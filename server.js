@@ -4,15 +4,17 @@ const bodyParser = require('body-parser');
 const serveStatic = require('serve-static');
 const http = require('http').Server(app);
 const path = require('path');
-const group = require('./api/group');
-const user = require('./api/user');
+const group = require('./routes/Group');
+const user = require('./routes/User');
 
+app.use(bodyParser.json());
 
-app.use('/register', register);
+app.use('/group', group);
 app.use('/user', user);
 
+
 // Middlewares
-app.use(bodyParser.json());
+
 
 app.use(serveStatic(path.join(__dirname + "/frontend/build")));
 
