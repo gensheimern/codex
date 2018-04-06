@@ -8,6 +8,12 @@ const path = require('path');
 // Middlewares
 app.use(bodyParser.json());
 
+app.get("/register",  (req, res) => {
+	res.json({
+		result: "Hello World"
+	});
+});
+
 app.use(serveStatic(path.join(__dirname + "/frontend/build")));
 
 /*app.get("/", (req, res) => {
@@ -15,6 +21,6 @@ app.use(serveStatic(path.join(__dirname + "/frontend/build")));
 });*/
 
 // Start Server
-http.listen(3000, function() {
+http.listen(5000, function() {
 	console.log('Server started: http://localhost:3000');
 });
