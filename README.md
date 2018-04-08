@@ -41,7 +41,7 @@ npm install
 
 Install the frontend dependencies
 ```
-npm installclient
+npm run installclient
 ```
 
 ## Quick start
