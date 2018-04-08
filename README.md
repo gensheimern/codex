@@ -48,9 +48,9 @@ npm run installclient
 
 All of the following commands support hot reloading. If the source code gets changed, the server restarts / page gets refreshed automatically.
 
-To start only the express backend use ```npm start```.
+To start only the express backend use ```npm run server```.
 
-To start only the react frontend use ```npm run react```.
+To start only the react frontend use ```npm run client```.
 
 To start the complete development environment, including the express backend with the REST API and the react frontend use ```npm run all```.
 After the server and the frontend are ready the application is opened in the default browser.
