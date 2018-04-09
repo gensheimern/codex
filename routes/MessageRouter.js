@@ -1,11 +1,11 @@
 var express = require('express');
 var router = express.Router();
-var User = require('../models/User');
+var Group = require('../models/MessageModel');
 
 router.get('/:id?', function(req, res, next) {
 
   if (req.params.id) {
-    User.getUserById(req.params.id, function(err, rows) {
+    Group.getMessageById(req.params.id, function(err, rows) {
       if (err) {
         res.json(err);
       } else {
@@ -13,7 +13,7 @@ router.get('/:id?', function(req, res, next) {
       }
     });
   } else {
-    User.getAllUser(function(err, rows) {
+    Group.getAllMessages(function(err, rows) {
       if (err) {
         res.json(err);
       } else {
@@ -26,7 +26,7 @@ router.get('/:id?', function(req, res, next) {
 
 router.post('/', function(req, res, next) {
 
-  User.addUser(req.body, function(err, count) {
+  Group.addMessage(req.body, function(err, count) {
 
     console.log(req.body);
 
@@ -41,7 +41,7 @@ router.post('/', function(req, res, next) {
 
 router.delete('/id', function(req, res, next) {
 
-  User.deleteUser(req.params.id, function(err, count) {
+  Group.deleteMessage(req.params.id, function(err, count) {
     if (err) {
       res.json(err);
     } else {
@@ -52,7 +52,7 @@ router.delete('/id', function(req, res, next) {
 
 router.put('/:id', function(req, res, next) {
 
-  User.updateUser(req.params.id, req.body, function(err, rows) {
+  Group.updateMessage(req.params.id, req.body, function(err, rows) {
 
     if (err) {
       res.json(err);

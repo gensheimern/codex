@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var Group = require('../models/Group');
+var Group = require('../models/GroupModel');
 
 router.get('/:id?', function(req, res, next) {
 
