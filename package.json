@@ -3,11 +3,13 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "installclient": "cd frontend & npm install",
-    "start": "nodemon server.js",
-    "react": "cd frontend & npm start",
-    "all": "concurrently \"npm start\" \"cd frontend & npm start\" --kill-others",
-    "prod": "cd frontend & npm run build & cd ../ & nodemon server.js"
+    "installclient": "cd frontend && npm install",
+    "start": "npm run server",
+    "server": "nodemon server.js",
+    "client": "npm start --prefix frontend",
+    "all": "concurrently \"npm start\" \"npm start --prefix frontend\" --kill-others",
+    "prod": "npm run build --prefix frontend & npm start",
+    "test": "echo Not implemented."
   },
   "dependencies": {
     "body-parser": "^1.18.2",
