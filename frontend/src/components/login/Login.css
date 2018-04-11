@@ -1,0 +1,13 @@
+.centered {
+	text-align: center;
+}
+
+.loginArea {
+	width: 300px;
+	font-size: 15pt;
+	text-align: right;
+	margin: auto;
+	margin-top: 20%;
+	padding: 1% 5%;
+	border: 1px solid blue;
+}

@@ -13,18 +13,34 @@ class ListGroups extends React.Component {
 				this.setState({
 					groups: res
 				});
-			});
+			})
+			.catch((err) => {
+				this.setState({
+					groups: []
+				});
+			});;
 	}
 
 	render() {
-		return(
-			<div style={{border: "2px solid black", margin: "5%"}}>
-				<h1>Vorhandene Gruppen</h1>
+		let groups;
+
+		if(this.state.groups.length === 0) {
+			groups = (<p>Noch keine Gruppen vorhanden.</p>);
+		}
+		else {
+			groups = (
 				<ul>
 				{this.state.groups.map((group) => {
 					return (<li key={group.Gruppen_Id}>{group.Gruppen_Id + "; " + group.Gruppenname + ", " + group.Gruppenleiter}</li>);
 				})}
 				</ul>
+			);
+		}
+
+		return(
+			<div style={{border: "2px solid black", margin: "5%"}}>
+				<h1>Vorhandene Gruppen:</h1>
+				{groups}
 			</div>
 		);
 	}

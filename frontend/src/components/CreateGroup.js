@@ -34,7 +34,8 @@ class CreateGroup extends React.Component {
 					Teamname: this.state.name
 				}),
 				headers: {
-					
+					'content-type': 'application/json',
+					'...': '...'
 				}
 			});*/
 			console.log("Group '" + this.state.name + "' created.");
