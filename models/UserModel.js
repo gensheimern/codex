@@ -15,7 +15,7 @@ var User = {
   },
 
   deleteUser: function(id, callback) {
-    return databaseConnection.query("Delete From User where User_Id=?", [id], calback);
+    return databaseConnection.query("Delete From User where User_Id=?", [id], callback);
   },
 
   updateUser: function(id, user, callback) {

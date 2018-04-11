@@ -11,15 +11,15 @@ var Activity = {
   },
 
   addActivity: function(activity, callback) {
-    return databaseConnection.query("Insert into Activity values(?,?,?,?,?,?,?)", [activity.Activity_Id, activity.Description, activity.Activityname, activity.User_Id, activity.Place, activity.Time, activity.Eventtag], callback);
+    return databaseConnection.query("Insert into Activity values(?,?,?,?,?,?,?)", [activity.Activity_Id, activity.Description, activity.Activityname, activity.Place, activity.Time, activity.Eventtag, activity.Host], callback);
   },
 
   deleteActivity: function(id, callback) {
-    return databaseConnection.query("Delete From Activity where Activity_Id=?", [id], calback);
+    return databaseConnection.query("Delete From Activity where Activity_Id=?", [id], callback);
   },
 
   updateActivity: function(id, activity, callback) {
-    return databaseConnection.query("Update Activity set Description=?, Activityname=?, User_Id=?, Place=?, Time=?, Eventtag=? where Gruppen_Id=?", [activity.Description, activity.Activityname, activity.User_Id, activity.Place, activity.Time, activity.Eventtag, id], callback);
+    return databaseConnection.query("Update Activity set Description=?, Activityname=?, Place=?, Time=?, Eventtag=?, Host=? where Gruppen_Id=?", [activity.Description, activity.Activityname, activity.Place, activity.Time, activity.Eventtag, activity.Host, id], callback);
   }
 };
 
