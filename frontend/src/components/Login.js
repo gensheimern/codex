@@ -1,4 +1,5 @@
 import React from 'react';
+import {withRouter} from 'react-router-dom';
 
 class Login extends React.Component {
 
@@ -30,8 +31,16 @@ class Login extends React.Component {
 	handleClick(e) {
 		e.preventDefault();
 
-		console.log("Mail: " + this.state.email);
-		console.log("Password: " + this.state.pw);
+		if(this.state.email === "support@codex-team.de" &&
+			this.state.pw === "password") {
+			this.props.history.push("/create_group");
+		}
+		else {
+			console.log("Wrong credentials");
+		}
+
+		//console.log("Mail: " + this.state.email);
+		//console.log("Password: " + this.state.pw);
 	}
 
 	render() {
@@ -39,8 +48,10 @@ class Login extends React.Component {
 			<div style={{
 				textAlign: 'center',
 				marginTop: '5%',
-				border: '1px solid black'
+				padding: '1%',
+				border: '1px solid blue'
 			}}>
+				<h1>Anmelden: </h1>
 				<form>
 					<label>E-Mail:</label>
 					<input type="email" value={this.state.email} onChange={this.inputEmail} />
