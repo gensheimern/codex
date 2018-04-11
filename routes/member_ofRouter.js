@@ -1,11 +1,11 @@
 var express = require('express');
 var router = express.Router();
-var User = require('../models/UserModel');
+var Member = require('../models/member_ofModel');
 
 router.get('/:id?', function(req, res, next) {
 
   if (req.params.id) {
-    User.getUserById(req.params.id, function(err, rows) {
+    Member.getMemberById(req.params.id, function(err, rows) {
       if (err) {
         res.json(err);
       } else {
@@ -13,7 +13,7 @@ router.get('/:id?', function(req, res, next) {
       }
     });
   } else {
-    User.getAllUser(function(err, rows) {
+    Member.getAllMember(function(err, rows) {
       if (err) {
         res.json(err);
       } else {
@@ -26,7 +26,7 @@ router.get('/:id?', function(req, res, next) {
 
 router.post('/', function(req, res, next) {
 
-  User.addUser(req.body, function(err, count) {
+  Member.addMember(req.body, function(err, count) {
 
     console.log(req.body);
 
@@ -41,7 +41,19 @@ router.post('/', function(req, res, next) {
 
 router.delete('/id', function(req, res, next) {
 
-  User.deleteUser(req.body.User_Id, function(err, count) {
+  Member.deleteMemberAll(req.body.Team_Id, function(err, count) {
+    console.log(req.body.Team_Id);
+    if (err) {
+      res.json(err);
+    } else {
+      res.json(count);
+    }
+  });
+});
+
+router.delete('/userid/teamid', function(req, res, next) {
+
+  Member.deleteMemberSingle(req.body.User_Id, req.body.Team_Id, function(err, count) {
     if (err) {
       res.json(err);
     } else {
@@ -52,7 +64,7 @@ router.delete('/id', function(req, res, next) {
 
 router.put('/:id', function(req, res, next) {
 
-  User.updateUser(req.params.id, req.body, function(err, rows) {
+  Member.updateMember(req.params.id, req.body, function(err, rows) {
 
     if (err) {
       res.json(err);

@@ -1,11 +1,11 @@
 var express = require('express');
 var router = express.Router();
-var Group = require('../models/GroupModel');
+var participates = require('../models/participatesModel');
 
 router.get('/:id?', function(req, res, next) {
 
   if (req.params.id) {
-    Group.getGroupById(req.params.id, function(err, rows) {
+    participates.getParticipatesById(req.params.id, function(err, rows) {
       if (err) {
         res.json(err);
       } else {
@@ -13,7 +13,7 @@ router.get('/:id?', function(req, res, next) {
       }
     });
   } else {
-    Group.getAllGroups(function(err, rows) {
+    participates.getAllParticipates(function(err, rows) {
       if (err) {
         res.json(err);
       } else {
@@ -26,7 +26,7 @@ router.get('/:id?', function(req, res, next) {
 
 router.post('/', function(req, res, next) {
 
-  Group.addGroup(req.body, function(err, count) {
+  participates.addParticipates(req.body, function(err, count) {
 
     console.log(req.body);
 
@@ -41,7 +41,18 @@ router.post('/', function(req, res, next) {
 
 router.delete('/id', function(req, res, next) {
 
-  Group.deleteGroup(req.params.id, function(err, count) {
+  participates.deleteParticipatesAll(req.body.Subscribed_Id, function(err, count) {
+    if (err) {
+      res.json(err);
+    } else {
+      res.json(count);
+    }
+  });
+});
+
+router.delete('/userid/activityid', function(req, res, next) {
+
+  participates.deleteParticipatesSingle(req.body.User_Id, req.body.Activity_Id, function(err, count) {
     if (err) {
       res.json(err);
     } else {
@@ -52,7 +63,7 @@ router.delete('/id', function(req, res, next) {
 
 router.put('/:id', function(req, res, next) {
 
-  Group.updateGroup(req.params.id, req.body, function(err, rows) {
+  participates.updateParticipates(req.params.id, req.body, function(err, rows) {
 
     if (err) {
       res.json(err);
