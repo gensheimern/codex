@@ -15,7 +15,7 @@ var Message = {
   },
 
   deleteMessage: function(id, callback) {
-    return databaseConnection.query("Delete From Message where Message_Id=?", [id], calback);
+    return databaseConnection.query("Delete From Message where Message_Id=?", [id], callback);
   },
 
   updateMessage: function(id, message, callback) {
