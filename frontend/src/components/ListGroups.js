@@ -1,13 +1,18 @@
 import React from 'react';
+import config from '../config';
 
-class ListGroups extends React.Component {
+class ListTeams extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {groups: []};
 	}
 
 	componentDidMount() {
-		fetch("http://localhost:3000/group")
+		this.refresh();
+	}
+
+	refresh() {
+		fetch(config.apiPath + "/team")
 			.then(res => res.json())
 			.then(res => {
 				this.setState({
@@ -31,7 +36,7 @@ class ListGroups extends React.Component {
 			groups = (
 				<ul>
 				{this.state.groups.map((group) => {
-					return (<li key={group.Gruppen_Id}>{group.Gruppen_Id + "; " + group.Gruppenname + ", " + group.Gruppenleiter}</li>);
+					return (<li key={group.Team_Id}>{group.Team_Id + "; " + group.Teamname + ", " + group.Teammanager}</li>);
 				})}
 				</ul>
 			);
@@ -46,4 +51,4 @@ class ListGroups extends React.Component {
 	}
 }
 
-export default ListGroups;
+export default ListTeams;

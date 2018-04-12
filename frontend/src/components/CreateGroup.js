@@ -1,6 +1,7 @@
 import React from 'react';
+import config from '../config';
 
-class CreateGroup extends React.Component {
+class CreateTeam extends React.Component {
 
 	constructor(props) {
 		super(props);
@@ -28,16 +29,18 @@ class CreateGroup extends React.Component {
 		e.preventDefault();
 
 		if(this.state.name !== "") {
-			/*fetch("http://localhost:3000/team", {
+			fetch(config.apiPath + "/team", {
 				method: 'POST',
 				body: JSON.stringify({
-					Teamname: this.state.name
+					Team_Id: null,
+					Teamname: this.state.name,
+					Teammanager: "Max"
 				}),
 				headers: {
-					'content-type': 'application/json',
-					'...': '...'
+					'Content-Type': 'application/json',
+					'X-Access-Token': 'demo_token'
 				}
-			});*/
+			});
 			console.log("Group '" + this.state.name + "' created.");
 		}
 		else {
@@ -66,4 +69,4 @@ class CreateGroup extends React.Component {
 	}
 }
 
-export default CreateGroup;
+export default CreateTeam;
