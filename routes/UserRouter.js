@@ -39,9 +39,9 @@ router.post('/', function(req, res, next) {
 });
 
 
-router.delete('/id', function(req, res, next) {
+router.delete('/:id', function(req, res, next) {
 
-  User.deleteUser(req.body.User_Id, function(err, count) {
+  User.deleteUser(req.params.id, function(err, count) {
     if (err) {
       res.json(err);
     } else {
