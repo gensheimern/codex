@@ -1,21 +1,29 @@
 import React, { Component } from 'react';
-//import logo from './logo.svg';
+import { BrowserRouter, Route, Link } from 'react-router-dom';
+
+// Components
 import './App.css';
-import HelloWorld from './components/HelloWorld';
+import Login from './components/login/Login';
+import CreateTeam from './components/CreateGroup';
+import ListTeams from './components/ListGroups';
+import ListUsers from './components/ListUsers';
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {};
+  }
+
   render() {
     return (
-      /*<div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>*/
-      <HelloWorld />
+      <BrowserRouter>
+        <React.Fragment>
+          <Route exact path="/" component={Login} />
+          <Route exact path="/create_group" component={CreateTeam} />
+          <Route exact path="/create_group" component={ListTeams} />
+        </React.Fragment>
+      </BrowserRouter>
     );
   }
 }

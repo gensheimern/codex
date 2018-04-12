@@ -18,6 +18,7 @@ const authenticate = require('./routes/auth/AuthenticateRouter');
 let verifyToken = require('./routes/auth/verify');
 
 
+
 app.use(bodyParser.json());
 
 app.use('/team', verifyToken, team);
@@ -29,6 +30,7 @@ app.use('/participates', verifyToken, participates);
 app.use('/memberof', verifyToken, member_of);
 
 app.use('/authenticate', authenticate);
+
 
 
 // Middlewares
