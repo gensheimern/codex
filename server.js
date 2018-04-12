@@ -14,18 +14,19 @@ const participates = require('./routes/participatesRouter');
 const member_of = require('./routes/member_ofRouter');
 
 const jwt = require('jsonwebtoken');
-const authenticate = require('./routes/AuthenticateRouter');
+const authenticate = require('./routes/auth/AuthenticateRouter');
+let verifyToken = require('./routes/auth/verify');
 
 
 app.use(bodyParser.json());
 
-app.use('/team', team);
-app.use('/user', user);
-app.use('/message', message);
-app.use('/activity', activity);
-app.use('/subscribed', subscribed);
-app.use('/participates', participates);
-app.use('/memberof', member_of);
+app.use('/team', verifyToken, team);
+app.use('/user', verifyToken, user);
+app.use('/message', verifyToken, message);
+app.use('/activity', verifyToken, activity);
+app.use('/subscribed', verifyToken, subscribed);
+app.use('/participates', verifyToken, participates);
+app.use('/memberof', verifyToken, member_of);
 
 app.use('/authenticate', authenticate);
 

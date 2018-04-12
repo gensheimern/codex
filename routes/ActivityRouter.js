@@ -39,7 +39,7 @@ router.post('/', function(req, res, next) {
 });
 
 
-router.delete('/id', function(req, res, next) {
+router.delete('/:id', function(req, res, next) {
 
   Activity.deleteActivity(req.params.id, function(err, count) {
     if (err) {

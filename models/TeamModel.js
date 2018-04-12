@@ -19,6 +19,7 @@ var Team = {
   },
 
   updateTeam: function(id, team, callback) {
+
     return databaseConnection.query("Update Team set Teamname=?, Teammanager=? where Team_Id=?", [team.Teamname, team.Teammanager, id], callback);
   }
 };
