@@ -10,6 +10,10 @@ var User = {
     return databaseConnection.query("Select * from User where User_Id=?", [id], callback);
   },
 
+  getUserByEmail: function(id, callback) {
+    return databaseConnection.query("Select * from User where Email=?", [id], callback);
+  },
+
   addUser: function(user, callback) {
     return databaseConnection.query("Insert into User values(?,?,?,?,?)", [user.User_Id, user.Vorname, user.Nachname, user.Email, user.Passwort], callback);
   },
