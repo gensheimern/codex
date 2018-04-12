@@ -39,7 +39,7 @@ router.post('/', function(req, res, next) {
 });
 
 
-router.delete('/id', function(req, res, next) {
+router.delete('/:id', function(req, res, next) {
 
   Group.deleteMessage(req.params.id, function(err, count) {
     if (err) {
