@@ -1,97 +1,77 @@
-import React from 'react';
-import './Login.css';
-import config from '../../config';
+import React, {Component} from "react";
+import {Button, FormGroup, FormControl, ControlLabel, Alert} from "react-bootstrap";
+import "./Login.css";
+import logo from '../../IMG/codex_logo1x.png';
 
-class Login extends React.Component {
+export default class Login extends Component {
+  constructor(props) {
+    super(props);
 
-	constructor(props) {
-		super(props);
+    this.state = {
+      email: "",
+      password: "",
+      showErrorPrompt: false,
+      errorPrompt: ""
+    };
+  }
 
-		this.inputEmail = this.inputEmail.bind(this);
-		this.inputPassword = this.inputPassword.bind(this);
-		this.handleClick = this.handleClick.bind(this);
+  validateForm() {
+    return this.state.email.length > 0 && this.state.password.length > 0;
+  }
 
-		this.state = {
-			email: "",
-			pw: "",
-			showErrorPrompt: false
-		}
-	}
+  handleChange = event => {
+    this.setState({
+      [event.target.id]: event.target.value
+    });
+  }
 
-	inputEmail(e) {
-		this.setState({
-			email: e.target.value
-		});
-	}
+  handleSubmit = event => {
+    event.preventDefault();
+    {{
 
-	inputPassword(e) {
-		this.setState({
-			pw: e.target.value
-		});
-	}
+      // TODO fetch(login...)
+      let loggedIn = this.state.email === "support@codex-team.de" && this.state.password === "password";
 
-	handleClick(e) {
-		e.preventDefault();
+      if (loggedIn) {
+        this.props.history.push("/create_group");
+      } else {
+        this.setState({showErrorPrompt: true});
+      }
+    }
 
-		fetch(config.apiPath + "/authenticate", {
-			method: 'POST',
-			body: JSON.stringify({
-				Email: this.state.email,
-				Password: this.state.pw
-			}),
-			headers: {
-				'Content-Type': 'application/json'
-			}
-		})
-		.then(res => res.json())
-		.then((res) => {
-			if(!res.ok) {
-				throw new Error("Invalid Password");
-			}
-			console.log("Token: " + res.token)
-		})
-		.catch((err) => {
-			console.log("Fehler" + err);
-		});
+    if (this.state.showErrorPrompt) {
+      this.errorPrompt = (<Alert bsStyle="warning">
+  <strong>Holy guacamole!</strong> Best check yo self, you're not looking too
+  good.
+</Alert>);
+    }
+  }}
 
-		// TODO fetch(login...)
-		let loggedIn = this.state.email === "support@codex-team.de" && this.state.pw === "password";
-
-		if(loggedIn) {
-			this.props.history.push("/create_group");
-		}
-		else {
-			this.setState({showErrorPrompt: true});
-		}
-	}
-
-	render() {
-		let errorPrompt = "";
-		
-		if(this.state.showErrorPrompt) {
-			errorPrompt = (
-				<p style={{color: 'red'}}>Login fehlgeschlagen!</p>
-			);
-		}
-
-		return(
-			<div className={"loginArea"}>
-				<h1 style={{textAlign: 'center'}}>Anmelden:</h1>
-				<form>
-					{errorPrompt}
-					<p>
-						<label>E-Mail: </label>
-						<input type="email" value={this.state.email} onChange={this.inputEmail} />
-					</p>
-					<p>
-						<label>Password: </label>
-						<input type="password" value={this.state.pw} onChange={this.inputPassword} />
-					</p>
-					<button onClick={this.handleClick}>Login</button>
-				</form>
-			</div>
-		);
-	}
-}
-
-export default Login;
+    render() {
+      return (<div className="Login">
+        <div><img src={logo} className="img-responsive center-block" style={{
+          width: "60%",
+          margin: "auto",
+          marginBottom: "20%"
+        }}/></div>
+        <form onSubmit={this.handleSubmit}>
+          <FormGroup controlId="errorprompt" bsSize="large">
+            {this.errorPrompt}
+          </FormGroup>
+          <FormGroup controlId="email" bsSize="large">
+            <ControlLabel></ControlLabel>
+            <FormControl placeholder="Email" autoFocus="autoFocus" type="email" value={this.state.email} onChange={this.handleChange}/>
+          </FormGroup>
+          <FormGroup controlId="password" bsSize="large">
+            <ControlLabel></ControlLabel>
+            <FormControl style={{
+                marginBottom: "11%"
+              }} placeholder="Pasword" value={this.state.password} onChange={this.handleChange} type="password"/>
+          </FormGroup>
+          <Button bsStyle="primary" block="block" bsSize="large" disabled={!this.validateForm()} type="submit">
+            Login
+          </Button>
+        </form>
+      </div>);
+    }
+  }
