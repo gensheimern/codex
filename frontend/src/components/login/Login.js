@@ -1,5 +1,6 @@
 import React from 'react';
 import './Login.css';
+import config from '../../config';
 
 class Login extends React.Component {
 
@@ -31,6 +32,27 @@ class Login extends React.Component {
 
 	handleClick(e) {
 		e.preventDefault();
+
+		fetch(config.apiPath + "/authenticate", {
+			method: 'POST',
+			body: JSON.stringify({
+				Email: this.state.email,
+				Password: this.state.pw
+			}),
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		})
+		.then(res => res.json())
+		.then((res) => {
+			if(!res.ok) {
+				throw new Error("Invalid Password");
+			}
+			console.log("Token: " + res.token)
+		})
+		.catch((err) => {
+			console.log("Fehler" + err);
+		});
 
 		// TODO fetch(login...)
 		let loggedIn = this.state.email === "support@codex-team.de" && this.state.pw === "password";

@@ -16,7 +16,7 @@ router.post('/', function(req, res, next) {
     } else {
 
       if (!rows[0]) {
-        res.sendStatus(404);
+        res.status(403);
         res.json({
           "success": false,
           "Email": "not found"

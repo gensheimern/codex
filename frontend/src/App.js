@@ -18,7 +18,7 @@ class App extends Component {
   render() {
     return (
       <BrowserRouter>
-        <React.Fragment><ListUsers/>
+        <React.Fragment>
           <Route exact path="/" component={Login} />
           <Route exact path="/create_group" component={CreateTeam} />
           <Route exact path="/create_group" component={ListTeams} />
