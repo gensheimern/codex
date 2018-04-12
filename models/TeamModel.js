@@ -1,4 +1,4 @@
-const databaseConnection = require('../DatabaseConnection')
+const databaseConnection = require('../DatabaseConnection');
 
 var Team = {
 

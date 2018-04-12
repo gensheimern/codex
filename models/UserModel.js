@@ -1,4 +1,5 @@
-const databaseConnection = require('../DatabaseConnection')
+const databaseConnection = require('../DatabaseConnection');
+const encryptPassword = require('../routes/auth/CryptPassword');
 
 var User = {
 
@@ -15,7 +16,7 @@ var User = {
   },
 
   addUser: function(user, callback) {
-    return databaseConnection.query("Insert into User values(?,?,?,?,?)", [user.User_Id, user.Firstname, user.Name, user.Email, user.Password], callback);
+    return databaseConnection.query("Insert into User values(?,?,?,?,?)", [user.User_Id, user.Firstname, user.Name, user.Email, encryptPassword(user.Password)], callback);
   },
 
   deleteUser: function(id, callback) {
