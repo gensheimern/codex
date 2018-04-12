@@ -8,22 +8,38 @@ class ListTeams extends React.Component {
 	}
 
 	componentDidMount() {
-		this.refresh();
+		this.loadContent();
 	}
 
-	refresh() {
-		fetch(config.apiPath + "/team")
-			.then(res => res.json())
-			.then(res => {
-				this.setState({
-					groups: res
-				});
-			})
-			.catch((err) => {
-				this.setState({
-					groups: []
-				});
-			});;
+	loadContent() { console.log(localStorage.getItem('apiToken'))
+		fetch(config.apiPath + "/team", {
+			headers: {
+				'Content-Type': 'application/json',
+				'X-Access-Token': localStorage.getItem('apiToken')
+			}
+		})
+		.then((res) => {
+			if(!res.ok) {
+				throw new Error("Request failed.");
+			}
+			else if(res.status !== 200) {
+				throw new Error("Forbidden");
+			}
+			else {
+				return res;
+			}
+		})
+		.then(res => res.json())
+		.then(res => {
+			this.setState({
+				groups: res
+			});
+		})
+		.catch((err) => {
+			this.setState({
+				groups: []
+			});
+		});
 	}
 
 	render() {

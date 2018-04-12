@@ -43,26 +43,28 @@ class Login extends React.Component {
 				'Content-Type': 'application/json'
 			}
 		})
-		.then(res => res.json())
 		.then((res) => {
 			if(!res.ok) {
 				throw new Error("Invalid Password");
 			}
-			console.log("Token: " + res.token)
+			return res;
+		})
+		.then(res => res.json())
+		.then((res) => {
+			//console.log("Token: " + res.token)
+
+			if (typeof(Storage) !== "undefined") {
+				localStorage.setItem("apiToken", res.token);
+			} else {
+				// TODO Code without local storage
+			}
+			
+			this.props.history.push("/create_group");
 		})
 		.catch((err) => {
-			console.log("Fehler" + err);
-		});
-
-		// TODO fetch(login...)
-		let loggedIn = this.state.email === "support@codex-team.de" && this.state.pw === "password";
-
-		if(loggedIn) {
-			this.props.history.push("/create_group");
-		}
-		else {
+			//console.log("Fehler" + err);
 			this.setState({showErrorPrompt: true});
-		}
+		});
 	}
 
 	render() {
