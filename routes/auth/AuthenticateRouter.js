@@ -1,19 +1,22 @@
 var express = require('express');
 var router = express.Router();
-var User = require('../models/UserModel');
+var User = require('../../models/UserModel');
 const jwt = require('jsonwebtoken');
 
-//  https://scotch.io/tutorials/authenticate-a-node-js-api-with-json-web-tokens
+
 
 router.post('/', function(req, res, next) {
-
 
   User.getUserByEmail(req.body.Email, function(err, rows) {
 
     if (err) {
+
       res.sendStatus(404);
+
     } else {
+
       if (rows[0].Password != req.body.Password) {
+
         res.sendStatus(403);
 
       } else {
@@ -29,17 +32,16 @@ router.post('/', function(req, res, next) {
           'secret');
         console.log(token);
         res.json({
+          success: true,
+
           token: token
         });
-
       }
-
-
     }
-
-
   });
-
-
 });
+
+
+
+
 module.exports = router;

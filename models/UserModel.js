@@ -15,7 +15,7 @@ var User = {
   },
 
   addUser: function(user, callback) {
-    return databaseConnection.query("Insert into User values(?,?,?,?,?)", [user.User_Id, user.Vorname, user.Nachname, user.Email, user.Passwort], callback);
+    return databaseConnection.query("Insert into User values(?,?,?,?,?)", [user.User_Id, user.Firstname, user.Name, user.Email, user.Password], callback);
   },
 
   deleteUser: function(id, callback) {
@@ -23,7 +23,7 @@ var User = {
   },
 
   updateUser: function(id, user, callback) {
-    return databaseConnection.query("Update User set Vorname=?, Nachname=?, Email=?, Passwort=? where User_Id=?", [user.Vorname, user.Nachname, user.Email, user.Passwort, id], callback);
+    return databaseConnection.query("Update User set Firstname=?, Name=?, Email=?, Password=? where User_Id=?", [user.Firstname, user.Name, user.Email, user.Password, id], callback);
   }
 };
 
