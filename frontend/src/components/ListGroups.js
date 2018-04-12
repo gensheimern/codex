@@ -11,7 +11,7 @@ class ListTeams extends React.Component {
 		this.loadContent();
 	}
 
-	loadContent() { console.log(localStorage.getItem('apiToken'))
+	loadContent() {
 		fetch(config.apiPath + "/team", {
 			headers: {
 				'Content-Type': 'application/json',

@@ -12,7 +12,6 @@ export default class Login extends Component {
 		this.state = {
 			email: "",
 			password: "",
-			showErrorPrompt: false,
 			errorPrompt: ""
 		};
 	}
@@ -44,6 +43,9 @@ export default class Login extends Component {
 			if(!res.ok) {
 				throw new Error("Invalid Password");
 			}
+			else if(res.status !== 200) {
+				throw new Error("Forbidden");
+			}
 			return res;
 		})
 		.then(res => res.json())
@@ -59,16 +61,11 @@ export default class Login extends Component {
 			this.props.history.push("/create_group");
 		})
 		.catch((err) => {
-			//console.log("Fehler" + err);
-			this.setState({showErrorPrompt: true});
-		});
-
-		if (this.state.showErrorPrompt) {
-			this.errorPrompt = (
+			this.setState({errorPrompt: (
 				<Alert bsStyle="warning">
 				<strong>Holy guacamole!</strong> Best check yo self, you're not looking too good.
-				</Alert>);
-		}
+				</Alert>)});
+		});
 	}
 
 	render() {
@@ -80,7 +77,7 @@ export default class Login extends Component {
 		  }}  alt=""/></div>
 		  <form onSubmit={this.handleSubmit}>
 			<FormGroup controlId="errorprompt" bsSize="large">
-			  {this.errorPrompt}
+			  {this.state.errorPrompt}
 			</FormGroup>
 			<FormGroup controlId="email" bsSize="large">
 			  <ControlLabel></ControlLabel>

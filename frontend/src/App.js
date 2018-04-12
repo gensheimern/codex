@@ -6,7 +6,6 @@ import './App.css';
 import Login from './components/login/Login';
 import CreateTeam from './components/CreateGroup';
 import ListTeams from './components/ListGroups';
-import ListUsers from './components/ListUsers';
 
 class App extends Component {
   constructor(props) {
