@@ -34,6 +34,7 @@ router.post('/', function(req, res, next) {
           //If the password match, send the token back to the client,
           //including expiration Date which is 24 hours
           var token = jwt.sign({
+              "User_Id": rows[0].User_Id,
               "Firstname": rows[0].Firstname,
               "Name": rows[0].Name,
               "Email": rows[0].Email,
