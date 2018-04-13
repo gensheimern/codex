@@ -79,17 +79,15 @@ export default class Login extends Component {
 			<FormGroup controlId="errorprompt" bsSize="large">
 			  {this.state.errorPrompt}
 			</FormGroup>
-			<FormGroup controlId="email" bsSize="large">
-			  <ControlLabel></ControlLabel>
-			  <FormControl placeholder="Email" autoFocus="autoFocus" type="text" value={this.state.email} onChange={this.handleChange}/>
+			<FormGroup controlId="emailInput" bsSize="large">
+			  <FormControl id="emailInput" placeholder="Email" autoFocus="autoFocus" type="text" value={this.state.email} onChange={this.handleChange}/>
 			</FormGroup>
-			<FormGroup controlId="password" bsSize="large">
-			  <ControlLabel></ControlLabel>
+			<FormGroup controlId="passwordInput" bsSize="large">
 			  <FormControl style={{
 				  marginBottom: "11%"
-				}} placeholder="Password" value={this.state.password} onChange={this.handleChange} type="password"/>
+				}} id="passwordInput" placeholder="Password" value={this.state.password} onChange={this.handleChange} type="password"/>
 			</FormGroup>
-			<Button bsStyle="primary" block bsSize="large" disabled={!this.validateForm()} type="submit">
+			<Button id="loginBtn" bsStyle="primary" block bsSize="large" disabled={!this.validateForm()} type="submit">
 			  Login
 			</Button>
 		  </form>
