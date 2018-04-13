@@ -9,7 +9,10 @@
     "client": "npm start --prefix frontend",
     "all": "concurrently \"npm start\" \"npm start --prefix frontend\" --kill-others",
     "prod": "npm run build --prefix frontend & npm start",
-    "test": "echo Not implemented."
+    "test": "echo Not implemented.",
+    "test:coverage": "echo Not implemented.",
+    "testclient": "npm run test --prefix frontend",
+    "testclient:coverage": "npm run test:coverage --prefix frontend"
   },
   "dependencies": {
     "body-parser": "^1.18.2",
