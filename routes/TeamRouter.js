@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var jwt = require('jsonwebtoken');
 var Team = require('../models/TeamModel');
 
 router.get('/:id?', function(req, res, next) {
@@ -26,9 +27,10 @@ router.get('/:id?', function(req, res, next) {
 
 router.post('/', function(req, res, next) {
 
-  Team.addTeam(req.body, function(err, count) {
+  var token = req.headers['x-access-token'];
+  var decoded = jwt.decode(token, 'secret');
 
-    console.log(req.body);
+  Team.addTeam(req.body, decoded.User_Id, function(err, count) {
 
     if (err) {
       res.json(err);

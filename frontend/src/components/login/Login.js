@@ -6,8 +6,8 @@ import config from '../../config';
 
 export default class Login extends Component {
 
-	constructor(props) {
-    	super(props);
+    constructor(props) {
+        super(props);
 
 		this.state = {
 			email: "",
@@ -16,15 +16,15 @@ export default class Login extends Component {
 		};
 	}
 
-	validateForm() {
-		return this.state.email.length > 0 && this.state.password.length > 0;
-	}
+    validateForm() {
+        return this.state.email.length > 0 && this.state.password.length > 0;
+    }
 
-	handleChange = event => {
-		this.setState({
-		[event.target.id]: event.target.value
-		});
-	}
+    handleChange = event => {
+        this.setState({
+            [event.target.id]: event.target.value
+        });
+    }
 
 	handleSubmit = event => {
 		event.preventDefault();

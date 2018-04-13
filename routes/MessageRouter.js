@@ -24,6 +24,18 @@ router.get('/:id?', function(req, res, next) {
   }
 });
 
+router.get('/activity/:id', function(req, res, next) {
+
+  Group.getMessageByActivity(req.params.id, function(err, rows) {
+    console.log("jupuupup");
+    if (err) {
+      res.json(err);
+    } else {
+      res.json(rows); //or return count for 1 & 0
+    }
+  });
+});
+
 router.post('/', function(req, res, next) {
 
   Group.addMessage(req.body, function(err, count) {
@@ -41,7 +53,18 @@ router.post('/', function(req, res, next) {
 
 router.delete('/:id', function(req, res, next) {
 
-  Group.deleteMessage(req.params.id, function(err, count) {
+  Group.deleteMessageById(req.params.id, function(err, count) {
+    if (err) {
+      res.json(err);
+    } else {
+      res.json(count);
+    }
+  });
+});
+
+router.delete('/activity/:id', function(req, res, next) {
+
+  Group.deleteMessageByActivity(req.params.id, function(err, count) {
     if (err) {
       res.json(err);
     } else {
