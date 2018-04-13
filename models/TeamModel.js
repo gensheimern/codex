@@ -1,4 +1,4 @@
-const databaseConnection = require('../DatabaseConnection')
+const databaseConnection = require('../DatabaseConnection');
 
 var Team = {
 
@@ -10,8 +10,8 @@ var Team = {
     return databaseConnection.query("Select * from Team where Team_Id=?", [id], callback);
   },
 
-  addTeam: function(team, callback) {
-    return databaseConnection.query("Insert into Team values(?,?,?)", [team.Team_Id, team.Teamname, Team.Teammanager], callback);
+  addTeam: function(team, userid, callback) {
+    return databaseConnection.query("Insert into Team values(?,?,?)", [team.Team_Id, team.Teamname, userid], callback);
   },
 
   deleteTeam: function(id, callback) {
