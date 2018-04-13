@@ -52,9 +52,9 @@ export default class CreateTeam extends React.Component {
     }
 
     render() {
-        return (<div className="Login">
+        return (<div className="CreateTeam">
             <div><img src={logo} className="img-responsive center-block" style={{
-                width: "60%",
+                width: "50%",
                 margin: "auto",
                 marginBottom: "0%"
             }} alt=""/></div>
@@ -66,7 +66,7 @@ export default class CreateTeam extends React.Component {
                     <ControlLabel></ControlLabel>
                     <FormControl placeholder="Gruppenname" type="text" value={this.state.name} onChange={this.handleChange}/>
                 </FormGroup>
-                <Button bsStyle="primary" block="block" bsSize="large" disabled={!this.validateForm()} type="submit">
+                <Button bsStyle="primary" block="true" bsSize="large" disabled={!this.validateForm()} type="submit">
                     erstelle Gruppe
                 </Button>
             </form>
