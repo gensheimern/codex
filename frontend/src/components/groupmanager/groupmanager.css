@@ -1,0 +1,21 @@
+.centered {
+  text-align: center;
+}
+
+.listTeams {
+  width: 90%;
+  font-size: 13pt;
+  margin: auto;
+  margin-top: 0%;
+  padding: 1% 5%;
+  /* border: 7px solid blue; */
+}
+
+.CreateGroup {
+  width: 90%;
+  font-size: 13pt;
+  margin: auto;
+  margin-top: 0%;
+  padding: 1% 5%;
+  /* border: 7px solid blue; */
+}
