@@ -39,10 +39,10 @@ router.post('/', function(req, res, next) {
 });
 
 
-router.delete('/id', function(req, res, next) {
+router.delete('/:id', function(req, res, next) {
 
-  Member.deleteMemberAll(req.body.Team_Id, function(err, count) {
-    console.log(req.body.Team_Id);
+  Member.deleteMemberAll(req.params.id, function(err, count) {
+
     if (err) {
       res.json(err);
     } else {
@@ -51,9 +51,9 @@ router.delete('/id', function(req, res, next) {
   });
 });
 
-router.delete('/userid/teamid', function(req, res, next) {
+router.delete('/:userid/:teamid', function(req, res, next) {
 
-  Member.deleteMemberSingle(req.body.User_Id, req.body.Team_Id, function(err, count) {
+  Member.deleteMemberSingle(req.params.userid, req.params.teamid, function(err, count) {
     if (err) {
       res.json(err);
     } else {
@@ -61,6 +61,12 @@ router.delete('/userid/teamid', function(req, res, next) {
     }
   });
 });
+
+
+/*
+============================================================================
+================== Fraglich ob überhaupt benötigt ==========================
+============================================================================
 
 router.put('/:id', function(req, res, next) {
 
@@ -73,4 +79,5 @@ router.put('/:id', function(req, res, next) {
     }
   });
 });
+*/
 module.exports = router;

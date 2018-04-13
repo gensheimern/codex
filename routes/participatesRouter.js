@@ -39,9 +39,9 @@ router.post('/', function(req, res, next) {
 });
 
 
-router.delete('/id', function(req, res, next) {
+router.delete('/:id', function(req, res, next) {
 
-  participates.deleteParticipatesAll(req.body.Subscribed_Id, function(err, count) {
+  participates.deleteParticipatesAll(req.params.id, function(err, count) {
     if (err) {
       res.json(err);
     } else {
@@ -61,6 +61,12 @@ router.delete('/userid/activityid', function(req, res, next) {
   });
 });
 
+/*
+==================================================================================
+================== Fraglich ob überhaupt benötigt ================================
+==================================================================================
+
+
 router.put('/:id', function(req, res, next) {
 
   participates.updateParticipates(req.params.id, req.body, function(err, rows) {
@@ -72,4 +78,5 @@ router.put('/:id', function(req, res, next) {
     }
   });
 });
+*/
 module.exports = router;

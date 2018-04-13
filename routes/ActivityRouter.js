@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var jwt = require('jsonwebtoken');
 var Activity = require('../models/ActivityModel');
 
 router.get('/:id?', function(req, res, next) {
@@ -26,7 +27,10 @@ router.get('/:id?', function(req, res, next) {
 
 router.post('/', function(req, res, next) {
 
-  Activity.addActivity(req.body, function(err, count) {
+  var token = req.headers['x-access-token'];
+  var decoded = jwt.decode(token, 'secret');
+
+  Activity.addActivity(req.body, decoded.User_Id, function(err, count) {
 
     console.log(req.body);
 
