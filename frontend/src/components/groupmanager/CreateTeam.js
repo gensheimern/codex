@@ -58,7 +58,7 @@ export default class CreateTeam extends React.Component {
                 margin: "auto",
                 marginBottom: "0%"
             }} alt=""/></div>
-            <form onSubmit={this.handleSubmit}>
+            <form onSubmit={this.handleClick}>
                 <FormGroup controlId="errorprompt" bsSize="large">
                     {this.errorPrompt}
                 </FormGroup>
@@ -66,7 +66,7 @@ export default class CreateTeam extends React.Component {
                     <ControlLabel></ControlLabel>
                     <FormControl placeholder="Gruppenname" type="text" value={this.state.name} onChange={this.handleChange}/>
                 </FormGroup>
-                <Button bsStyle="primary" block="block" bsSize="large" disabled={!this.validateForm()} type="submit">
+                <Button bsStyle="primary" block bsSize="large" disabled={!this.validateForm()} type="submit">
                     erstelle Gruppe
                 </Button>
             </form>
