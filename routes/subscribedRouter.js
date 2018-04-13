@@ -39,7 +39,7 @@ router.post('/', function(req, res, next) {
 });
 
 
-router.delete('/subscriberid', function(req, res, next) {
+router.delete('/subscriberid/:id', function(req, res, next) {
 
   Subscriber.deleteSubscriberAll(req.body.Subscriber_Id, function(err, count) {
     if (err) {
@@ -50,9 +50,9 @@ router.delete('/subscriberid', function(req, res, next) {
   });
 });
 
-router.delete('/subscribedid', function(req, res, next) {
+router.delete('/subscribedid/:id', function(req, res, next) {
 
-  Subscriber.deleteSubscribedAll(req.body.Subscribed_Id, function(err, count) {
+  Subscriber.deleteSubscribedAll(req.params.id, function(err, count) {
     if (err) {
       res.json(err);
     } else {
@@ -71,6 +71,8 @@ router.delete('/subscriberid/subscribedid', function(req, res, next) {
     }
   });
 });
+/*
+ ======================Fraglich ob es benötigt wird===============================
 
 router.put('/:id', function(req, res, next) {
 
@@ -83,4 +85,5 @@ router.put('/:id', function(req, res, next) {
     }
   });
 });
+*/
 module.exports = router;
