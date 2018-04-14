@@ -9,7 +9,7 @@
     "client": "npm start --prefix frontend",
     "all": "concurrently \"npm start\" \"npm start --prefix frontend\" --kill-others",
     "prod": "npm run build --prefix frontend & npm start",
-    "test": "echo Not implemented.",
+    "test": "mocha",
     "test:coverage": "echo Not implemented.",
     "testclient": "npm run test --prefix frontend",
     "testclient:coverage": "npm run test:coverage --prefix frontend"
@@ -28,5 +28,8 @@
     "nodemon": "^1.17.3",
     "npm": "^5.8.0",
     "serve-static": "^1.13.2"
+  },
+  "devDependencies": {
+    "mocha": "^5.1.0"
   }
 }
