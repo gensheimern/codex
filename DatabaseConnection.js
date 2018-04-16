@@ -5,8 +5,6 @@ var dbConnection = mysql.createPool({
   user: 'root',
   password: 'teamcodex',
   database: 'lunch_planner',
-
-
-
 });
+
 module.exports = dbConnection;

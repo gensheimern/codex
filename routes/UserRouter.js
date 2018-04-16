@@ -13,7 +13,7 @@ router.get('/:id?', function(req, res, next) {
 					res.sendStatus(404);
 				}
 				else {
-					res.json(rows);
+					res.json(rows[0]);
 				}
 			}
 		});
@@ -45,7 +45,7 @@ router.post('/', function(req, res, next) {
 		if (err) {
 			res.sendStatus(500);
 		} else {
-			res.json({
+			res.status(201).json({
 				User_Id: count.insertId,
 				Firstname: req.body.Firstname,
     			Name: req.body.Name,
@@ -66,7 +66,7 @@ router.delete('/:id', function(req, res, next) {
 				res.sendStatus(404);
 			}
 			else {
-				res.json(count);
+				res.sendStatus(200);
 			}
 		}
 	});

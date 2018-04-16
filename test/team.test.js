@@ -17,29 +17,25 @@ const validToken = jwt.sign({
 	exp: Math.floor(Date.now() / 1000) + (60 * 60)
 }, 'secret');
 
-describe('User Router', () => {
-	describe('GET all users', () => {
+describe('Team Router', () => {
+	describe('GET all teams', () => {
 		it('should send the data of all users', (done) => {
 			let mockDB = sinon.mock(dbConn);
 
 			let expectation = mockDB.expects('query')
-			.withArgs("Select * From User")
+			.withArgs("Select * From Team")
 			.callsArgWith(1, null, [{
-				User_Id: 1,
-				Firstname: "Max",
-				Name: "Mustermann",
-				Email: "valid@email.com",
-				Password: "very_secure_password"
+				Team_Id: 1,
+				Teamname: "Musterteam",
+				Teammanager: 1
 			},{
-				User_Id: 2,
-				Firstname: "Max2",
-				Name: "Mustermann2",
-				Email: "valid2@email.com",
-				Password: "very_secure_password2"
+				Team_Id: 2,
+				Teamname: "Musterteam2",
+				Teammanager: 3
 			}]);
 
 			request(app)
-				.get('/user')
+				.get('/team')
 				.set('Accept', 'application/json')
 				.set('x-access-token', validToken)
 				.expect(200)
@@ -51,15 +47,13 @@ describe('User Router', () => {
 
 					assert.isFalse(res.forbidden);
 					assert.deepEqual(res.body, [{
-						User_Id: 1,
-						Firstname: "Max",
-						Name: "Mustermann",
-						Email: "valid@email.com"
+						Team_Id: 1,
+						Teamname: "Musterteam",
+						Teammanager: 1
 					},{
-						User_Id: 2,
-						Firstname: "Max2",
-						Name: "Mustermann2",
-						Email: "valid2@email.com"
+						Team_Id: 2,
+						Teamname: "Musterteam2",
+						Teammanager: 3
 					}]);
 
 					done();
@@ -67,24 +61,22 @@ describe('User Router', () => {
 		});
 	});
 
-	describe('GET user by id', () => {
-		it('should send the data of one user when the id is valid', (done) => {
+	describe('GET team by id', () => {
+		it('should send the data of one team when the id is valid', (done) => {
 			let mockDB = sinon.mock(dbConn);
 
 			let expectation = mockDB.expects('query')
-			.withArgs("Select * from User where User_Id=?", ["5"])
+			.withArgs("Select * from Team where Team_Id=?", ["5"])
 			.callsArgWith(2, null, [{
-				User_Id: 5,
-				Firstname: "Max",
-				Name: "Mustermann",
-				Email: "valid@email.com",
-				Password: "very_secure_password"
+				Team_Id: 5,
+				Teamname: "Musterteam",
+				Teammanager: 8
 			}]);
 
 			request(app)
-				.get('/user/5')
+				.get('/team/5')
 				.set('Accept', 'application/json')
-				.set('X-Access-Token', validToken)
+				.set('x-access-token', validToken)
 				.expect(200)
 				.end((err, res) => {
 					mockDB.verify();
@@ -94,11 +86,9 @@ describe('User Router', () => {
 
 					assert.isFalse(res.forbidden);
 					assert.deepEqual(res.body, {
-						User_Id: 5,
-						Firstname: "Max",
-						Name: "Mustermann",
-						Email: "valid@email.com",
-						Password: "very_secure_password"
+						Team_Id: 5,
+						Teamname: "Musterteam",
+						Teammanager: 8
 					});
 
 					done();
@@ -109,13 +99,13 @@ describe('User Router', () => {
 			let mockDB = sinon.mock(dbConn);
 
 			let expectation = mockDB.expects('query')
-			.withArgs("Select * from User where User_Id=?", ["6"])
+			.withArgs("Select * from Team where Team_Id=?", ["5"])
 			.callsArgWith(2, null, []);
 
 			request(app)
-				.get('/user/6')
+				.get('/team/5')
 				.set('Accept', 'application/json')
-				.set('X-Access-Token', validToken)
+				.set('x-access-token', validToken)
 				.expect(404)
 				.end((err, res) => {
 					mockDB.verify();
@@ -130,12 +120,12 @@ describe('User Router', () => {
 		});
 	});
 
-	describe('POST new user', () => {
-		it('should create a new user', (done) => {
+	describe('POST a new team', () => {
+		it('should create a new team', (done) => {
 			let mockDB = sinon.mock(dbConn);
 
 			let expectation = mockDB.expects('query')
-			.withArgs("Insert into User values(?,?,?,?,?)", [undefined, "Peter", "Pan", "peter.pan@gmx.de", encryptPassword("very_secure_password")])
+			.withArgs("Insert into Team values(?,?,?)", [undefined, "Mustername", 1])
 			.callsArgWith(2, null, {
 				fieldCount: 0,
 				affectedRows: 1,
@@ -148,14 +138,11 @@ describe('User Router', () => {
 			});
 
 			request(app)
-				.post('/user')
+				.post('/team')
 				.set('Accept', 'application/json')
-				.set('X-Access-Token', validToken)
+				.set('x-access-token', validToken)
 				.send({
-					Firstname: "Peter",
-					Name: "Pan",
-					Email: "peter.pan@gmx.de",
-					Password: "very_secure_password"
+					Teamname: "Mustername"
 				})
 				.expect(201)
 				.end((err, res) => {
@@ -166,43 +153,40 @@ describe('User Router', () => {
 
 					assert.isFalse(res.forbidden);
 					assert.deepEqual(res.body, {
-						User_Id: 5,
-						Firstname: "Peter",
-						Name: "Pan",
-						Email: "peter.pan@gmx.de"
+						Team_Id: 5,
+						Teamname: "Mustername",
+						Teammanager: 1
 					});
 
 					done();
-			});
+				});
 		});
 	});
 
-	describe('PUT update user', () => {
-		it('should update an existing user', (done) => {
+	describe('PUT update team', () => {
+		it('should update a team when the id is valid', (done) => {
 			let mockDB = sinon.mock(dbConn);
 
 			let expectation = mockDB.expects('query')
-			.withArgs("Update User set Firstname=?, Name=?, Email=?, Password=? where User_Id=?", ["peter", "pan", "peter.pan@gmx.de", "peterpan", "5"])
+			.withArgs("Update Team set Teamname=?, Teammanager=? where Team_Id=?", ["Testname", 1, "5"])
 			.callsArgWith(2, null, {
-				"fieldCount": 0,
-				"affectedRows": 1,
-				"insertId": 0,
-				"serverStatus": 2,
-				"warningCount": 0,
-				"message": "(Rows matched: 1  Changed: 1  Warnings: 0",
-				"protocol41": true,
-				"changedRows": 1
+				fieldCount: 0,
+				affectedRows: 1,
+				insertId: 5,
+				serverStatus: 2,
+				warningCount: 0,
+				message: '',
+				protocol41: true,
+				changedRows: 1
 			});
 
 			request(app)
-				.put('/user/5')
+				.put('/team/5')
 				.set('Accept', 'application/json')
-				.set('X-Access-Token', validToken)
+				.set('x-access-token', validToken)
 				.send({
-					Firstname: "peter",
-					Name: "pan",
-					Email: "peter.pan@gmx.de",
-					Password: "peterpan"
+					Teamname: "Testname",
+					Teammanager: 1
 				})
 				.expect(200)
 				.end((err, res) => {
@@ -217,31 +201,29 @@ describe('User Router', () => {
 				});
 		});
 
-		it('should send "Not found" when user id is invalid', (done) => {
+		it('should send "Not found" when team id is invalid', (done) => {
 			let mockDB = sinon.mock(dbConn);
 
 			let expectation = mockDB.expects('query')
-			.withArgs("Update User set Firstname=?, Name=?, Email=?, Password=? where User_Id=?", ["peter", "pan", "peter.pan@gmx.de", "peterpan", "5"])
+			.withArgs("Update Team set Teamname=?, Teammanager=? where Team_Id=?", ["Testname", 1, "5"])
 			.callsArgWith(2, null, {
-				"fieldCount": 0,
-				"affectedRows": 0,
-				"insertId": 0,
-				"serverStatus": 2,
-				"warningCount": 0,
-				"message": "(Rows matched: 1  Changed: 1  Warnings: 0",
-				"protocol41": true,
-				"changedRows": 0
+				fieldCount: 0,
+				affectedRows: 0,
+				insertId: 0,
+				serverStatus: 2,
+				warningCount: 0,
+				message: "(Rows matched: 1  Changed: 1  Warnings: 0",
+				protocol41: true,
+				changedRows: 0
 			});
 
 			request(app)
-				.put('/user/5')
+				.put('/team/5')
 				.set('Accept', 'application/json')
 				.set('X-Access-Token', validToken)
 				.send({
-					Firstname: "peter",
-					Name: "pan",
-					Email: "peter.pan@gmx.de",
-					Password: "peterpan"
+					Teamname: "Testname",
+					Teammanager: 1
 				})
 				.expect(404)
 				.end((err, res) => {
@@ -257,25 +239,25 @@ describe('User Router', () => {
 		});
 	});
 
-	describe('DELETE user', () => {
-		it('should delete an existing user', (done) => {
+	describe('DELETE team', () => {
+		it('should delete an existing team', (done) => {
 			let mockDB = sinon.mock(dbConn);
 
 			let expectation = mockDB.expects('query')
-			.withArgs("Delete From User where User_Id=?", ["5"])
+			.withArgs("Delete From Team where Team_Id=?", ["5"])
 			.callsArgWith(2, null, {
-				"fieldCount": 0,
-				"affectedRows": 1,
-				"insertId": 0,
-				"serverStatus": 2,
-				"warningCount": 0,
-				"message": "(Rows matched: 1  Changed: 1  Warnings: 0",
-				"protocol41": true,
-				"changedRows": 1
+				fieldCount: 0,
+				affectedRows: 1,
+				insertId: 0,
+				serverStatus: 2,
+				warningCount: 0,
+				message: "(Rows matched: 1  Changed: 1  Warnings: 0",
+				protocol41: true,
+				changedRows: 1
 			});
 
 			request(app)
-				.delete('/user/5')
+				.delete('/team/5')
 				.set('Accept', 'application/json')
 				.set('X-Access-Token', validToken)
 				.expect(200)
@@ -296,20 +278,20 @@ describe('User Router', () => {
 			let mockDB = sinon.mock(dbConn);
 
 			let expectation = mockDB.expects('query')
-			.withArgs("Delete From User where User_Id=?", ["5"])
+			.withArgs("Delete From Team where Team_Id=?", ["5"])
 			.callsArgWith(2, null, {
-				"fieldCount": 0,
-				"affectedRows": 0,
-				"insertId": 0,
-				"serverStatus": 2,
-				"warningCount": 0,
-				"message": "(Rows matched: 0  Changed: 0  Warnings: 0",
-				"protocol41": true,
-				"changedRows": 0
+				fieldCount: 0,
+				affectedRows: 0,
+				insertId: 0,
+				serverStatus: 2,
+				warningCount: 0,
+				message: "(Rows matched: 0  Changed: 0  Warnings: 0",
+				protocol41: true,
+				changedRows: 0
 			});
 
 			request(app)
-				.delete('/user/5')
+				.delete('/team/5')
 				.set('Accept', 'application/json')
 				.set('X-Access-Token', validToken)
 				.expect(404)
