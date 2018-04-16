@@ -1,0 +1,38 @@
+.card {
+  width:70%;
+  height:auto;
+  border:1px solid;
+  -moz-box-shadow:    3px 3px 5px 6px #ccc;
+  -webkit-box-shadow: 3px 3px 5px 6px #ccc;
+  box-shadow:         3px 3px 5px 6px #ccc;
+}
+img {
+  width:100%;
+  height:300px;
+}
+.activity-host {
+  float:left;
+  margin-right:300px;
+}
+.activity-timestamp {
+  position: absolute;
+   right: 30%;
+}
+.activity-host, .activity-timestamp {
+  padding-top:30px;
+}
+
+.activity-date {
+  float:left;
+}
+.activity-time {
+  position: absolute;
+   right: 65%;
+}
+.activity-place {
+    position: absolute;
+     right: 30%;
+     clear:both;
+
+
+}
