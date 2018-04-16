@@ -22,9 +22,6 @@ export default class ListTeams extends React.Component {
     }
 
     SendTeamToDelete(Tid) {
-
-        console.log(Tid)
-        // TODO: senden an Server
         fetch(config.apiPath + "/team/" + Tid, {
             method: 'delete',
             headers: {
@@ -63,8 +60,7 @@ export default class ListTeams extends React.Component {
                 }
             }).then(resN => resN.json()).then(resN => {
                 let resNM = this.state.groups;
-                let theButton //SendTeamToDelete(Tid)
-                console.log(Tid)
+                let theButton
                 theButton = <button type="button" onClick={() => this.SendTeamToDelete.bind(this)(Tid)}>
                     Delete the Group
                 </button>
