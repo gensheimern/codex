@@ -9,7 +9,7 @@
     "client": "npm start --prefix frontend",
     "all": "concurrently \"npm start\" \"npm start --prefix frontend\" --kill-others",
     "prod": "npm run build --prefix frontend & npm start",
-    "test": "mocha",
+    "test": "mocha --exit",
     "test:coverage": "nyc mocha --timeout=3000",
     "testclient": "npm run test --prefix frontend",
     "testclient:coverage": "npm run test:coverage --prefix frontend"
