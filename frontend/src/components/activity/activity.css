@@ -33,6 +33,11 @@ img {
     position: absolute;
      right: 30%;
      clear:both;
-
-
+}
+.activity-joining {
+  width:100%;
+  padding-top:40px;
+}
+button {
+  width:33%;
 }

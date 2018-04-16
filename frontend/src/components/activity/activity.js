@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, CardImg, CardText, CardBody, CardLink,
-  CardTitle, CardSubtitle } from 'reactstrap';
+  CardTitle, CardSubtitle, CardImgOverlay  } from 'reactstrap';
 
 import config from "../../config.js";
 import "./activity.css";
@@ -27,7 +27,7 @@ export default class Activity extends React.Component {
   }
 
   loadData(id) {
-    fetch(config.apiPath + "/activity/" + 13, {
+    fetch(config.apiPath + "/activity/" + 14, {
       method: 'get',
       headers: {
         'Content-Type': 'application/json',
@@ -73,6 +73,7 @@ export default class Activity extends React.Component {
 
          </CardBody>
          <img src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
+            {this.state.description}
          <CardBody>
            <CardText>
             <div className="activity-date">
@@ -86,7 +87,7 @@ export default class Activity extends React.Component {
               </div>
            </CardText>
            <div className="activity-joining">
-            Already Joining ICOOOOON ICOOOON ICOOOOON
+            Already Joining ICOOOOON ICOOOON ICOOOOONAlready Joining ICOOOOON ICOOOON ICOOOOONAlready Joining ICOOOOON ICOOOON ICOOOOONAlready Joining ICOOOOON ICOOOON ICOOOOONAlready Joining ICOOOOON ICOOOON ICOOOOONAlready Joining ICOOOOON ICOOOON ICOOOOONAlready Joining ICOOOOON ICOOOON ICOOOOONAlready Joining ICOOOOON ICOOOON ICOOOOONAlready Joining ICOOOOON ICOOOON ICOOOOONAlready Joining ICOOOOON ICOOOON ICOOOOONAlready Joining ICOOOOON ICOOOON ICOOOOON
            </div>
            <div className="activity-buttons">
            <button> share </button> <button> comment </button> <button> join </button>
