@@ -43,7 +43,7 @@ router.post('/', function(req, res, next) {
 
             },
             'secret');
-          console.log(token);
+          //console.log(token);
           res.json({
             success: true,
             token: token
