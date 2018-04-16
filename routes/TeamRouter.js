@@ -41,7 +41,7 @@ router.post('/', function(req, res, next) {
 });
 
 
-router.delete('/id', function(req, res, next) {
+router.delete('/:id', function(req, res, next) {
 
   Team.deleteTeam(req.params.id, function(err, count) {
     if (err) {
