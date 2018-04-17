@@ -17,10 +17,17 @@ export default class ListTeams extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            groups: []
+            groups: [],
+            unseen: []
         };
     }
-
+    // componentDidUpdate(prevProps, prevState) {
+    //      only update chart if the data has changed
+    //     console.log('didpdate called');
+    //     if (prevProps.data !== this.props.data) {
+    //         this.listTeams = this.listTeams.load({data: this.props.data});
+    //     }
+    // }
     SendTeamToDelete(Tid) {
         fetch(config.apiPath + "/team/" + Tid, {
             method: 'delete',
@@ -29,20 +36,28 @@ export default class ListTeams extends React.Component {
                 'X-Access-Token': localStorage.getItem('apiToken')
             }
         }).then((resN) => {
-            if (!resN.ok) {
+            if(!resN.ok) {
                 throw new Error("Request failed.");
-            } else if (resN.status !== 200) {
+            } else if(resN.status !== 200) {
                 throw new Error("Forbidden");
             } else {
                 return resN;
             }
-        }).then(resN => resN.json()).then(resN => {});
+        }).then(resN => resN.json()).then(resN => {
+            console.log(resN);
+            this.setState({
+                unseen: resN
+            });
+            this.setState({
+                groups: this.groups
+            });
+        });
     }
 
     nameHostId() {
 
         let resN;
-        for (let i = 0; i < this.state.groups.length; i++) {
+        for(let i = 0; i < this.state.groups.length; i++) {
             let TMid = this.state.groups[i].Teammanager;
             let Tid = this.state.groups[i].Team_Id;
             fetch(config.apiPath + "/user/" + TMid, {
@@ -51,9 +66,9 @@ export default class ListTeams extends React.Component {
                     'X-Access-Token': localStorage.getItem('apiToken')
                 }
             }).then((resN) => {
-                if (!resN.ok) {
+                if(!resN.ok) {
                     throw new Error("Request failed.");
-                } else if (resN.status !== 200) {
+                } else if(resN.status !== 200) {
                     throw new Error("Forbidden");
                 } else {
                     return resN;
@@ -65,10 +80,12 @@ export default class ListTeams extends React.Component {
                     Delete the Group
                 </button>
                 resNM[i].button = theButton;
-                if (resN.length > 0) 
+                if(resN.length > 0)
                     resNM[i].Teammanager = resN[0].Firstname + " " + resN[0].Name;
-                
-                this.setState({groups: resNM});
+
+                this.setState({
+                    groups: resNM
+                });
 
                 // }).catch((err) => {
                 //     this.setState({groups: []});
@@ -87,47 +104,49 @@ export default class ListTeams extends React.Component {
                 'X-Access-Token': localStorage.getItem('apiToken')
             }
         }).then((res) => {
-            if (!res.ok) {
+            if(!res.ok) {
                 throw new Error("Request failed.");
-            } else if (res.status !== 200) {
+            } else if(res.status !== 200) {
                 throw new Error("Forbidden");
             } else {
                 return res;
             }
         }).then(res => res.json()).then(res => {
-            this.setState({groups: res});
+            this.setState({
+                groups: res
+            });
             this.nameHostId();
         }).catch((err) => {
-            this.setState({groups: []});
+            this.setState({
+                groups: []
+            });
         });
 
     }
     render() {
-        const columns = [
-            {
-                style: {},
-                classes: 'span-1',
-                dataField: 'Team_Id',
-                text: 'Team ID'
-                // headerStyle: {
-                //   backgroundColor: 'lightblue'
-            }, {
-                classes: 'span-2',
-                dataField: 'Teamname',
-                text: 'Team Name'
-            }, {
-                classes: 'span-2',
-                dataField: 'Teammanager',
-                text: 'Team Leiter'
-            }, {
-                classes: 'span-1',
-                dataField: 'button',
-                text: 'Eintrag löschen',
-                allign: 'center'
-            }
-        ];
+        const columns = [{
+            style: {},
+            classes: 'span-1',
+            dataField: 'Team_Id',
+            text: 'Team ID'
+            // headerStyle: {
+            //   backgroundColor: 'lightblue'
+        }, {
+            classes: 'span-2',
+            dataField: 'Teamname',
+            text: 'Team Name'
+        }, {
+            classes: 'span-2',
+            dataField: 'Teammanager',
+            text: 'Team Leiter'
+        }, {
+            classes: 'span-1',
+            dataField: 'button',
+            text: 'Eintrag löschen',
+            allign: 'center'
+        }];
 
-        return (<div className="listTeams">
+        return(<div className="listTeams">
             <div>
                 <BootstrapTable responsive="responsive" keyField='Team_Id' data={this.state.groups} columns={columns}/>
             </div>

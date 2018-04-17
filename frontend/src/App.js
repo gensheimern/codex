@@ -1,11 +1,16 @@
-import React, {Component} from 'react';
-import {BrowserRouter, Route, Link} from 'react-router-dom';
+import React, {
+    Component
+} from 'react';
+import {
+    BrowserRouter,
+    Route,
+    Link
+} from 'react-router-dom';
 
 // Components
 import './App.css';
 import Login from './components/login/Login';
-import CreateTeam from './components/groupmanager/CreateTeam';
-import ListTeams from './components/groupmanager/ListGroups';
+import Groupmanager from './components/groupmanager/Groupmanager';
 
 class App extends Component {
     constructor(props) {
@@ -15,12 +20,11 @@ class App extends Component {
     }
 
     render() {
-        return (<BrowserRouter>
+        return(<BrowserRouter>
             <React.Fragment>
                 <Route exact path="/" component={Login}/>
-                <Route exact path="/create_group" component={CreateTeam}/>
-                <Route exact path="/create_group" component={ListTeams}/>
-            </React.Fragment>
+                <Route exact path="/groupmanager" component={Groupmanager}/>
+            </ React.Fragment>
         </BrowserRouter>);
     }
 }
