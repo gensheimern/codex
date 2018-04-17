@@ -1,5 +1,13 @@
-import React, {Component} from "react";
-import {Button, FormGroup, FormControl, ControlLabel, Alert} from "react-bootstrap";
+import React, {
+    Component
+} from "react";
+import {
+    Button,
+    FormGroup,
+    FormControl,
+    ControlLabel,
+    Alert
+} from "react-bootstrap";
 import "./groupmanager.css";
 import logo from '../../IMG/codex_logo1x.png';
 import config from '../../config';
@@ -18,11 +26,14 @@ export default class CreateTeam extends React.Component {
             showError: false
         }
     }
+
     validateForm() {
         return this.state.name.length > 0;
     }
     inputName(e) {
-        this.setState({name: e.target.value});
+        this.setState({
+            name: e.target.value
+        });
 
         this.setState({
             showError: e.target.value === ""
@@ -36,10 +47,12 @@ export default class CreateTeam extends React.Component {
     handleClick(e) {
         e.preventDefault();
 
-        if (this.state.name !== "") {
+        if(this.state.name !== "") {
             fetch(config.apiPath + "/team", {
                 method: 'POST',
-                body: JSON.stringify({Teamname: this.state.name}),
+                body: JSON.stringify({
+                    Teamname: this.state.name
+                }),
                 headers: {
                     'Content-Type': 'application/json',
                     'X-Access-Token': localStorage.getItem('apiToken')
@@ -47,12 +60,14 @@ export default class CreateTeam extends React.Component {
             });
             console.log("Group '" + this.state.name + "' created.");
         } else {
-            this.setState({showError: true});
+            this.setState({
+                showError: true
+            });
         }
     }
 
     render() {
-        return (<div className="Login">
+        return(<div className="Login">
             <div><img src={logo} className="img-responsive center-block" style={{
                 width: "60%",
                 margin: "auto",
