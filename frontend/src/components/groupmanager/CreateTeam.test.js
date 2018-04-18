@@ -1,7 +1,6 @@
-import React from "react";
-import { mount } from "enzyme";
-import {shallow} from 'enzyme';
-import CreateTeam from "./CreateTeam";
+import React from 'react';
+import {shallow, mount} from 'enzyme';
+import CreateTeam from './CreateTeam';
 
 describe("CreateTeam", () => {
     let mountedCreateTeam;

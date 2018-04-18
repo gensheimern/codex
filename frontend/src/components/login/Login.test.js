@@ -1,6 +1,7 @@
 import React from 'react';
 import Login from './Login';
 import {shallow} from 'enzyme';
+import renderer from 'react-test-renderer';
 
 
 describe("Login component", () => {
@@ -8,14 +9,20 @@ describe("Login component", () => {
 		shallow(<Login />);
 	});
 
+	it('renders correctly', () => {
+		const tree = renderer.create(<Login />).toJSON();
+
+		expect(tree).toMatchSnapshot();
+	});
+
 	it('renders an email input field', () => {
 		const wrapper = shallow(<Login/>);
-		expect(wrapper.find("FormControl#emailInput").length).toBe(1);
+		expect(wrapper.find("FormControl#email").length).toBe(1);
 	});
 
 	it('renders an password input field', () => {
 		const wrapper = shallow(<Login/>);
-		expect(wrapper.find("FormControl#passwordInput").length).toBe(1);
+		expect(wrapper.find("FormControl#password").length).toBe(1);
 	});
 
 	it('renders an login button', () => {
