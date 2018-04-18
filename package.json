@@ -1,38 +1,45 @@
 {
-  "name": "backend",
-  "version": "0.0.0",
-  "private": true,
-  "scripts": {
-    "installclient": "cd frontend && npm install",
-    "start": "node server",
-    "server": "nodemon server.js",
-    "client": "npm start --prefix frontend",
-    "all": "concurrently \"npm start\" \"npm start --prefix frontend\" --kill-others",
-    "prod": "npm run build --prefix frontend & npm start",
-    "test": "mocha --exit",
+	"name": "lunch-planner-backend",
+	"version": "0.0.1",
+	"private": true,
+	"scripts": {
+		"installclient": "cd frontend && npm install",
+		"start": "node server",
+		"server": "nodemon server.js",
+		"client": "npm start --prefix frontend",
+		"all": "concurrently \"npm start\" \"npm start --prefix frontend\" --kill-others",
+		"prod": "npm run build --prefix frontend & npm start",
+		"test": "mocha --exit",
     "test:coverage": "nyc mocha --timeout=3000",
     "testclient": "npm run test --prefix frontend",
     "testclient:coverage": "npm run test:coverage --prefix frontend"
-  },
-  "dependencies": {
-    "body-parser": "^1.18.2",
-    "concurrently": "^3.5.1",
-    "cookie-parser": "~1.4.3",
-    "debug": "~2.6.9",
-    "ejs": "~2.5.7",
-    "express": "~4.16.0",
-    "http-errors": "~1.6.2",
-    "jsonwebtoken": "^8.2.1",
-    "morgan": "~1.9.0",
-    "mysql": "^2.15.0",
-    "nodemon": "^1.17.3",
-    "serve-static": "^1.13.2"
-  },
-  "devDependencies": {
-    "chai": "^4.1.2",
-    "mocha": "^5.1.0",
-    "nyc": "^11.6.0",
-    "sinon": "^4.5.0",
-    "supertest": "^3.0.0"
-  }
+	},
+	"engines": {
+		"node": ">=6.9.1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/gensheimern/codex.git"
+	},
+	"bugs": {
+		"url": "https://github.com/gensheimern/codex/issues"
+	},
+	"website": "https://github.com/gensheimern/codex#readme",
+	"keywords": [],
+	"author": "CODEX Team",
+	"license": "ISC",
+	"dependencies": {
+		"body-parser": "^1.18.2",
+		"concurrently": "^3.5.1",
+		"cookie-parser": "~1.4.3",
+		"debug": "~2.6.9",
+		"ejs": "~2.5.7",
+		"express": "~4.16.0",
+		"http-errors": "~1.6.2",
+		"jsonwebtoken": "^8.2.1",
+		"morgan": "~1.9.0",
+		"mysql": "^2.15.0",
+		"nodemon": "^1.17.3",
+		"serve-static": "^1.13.2"
+	}
 }
