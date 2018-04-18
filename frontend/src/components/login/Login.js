@@ -79,13 +79,13 @@ export default class Login extends Component {
 			<FormGroup controlId="errorprompt" bsSize="large">
 			  {this.state.errorPrompt}
 			</FormGroup>
-			<FormGroup controlId="emailInput" bsSize="large">
-			  <FormControl id="emailInput" placeholder="Email" autoFocus="autoFocus" type="text" value={this.state.email} onChange={this.handleChange}/>
+			<FormGroup controlId="email" bsSize="large">
+			  <FormControl id="email" placeholder="Email" autoFocus="autoFocus" type="text" value={this.state.email} onChange={this.handleChange}/>
 			</FormGroup>
-			<FormGroup controlId="passwordInput" bsSize="large">
+			<FormGroup controlId="password" bsSize="large">
 			  <FormControl style={{
 				  marginBottom: "11%"
-				}} id="passwordInput" placeholder="Password" value={this.state.password} onChange={this.handleChange} type="password"/>
+				}} id="password" placeholder="Password" value={this.state.password} onChange={this.handleChange} type="password"/>
 			</FormGroup>
 			<Button id="loginBtn" bsStyle="primary" block bsSize="large" disabled={!this.validateForm()} type="submit">
 			  Login
