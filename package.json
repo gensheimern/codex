@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "installclient": "cd frontend && npm install",
-    "start": "npm run server",
+    "start": "node server",
     "server": "nodemon server.js",
     "client": "npm start --prefix frontend",
     "all": "concurrently \"npm start\" \"npm start --prefix frontend\" --kill-others",
