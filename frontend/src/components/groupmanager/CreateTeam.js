@@ -85,22 +85,16 @@ export default class CreateTeam extends React.Component {
                     this.handleClick
                 } >
                 <FormGroup controlId="errorprompt" bsSize="large">
-                {this.errorPrompt}
-            </FormGroup> <
-                FormGroup controlId = "name"
-                bsSize = "large" >
-                <ControlLabel>
-                </ControlLabel> <FormControl placeholder = "Gruppenname"
-                type = "text"
-                value = {
-                    this.state.name
-                }
-                onChange = {
-                    this.handleChange
-                }
-                /></FormGroup >
+                    {this.errorPrompt}
+                </FormGroup>
+                <FormGroup controlId="name" bsSize="large">
+                    <ControlLabel></ControlLabel>
+                    <FormControl placeholder="Gruppenname" type="text" value={this.state.name} onChange={this.handleChange}/>
+                </FormGroup>
                 <Button bsStyle="primary" block={true} bsSize="large" disabled={!this.validateForm()} type="submit">
-                erstelle Gruppe
-            </Button > </form> </div>);
-            }
-        }
+                    erstelle Gruppe
+                </Button>
+            </form>
+        </div>);
+    }
+}
