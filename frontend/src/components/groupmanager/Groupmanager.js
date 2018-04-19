@@ -1,5 +1,5 @@
 import React from "react";
-import {} from "react-bootstrap";
+import {Button, Glyphicon} from "react-bootstrap";
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import "./groupmanager.css";
 import CreateTeam from './CreateTeam.js'
@@ -63,11 +63,11 @@ export default class Groupmanager extends React.Component {
                         }).then(resN => resN.json()).then(resN => {
                                 let resNM = this.state.groups;
                                 let theButton
-                                theButton = <button type = "button"
+                                theButton = <Button bsStyle="danger"
                 onClick = {
                         () => this.SendTeamToDelete.bind(this)(Tid)
                     } >
-                    Delete the Group </button>
+                    <Glyphicon glyph="trash" /> </Button>
                 resNM[i].button = theButton;
                 if(resN.length > 0)
                     resNM[i].Teammanager = resN[0].Firstname + " " + resN[0].Name;

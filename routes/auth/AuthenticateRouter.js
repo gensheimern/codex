@@ -1,7 +1,8 @@
-var express = require('express');
-var router = express.Router();
-var User = require('../../models/UserModel');
+const express = require('express');
+const router = express.Router();
+const User = require('../../models/UserModel');
 const jwt = require('jsonwebtoken');
+const encryptPassword = require('./CryptPassword');
 
 /*
 API to signup users and also to authenticate them. In the authenticate API
@@ -16,7 +17,7 @@ router.post('/', function(req, res, next) {
 		else {
 			// If the user doesnt exits, it will send status code 403 and the
 			// json to the client
-			if (!rows[0] || rows[0].Password != req.body.Password) { //If the password doesn't match, it sends status code 403
+			if (!rows[0] || rows[0].Password != encryptPassword(req.body.Password)) { //If the password doesn't match, it sends status code 403
 				res.status(403).json({
 					success: false,
 					message: "Invalid user credentials"

@@ -9,6 +9,7 @@ import {
 // Components
 import './App.css';
 import Login from './components/login/Login';
+import Logout from './components/login/Logout';
 import Signup from './components/signup/Signup';
 import Groupmanager from './components/groupmanager/Groupmanager';
 
@@ -25,6 +26,7 @@ class App extends Component {
                 <Route exact path="/" component={Login}/>
                 <Route exact path="/groupmanager" component={Groupmanager}/>
                 <Route exact path="/signup" component={Signup}/>
+                <Route exact path="/logout" component={Logout}/>
             </React.Fragment>
         </BrowserRouter>);
     }
