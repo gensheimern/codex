@@ -68,7 +68,7 @@ export default class ListTeams extends React.Component {
             text: 'Team Name'
         }, {
             classes: 'span-2',
-            dataField: 'Teammanager',
+            dataField: 'TMName',
             text: 'Team Leiter'
         }, {
             classes: 'span-1',

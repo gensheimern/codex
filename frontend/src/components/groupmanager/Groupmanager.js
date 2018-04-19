@@ -34,7 +34,13 @@ export default class Groupmanager extends React.Component {
             this.setState({
                 groups: res
             });
-            this.createGroupdeleteButtons();
+            let resNM = this.state.groups;
+            for(let i = 0; i < this.state.groups.length; i++) {
+                let TMNameR;
+                TMNameR = this.state.groups[i].Firstname + " " + this.state.groups[i].Name;
+                resNM[i].TMName = TMNameR;
+            }
+            this.createGroupDeleteButtons();
         }).catch((err) => {
             this.setState({
                 groups: []
@@ -42,7 +48,7 @@ export default class Groupmanager extends React.Component {
         });
 
     }
-    createGroupdeleteButtons() {
+    createGroupDeleteButtons() {
         for(let i = 0; i < this.state.groups.length; i++) {
             let TMid = this.state.groups[i].Teammanager;
             let Tid = this.state.groups[i].Team_Id;
