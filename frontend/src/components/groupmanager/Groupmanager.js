@@ -42,9 +42,8 @@ export default class Groupmanager extends React.Component {
             });
 
         }
-        nameHostId() {
 
-                let resN;
+        nameHostId() {
                 for(let i = 0; i < this.state.groups.length; i++) {
                     let TMid = this.state.groups[i].Teammanager;
                     let Tid = this.state.groups[i].Team_Id;
@@ -68,8 +67,7 @@ export default class Groupmanager extends React.Component {
                 onClick = {
                         () => this.SendTeamToDelete.bind(this)(Tid)
                     } >
-                    Delete the Group <
-                    /button>
+                    Delete the Group </button>
                 resNM[i].button = theButton;
                 if(resN.length > 0)
                     resNM[i].Teammanager = resN[0].Firstname + " " + resN[0].Name;
@@ -86,7 +84,7 @@ export default class Groupmanager extends React.Component {
     }
     SendTeamToDelete(Tid) {
         fetch(config.apiPath + "/team/" + Tid, {
-            method: 'delete',
+            method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
                 'X-Access-Token': localStorage.getItem('apiToken')
@@ -99,7 +97,8 @@ export default class Groupmanager extends React.Component {
             } else {
                 return resN;
             }
-        }).then(resN => resN.json()).then(resN => {
+        })
+        .then(() => {
             this.loadContent();
         });
     }

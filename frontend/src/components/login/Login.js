@@ -65,7 +65,7 @@ export default class Login extends Component {
             this.props.history.push("/groupmanager");
         }).catch((err) => {
             this.setState({
-                errorPrompt: (<Alert bsStyle = "warning"> <strong> Holy guacamole ! < /strong>
+                errorPrompt: (<Alert bsStyle = "warning"> <strong> Holy guacamole ! </strong>
                   Best check yo self, youre not looking too good. </Alert>)
             });
         });
@@ -82,7 +82,7 @@ export default class Login extends Component {
                 marginBottom: "20%"
             }
         }
-        alt = ""/> < /div> <form onSubmit = {
+        alt = ""/> </div> <form onSubmit = {
                   this.handleSubmit
                 }>
                 <FormGroup controlId = "errorprompt"
@@ -99,7 +99,7 @@ export default class Login extends Component {
                 }/>
               </FormGroup> <FormGroup controlId = "password"
                 bsSize = "large">
-                <ControlLabel > < /ControlLabel > <FormControl style = {
+                <ControlLabel > </ControlLabel > <FormControl style = {
             {
                 marginBottom: "11%"
             }
@@ -112,7 +112,7 @@ export default class Login extends Component {
         }
         type = "password"/> </FormGroup> <
                 Button bsStyle = "primary"
-                block = "block"
+                block = {true}
                 bsSize = "large"
                 disabled = {!this.validateForm()
                 }

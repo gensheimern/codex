@@ -33,7 +33,8 @@ export default class ListTeams extends React.Component {
                     'Content-Type': 'application/json',
                     'X-Access-Token': localStorage.getItem('apiToken')
                 }
-            }).then((resN) => {
+            })
+            .then((resN) => {
                 if(!resN.ok) {
                     throw new Error("Request failed.");
                 } else if(resN.status !== 200) {
@@ -41,8 +42,10 @@ export default class ListTeams extends React.Component {
                 } else {
                     return resN;
                 }
-            }).then(resN => resN.json()).then(resN => {
-                this.props.update;
+            })
+            .then(resN => resN.json())
+            .then(resN => {
+                this.props.update();
             });
         }
 
@@ -83,7 +86,6 @@ export default class ListTeams extends React.Component {
         columns = {
           columns
         }
-        /> </div > <
-        /div>);
+        /> </div > </div>);
       }
     }

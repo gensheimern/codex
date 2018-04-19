@@ -1,12 +1,9 @@
-import React, {
-    Component
-} from "react";
+import React from "react";
 import {
     Button,
     FormGroup,
     FormControl,
-    ControlLabel,
-    Alert
+    ControlLabel
 } from "react-bootstrap";
 import "./groupmanager.css";
 import logo from '../../IMG/codex_logo1x.png';
@@ -29,7 +26,7 @@ export default class CreateTeam extends React.Component {
         }
         componentDidUpdate(prevProps, prevState) {
             // only update chart if the data has changed
-            console.log('didpdate called');
+            //console.log('didpdate called');
             if(prevProps.data !== this.props.data) {
                 this.chart = this.listTeams.load({
                     data: this.props.data
@@ -104,8 +101,6 @@ export default class CreateTeam extends React.Component {
                 /></FormGroup >
                 <Button bsStyle="primary" block={true} bsSize="large" disabled={!this.validateForm()} type="submit">
                 erstelle Gruppe
-            </Button > <
-                /form> <
-                /div>);
+            </Button > </form> </div>);
             }
         }
