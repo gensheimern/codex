@@ -6,28 +6,28 @@ import config from '../../config';
 import BootstrapTable from 'react-bootstrap-table-next';
 
 export default class ListTeams extends React.Component {
-        constructor(props) {
-            super(props);
-            this.state = {
-                groups: [],
-                unseen: []
-            };
+    constructor(props) {
+        super(props);
+        this.state = {
+            groups: [],
+            unseen: []
+        };
 
-            this.SendTeamToDelete = this.SendTeamToDelete.bind(this);
+        this.SendTeamToDelete = this.SendTeamToDelete.bind(this);
 
-            this.componentDidMount = this.componentDidMount.bind(this);
+        this.componentDidMount = this.componentDidMount.bind(this);
 
-        }
+    }
 
-        // componentDidUpdate(prevProps, prevState) {
-        //      only update chart if the data has changed
-        //     console.log('didpdate called');
-        //     if (prevProps.data !== this.props.data) {
-        //         this.listTeams = this.listTeams.load({data: this.props.data});
-        //     }
-        // }
-        SendTeamToDelete(Tid) {
-            fetch(config.apiPath + "/team/" + Tid, {
+    // componentDidUpdate(prevProps, prevState) {
+    //      only update chart if the data has changed
+    //     console.log('didpdate called');
+    //     if (prevProps.data !== this.props.data) {
+    //         this.listTeams = this.listTeams.load({data: this.props.data});
+    //     }
+    // }
+    SendTeamToDelete(Tid) {
+        fetch(config.apiPath + "/team/" + Tid, {
                 method: 'delete',
                 headers: {
                     'Content-Type': 'application/json',
@@ -47,36 +47,37 @@ export default class ListTeams extends React.Component {
             .then(resN => {
                 this.props.update();
             });
-        }
+    }
 
-        componentDidMount() {
-            this.props.update();
-        }
+    componentDidMount() {
+        this.props.update();
+    }
 
-        render() {
-                const columns = [{
-                    style: {},
-                    classes: 'span-1',
-                    dataField: 'Team_Id',
-                    text: 'Team ID'
-                    // headerStyle: {
-                    //   backgroundColor: 'lightblue'
-                }, {
-                    classes: 'span-2',
-                    dataField: 'Teamname',
-                    text: 'Team Name'
-                }, {
-                    classes: 'span-2',
-                    dataField: 'Teammanager',
-                    text: 'Team Leiter'
-                }, {
-                    classes: 'span-1',
-                    dataField: 'button',
-                    text: 'Eintrag löschen',
-                    allign: 'center'
-                }];
+    render() {
+        console.log(this.props.teams);
+        const columns = [{
+            style: {},
+            classes: 'span-1',
+            dataField: 'Team_Id',
+            text: 'Team ID'
+            // headerStyle: {
+            //   backgroundColor: 'lightblue'
+        }, {
+            classes: 'span-2',
+            dataField: 'Teamname',
+            text: 'Team Name'
+        }, {
+            classes: 'span-2',
+            dataField: 'Teammanager',
+            text: 'Team Leiter'
+        }, {
+            classes: 'span-1',
+            dataField: 'button',
+            text: 'Eintrag löschen',
+            allign: 'center'
+        }];
 
-                return(<div className = "listTeams">
+        return(<div className = "listTeams">
         <div>
         <BootstrapTable responsive = "responsive"
         keyField = 'Team_Id'
@@ -87,5 +88,5 @@ export default class ListTeams extends React.Component {
           columns
         }
         /> </div > </div>);
-      }
     }
+}
