@@ -82,17 +82,13 @@ export default class Login extends Component {
                 marginBottom: "20%"
             }
         }
-        alt = "" / > < /div> <
-                form onSubmit = {
+        alt = ""/> < /div> <form onSubmit = {
                   this.handleSubmit
-                } >
-                <
-                FormGroup controlId = "errorprompt"
+                }>
+                <FormGroup controlId = "errorprompt"
                 bsSize = "large" > {
                   this.state.errorPrompt
-                } <
-                /FormGroup > <FormGroup controlId = "email" bsSize = "large" > <ControlLabel > < /ControlLabel> <
-                FormControl placeholder = "Email"
+                } </FormGroup > <FormGroup controlId = "email" bsSize = "large" > <ControlLabel > </ControlLabel> <FormControl placeholder = "Email"
                 autoFocus = "autoFocus"
                 type = "text"
                 value = {
@@ -100,12 +96,10 @@ export default class Login extends Component {
                 }
                 onChange = {
                   this.handleChange
-                }
-                / > < /FormGroup> <
-                FormGroup controlId = "password"
-                bsSize = "large" >
-                <
-                ControlLabel > < /ControlLabel > <FormControl style = {
+                }/>
+              </FormGroup> <FormGroup controlId = "password"
+                bsSize = "large">
+                <ControlLabel > < /ControlLabel > <FormControl style = {
             {
                 marginBottom: "11%"
             }
@@ -116,15 +110,13 @@ export default class Login extends Component {
         onChange = {
             this.handleChange
         }
-        type = "password" / > < /FormGroup> <
+        type = "password"/> </FormGroup> <
                 Button bsStyle = "primary"
                 block = "block"
                 bsSize = "large"
                 disabled = {!this.validateForm()
                 }
                 type = "submit" >
-                Login <
-                /Button > < /form> <
-                /div >);
+                Login </Button > </form> </div>);
     }
 }
