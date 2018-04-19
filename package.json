@@ -4,12 +4,15 @@
 	"private": true,
 	"scripts": {
 		"installclient": "cd frontend && npm install",
-		"start": "npm run server",
+		"start": "nodemon server",
 		"server": "nodemon server.js",
 		"client": "npm start --prefix frontend",
 		"all": "concurrently \"npm start\" \"npm start --prefix frontend\" --kill-others",
 		"prod": "npm run build --prefix frontend & npm start",
-		"test": "echo Not implemented."
+		"test": "mocha --exit",
+		"test:coverage": "nyc mocha --timeout=3000",
+		"testclient": "npm run test --prefix frontend",
+		"testclient:coverage": "npm run test:coverage --prefix frontend"
 	},
 	"engines": {
 		"node": ">=6.9.1"
@@ -37,7 +40,13 @@
 		"morgan": "~1.9.0",
 		"mysql": "^2.15.0",
 		"nodemon": "^1.17.3",
-		"npm": "^5.8.0",
 		"serve-static": "^1.13.2"
+	},
+	"devDependencies": {
+		"chai": "^4.1.2",
+		"mocha": "^5.1.1",
+		"nyc": "^11.7.1",
+		"sinon": "^4.5.0",
+		"supertest": "^3.0.0"
 	}
 }
