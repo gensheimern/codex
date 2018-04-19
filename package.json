@@ -10,9 +10,9 @@
 		"all": "concurrently \"npm start\" \"npm start --prefix frontend\" --kill-others",
 		"prod": "npm run build --prefix frontend & npm start",
 		"test": "mocha --exit",
-    "test:coverage": "nyc mocha --timeout=3000",
-    "testclient": "npm run test --prefix frontend",
-    "testclient:coverage": "npm run test:coverage --prefix frontend"
+		"test:coverage": "nyc mocha --timeout=3000",
+		"testclient": "npm run test --prefix frontend",
+		"testclient:coverage": "npm run test:coverage --prefix frontend"
 	},
 	"engines": {
 		"node": ">=6.9.1"
@@ -41,5 +41,11 @@
 		"mysql": "^2.15.0",
 		"nodemon": "^1.17.3",
 		"serve-static": "^1.13.2"
+	},
+	"devDependencies": {
+		"chai": "^4.1.2",
+		"mocha": "^5.1.1",
+		"sinon": "^4.5.0",
+		"supertest": "^3.0.0"
 	}
 }
