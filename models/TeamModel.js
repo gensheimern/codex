@@ -7,7 +7,7 @@ var Team = {
   },
 
   getTeamById: function(id, callback) {
-    return databaseConnection.query("Select * from Team where Team_Id=?", [id], callback);
+    return databaseConnection.query("SELECT User.Firstname, User.Name, Team.Team_Id, Team.Teamname FROM Team INNER JOIN User ON User.User_Id = Team.Teammanager WHERE Team_Id=?", [id], callback);
   },
 
   addTeam: function(team, userid, callback) {

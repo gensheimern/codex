@@ -5,7 +5,12 @@ import {
     Button,
     FormGroup,
     FormControl,
+<<<<<<< HEAD
     ControlLabel
+=======
+    ControlLabel,
+    Alert
+>>>>>>> development
 } from "react-bootstrap";
 import "./groupmanager.css";
 import logo from '../../IMG/codex_logo1x.png';
@@ -26,6 +31,7 @@ export default class CreateTeam extends React.Component {
                 showError: false
             }
         }
+<<<<<<< HEAD
         componentDidUpdate(prevProps, prevState) {
             // only update chart if the data has changed
             console.log('didpdate called');
@@ -46,6 +52,46 @@ export default class CreateTeam extends React.Component {
             this.setState({
                 showError: e.target.value === ""
             });
+=======
+    }
+
+    validateForm() {
+        return this.state.name.length > 0;
+    }
+    inputName(e) {
+        this.setState({
+            name: e.target.value
+        });
+
+        this.setState({
+            showError: e.target.value === ""
+        });
+    }
+    handleChange = event => {
+        this.setState({
+            [event.target.id]: event.target.value
+        });
+    }
+    handleClick(e) {
+        e.preventDefault();
+
+        if(this.state.name !== "") {
+            fetch(config.apiPath + "/team", {
+                method: 'POST',
+                body: JSON.stringify({
+                    Teamname: this.state.name
+                }),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Access-Token': localStorage.getItem('apiToken')
+                }
+            });
+            console.log("Group '" + this.state.name + "' created.");
+        } else {
+            this.setState({
+                showError: true
+            });
+>>>>>>> development
         }
         handleChange = event => {
             this.setState({
@@ -76,6 +122,7 @@ export default class CreateTeam extends React.Component {
             }
         }
 
+<<<<<<< HEAD
         render() {
                 return(<div className = "CreateTeam"> <div>
             <img src={logo} className="img-responsive center-block" style={{
@@ -86,6 +133,16 @@ export default class CreateTeam extends React.Component {
                 form onSubmit = {
                     this.handleClick
                 } >
+=======
+    render() {
+        return(<div className="Login">
+            <div><img src={logo} className="img-responsive center-block" style={{
+                width: "60%",
+                margin: "auto",
+                marginBottom: "0%"
+            }} alt=""/></div>
+            <form onSubmit={this.handleClick}>
+>>>>>>> development
                 <FormGroup controlId="errorprompt" bsSize="large">
                 {this.errorPrompt}
             </FormGroup> <
