@@ -11,6 +11,7 @@ const activity = require('./routes/ActivityRouter');
 const subscribed = require('./routes/subscribedRouter');
 const participates = require('./routes/participatesRouter');
 const member_of = require('./routes/member_ofRouter');
+const mail = require('./mailservice/mailservice');
 
 const jwt = require('jsonwebtoken');
 const authenticate = require('./routes/auth/AuthenticateRouter');
@@ -27,6 +28,7 @@ app.use('/activity', verifyToken, activity);
 app.use('/subscribed', verifyToken, subscribed);
 app.use('/participates', verifyToken, participates);
 app.use('/memberof', verifyToken, member_of);
+app.use('/mail', verifyToken, mail);
 
 app.use('/authenticate', authenticate);
 
