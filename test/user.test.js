@@ -1,30 +1,18 @@
 const chai = require('chai');
-const assert = chai.assert;
-const request = require('supertest');
+const expect = chai.expect;
 const sinon = require('sinon');
-const jwt = require('jsonwebtoken');
+const TestTools = require('./TestTools');
+
+const userController = require('../routes/UserController');
+const userModel = require('../models/UserModel');
 const encryptPassword = require('../routes/auth/CryptPassword');
 
-const dbConn = require('../DatabaseConnection');
-const app = require('../app');
-
-const validToken = jwt.sign({
-	User_Id: 1,
-	Firstname: "Peter",
-	Name: "Pan",
-	Email: "peter.pan@gmx.de",
-	iat: Math.floor(Date.now() / 1000),
-	exp: Math.floor(Date.now() / 1000) + (60 * 60)
-}, 'secret');
-
-describe('User Router', () => {
+describe('User controller', () => {
 	describe('GET all users', () => {
-		it('should send the data of all users', (done) => {
-			let mockDB = sinon.mock(dbConn);
-
-			let expectation = mockDB.expects('query')
-			.withArgs("Select * From User")
-			.callsArgWith(1, null, [{
+		it('should send the data of all users', () => {
+			// Mock user model
+			let mockModel = TestTools.mockModel(userModel, 'getAllUser', null,
+			[{
 				User_Id: 1,
 				Firstname: "Max",
 				Name: "Mustermann",
@@ -38,42 +26,41 @@ describe('User Router', () => {
 				Password: "very_secure_password2"
 			}]);
 
-			request(app)
-				.get('/user')
-				.set('Accept', 'application/json')
-				.set('x-access-token', validToken)
-				.expect(200)
-				.end((err, res) => {
-					mockDB.verify();
-					mockDB.restore();
+			// Mock http request and response
+			let req = TestTools.mockRequest({
+				method: 'GET',
+				baseUrl: '/user'
+			});
+			let res = TestTools.mockResponse();
 
-					if(err) assert.fail();
+			// Call test method
+			userController.getAllUsers(req, res);
 
-					assert.isFalse(res.forbidden);
-					assert.deepEqual(res.body, [{
-						User_Id: 1,
-						Firstname: "Max",
-						Name: "Mustermann",
-						Email: "valid@email.com"
-					},{
-						User_Id: 2,
-						Firstname: "Max2",
-						Name: "Mustermann2",
-						Email: "valid2@email.com"
-					}]);
+			// Check result with expected values
+			userModel.getAllUser.restore();
 
-					done();
-				});
+			expect(res._isEndCalled(), 'End called').to.be.true;
+			expect(res._getStatusCode(), 'Right status code').to.equal(200);
+			expect(res._isJSON(), 'JSON response').to.be.true;
+			expect(res._isUTF8(), 'UTF-8 encoding').to.be.true;
+			expect(JSON.parse(res._getData()), 'Correct response body').to.deep.equal([{
+				User_Id: 1,
+				Firstname: "Max",
+				Name: "Mustermann",
+				Email: "valid@email.com"
+			},{
+				User_Id: 2,
+				Firstname: "Max2",
+				Name: "Mustermann2",
+				Email: "valid2@email.com"
+			}]);
 		});
 	});
 
-	describe('GET user by id', () => {
-		it('should send the data of one user when the id is valid', (done) => {
-			let mockDB = sinon.mock(dbConn);
-
-			let expectation = mockDB.expects('query')
-			.withArgs("Select * from User where User_Id=?", ["5"])
-			.callsArgWith(2, null, [{
+	describe('GET one user by id', () => {
+		it('should send the data of one users when the id is valid', () => {
+			// Mock user model
+			let mockModel = TestTools.mockModel(userModel, 'getUserById', null, [{
 				User_Id: 5,
 				Firstname: "Max",
 				Name: "Mustermann",
@@ -81,62 +68,93 @@ describe('User Router', () => {
 				Password: "very_secure_password"
 			}]);
 
-			request(app)
-				.get('/user/5')
-				.set('Accept', 'application/json')
-				.set('X-Access-Token', validToken)
-				.expect(200)
-				.end((err, res) => {
-					mockDB.verify();
-					mockDB.restore();
+			// Mock http request and response
+			let req = TestTools.mockRequest({
+				method: 'GET',
+				baseUrl: '/user',
+				params: {
+					id: '5'
+				}
+			});
+			let res = TestTools.mockResponse();
 
-					if(err) assert.fail();
+			// Call test method
+			userController.getUserById(req, res);
 
-					assert.isFalse(res.forbidden);
-					assert.deepEqual(res.body, {
-						User_Id: 5,
-						Firstname: "Max",
-						Name: "Mustermann",
-						Email: "valid@email.com",
-						Password: "very_secure_password"
-					});
+			// Check result with expected values
+			mockModel.restore();
 
-					done();
-				});
+			expect(res._isEndCalled(), 'End called').to.be.true;
+			expect(res._getStatusCode(), 'Right status code').to.equal(200);
+			expect(res._isJSON(), 'JSON response').to.be.true;
+			expect(res._isUTF8(), 'UTF-8 encoding').to.be.true;
+			expect(JSON.parse(res._getData()), 'Correct response body').to.deep.equal({
+				User_Id: 5,
+				Firstname: "Max",
+				Name: "Mustermann",
+				Email: "valid@email.com"
+			});
 		});
 
-		it('should send "Not found" when the id is invalid', (done) => {
-			let mockDB = sinon.mock(dbConn);
+		it('should send "not found" when the id is invalid', () => {
+			// Mock model
+			let mockModel = TestTools.mockModel(userModel, 'getUserById', null, []);
 
-			let expectation = mockDB.expects('query')
-			.withArgs("Select * from User where User_Id=?", ["6"])
-			.callsArgWith(2, null, []);
+			// Mock http request and response
+			let req = TestTools.mockRequest({
+				method: 'GET',
+				baseUrl: '/user',
+				params: {
+					id: '5'
+				}
+			});
+			let res = TestTools.mockResponse();
 
-			request(app)
-				.get('/user/6')
-				.set('Accept', 'application/json')
-				.set('X-Access-Token', validToken)
-				.expect(404)
-				.end((err, res) => {
-					mockDB.verify();
-					mockDB.restore();
+			// Call test method
+			userController.getUserById(req, res);
 
-					if(err) assert.fail();
+			// Check result with expected values
+			mockModel.restore();
 
-					assert.isFalse(res.forbidden);
+			expect(res._isEndCalled(), 'End called').to.be.true;
+			expect(res._getStatusCode(), 'Right status code').to.equal(404);
+			expect(res._isJSON(), 'JSON response').to.be.true;
+			expect(res._isUTF8(), 'UTF-8 encoding').to.be.true;
+			expect(JSON.parse(res._getData()), 'Correct response body').to.deep.equal({
+				message: "Invalid user id."
+			});
+		});
 
-					done();
-				});
+		it('should send "not found" when no id is passed', () => {
+			let mockModel = TestTools.mockModel(userModel, 'getUserById', null, []);
+
+			// Mock http request and response
+			let req = TestTools.mockRequest({
+				method: 'GET',
+				baseUrl: '/user',
+				params: {}
+			});
+			let res = TestTools.mockResponse();
+
+			// Call test method
+			userController.getUserById(req, res);
+
+			// Check result with expected values
+			mockModel.restore();
+
+			expect(res._isEndCalled(), 'End called').to.be.true;
+			expect(res._getStatusCode(), 'Right status code').to.equal(404);
+			expect(res._isJSON(), 'JSON response').to.be.true;
+			expect(res._isUTF8(), 'UTF-8 encoding').to.be.true;
+			expect(JSON.parse(res._getData()), 'Correct response body').to.deep.equal({
+				message: "Invalid user id."
+			});
 		});
 	});
 
-	describe('POST new user', () => {
-		it('should create a new user', (done) => {
-			let mockDB = sinon.mock(dbConn);
-
-			let expectation = mockDB.expects('query')
-			.withArgs("Insert into User values(?,?,?,?,?)", [undefined, "Peter", "Pan", "peter.pan@gmx.de", encryptPassword("very_secure_password")])
-			.callsArgWith(2, null, {
+	describe('POST a new user', () => {
+		it('should create a new user', () => {
+			let mockModel = TestTools.mockModel(userModel, 'addUser', null, {
 				fieldCount: 0,
 				affectedRows: 1,
 				insertId: 5,
@@ -147,182 +165,274 @@ describe('User Router', () => {
 				changedRows: 0
 			});
 
-			request(app)
-				.post('/user')
-				.set('Accept', 'application/json')
-				.set('X-Access-Token', validToken)
-				.send({
-					Firstname: "Peter",
-					Name: "Pan",
-					Email: "peter.pan@gmx.de",
+			// Mock http request and response
+			let req = TestTools.mockRequest({
+				method: 'POST',
+				baseUrl: '/user',
+				body: {
+					Firstname: "Max",
+					Name: "Mustermann",
+					Email: "valid@email.com",
 					Password: "very_secure_password"
-				})
-				.expect(201)
-				.end((err, res) => {
-					mockDB.verify();
-					mockDB.restore();
+				}
+			});
+			let res = TestTools.mockResponse();
 
-					if(err) assert.fail();
+			// Call test method
+			userController.addUser(req, res);
 
-					assert.isFalse(res.forbidden);
-					assert.deepEqual(res.body, {
-						User_Id: 5,
-						Firstname: "Peter",
-						Name: "Pan",
-						Email: "peter.pan@gmx.de"
-					});
+			// Check result with expected values
+			mockModel.restore();
 
-					done();
+			expect(res._isEndCalled(), 'End called').to.be.true;
+			expect(res._getStatusCode(), 'Right status code').to.equal(201);
+			expect(res._isJSON(), 'JSON response').to.be.true;
+			expect(res._isUTF8(), 'UTF-8 encoding').to.be.true;
+			expect(JSON.parse(res._getData()), 'Correct response body').to.deep.equal({
+				User_Id: 5
 			});
 		});
 	});
 
 	describe('PUT update user', () => {
-		it('should update an existing user', (done) => {
-			let mockDB = sinon.mock(dbConn);
-
-			let expectation = mockDB.expects('query')
-			.withArgs("Update User set Firstname=?, Name=?, Email=?, Password=? where User_Id=?", ["peter", "pan", "peter.pan@gmx.de", "peterpan", "5"])
-			.callsArgWith(2, null, {
-				"fieldCount": 0,
-				"affectedRows": 1,
-				"insertId": 0,
-				"serverStatus": 2,
-				"warningCount": 0,
-				"message": "(Rows matched: 1  Changed: 1  Warnings: 0",
-				"protocol41": true,
-				"changedRows": 1
+		it('should update an existing user', () => {
+			let mockModel = TestTools.mockModel(userModel, 'updateUser', null, {
+				fieldCount: 0,
+				affectedRows: 1,
+				insertId: 5,
+				serverStatus: 2,
+				warningCount: 0,
+				message: '',
+				protocol41: true,
+				changedRows: 1
 			});
 
-			request(app)
-				.put('/user/5')
-				.set('Accept', 'application/json')
-				.set('X-Access-Token', validToken)
-				.send({
-					Firstname: "peter",
-					Name: "pan",
-					Email: "peter.pan@gmx.de",
-					Password: "peterpan"
-				})
-				.expect(200)
-				.end((err, res) => {
-					mockDB.verify();
-					mockDB.restore();
+			// Mock http request and response
+			let req = TestTools.mockRequest({
+				method: 'PUT',
+				baseUrl: '/user',
+				params: {
+					id: '5'
+				},
+				body: {
+					Firstname: "Maxneu",
+					Name: "Mustermannneu",
+					Email: "neue@email.com",
+					Password: "very_new_password"
+				}
+			});
+			let res = TestTools.mockResponse();
 
-					if(err) assert.fail();
+			// Call test method
+			userController.updateUser(req, res);
 
-					assert.isFalse(res.forbidden);
+			// Check result with expected values
+			mockModel.restore();
 
-					done();
-				});
+			expect(res._isEndCalled(), 'End called').to.be.true;
+			expect(res._getStatusCode(), 'Right status code').to.equal(200);
+			expect(res._isJSON(), 'JSON response').to.be.true;
+			expect(res._isUTF8(), 'UTF-8 encoding').to.be.true;
+			expect(JSON.parse(res._getData()), 'Correct response body').to.deep.equal({
+				success: true,
+				message: "User updated."
+			});
 		});
-
-		it('should send "Not found" when user id is invalid', (done) => {
-			let mockDB = sinon.mock(dbConn);
-
-			let expectation = mockDB.expects('query')
-			.withArgs("Update User set Firstname=?, Name=?, Email=?, Password=? where User_Id=?", ["peter", "pan", "peter.pan@gmx.de", "peterpan", "5"])
-			.callsArgWith(2, null, {
-				"fieldCount": 0,
-				"affectedRows": 0,
-				"insertId": 0,
-				"serverStatus": 2,
-				"warningCount": 0,
-				"message": "(Rows matched: 1  Changed: 1  Warnings: 0",
-				"protocol41": true,
-				"changedRows": 0
+		
+		it('should send "Not found" when user id is invalid', () => {
+			let mockModel = TestTools.mockModel(userModel, 'updateUser', null, {
+				fieldCount: 0,
+				affectedRows: 0,
+				serverStatus: 2,
+				warningCount: 0,
+				message: '',
+				protocol41: true,
+				changedRows: 0
 			});
 
-			request(app)
-				.put('/user/5')
-				.set('Accept', 'application/json')
-				.set('X-Access-Token', validToken)
-				.send({
-					Firstname: "peter",
-					Name: "pan",
-					Email: "peter.pan@gmx.de",
-					Password: "peterpan"
-				})
-				.expect(404)
-				.end((err, res) => {
-					mockDB.verify();
-					mockDB.restore();
+			// Mock http request and response
+			let req = TestTools.mockRequest({
+				method: 'PUT',
+				baseUrl: '/user',
+				params: {
+					id: '5'
+				},
+				body: {
+					Firstname: "Maxneu",
+					Name: "Mustermannneu",
+					Email: "neue@email.com",
+					Password: "very_new_password"
+				}
+			});
+			let res = TestTools.mockResponse();
 
-					if(err) assert.fail();
+			// Call test method
+			userController.updateUser(req, res);
 
-					assert.isFalse(res.forbidden);
+			// Check result with expected values
+			mockModel.restore();
 
-					done();
-				});
+			expect(res._isEndCalled(), 'End called').to.be.true;
+			expect(res._getStatusCode(), 'Right status code').to.equal(404);
+			expect(res._isJSON(), 'JSON response').to.be.true;
+			expect(res._isUTF8(), 'UTF-8 encoding').to.be.true;
+			expect(JSON.parse(res._getData()), 'Correct response body').to.deep.equal({
+				success: false,
+				message: "Invalid user id."
+			});
+		});
+		
+		it('should send "Not found" when no id is passed', () => {
+			let mockModel = TestTools.mockModel(userModel, 'updateUser', null, {
+				fieldCount: 0,
+				affectedRows: 0,
+				serverStatus: 2,
+				warningCount: 0,
+				message: '',
+				protocol41: true,
+				changedRows: 0
+			});
+
+			// Mock http request and response
+			let req = TestTools.mockRequest({
+				method: 'PUT',
+				baseUrl: '/user',
+				body: {
+					Firstname: "Maxneu",
+					Name: "Mustermannneu",
+					Email: "neue@email.com",
+					Password: "very_new_password"
+				}
+			});
+			let res = TestTools.mockResponse();
+
+			// Call test method
+			userController.updateUser(req, res);
+
+			// Check result with expected values
+			mockModel.restore();
+
+			expect(res._isEndCalled(), 'End called').to.be.true;
+			expect(res._getStatusCode(), 'Right status code').to.equal(404);
+			expect(res._isJSON(), 'JSON response').to.be.true;
+			expect(res._isUTF8(), 'UTF-8 encoding').to.be.true;
+			expect(JSON.parse(res._getData()), 'Correct response body').to.deep.equal({
+				success: false,
+				message: "Invalid user id."
+			});
 		});
 	});
 
 	describe('DELETE user', () => {
-		it('should delete an existing user', (done) => {
-			let mockDB = sinon.mock(dbConn);
-
-			let expectation = mockDB.expects('query')
-			.withArgs("Delete From User where User_Id=?", ["5"])
-			.callsArgWith(2, null, {
-				"fieldCount": 0,
-				"affectedRows": 1,
-				"insertId": 0,
-				"serverStatus": 2,
-				"warningCount": 0,
-				"message": "(Rows matched: 1  Changed: 1  Warnings: 0",
-				"protocol41": true,
-				"changedRows": 1
+		it('should delete an existing user', () => {
+			let mockModel = TestTools.mockModel(userModel, 'deleteUser', null, {
+				fieldCount: 0,
+				affectedRows: 1,
+				insertId: 5,
+				serverStatus: 2,
+				warningCount: 0,
+				message: '',
+				protocol41: true,
+				changedRows: 1
 			});
 
-			request(app)
-				.delete('/user/5')
-				.set('Accept', 'application/json')
-				.set('X-Access-Token', validToken)
-				.expect(200)
-				.end((err, res) => {
-					mockDB.verify();
-					mockDB.restore();
+			// Mock http request and response
+			let req = TestTools.mockRequest({
+				method: 'DELETE',
+				baseUrl: '/user',
+				params: {
+					id: '5'
+				}
+			});
+			let res = TestTools.mockResponse();
 
-					if(err) assert.fail();
+			// Call test method
+			userController.deleteUser(req, res);
 
-					assert.isFalse(res.forbidden);
-					assert.deepEqual(res.body, {});
+			// Check result with expected values
+			mockModel.restore();
 
-					done();
-				});
+			expect(res._isEndCalled(), 'End called').to.be.true;
+			expect(res._getStatusCode(), 'Right status code').to.equal(200);
+			expect(res._isJSON(), 'JSON response').to.be.true;
+			expect(res._isUTF8(), 'UTF-8 encoding').to.be.true;
+			expect(JSON.parse(res._getData()), 'Correct response body').to.deep.equal({
+				success: true,
+				message: "User deleted."
+			});
 		});
 
-		it('should send "Not found" when user id is invalid', (done) => {
-			let mockDB = sinon.mock(dbConn);
-
-			let expectation = mockDB.expects('query')
-			.withArgs("Delete From User where User_Id=?", ["5"])
-			.callsArgWith(2, null, {
-				"fieldCount": 0,
-				"affectedRows": 0,
-				"insertId": 0,
-				"serverStatus": 2,
-				"warningCount": 0,
-				"message": "(Rows matched: 0  Changed: 0  Warnings: 0",
-				"protocol41": true,
-				"changedRows": 0
+		it('should send "Not found" when user id is invalid', () => {
+			let mockModel = TestTools.mockModel(userModel, 'deleteUser', null, {
+				fieldCount: 0,
+				affectedRows: 0,
+				insertId: 5,
+				serverStatus: 2,
+				warningCount: 0,
+				message: '',
+				protocol41: true,
+				changedRows: 0
 			});
 
-			request(app)
-				.delete('/user/5')
-				.set('Accept', 'application/json')
-				.set('X-Access-Token', validToken)
-				.expect(404)
-				.end((err, res) => {
-					mockDB.verify();
-					mockDB.restore();
+			// Mock http request and response
+			let req = TestTools.mockRequest({
+				method: 'DELETE',
+				baseUrl: '/user',
+				params: {
+					id: '5'
+				}
+			});
+			let res = TestTools.mockResponse();
 
-					if(err) assert.fail();
+			// Call test method
+			userController.deleteUser(req, res);
 
-					assert.isFalse(res.forbidden);
+			// Check result with expected values
+			mockModel.restore();
 
-					done();
-				});
+			expect(res._isEndCalled(), 'End called').to.be.true;
+			expect(res._getStatusCode(), 'Right status code').to.equal(404);
+			expect(res._isJSON(), 'JSON response').to.be.true;
+			expect(res._isUTF8(), 'UTF-8 encoding').to.be.true;
+			expect(JSON.parse(res._getData()), 'Correct response body').to.deep.equal({
+				success: false,
+				message: "Invalid user id."
+			});
+		});
+
+		it('should send "Not found" when no id is passed', () => {
+			let mockModel = TestTools.mockModel(userModel, 'deleteUser', null, {
+				fieldCount: 0,
+				affectedRows: 0,
+				insertId: 5,
+				serverStatus: 2,
+				warningCount: 0,
+				message: '',
+				protocol41: true,
+				changedRows: 0
+			});
+
+			// Mock http request and response
+			let req = TestTools.mockRequest({
+				method: 'DELETE',
+				baseUrl: '/user'
+			});
+			let res = TestTools.mockResponse();
+
+			// Call test method
+			userController.deleteUser(req, res);
+
+			// Check result with expected values
+			mockModel.restore();
+
+			expect(res._isEndCalled(), 'End called').to.be.true;
+			expect(res._getStatusCode(), 'Right status code').to.equal(404);
+			expect(res._isJSON(), 'JSON response').to.be.true;
+			expect(res._isUTF8(), 'UTF-8 encoding').to.be.true;
+			expect(JSON.parse(res._getData()), 'Correct response body').to.deep.equal({
+				success: false,
+				message: "Invalid user id."
+			});
 		});
 	});
 });

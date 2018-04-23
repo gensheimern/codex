@@ -8,8 +8,9 @@
 		"server": "nodemon server.js",
 		"client": "npm start --prefix frontend",
 		"all": "concurrently \"npm start\" \"npm start --prefix frontend\" --kill-others",
+		"build": "npm run build --prefix frontend",
 		"prod": "npm run build --prefix frontend & npm start",
-		"test": "mocha --exit",
+		"test": "mocha",
 		"test:coverage": "nyc mocha --timeout=3000",
 		"testclient": "npm run test --prefix frontend",
 		"testclient:coverage": "npm run test:coverage --prefix frontend"
@@ -29,6 +30,7 @@
 	"author": "CODEX Team",
 	"license": "ISC",
 	"dependencies": {
+		"bcrypt-nodejs": "0.0.3",
 		"body-parser": "^1.18.2",
 		"concurrently": "^3.5.1",
 		"cookie-parser": "~1.4.3",
@@ -46,6 +48,7 @@
 	"devDependencies": {
 		"chai": "^4.1.2",
 		"mocha": "^5.1.1",
+		"node-mocks-http": "^1.5.8",
 		"nyc": "^11.7.1",
 		"sinon": "^4.5.0",
 		"supertest": "^3.0.0"

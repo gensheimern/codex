@@ -1,8 +1,8 @@
-const databaseConnection = require('../DatabaseConnection')
+const databaseConnection = require('./DatabaseConnection')
 
-var Activity = {
+const Activity = {
 
-  getAllActivitys: function(callback) {
+  getAllActivities: function(callback) {
     return databaseConnection.query("Select * From Activity", callback);
   },
 
