@@ -1,104 +1,108 @@
 const chai = require('chai');
-const assert = chai.assert;
-const request = require('supertest');
+const expect = chai.expect;
 const sinon = require('sinon');
+const TestTools = require('./TestTools');
+const userModel = require('../models/UserModel');
 
-const dbConn = require('../DatabaseConnection');
-const app = require('../app');
+const authController = require('../routes/auth/AuthenticateController');
 
-describe('Test user authorization', () => {
-	it('should deny access with invalid username', (done) => {
-		let mockDB = sinon.mock(dbConn);
+describe('User authorization', () => {
+	it('should grant access with valid credentails', () => {
+		let mockModel = TestTools.mockModel(userModel, 'getUserByEmail', null, [{
+			User_Id: 5,
+			Firstname: "Max",
+			Name: "Mustermann",
+			Email: "valid@email.com",
+			Password: "very_secure_password"
+		}]);
 
-		let expectation = mockDB.expects('query')
-			.withArgs("Select * from User where Email=?", ['invalid@email.com'])
-			.callsArgWith(2, null, []);
-
-		request(app)
-			.post('/authenticate')
-			.set('Accept', 'application/json')
-			.send({
-				"Email": "invalid@email.com",
-				"Password": "false"
-			})
-			.expect(403)
-			.end((err, res) => {
-				mockDB.verify();
-				mockDB.restore();
-
-				if(err) assert.fail();
-
-				assert.equal(res.body.success, false);
-				assert.isTrue(res.forbidden);
-
-				done();
-			});
-	});
-
-	it('should deny access with invalid password', (done) => {
-		let mockDB = sinon.mock(dbConn);
-
-		let expectation = mockDB.expects('query')
-			.withArgs("Select * from User where Email=?", ['valid@email.com'])
-			.callsArgWith(2, null, [{
-				Firstname: "Max",
-				Name: "Mustermann",
+		// Mock http request and response
+		let req = TestTools.mockRequest({
+			method: 'POST',
+			baseUrl: '/authenticate',
+			body: {
 				Email: "valid@email.com",
 				Password: "very_secure_password"
-			}]);
+			}
+		});
+		let res = TestTools.mockResponse();
 
-		request(app)
-			.post('/authenticate')
-			.set('Accept', 'application/json')
-			.send({
-				"Email": "valid@email.com",
-				"Password": "wrong_password"
-			})
-			.expect(403)
-			.end((err, res) => {
-				mockDB.verify();
-				mockDB.restore();
+		// Call test method
+		authController.authenticate(req, res);
 
-				if(err) assert.fail();
+		// Check result with expected values
+		mockModel.restore();
 
-				assert.equal(res.body.success, false);
-				assert.isTrue(res.forbidden);
-
-				done();
-			});
+		expect(res._isEndCalled(), 'End called').to.be.true;
+		expect(res._getStatusCode(), 'Right status code').to.equal(200);
+		expect(res._isJSON(), 'JSON response').to.be.true;
+		expect(res._isUTF8(), 'UTF-8 encoding').to.be.true;
+		expect(JSON.parse(res._getData()).success, 'Correct response success').to.be.true,
+		expect(JSON.parse(res._getData()).message, 'Correct response message').to.equal("Valid user credentials.");
+		expect(JSON.parse(res._getData()).token, 'Return authorization token').to.not.be.undefined;
 	});
 
-	it('should grant access with valid credentials', (done) => {
-		let mockDB = sinon.mock(dbConn);
+	it('should deny access with invalid username', () => {
+		let mockModel = TestTools.mockModel(userModel, 'getUserByEmail', null, []);
 
-		let expectation = mockDB.expects('query')
-			.withArgs("Select * from User where Email=?", ['valid@email.com'])
-			.callsArgWith(2, null, [{
-				Firstname: "Max",
-				Name: "Mustermann",
+		// Mock http request and response
+		let req = TestTools.mockRequest({
+			method: 'POST',
+			baseUrl: '/authenticate',
+			body: {
 				Email: "valid@email.com",
 				Password: "very_secure_password"
-			}]);
+			}
+		});
+		let res = TestTools.mockResponse();
 
-		request(app)
-			.post('/authenticate')
-			.set('Accept', 'application/json')
-			.send({
-				"Email": "valid@email.com",
-				"Password": "very_secure_password"
-			})
-			.expect(200)
-			.end((err, res) => {
-				mockDB.verify();
-				mockDB.restore();
+		// Call test method
+		authController.authenticate(req, res);
 
-				if(err) assert.fail();
-				
-				assert.equal(res.body.success, true);
-				assert.isString(res.body.token);
-				assert.isFalse(res.forbidden);
+		// Check result with expected values
+		mockModel.restore();
 
-				done();
-			});
+		expect(res._isEndCalled(), 'End called').to.be.true;
+		expect(res._getStatusCode(), 'Right status code').to.equal(403);
+		expect(res._isJSON(), 'JSON response').to.be.true;
+		expect(res._isUTF8(), 'UTF-8 encoding').to.be.true;
+		expect(JSON.parse(res._getData()).success, 'Correct response success').to.be.false,
+		expect(JSON.parse(res._getData()).message, 'Correct response message').to.equal("Invalid user credentials.");
+		expect(JSON.parse(res._getData()).token, 'Return authorization token').to.be.undefined;
+	});
+
+	it('should deny access with invalid username', () => {
+		let mockModel = TestTools.mockModel(userModel, 'getUserByEmail', null, [{
+			User_Id: 5,
+			Firstname: "Max",
+			Name: "Mustermann",
+			Email: "valid@email.com",
+			Password: "very_different_password"
+		}]);
+
+		// Mock http request and response
+		let req = TestTools.mockRequest({
+			method: 'POST',
+			baseUrl: '/authenticate',
+			body: {
+				Email: "valid@email.com",
+				Password: "very_secure_password"
+			}
+		});
+		let res = TestTools.mockResponse();
+
+		// Call test method
+		authController.authenticate(req, res);
+
+		// Check result with expected values
+		mockModel.restore();
+
+		expect(res._isEndCalled(), 'End called').to.be.true;
+		expect(res._getStatusCode(), 'Right status code').to.equal(403);
+		expect(res._isJSON(), 'JSON response').to.be.true;
+		expect(res._isUTF8(), 'UTF-8 encoding').to.be.true;
+		expect(JSON.parse(res._getData()).success, 'Correct response success').to.be.false,
+		expect(JSON.parse(res._getData()).message, 'Correct response message').to.equal("Invalid user credentials.");
+		expect(JSON.parse(res._getData()).token, 'Return authorization token').to.be.undefined;
 	});
 });
