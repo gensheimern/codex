@@ -6,7 +6,7 @@ import './App.css';
 import Login from './components/login/Login';
 import CreateTeam from './components/groupmanager/CreateTeam';
 import ListTeams from './components/groupmanager/ListGroups';
-import Activity from './components/activity/activity';
+import Activity from './components/activity/Activity';
 
 class App extends Component {
     constructor(props) {
@@ -26,7 +26,7 @@ class App extends Component {
         </BrowserRouter>);
     }
 
-    
+
 }
 
 export default App;

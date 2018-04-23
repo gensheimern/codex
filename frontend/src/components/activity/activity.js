@@ -4,30 +4,35 @@ import { Card, CardImg, CardText, CardBody, CardLink,
 
 import config from "../../config.js";
 import "./activity.css";
+import ActivityItem from "./ActivityItem";
 export default class Activity extends React.Component {
 
   constructor(props) {
     super(props);
+    this.state= {activitys:[]};
+/*
     this.state = {
-      id : "",
-      description:"",
-      activityname:"",
-      place:"",
-      day:"",
-      time:"",
-      eventtag:"",
-      host:""
+        activitys: [{
+        Activity_Id: "",
+        Activityname:"",
+        Description:"",
+        Eventtag:"",
+        Host:"",
+        Place:"",
+        Time:""
+        }
+      ]
     }
-    const id = props.id;
+    */
+};
+
+  componentDidMount() {
+    this.loadData();
+
   }
 
-  componentDidMount(props) {
-    this.loadData(props);
-
-  }
-
-  loadData(id) {
-    fetch(config.apiPath + "/activity/" + 14, {
+  loadData() {
+    fetch(config.apiPath + "/activity/", {
       method: 'get',
       headers: {
         'Content-Type': 'application/json',
@@ -43,58 +48,36 @@ export default class Activity extends React.Component {
         return resN;
       }
     }).then(resN => resN.json()).then(resN => {
+
+
       this.setState({
-        id: resN[0].Activity_Id,
-        description:resN[0].Description,
-        activityname:resN[0].Activityname,
-        place:resN[0].Place,
-        time:new Date(resN[0].Time).getHours()+ ":"+new Date(resN[0].Time).getMinutes(),
-        day:new Date(resN[0].Time).getDate()+"."+ new Date(resN[0].Time).getMonth()+ "."+ new Date(resN[0].Time).getFullYear(),
-        eventtag:resN[0].Eventtag,
-        host: resN[0].Host
+        activitys: resN
+
       });
+      console.log(resN);
     });
 
   }
 
   render() {
-    return (
-      <div>
-       <Card>
-         <CardBody>
-           <CardTitle>
-            <div className="activity-host">
-              {this.state.host}
-            </div>
-            <div className="activity-timestamp">
-              {this.state.time}
-            </div>
-          </CardTitle>
+    let Item;
+    if (this.state.activitys.length != 0){
+      Item = this.state.activitys.map(activity => {
+        console.log(activity);
 
-         </CardBody>
-         <img src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
-            {this.state.description}
-         <CardBody>
-           <CardText>
-            <div className="activity-date">
-                ICOOON {this.state.day}
-              </div>
-              <div className="activity-time">
-                ICOON {this.state.time}
-              </div>
-              <div className="activity-place">
-                ICOOOON {this.state.place}
-              </div>
-           </CardText>
-           <div className="activity-joining">
-            Already Joining ICOOOOON ICOOOON ICOOOOONAlready Joining ICOOOOON ICOOOON ICOOOOONAlready Joining ICOOOOON ICOOOON ICOOOOONAlready Joining ICOOOOON ICOOOON ICOOOOONAlready Joining ICOOOOON ICOOOON ICOOOOONAlready Joining ICOOOOON ICOOOON ICOOOOONAlready Joining ICOOOOON ICOOOON ICOOOOONAlready Joining ICOOOOON ICOOOON ICOOOOONAlready Joining ICOOOOON ICOOOON ICOOOOONAlready Joining ICOOOOON ICOOOON ICOOOOONAlready Joining ICOOOOON ICOOOON ICOOOOON
-           </div>
-           <div className="activity-buttons">
-           <button> share </button> <button> comment </button> <button> join </button>
-           </div>
-         </CardBody>
-       </Card>
-     </div>
+        return (
+          <ActivityItem key={activity.Activity_Id} activity={activity} />
+        );
+
+      });
+    }else {
+      Item = <p> loading.. </p>;
+}
+    return (
+      <div className="Feed">
+      {Item}
+      </div>
   );
+
 }
 }
