@@ -71,52 +71,29 @@ export default class Login extends Component {
         });
     }
 
-    render() {
-            return(<div className = "Login" > <div > <img src = {
-            logo
-        }
-        className = "img-responsive center-block" style = {
-            {
-                width: "45%",
-                margin: "auto",
-                marginBottom: "20%"
-            }
-        }
-        alt = ""/> </div> <form onSubmit = {
-                  this.handleSubmit
-                }>
-                <FormGroup controlId = "errorprompt"
-                bsSize = "large" > {
-                  this.state.errorPrompt
-                } </FormGroup > <FormGroup controlId = "email" bsSize = "large" > <ControlLabel > </ControlLabel> <FormControl placeholder = "Email"
-                autoFocus = "autoFocus"
-                type = "text"
-                value = {
-                  this.state.email
-                }
-                onChange = {
-                  this.handleChange
-                }/>
-              </FormGroup> <FormGroup controlId = "password"
-                bsSize = "large">
-                <ControlLabel > </ControlLabel > <FormControl style = {
-            {
-                marginBottom: "11%"
-            }
-        }
-        placeholder = "Password" value = {
-            this.state.password
-        }
-        onChange = {
-            this.handleChange
-        }
-        type = "password"/> </FormGroup> <
-                Button bsStyle = "primary"
-                block = {true}
-                bsSize = "large"
-                disabled = {!this.validateForm()
-                }
-                type = "submit" >
-                Login </Button > </form> </div>);
-    }
+	render() {
+		return (<div className="Login">
+		  <div><img src={logo} className="img-responsive center-block" style={{
+			width: "60%",
+			margin: "auto",
+			marginBottom: "20%"
+		  }}  alt=""/></div>
+		  <form onSubmit={this.handleSubmit}>
+			<FormGroup controlId="errorprompt" bsSize="large">
+			  {this.state.errorPrompt}
+			</FormGroup>
+			<FormGroup controlId="email" bsSize="large">
+			  <FormControl id="email" placeholder="Email" autoFocus="autoFocus" type="text" value={this.state.email} onChange={this.handleChange}/>
+			</FormGroup>
+			<FormGroup controlId="password" bsSize="large">
+			  <FormControl style={{
+				  marginBottom: "11%"
+				}} id="password" placeholder="Password" value={this.state.password} onChange={this.handleChange} type="password"/>
+			</FormGroup>
+			<Button id="loginBtn" bsStyle="primary" block bsSize="large" disabled={!this.validateForm()} type="submit">
+			  Login
+			</Button>
+		  </form>
+		</div>);
+	}
 }

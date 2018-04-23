@@ -1,9 +1,8 @@
 const databaseConnection = require('./DatabaseConnection');
 
 const Team = {
-
 	getAllTeam: function(callback) {
-		return databaseConnection.query("Select * From Team", callback);
+		return databaseConnection.query("SELECT User.Firstname, User.Name, Team.Team_Id, Team.Teamname FROM Team INNER JOIN User ON User.User_Id = Team.Teammanager", callback);
 	},
 
 	getTeamById: function(id, callback) {
