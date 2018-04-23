@@ -50,7 +50,7 @@ export default class Groupmanager extends React.Component {
     }
     createGroupDeleteButtons() {
         for(let i = 0; i < this.state.groups.length; i++) {
-            let TMid = this.state.groups[i].Teammanager;
+            //let TMid = this.state.groups[i].Teammanager;
             let Tid = this.state.groups[i].Team_Id;
             let resNM = this.state.groups;
             let theButton
