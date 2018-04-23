@@ -1,6 +1,7 @@
 import React from 'react';
 import Login from './Login';
 import {shallow} from 'enzyme';
+import renderer from 'react-test-renderer';
 
 
 describe("Login component", () => {
@@ -22,4 +23,4 @@ describe("Login component", () => {
 		const wrapper = shallow(<Login/>);
 		expect(wrapper.find("Button#loginBtn").length).toBe(1);
 	});
-})
+});
