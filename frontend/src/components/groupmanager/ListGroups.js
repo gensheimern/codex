@@ -57,7 +57,6 @@ export default class ListTeams extends React.Component {
     }
 
     render() {
-        console.log(this.props.teams);
         const columns = [{
             style: {},
             classes: 'span-1',

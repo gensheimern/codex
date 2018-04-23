@@ -76,12 +76,7 @@ export default class CreateTeam extends React.Component {
 
         render() {
                 return(<div className = "CreateTeam"> <div>
-            <img src={logo} className="img-responsive center-block" style={{
-                    width: "45%",
-                    margin: "auto",
-                    marginBottom: "0%"
-                }} alt=""/></div> <
-                form onSubmit = {
+                </div> <form onSubmit = {
                     this.handleClick
                 } >
                 <FormGroup controlId="errorprompt" bsSize="large">
