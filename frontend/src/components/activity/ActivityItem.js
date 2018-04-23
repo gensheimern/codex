@@ -1,23 +1,11 @@
 import React from "react";
-import { Card, CardImg, CardText, CardBody, CardLink,
-  CardTitle, CardSubtitle, CardImgOverlay  } from 'reactstrap';
+import { Card, CardText, CardBody, CardTitle} from 'reactstrap';
 
-import config from "../../config.js";
 import "./activity.css";
 export default class ActivityItem extends React.Component {
 
-  constructor(props) {
-    super(props);
-
-    }
-
-componentDidMount(){
-
-}
-
-
   render() {
-    console.log(this.props.activity.Host);
+    //console.log(this.props.activity.Host);
 
     return (
       <div>
@@ -30,7 +18,7 @@ componentDidMount(){
             </CardTitle>
 
          </CardBody>
-         <img src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
+         <img src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card cap" />
             {this.props.activity.Activityname}
          <CardBody>
            <CardText>
