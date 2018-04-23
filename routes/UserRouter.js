@@ -1,92 +1,17 @@
-var express = require('express');
-var router = express.Router();
-var User = require('../models/UserModel');
-
-router.get('/:id?', function(req, res, next) {
-
-	if (req.params.id) {
-		User.getUserById(req.params.id, function(err, rows) {
-			if (err) {
-				res.sendStatus(500);
-			} else {
-				if(rows.length === 0) {
-					res.sendStatus(404);
-				}
-				else {
-					res.json(rows[0]);
-				}
-			}
-		});
-	} else {
-		User.getAllUser(function(err, rows) {
-			if (err) {
-				res.sendStatus(500);
-			} else {
-				res.json(rows.map(elem => {
-					return {
-						User_Id: elem.User_Id,
-						Firstname: elem.Firstname,
-						Name: elem.Name,
-						Email: elem.Email
-					};
-				}));
-			}
-
-		});
-	}
-});
-
-router.post('/', function(req, res, next) {
-
-	User.addUser(req.body, function(err, count) {
-
-		//console.log(req.body);
-
-		if (err) {
-			res.sendStatus(500);
-		} else {
-			res.status(201).json({
-				User_Id: count.insertId,
-				Firstname: req.body.Firstname,
-    			Name: req.body.Name,
-				Email: req.body.Email,
-			});
-		}
-	});
-});
+const express = require('express');
+const router = express.Router();
+const UserController = require('./UserController')
 
 
-router.delete('/:id', function(req, res, next) {
+router.get('/', UserController.getAllUsers);
 
-	User.deleteUser(req.params.id, function(err, count) {
-		if (err) {
-			res.sendStatus(500);
-		} else {
-			if(count.affectedRows === 0) {
-				res.sendStatus(404);
-			}
-			else {
-				res.sendStatus(200);
-			}
-		}
-	});
-});
+router.get('/:id', UserController.getUserById);
 
-router.put('/:id', function(req, res, next) {
+router.post('/', UserController.addUser);
 
-	User.updateUser(req.params.id, req.body, function(err, rows) {
+router.delete('/:id', UserController.deleteUser);
 
-		if (err) {
-			res.sendStatus(500);
-		} else {
-			if(rows.affectedRows === 0) {
-				res.sendStatus(404);
-			}
-			else {
-				res.json(rows);
-			}
-		}
-	});
-});
+router.put('/:id', UserController.updateUser);
+
 
 module.exports = router;
