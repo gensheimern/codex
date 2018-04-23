@@ -9,12 +9,6 @@ describe("Login component", () => {
 		shallow(<Login />);
 	});
 
-	it('renders correctly', () => {
-		const tree = renderer.create(<Login />).toJSON();
-
-		expect(tree).toMatchSnapshot();
-	});
-
 	it('renders an email input field', () => {
 		const wrapper = shallow(<Login/>);
 		expect(wrapper.find("FormControl#email").length).toBe(1);
@@ -29,4 +23,4 @@ describe("Login component", () => {
 		const wrapper = shallow(<Login/>);
 		expect(wrapper.find("Button#loginBtn").length).toBe(1);
 	});
-})
+});
