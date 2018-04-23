@@ -1,5 +1,8 @@
 import React from "react";
-import {} from "react-bootstrap";
+import {
+    Button,
+    ButtonGroup
+} from "react-bootstrap";
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import "./groupmanager.css";
 import CreateTeam from './CreateTeam.js'
@@ -53,11 +56,25 @@ export default class Groupmanager extends React.Component {
             let TMid = this.state.groups[i].Teammanager;
             let Tid = this.state.groups[i].Team_Id;
             let resNM = this.state.groups;
-            let theButton
-            theButton = <button type = "button"
-                onClick = {() => this.SendTeamToDelete.bind(this)(Tid)}>
-                    Delete the Group </button>
-            resNM[i].button = theButton;
+
+            let theButtongroup
+            theButtongroup = <ButtonGroup>
+            <Button onClick = {
+                    () => this.SendTeamToDelete.bind(this)(Tid)
+                } >
+                Delete the Group </Button> <Button onClick = {
+                () => this.SendTeamToDelete.bind(this)(Tid)
+        } >
+        Create Activity </Button> <
+        Button onClick = {
+                () => this.SendTeamToDelete.bind(this)(Tid)
+            } >
+            Free Space </Button> </ButtonGroup >
+
+                + // <button type="button" onClick={() => this.SendTeamToDelete.bind(this)(Tid)}>
+                + //   Delete the Group
+                + // </button>
+                +resNM[i].buttongroup = theButtongroup;
 
             this.setState({
                 groups: resNM
