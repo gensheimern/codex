@@ -12,6 +12,8 @@ import Login from './components/login/Login';
 import Logout from './components/login/Logout';
 import Signup from './components/signup/Signup';
 import Groupmanager from './components/groupmanager/Groupmanager';
+import Activity from './components/activity/Activity';
+
 
 class App extends Component {
     constructor(props) {
@@ -27,9 +29,12 @@ class App extends Component {
                 <Route exact path="/groupmanager" component={Groupmanager}/>
                 <Route exact path="/signup" component={Signup}/>
                 <Route exact path="/logout" component={Logout}/>
+                <Route exact path="/activity" component={Activity}/>
             </React.Fragment>
         </BrowserRouter>);
     }
+
+
 }
 
 export default App;

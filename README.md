@@ -1,4 +1,4 @@
-# Lunch Planner
+# Lunch Planner [![Build Status](https://travis-ci.com/gensheimern/codex.svg?token=qsyWE426FpVSy3qKWwNg&branch=development)](https://travis-ci.com/gensheimern/codex)
 
 Lunch Planner is a simple and intuitive Web-App, made to simplify the process of making appointments for lunch.
 

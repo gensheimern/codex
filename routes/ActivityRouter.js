@@ -1,68 +1,17 @@
-var express = require('express');
-var router = express.Router();
-var jwt = require('jsonwebtoken');
-var Activity = require('../models/ActivityModel');
-
-router.get('/:id?', function(req, res, next) {
-
-  if (req.params.id) {
-    Activity.getActivityById(req.params.id, function(err, rows) {
-      if (err) {
-        res.json(err);
-      } else {
-        res.json(rows);
-      }
-    });
-  } else {
-    Activity.getAllActivitys(function(err, rows) {
-      if (err) {
-        res.json(err);
-      } else {
-        res.json(rows);
-      }
-
-    });
-  }
-});
-
-router.post('/', function(req, res, next) {
-
-  var token = req.headers['x-access-token'];
-  var decoded = jwt.decode(token, 'secret');
-
-  Activity.addActivity(req.body, decoded.User_Id, function(err, count) {
-
-    console.log(req.body);
-
-    if (err) {
-      res.json(err);
-    } else {
-      res.json(req.body);
-    }
-  });
-});
+const express = require('express');
+const router = express.Router();
+const ActivityController = require('./ActivityController');
 
 
-router.delete('/:id', function(req, res, next) {
+router.get('/', ActivityController.getAllActivities);
 
-  Activity.deleteActivity(req.params.id, function(err, count) {
-    if (err) {
-      res.json(err);
-    } else {
-      res.json(count);
-    }
-  });
-});
+router.get('/:id', ActivityController.getActivityById);
 
-router.put('/:id', function(req, res, next) {
+router.post('/', ActivityController.addActivity);
 
-  Activity.updateActivity(req.params.id, req.body, function(err, rows) {
+router.delete('/:id', ActivityController.deleteActivity);
 
-    if (err) {
-      res.json(err);
-    } else {
-      res.json(rows);
-    }
-  });
-});
+router.put('/:id', ActivityController.updateActivity);
+
+
 module.exports = router;

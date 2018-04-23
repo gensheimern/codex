@@ -1,13 +1,8 @@
 import React from "react";
-import config from '../../config';
 import {Modal, Button} from 'react-bootstrap';
 import {Link} from 'react-router-dom';
 
 export default class Login extends React.Component {
-
-    constructor(props) {
-		super(props);
-    }
 
     componentDidMount() {
 		if(typeof (Storage) !== "undefined") {

@@ -1,5 +1,5 @@
 import React from 'react';
-import {FormGroup, FormControl, Button, ControlLabel} from 'react-bootstrap';
+import {FormGroup, FormControl, Button} from 'react-bootstrap';
 import config from '../../config';
 
 import './signup.css';

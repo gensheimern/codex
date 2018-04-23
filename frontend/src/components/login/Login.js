@@ -5,7 +5,6 @@ import {
     Button,
     FormGroup,
     FormControl,
-    ControlLabel,
     Alert
 } from "react-bootstrap";
 import "./Login.css";
