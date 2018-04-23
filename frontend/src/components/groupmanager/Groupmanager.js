@@ -1,5 +1,4 @@
 import React from "react";
-import {} from "react-bootstrap";
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import "./groupmanager.css";
 import CreateTeam from './CreateTeam.js'
@@ -48,9 +47,9 @@ export default class Groupmanager extends React.Component {
         });
 
     }
+
     createGroupDeleteButtons() {
         for(let i = 0; i < this.state.groups.length; i++) {
-            //let TMid = this.state.groups[i].Teammanager;
             let Tid = this.state.groups[i].Team_Id;
             let resNM = this.state.groups;
             let theButton
@@ -65,6 +64,7 @@ export default class Groupmanager extends React.Component {
         }
 
     }
+
     SendTeamToDelete(Tid) {
         fetch(config.apiPath + "/team/" + Tid, {
                 method: 'DELETE',
@@ -85,7 +85,13 @@ export default class Groupmanager extends React.Component {
                 this.loadContent();
             });
     }
+
     render() {
-        return(<React.Fragment><CreateTeam update={this.loadContent}/><ListGroups update={this.loadContent} teams={this.state.groups}/></React.Fragment>)
+        return(
+            <React.Fragment>
+                <CreateTeam update={this.loadContent}/>
+                <ListGroups update={this.loadContent} teams={this.state.groups}/>
+            </React.Fragment>
+        );
     }
 }
