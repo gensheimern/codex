@@ -9,7 +9,9 @@ export default class Activity extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state= {activitys:[]};
+    this.state= {
+      activitys:[]
+    };
 /*
     this.state = {
         activitys: [{
@@ -27,11 +29,12 @@ export default class Activity extends React.Component {
 };
 
   componentDidMount() {
-    this.loadData();
+    this.loadActivityData();
 
   }
 
-  loadData() {
+
+  loadActivityData() {
     fetch(config.apiPath + "/activity/", {
       method: 'get',
       headers: {
@@ -54,7 +57,7 @@ export default class Activity extends React.Component {
         activitys: resN
 
       });
-      console.log(resN);
+
     });
 
   }
@@ -63,7 +66,7 @@ export default class Activity extends React.Component {
     let Item;
     if (this.state.activitys.length != 0){
       Item = this.state.activitys.map(activity => {
-        console.log(activity);
+      
 
         return (
           <ActivityItem key={activity.Activity_Id} activity={activity} />

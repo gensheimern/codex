@@ -10,33 +10,21 @@ img {
   width:100%;
   height:300px;
 }
-.activity-host {
-  float:left;
-  margin-right:300px;
-}
-.activity-timestamp {
-  position: absolute;
-   right: 30%;
-}
-.activity-host, .activity-timestamp {
-  padding-top:30px;
+.activity-group {
+  margin-left: auto;
+  margin-right: auto;
+  width: 90%;
 }
 
-.activity-date {
+.activity-date, .activity-time, .activity-meetingpoint {
   float:left;
+  padding-left:100px;
+  padding-right:100px;
 }
-.activity-time {
-  position: absolute;
-   right: 65%;
-}
-.activity-place {
-    position: absolute;
-     right: 30%;
-     clear:both;
-}
-.activity-joining {
-  width:100%;
-  padding-top:40px;
+
+.activity-alreadyjoining {
+  padding-top:20px;
+  clear:both;
 }
 button {
   width:33%;

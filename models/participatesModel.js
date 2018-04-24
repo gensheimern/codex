@@ -7,7 +7,7 @@ var Participates = {
   },
 
   getParticipatesById: function(id, callback) {
-    return databaseConnection.query("Select * from participates where Activity_Id=?", [id], callback);
+    return databaseConnection.query("SELECT * , User.IMG, User.Firstname, User.Name FROM participates inner join User on participates.User_Id = User.User_Id WHERE participates.Activity_Id=?", [id], callback);
   },
 
   addParticipates: function(participates, callback) {
