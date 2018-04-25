@@ -10,6 +10,7 @@ import {
 import './App.css';
 import Login from './components/login/Login';
 import Groupmanager from './components/groupmanager/Groupmanager';
+import Example from './components/MenuComponents/example';
 
 class App extends Component {
     constructor(props) {
@@ -23,6 +24,7 @@ class App extends Component {
             <React.Fragment>
                 <Route exact path="/" component={Login}/>
                 <Route exact path="/groupmanager" component={Groupmanager}/>
+                <Route exact path="/example" component={Example}/>
             </ React.Fragment>
         </BrowserRouter>);
     }
