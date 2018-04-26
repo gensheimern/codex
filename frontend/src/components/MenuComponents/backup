@@ -1,0 +1,2 @@
+{['open', 'docked', 'transitions', 'touch', 'shadow', 'pullRight'].map(this.renderPropCheckbox)}
+{['touchHandleWidth', 'dragToggleDistance'].map(this.renderPropNumber)}
