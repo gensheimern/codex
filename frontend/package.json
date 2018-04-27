@@ -23,14 +23,12 @@
     "react-dom": "^16.3.1",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.1.2",
-<<<<<<< HEAD
     "react-sidebar": "^2.3.2",
     "react-sidenav": "^2.1.2",
-    "react-test-renderer": "^16.3.1"
-=======
+    "react-test-renderer": "^16.3.1",
     "react-test-renderer": "^16.3.1",
     "reactstrap": "^5.0.0-beta.3"
->>>>>>> development
+
   },
   "proxy": "http://localhost:5000"
 }
