@@ -1,11 +1,10 @@
 import React from "react";
 import {
-    Button,Alert,Checkbox,
-    ButtonGroup,Popover,Tooltip,Modal,OverlayTrigger,Navbar,Nav,NavItem,MenuItem,NavDropdown,FormGroup,FormControl
+    Button,Alert,Checkbox
+  ,FormGroup,FormControl
 } from "react-bootstrap";
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import config from '../../config';
-import logo from '../../IMG/codex_logo1x.png';
 
 export default class CreateActivity extends React.Component {
   constructor(props) {

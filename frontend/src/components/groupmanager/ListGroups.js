@@ -1,7 +1,5 @@
 import React from "react";
 import {
-    Button,
-    ButtonGroup
 } from "react-bootstrap";
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import "./groupmanager.css";

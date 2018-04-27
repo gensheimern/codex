@@ -1,19 +1,14 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-
 import Sidebar from './Sidebar.js';
-import MaterialTitlePanel from './material_title_panel';
 import SidebarContent from './sidebar_content';
 import {
-    Button,Alert,Grid,Row,Col,
-    ButtonGroup,Popover,Tooltip,Modal,OverlayTrigger,Navbar,Nav,NavItem,MenuItem,NavDropdown,FormGroup,FormControl
+    Button,
+    ButtonGroup,Modal,Navbar,Nav,NavItem,MenuItem,NavDropdown
 } from "react-bootstrap";
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import CreateTeam from '../groupmanager/CreateTeam.js';
-import NavbarMenu from '../MenuComponents/NavbarMenu.js';
 import config from '../../config';
 import ListGroups from '../groupmanager/ListGroups.js'
-import Groupmanager from '../groupmanager/Groupmanager.js'
 import CreateActivity from '../activity/CreateActivity.js'
 
 const styles = {
@@ -97,7 +92,6 @@ fetch(config.apiPath + "/team", {
 }
 createGroupDeleteButtons() {
 for(let i = 0; i < this.state.groups.length; i++) {
-  let TMid = this.state.groups[i].Teammanager;
   let Tid = this.state.groups[i].Team_Id;
   let resNM = this.state.groups;
 
@@ -107,7 +101,7 @@ for(let i = 0; i < this.state.groups.length; i++) {
     onClick = {
           () => this.SendTeamToDelete.bind(this)(Tid)
       } >
-    <span class="glyphicon glyphicon-trash"></span> </Button> <Button onClick = {
+    <span className="glyphicon glyphicon-trash"></span> </Button> <Button onClick = {
       () => this.SendTeamToDelete.bind(this)(Tid)
   } >
   Free Space </Button> </ButtonGroup >
@@ -152,7 +146,7 @@ this.setState({ show: true });
 }
 
 handleSelect(eventKey) {
-if(eventKey == 2){
+if(eventKey === 2){
 this.handleShow();
 }
 }
@@ -193,14 +187,7 @@ this.handleShow();
   }
 
   render() {
-    const sidebar = <SidebarContent />;
-
-    const contentHeader = (
-      <span>
-        {!this.state.docked &&
-         <a onClick={this.menuButtonClick} href="#" style={styles.contentHeaderMenuLink}>=</a>}
-        <span> React Sidebar</span>
-      </span>);
+    const sidebar = <SidebarContent/>;
 
     const sidebarProps = {
       sidebar: sidebar,

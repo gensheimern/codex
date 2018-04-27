@@ -1,16 +1,13 @@
 import React from "react";
 import {
-    Button,Alert,Grid,Row,Col,
-    ButtonGroup,Popover,Tooltip,Modal,OverlayTrigger,Navbar,Nav,NavItem,MenuItem,NavDropdown,FormGroup,FormControl
+    Button,
+    ButtonGroup,Modal,Navbar,Nav,NavItem,MenuItem,NavDropdown
 } from "react-bootstrap";
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import "./groupmanager.css";
 import CreateTeam from './CreateTeam.js';
-import NavbarMenu from '../MenuComponents/NavbarMenu.js';
-import Sidebar from '../MenuComponents/Sidebar.js';
 import config from '../../config';
 import ListGroups from './ListGroups.js'
-import logo from '../../IMG/codex_logo1x.png';
 import CreateActivity from '../activity/CreateActivity.js'
 
 export default class Groupmanager extends React.Component {
@@ -69,7 +66,6 @@ export default class Groupmanager extends React.Component {
     }
     createGroupDeleteButtons() {
         for(let i = 0; i < this.state.groups.length; i++) {
-            let TMid = this.state.groups[i].Teammanager;
             let Tid = this.state.groups[i].Team_Id;
             let resNM = this.state.groups;
 
@@ -79,7 +75,7 @@ export default class Groupmanager extends React.Component {
               onClick = {
                     () => this.SendTeamToDelete.bind(this)(Tid)
                 } >
-              <span class="glyphicon glyphicon-trash"></span> </Button> <Button onClick = {
+              <span className="glyphicon glyphicon-trash"></span> </Button> <Button onClick = {
                 () => this.SendTeamToDelete.bind(this)(Tid)
             } >
             Free Space </Button> </ButtonGroup >
@@ -124,18 +120,12 @@ export default class Groupmanager extends React.Component {
   }
 
     handleSelect(eventKey) {
-  if(eventKey == 2){
+  if(eventKey === 2){
     this.handleShow();
   }
   }
 
     render() {
-      const popover = (
-  <Popover id="modal-popover" title="popover">
-    very popover. such engagement
-  </Popover>);
-    const tooltip = <Tooltip id="modal-tooltip">wow.</Tooltip>;
-
         return(  <React.Fragment>
               <Modal show={this.state.show} onHide={this.handleClose}>
                   <Modal.Header closeButton>

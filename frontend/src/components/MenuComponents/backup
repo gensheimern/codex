@@ -1,2 +1,15 @@
 {['open', 'docked', 'transitions', 'touch', 'shadow', 'pullRight'].map(this.renderPropCheckbox)}
 {['touchHandleWidth', 'dragToggleDistance'].map(this.renderPropNumber)}
+
+
+    const contentHeader = (
+      <span>
+        {!this.state.docked &&
+         <a onClick={this.menuButtonClick} href="#" style={styles.contentHeaderMenuLink}>=</a>}
+        <span> React Sidebar</span>
+      </span>);
+      const popover = (
+              <Popover id="modal-popover" title="popover">
+                very popover. such engagement
+              </Popover>);
+    const tooltip = <Tooltip id="modal-tooltip">wow.</Tooltip>;

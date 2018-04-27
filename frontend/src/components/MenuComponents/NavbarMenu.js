@@ -1,12 +1,10 @@
 import React from "react";
 import {
-    Button,Alert,
-    ButtonGroup,Popover,Tooltip,Modal,OverlayTrigger,Navbar,Nav,NavItem,MenuItem,NavDropdown,FormGroup,FormControl
+    Button,
+    Modal,Navbar,Nav,NavItem,MenuItem,NavDropdown
 } from "react-bootstrap";
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import CreateActivity from '../activity/CreateActivity.js'
-import config from '../../config';
-import logo from '../../IMG/codex_logo1x.png';
 
 export default class NavbarMenu extends React.Component {
 
@@ -28,17 +26,11 @@ this.setState({ show: true });
 }
 
   handleSelect(eventKey) {
-if(eventKey == 2){
+if(eventKey === 2){
   this.handleShow();
 }
 }
   render(){
-    const popover = (
-            <Popover id="modal-popover" title="popover">
-              very popover. such engagement
-            </Popover>);
-  const tooltip = <Tooltip id="modal-tooltip">wow.</Tooltip>;
-
       return(<React.Fragment>
               <Modal show={this.state.show} onHide={this.handleClose}>
                        <Modal.Header closeButton>

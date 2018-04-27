@@ -6,7 +6,6 @@ import {
     ControlLabel
 } from "react-bootstrap";
 import "./groupmanager.css";
-import logo from '../../IMG/codex_logo1x.png';
 import config from '../../config';
 import "./ListGroups.js";
 

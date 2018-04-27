@@ -1,5 +1,4 @@
 import React from 'react';
-import MaterialTitlePanel from './material_title_panel';
 import PropTypes from 'prop-types';
 
 const styles = {
@@ -26,13 +25,11 @@ const styles = {
 };
 
 const SidebarContent = (props) => {
-  const style = props.style ? {...styles.sidebar, ...props.style} : styles.sidebar;
-
   const links = [];
 
   for (let ind = 0; ind < 10; ind++) {
     links.push(
-      <a key={ind} href="#" style={styles.sidebarLink}>Mock menu item {ind}</a>);
+      <a key={ind} href="/groupmanager" style={styles.sidebarLink}>Mock menu item {ind}</a>);
   }
 
   return (
