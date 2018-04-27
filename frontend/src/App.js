@@ -15,7 +15,6 @@ import Logout from './components/login/Logout';
 import Signup from './components/signup/Signup';
 import Groupmanager from './components/groupmanager/Groupmanager';
 import Example from './components/MenuComponents/example';
-import Activity from './components/activity/Activity';
 
 
 class App extends Component {
