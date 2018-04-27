@@ -18,6 +18,31 @@ const validToken = jwt.sign({
 }, 'secret');
 
 describe('Team Router', () => {
+	describe('GET all teams', () => {
+		it('should send the data of all users', (done) => {
+
+
+					done();
+				});
+		});
+	});
+
+	describe('GET team by id', () => {
+		it('should send the data of one team when the id is valid', (done) => {
+
+
+					done();
+				});
+		});
+
+		it('should send "Not found" when the id is invalid', (done) => {
+
+
+					done();
+				});
+		});
+	});
+
 	describe('POST a new team', () => {
 		it('should create a new team', (done) => {
 			let mockDB = sinon.mock(dbConn);
