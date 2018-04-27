@@ -20,7 +20,41 @@ const validToken = jwt.sign({
 describe('Team Router', () => {
 	describe('GET all teams', () => {
 		it('should send the data of all users', (done) => {
+			let mockDB = sinon.mock(dbConn);
 
+			let expectation = mockDB.expects('query')
+			.withArgs("Select * From Team")
+			.callsArgWith(1, null, [{
+				Team_Id: 1,
+				Teamname: "Musterteam",
+				Teammanager: 1
+			},{
+				Team_Id: 2,
+				Teamname: "Musterteam2",
+				Teammanager: 3
+			}]);
+
+			request(app)
+				.get('/team')
+				.set('Accept', 'application/json')
+				.set('x-access-token', validToken)
+				.expect(200)
+				.end((err, res) => {
+					mockDB.verify();
+					mockDB.restore();
+
+					if(err) assert.fail();
+
+					assert.isFalse(res.forbidden);
+					assert.deepEqual(res.body, [{
+						Team_Id: 1,
+						Teamname: "Musterteam",
+						Teammanager: 1
+					},{
+						Team_Id: 2,
+						Teamname: "Musterteam2",
+						Teammanager: 3
+					}]);
 
 					done();
 				});
@@ -29,14 +63,57 @@ describe('Team Router', () => {
 
 	describe('GET team by id', () => {
 		it('should send the data of one team when the id is valid', (done) => {
+			let mockDB = sinon.mock(dbConn);
 
+			let expectation = mockDB.expects('query')
+			.withArgs("Select * from Team where Team_Id=?", ["5"])
+			.callsArgWith(2, null, [{
+				Team_Id: 5,
+				Teamname: "Musterteam",
+				Teammanager: 8
+			}]);
+
+			request(app)
+				.get('/team/5')
+				.set('Accept', 'application/json')
+				.set('x-access-token', validToken)
+				.expect(200)
+				.end((err, res) => {
+					mockDB.verify();
+					mockDB.restore();
+
+					if(err) assert.fail();
+
+					assert.isFalse(res.forbidden);
+					assert.deepEqual(res.body, {
+						Team_Id: 5,
+						Teamname: "Musterteam",
+						Teammanager: 8
+					});
 
 					done();
 				});
 		});
 
 		it('should send "Not found" when the id is invalid', (done) => {
+			let mockDB = sinon.mock(dbConn);
 
+			let expectation = mockDB.expects('query')
+			.withArgs("Select * from Team where Team_Id=?", ["5"])
+			.callsArgWith(2, null, []);
+
+			request(app)
+				.get('/team/5')
+				.set('Accept', 'application/json')
+				.set('x-access-token', validToken)
+				.expect(404)
+				.end((err, res) => {
+					mockDB.verify();
+					mockDB.restore();
+
+					if(err) assert.fail();
+
+					assert.isFalse(res.forbidden);
 
 					done();
 				});
