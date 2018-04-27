@@ -28,13 +28,8 @@
     "react-sidenav": "^2.1.2",
     "react-test-renderer": "^16.3.1",
     "react-test-renderer": "^16.3.1",
-<<<<<<< HEAD
-    "reactstrap": "^5.0.0-beta.3"
-
-=======
     "reactstrap": "^5.0.0-beta.3",
     "read-blob": "^1.1.0"
->>>>>>> development
   },
   "proxy": "http://localhost:5000",
   "devDependencies": {
