@@ -9,7 +9,6 @@ import {
 // Components
 import './App.css';
 import Login from './components/login/Login';
-import GroupManager from './components/groupmanager/Groupmanager';
 import Activity from './components/activity/Activity';
 import Logout from './components/login/Logout';
 import Signup from './components/signup/Signup';
