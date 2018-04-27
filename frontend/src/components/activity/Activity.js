@@ -49,7 +49,6 @@ export default class Activity extends React.Component {
 
   render() {
     let Item;
-
     if (this.state.activitys.length !== 0){
       Item = this.state.activitys.map(activity => {
 

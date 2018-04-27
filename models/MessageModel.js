@@ -1,6 +1,6 @@
-const databaseConnection = require('../DatabaseConnection')
+const databaseConnection = require('./DatabaseConnection')
 
-var Message = {
+const Message = {
 
   getAllMessages: function(callback) {
     return databaseConnection.query("Select * From Message", callback);

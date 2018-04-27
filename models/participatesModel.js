@@ -1,6 +1,6 @@
-const databaseConnection = require('../DatabaseConnection')
+const databaseConnection = require('./DatabaseConnection')
 
-var Participates = {
+const Participates = {
 
   getAllParticipates: function(callback) {
     return databaseConnection.query("Select * From participates", callback);

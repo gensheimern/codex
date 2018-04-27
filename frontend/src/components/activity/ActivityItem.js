@@ -100,7 +100,6 @@ loadParticipatesData(){
     return (
       <div>
        <Card>
-
           <div className="image-container">
          <img className="image" src={this.props.activity.Banner} alt="Card cap" />
             <div className="after">
@@ -108,7 +107,6 @@ loadParticipatesData(){
                 <div className="text2"><button>JOIN </button></div>
             </div></div>
          </div>
-
            <CardText>
            <div className="activity-group">
               <div className="activity-date">

@@ -1,8 +1,8 @@
-const databaseConnection = require('../DatabaseConnection')
+const databaseConnection = require('./DatabaseConnection')
 
-var Activity = {
+const Activity = {
 
-  getAllActivitys: function(callback) {
+  getAllActivities: function(callback) {
     return databaseConnection.query("SELECT *, User.Firstname, User.Name, User.Image FROM Activity inner join User on Activity.Host = User.User_Id", callback);
   },
 
