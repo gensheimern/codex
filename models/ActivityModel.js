@@ -3,7 +3,7 @@ const databaseConnection = require('../DatabaseConnection')
 var Activity = {
 
   getAllActivitys: function(callback) {
-    return databaseConnection.query("SELECT *, User.Firstname, User.Name, User.IMG FROM Activity inner join User on Activity.Host = User.User_Id", callback);
+    return databaseConnection.query("SELECT *, User.Firstname, User.Name, User.Image FROM Activity inner join User on Activity.Host = User.User_Id", callback);
   },
 
   getActivityById: function(id, callback) {

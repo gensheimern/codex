@@ -1,26 +1,28 @@
 import React from "react";
-
-import { Card, CardImg, CardText, CardBody, CardLink,
-  CardTitle, CardSubtitle, CardImgOverlay  } from 'reactstrap';
+import { Card,  CardText } from 'reactstrap';
 import CalendarFA from 'react-icons/lib/fa/calendar-check-o';
 import ClockFA from 'react-icons/lib/fa/clock-o';
 import BullseyeFA from 'react-icons/lib/fa/bullseye';
 import config from "../../config.js";
 import "./activity.css";
-var readBlob = require('read-blob');
+import Image from 'react-image';
 export default class ActivityItem extends React.Component {
 
   constructor(props) {
     super(props);
     this.state= {
-      participates: []
+      participates: [],
+      image:"",
+      lazyload: <div className="lazyload"> </div>
       };
+
     }
 
 componentDidMount(){
   this.loadParticipatesData();
   this.DateparserTime();
   this.DateparserDate();
+
 }
 
 DateparserDate() {
@@ -46,8 +48,8 @@ return d.getDay() + " " + month[d.getMonth()];
     var d = new Date(this.props.activity.Time);
     var h = this.addZero(d.getHours());
     var m = this.addZero(d.getMinutes());
-    var s = this.addZero(d.getSeconds());
-    return h + ":" + m + ":" + s;
+
+    return h + ":" + m;
 }
 
 addZero(i) {
@@ -73,53 +75,41 @@ loadParticipatesData(){
       throw new Error("Forbidden");
     } else {
       return resN;
+
     }
   }).then(resN => resN.json()).then(resN => {
 
-
-    this.setState({
+      this.setState({
       participates: resN
-
+      });
     });
-console.log(this.state.participates);
-  });
-
 }
-
 
 
   render() {
+
     let participatesIMG;
     if (this.state.participates.length != 0){
-      participatesIMG = this.state.participates.map(participates => {
-        console.log(this.state.participates);
-        readBlob(this.state.participates.IMG, 'dataurl', function (err, dataurl) {
-          if (err) throw err;
-
-  console.log('that was simple!');
- let  imgsrc = dataurl;
-});
-
+        participatesIMG = this.state.participates.map( participatesItem => {
+            let x = participatesItem.Image;
 
         return (
-          <img src="kl" />
+            <img className="myimage" src={participatesItem.Image}  />
         );
       });
-
 }
+
     return (
       <div>
        <Card>
-         <CardBody>
-           <CardTitle>
-            <div className="activity-host">
-              <h4>{this.props.activity.Firstname + " " + this.props.activity.Name}</h4>
-            </div>
-            </CardTitle>
 
-         </CardBody>
-         <img src="https://placeholdit.imgix.net/~text?txtsize=33&txt=318%C3%97180&w=318&h=180" alt="Card image cap" />
-            <h2>{this.props.activity.Activityname}</h2>
+          <div className="image-container">
+         <img className="image" src={this.props.activity.Banner} alt="Card image cap" />
+            <div className="after">
+               <div className="text">{this.props.activity.Activityname}
+                <div className="text2"><button>JOIN </button></div>
+            </div></div>
+         </div>
 
            <CardText>
            <div className="activity-group">
@@ -134,16 +124,18 @@ console.log(this.state.participates);
               </div>
             </div>
             <div className="activity-alreadyjoining">
-              <h2>Already joining </h2>
-                <h1> {participatesIMG}</h1>
+              <h3>Already joining </h3>
+              {participatesIMG}
               <div className="activity-userimg">
-                <h1> {this.state.participates.User_Id}</h1>
+              </div>
+              <div className="activity-counter">
+               <h1>10/20 </h1>
               </div>
             </div>
            </CardText>
 
            <div className="activity-buttons">
-           <button> share </button> <button> comment </button> <button> join </button>
+           <button> join </button>
            </div>
 
        </Card>

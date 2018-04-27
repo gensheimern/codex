@@ -12,20 +12,7 @@ export default class Activity extends React.Component {
     this.state= {
       activitys:[]
     };
-/*
-    this.state = {
-        activitys: [{
-        Activity_Id: "",
-        Activityname:"",
-        Description:"",
-        Eventtag:"",
-        Host:"",
-        Place:"",
-        Time:""
-        }
-      ]
-    }
-    */
+
 };
 
   componentDidMount() {
@@ -64,9 +51,10 @@ export default class Activity extends React.Component {
 
   render() {
     let Item;
+
     if (this.state.activitys.length != 0){
       Item = this.state.activitys.map(activity => {
-      
+
 
         return (
           <ActivityItem key={activity.Activity_Id} activity={activity} />

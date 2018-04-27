@@ -31,7 +31,8 @@ app.use('/memberof', verifyToken, member_of);
 
 app.use('/authenticate', authenticate);
 
-
+app.use(serveStatic(path.join(__dirname + "/image/user")));
+app.use(serveStatic(path.join(__dirname + "/image/activity")));
 
 // Middlewares
 app.use(serveStatic(path.join(__dirname + "/frontend/build")));
