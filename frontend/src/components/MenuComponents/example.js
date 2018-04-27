@@ -218,7 +218,7 @@ this.handleShow();
 
     return (
       <Sidebar {...sidebarProps}>
-        <MaterialTitlePanel title={contentHeader}>
+
           <div style={styles.content}>
             <React.Fragment>
                   <Modal show={this.state.show} onHide={this.handleClose}>
@@ -274,7 +274,7 @@ this.handleShow();
 
               </React.Fragment>
           </div>
-        </MaterialTitlePanel>
+
       </Sidebar>
     );
   }
