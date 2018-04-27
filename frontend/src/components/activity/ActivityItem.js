@@ -5,7 +5,6 @@ import ClockFA from 'react-icons/lib/fa/clock-o';
 import BullseyeFA from 'react-icons/lib/fa/bullseye';
 import config from "../../config.js";
 import "./activity.css";
-import Image from 'react-image';
 export default class ActivityItem extends React.Component {
 
   constructor(props) {
@@ -27,7 +26,7 @@ componentDidMount(){
 
 DateparserDate() {
   var d = new Date(this.props.activity.Time);
-  var month = new Array();
+  var month = [];
   month[0] = "January";
   month[1] = "February";
   month[2] = "March";
@@ -89,12 +88,11 @@ loadParticipatesData(){
   render() {
 
     let participatesIMG;
-    if (this.state.participates.length != 0){
+    if (this.state.participates.length !== 0){
         participatesIMG = this.state.participates.map( participatesItem => {
-            let x = participatesItem.Image;
 
         return (
-            <img className="myimage" src={participatesItem.Image}  />
+            <img className="myimage" src={participatesItem.Image} alt="profile" />
         );
       });
 }
@@ -104,7 +102,7 @@ loadParticipatesData(){
        <Card>
 
           <div className="image-container">
-         <img className="image" src={this.props.activity.Banner} alt="Card image cap" />
+         <img className="image" src={this.props.activity.Banner} alt="Card cap" />
             <div className="after">
                <div className="text">{this.props.activity.Activityname}
                 <div className="text2"><button>JOIN </button></div>

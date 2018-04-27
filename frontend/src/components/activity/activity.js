@@ -1,6 +1,4 @@
 import React from "react";
-import { Card, CardImg, CardText, CardBody, CardLink,
-  CardTitle, CardSubtitle, CardImgOverlay  } from 'reactstrap';
 
 import config from "../../config.js";
 import "./activity.css";
@@ -52,7 +50,7 @@ export default class Activity extends React.Component {
   render() {
     let Item;
 
-    if (this.state.activitys.length != 0){
+    if (this.state.activitys.length !== 0){
       Item = this.state.activitys.map(activity => {
 
 
