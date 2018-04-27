@@ -9,8 +9,15 @@ import {
 // Components
 import './App.css';
 import Login from './components/login/Login';
+import Logout from './components/login/Logout';
+import Signup from './components/signup/Signup';
 import Groupmanager from './components/groupmanager/Groupmanager';
+<<<<<<< HEAD
 import Example from './components/MenuComponents/example';
+=======
+import Activity from './components/activity/Activity';
+
+>>>>>>> development
 
 class App extends Component {
     constructor(props) {
@@ -24,10 +31,19 @@ class App extends Component {
             <React.Fragment>
                 <Route exact path="/" component={Login}/>
                 <Route exact path="/groupmanager" component={Groupmanager}/>
+<<<<<<< HEAD
                 <Route exact path="/example" component={Example}/>
             </ React.Fragment>
+=======
+                <Route exact path="/signup" component={Signup}/>
+                <Route exact path="/logout" component={Logout}/>
+                <Route exact path="/activity" component={Activity}/>
+            </React.Fragment>
+>>>>>>> development
         </BrowserRouter>);
     }
+
+
 }
 
 export default App;

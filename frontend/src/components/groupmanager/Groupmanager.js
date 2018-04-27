@@ -1,8 +1,11 @@
 import React from "react";
+<<<<<<< HEAD
 import {
     Button,
     ButtonGroup,Modal,Navbar,Nav,NavItem,MenuItem,NavDropdown
 } from "react-bootstrap";
+=======
+>>>>>>> development
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import "./groupmanager.css";
 import CreateTeam from './CreateTeam.js';
@@ -64,6 +67,7 @@ export default class Groupmanager extends React.Component {
         });
 
     }
+
     createGroupDeleteButtons() {
         for(let i = 0; i < this.state.groups.length; i++) {
             let Tid = this.state.groups[i].Team_Id;
@@ -91,6 +95,7 @@ export default class Groupmanager extends React.Component {
         }
 
     }
+
     SendTeamToDelete(Tid) {
         fetch(config.apiPath + "/team/" + Tid, {
                 method: 'DELETE',
@@ -111,6 +116,7 @@ export default class Groupmanager extends React.Component {
                 this.loadContent();
             });
     }
+<<<<<<< HEAD
     handleClose() {
   this.setState({ show: false });
   }
@@ -175,5 +181,15 @@ export default class Groupmanager extends React.Component {
                 <ListGroups update = {this.loadContent} teams = {this.state.groups}/>
 
           </React.Fragment>)
+=======
+
+    render() {
+        return(
+            <React.Fragment>
+                <CreateTeam update={this.loadContent}/>
+                <ListGroups update={this.loadContent} teams={this.state.groups}/>
+            </React.Fragment>
+        );
+>>>>>>> development
     }
 }
