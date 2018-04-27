@@ -7,7 +7,7 @@ cache:
     - frontend/node_modules
 install:
   - npm install
-  - cd frontend && npm install
+  - cd frontend && npm install && cd ..
 script:
   - npm test
   - npm test --prefix frontend
