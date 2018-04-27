@@ -34,8 +34,6 @@ app.use('/authenticate', authenticate);
 
 
 // Middlewares
-app.use(serveStatic(path.join(__dirname + "/image/user")));
-app.use(serveStatic(path.join(__dirname + "/image/activity")));
 app.use(serveStatic(path.join(__dirname + "/frontend/build")));
 
 
