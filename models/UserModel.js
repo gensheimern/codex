@@ -3,29 +3,34 @@ const encryptPassword = require('../routes/auth/CryptPassword');
 
 const User = {
 
-	getAllUser: function(callback) {
-		return databaseConnection.query("Select * From User", callback);
+	async getAllUsers() {
+		return databaseConnection.queryp("SELECT User_Id, Firstname, Name, Email FROM User");
 	},
 
-	getUserById: function(id, callback) {
-		return databaseConnection.query("Select * from User where User_Id=?", [id], callback);
+	async getUserById(userID) {
+		return databaseConnection.queryp("SELECT User_Id, Firstname, Name, Email FROM User WHERE User_Id = ?", [userID]);
 	},
 
-	getUserByEmail: function(id, callback) {
-		return databaseConnection.query("Select * from User where Email=?", [id], callback);
+	async getUserByIdWithPw(userID) {
+		return databaseConnection.queryp("SELECT User_Id, Firstname, Name, Email, Password FROM User WHERE User_Id = ?", [userID]);
 	},
 
-	addUser: function(user, callback) {
-		return databaseConnection.query("Insert into User values(?,?,?,?,?)", [user.User_Id, user.Firstname, user.Name, user.Email, encryptPassword(user.Password)], callback);
+	async getUserByEmail(email) {
+		return databaseConnection.queryp("SELECT * FROM User WHERE Email = ?", [email]);
 	},
 
-	deleteUser: function(id, callback) {
-		return databaseConnection.query("Delete From User where User_Id=?", [id], callback);
+	async addUser(user) {
+		return databaseConnection.queryp("INSERT INTO User (Firstname, Name, Email, Password, Image) VALUES (?,?,?,?,?)", [user.Firstname, user.Name, user.Email, encryptPassword(user.Password), user.Image]);
 	},
 
-	updateUser: function(id, user, callback) {
-		return databaseConnection.query("Update User set Firstname=?, Name=?, Email=?, Password=? where User_Id=?", [user.Firstname, user.Name, user.Email, user.Password, id], callback);
+	async deleteUser(id) {
+		return databaseConnection.queryp("DELETE FROM User WHERE User_Id = ?", [id]);
+	},
+
+	async updateUser(id, user) {
+		return databaseConnection.queryp("UPDATE User SET Firstname=?, Name=?, Email=?, Password=? where User_Id=?", [user.Firstname, user.Name, user.Email, user.Password, id]);
 	}
+
 };
 
 

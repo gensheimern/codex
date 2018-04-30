@@ -2,34 +2,32 @@ const databaseConnection = require('./DatabaseConnection')
 
 const Message = {
 
-  getAllMessages: function(callback) {
-    return databaseConnection.query("Select * From Message", callback);
-  },
+	async getMessagesOfActivity(activityId, userId) {
+		return databaseConnection.queryp("SELECT * FROM Message INNER JOIN (Activity INNER JOIN participates ON participates.Activity_Id = Activity.Activity_Id) ON Message.Activity_Id = Activity.Activity_Id  WHERE Activity.Activity_Id = ? AND participates.User_Id = ?", [activityId, userId]);
+	},
 
-  getMessageById: function(id, callback) {
-    return databaseConnection.query("Select * from Message where Message_Id=?", [id], callback);
-  },
+	async createMessage(content, activityId, userId) {
+		const date = new Date().toISOString().slice(0, 19).replace('T', ' ');
 
-  getMessageByActivity: function(id, callback) {
-    return databaseConnection.query("Select * from Message where Activity_Id=?", [id], callback);
-  },
+		return databaseConnection.queryp("INSERT INTO Message VALUES (?,?,?,?,?)", [undefined, date, content, activityId, userId]);
+	},
 
-  addMessage: function(message, callback) {
-    return databaseConnection.query("Insert into Message values(?,?,?,?,?)", [message.Message_Id, message.Date, message.Messagecontent, message.Activity_Id, message.User_Id], callback);
-  },
+	async deleteMessage(messageId, userId) {
+		return databaseConnection.queryp("DELETE FROM Message WHERE Message_Id = ? AND User_Id = ?", [messageId, userId]);
+	},
 
-  deleteMessageById: function(id, callback) {
-    return databaseConnection.query("Delete From Message where Message_Id=?", [id], callback);
-  },
+	async deleteMessageAdmin(messageId) {
+		return databaseConnection.queryp("DELETE FROM Message WHERE Message_Id = ?", [messageId]);
+	},
 
-  deleteMessageByActivity: function(id, callback) {
-    return databaseConnection.query("Delete From Message where Activity_Id=?", [id], callback);
-  },
+	async updateMessage(messageId, content, userId) {
+		return databaseConnection.queryp("UPDATE Message SET Messagecontent=? WHERE Message_Id=? AND User_Id=?", [content, messageId, userId]);
+	},
 
-
-  updateMessage: function(id, message, callback) {
-    return databaseConnection.query("Update Message set Date=?, Messagecontent=?,Activity_Id=?, User_Id=?  where Message_Id=?", [message.Date, message.Messagecontent, message.Activity_Id, message.User_Id, id], callback);
-  }
+	async updateMessageAdmin(messageId, content) {
+		return databaseConnection.queryp("UPDATE Message SET Messagecontent=? WHERE Message_Id=?", [content, messageId]);
+	}
+	
 };
 
 

@@ -3,50 +3,100 @@ const jwt = require('jsonwebtoken');
 
 ActivityController = {
 	
-	getAllActivities(req, res) {
-		Activity.getAllActivities(function(err, rows) {
-			if (err) return res.json(err);
-			
-			res.json(rows);
-		});
+	async getAllActivities(req, res) {
+		const userId = req.token.User_Id;
+
+		try {
+			let activities = await Activity.getAllActivities(userId);
+
+			res.json(activities);
+		} catch (error) {
+			res.sendStatus(500);
+		}
 	},
 
-	getActivityById(req, res, next) {
-		Activity.getActivityById(req.params.id, function(err, rows) {
-			if (err) return res.json(err);
+	async getActivityById(req, res) {
+		const userId = req.token.User_Id;
 
-			count.affectedRows === 0 ? res.sendStatus(404) : res.json(rows[0]);
-		});
+		try {
+			let result = await Activity.getActivityById(req.params.id, userId);
+
+			if(result.length === 1) {
+				res.json(result[0]);
+			}
+			else {
+				res.statsus(404).json({
+					message: "Activity not found"
+				});
+			}
+		} catch (error) {
+			res.sendStatus(500);
+		}
 	},
 
-	addActivity(req, res) {
+	async createActivity(req, res) {
+		const userId = req.token.User_Id;
+		const activity = req.body;
 
-		var token = req.headers['x-access-token'];
-		var decoded = jwt.decode(token, 'secret');
-	
-		Activity.addActivity(req.body, decoded.User_Id, function(err, count) {
-			if (err) return res.json(err);
+		try {
+			let result = await Activity.createActivity(activity, userId);
 
 			res.status(201).json({
-				Activity_Id: count.insertId
+				Activity_Id: result.insertId
 			});
-		});
+		} catch (error) {
+			res.sendStatus(500);
+		}
 	},
 
-	deleteActivity(req, res) {
-		Activity.deleteActivity(req.params.id, function(err, count) {
-			if (err) return res.json(err);
+	async deleteActivity(req, res) {
+		const userId = req.token.User_Id;
+		const activityId = req.params.id;
 
-			count.affectedRows === 0 ? res.sendStatus(404) : res.sendStatus(200);
-		});
+		try {
+			// TODO Check if user is admin of activity
+			let result = await Activity.deleteActivity(activityId, userId);
+
+			if(result.affectedRows === 1) {
+				res.json({
+					success: true,
+					message: "Activity successfully deleted."
+				});
+			}
+			else {
+				res.status(404).json({
+					success: false,
+					message: "Activity not found."
+				});
+			}
+		} catch (error) {
+			res.sendStatus(500);
+		}
 	},
 
-	updateActivity(req, res) {
-		Activity.updateActivity(req.params.id, function(err, count) {
-			if (err) return res.json(err);
+	async updateActivity(req, res) {
+		const userId = req.token.User_Id;
+		const activityId = req.params.id;
 
-			count.affectedRows === 0 ? res.sendStatus(404) : res.sendStatus(200);
-		});
+		try {
+			// TODO Check if user is admin of activity
+			let result = await Activity.updateActivity(activityId, userId);
+
+			if(result.affectedRows === 1) {
+				res.json({
+					success: true,
+					message: "Activity successfully updated."
+				});
+			}
+			else {
+				res.status(404).json({
+					success: false,
+					message: "Activity not found."
+				});
+			}
+		} catch (error) {
+			res.sendStatus(500);
+		}
 	}
 
 }

@@ -7,7 +7,7 @@ router.get('/', ActivityController.getAllActivities);
 
 router.get('/:id', ActivityController.getActivityById);
 
-router.post('/', ActivityController.addActivity);
+router.post('/', ActivityController.createActivity);
 
 router.delete('/:id', ActivityController.deleteActivity);
 

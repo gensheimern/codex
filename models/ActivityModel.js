@@ -2,25 +2,25 @@ const databaseConnection = require('./DatabaseConnection')
 
 const Activity = {
 
-  getAllActivities: function(callback) {
-    return databaseConnection.query("Select * From Activity", callback);
-  },
+	async getAllActivities(userId) {
+		return databaseConnection.queryp("SELECT * FROM Activity WHERE Private=0 UNION SELECT Activity.* FROM Activity INNER JOIN participates ON Activity.Activity_Id = participates.Activity_Id WHERE participates.User_Id=?", [userId]);
+	},
 
-  getActivityById: function(id, callback) {
-    return databaseConnection.query("Select * from Activity where Activity_Id=?", [id], callback);
-  },
+	async getActivityById(activityId, userId) {
+		return databaseConnection.queryp("SELECT * FROM Activity INNER JOIN participates ON Activity.Activity_Id = participates.Activity_Id WHERE Activity.Activity_Id=? AND participates.User_Id = ?", [activityId, userId]);
+	},
 
-  addActivity: function(activity, userid, callback) {
-    return databaseConnection.query("Insert into Activity values(?,?,?,?,?,?,?)", [activity.Activity_Id, activity.Description, activity.Activityname, activity.Place, activity.Time, activity.Eventtag, userid], callback);
-  },
+	async createActivity(activity, userId) {
+		return databaseConnection.queryp("INSERT INTO Activity VALUES (?,?,?,?,?,?,?)", [undefined, activity.Description, activity.Activityname, activity.Place, activity.Time, activity.Eventtag, userId]);
+	},
 
-  deleteActivity: function(id, callback) {
-    return databaseConnection.query("Delete From Activity where Activity_Id=?", [id], callback);
-  },
+	async deleteActivity(activityId, userId) {
+		return databaseConnection.queryp("DELETE FROM Activity WHERE Activity_Id=?", [id]);
+	},
 
-  updateActivity: function(id, activity, callback) {
-    return databaseConnection.query("Update Activity set Description=?, Activityname=?, Place=?, Time=?, Eventtag=?, Host=? where Gruppen_Id=?", [activity.Description, activity.Activityname, activity.Place, activity.Time, activity.Eventtag, activity.Host, id], callback);
-  }
+	async updateActivity(activityId, activity, userId) {
+		return databaseConnection.queryp("UPDATE Activity SET Description=?, Activityname=?, Place=?, Time=?, Eventtag=? WHERE Activity_Id=?", [activity.Description, activity.Activityname, activity.Place, activity.Time, activity.Eventtag, activityId]);
+	}
 };
 
 module.exports = Activity;

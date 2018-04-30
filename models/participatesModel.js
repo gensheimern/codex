@@ -2,29 +2,28 @@ const databaseConnection = require('./DatabaseConnection')
 
 const Participates = {
 
-  getAllParticipates: function(callback) {
-    return databaseConnection.query("Select * From participates", callback);
-  },
+	async getMemberOfActivity(activityId, userId) {
+		return databaseConnection.queryp(`SELECT Member.* FROM User AS Member
+			INNER JOIN participates ON Member.User_Id = participates.User_Id
+			INNER JOIN (User INNER JOIN participates AS participates2 ON User.User_Id = participates2.User_Id) ON participates2.Activity_Id = participates.Activity_Id
+			WHERE participates.Activity_Id = ? AND User.User_Id = ?`, [activityId, userId]);
+	},
 
-  getParticipatesById: function(id, callback) {
-    return databaseConnection.query("Select * from participates where Activity_Id=?", [id], callback);
-  },
+	/*async addParticipates(participates) {
+		return databaseConnection.queryp("INSERT INTO participates VALUES (?,?)", [participates.User_Id, participates.Activity_Id]);
+	},
 
-  addParticipates: function(participates, callback) {
-    return databaseConnection.query("Insert into participates values(?,?)", [participates.User_Id, participates.Activity_Id], callback);
-  },
+	async deleteParticipatesAll(id) {
+		return databaseConnection.queryp("DELETE FROM participates WHERE Activity_Id=?", [id]);
+	},
 
-  deleteParticipatesAll: function(id, callback) {
-    return databaseConnection.query("Delete From participates where Activity_Id=?", [id], callback);
-  },
+	async deleteParticipatesSingle(userid, activityid) {
+		return databaseConnection.queryp("DELETE FROM participates WHERE User_Id=? AND Activity_Id=?", [userid, activityid]);
+	},
 
-  deleteParticipatesSingle: function(userid, activityid, callback) {
-    return databaseConnection.query("Delete From participates where User_Id=? AND Activity_Id=?", [userid, activityid], callback);
-  },
-
-  updateParticipates: function(id, participates, callback) {
-    return databaseConnection.query("Update participates set User_Id=? where User_Id=? AND Activity_Id=?", [id, participates.User_Id, participates.Activity_Id], callback);
-  }
+	async updateParticipates(id, participates) {
+		return databaseConnection.queryp("UPDATE participates SET User_Id=? WHERE User_Id=? AND Activity_Id=?", [id, participates.User_Id, participates.Activity_Id]);
+	}*/
 };
 
 

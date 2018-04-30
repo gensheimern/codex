@@ -2,11 +2,11 @@ const jwt = require('jsonwebtoken');
 const User = require('../../models/UserModel');
 
 AuthenticateController = {
-	authenticate(req, res) {
+	async authenticate(req, res) {
 		const {Email, Password} = req.body;
-		
-		User.getUserByEmail(Email, function(err, rows) {
-			if (err) return res.sendStatus(500);
+
+		try {
+			let rows = await User.getUserByEmail(Email);
 			
 			// If the user doesnt exits, it will send status code 403 and the
 			// json to the client
@@ -27,15 +27,17 @@ AuthenticateController = {
 					iat: Math.floor(Date.now() / 1000),
 					exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24)
 				}, 'secret');
-			
-				//console.log(token);
+		
+					//console.log(token);
 				res.json({
 					success: true,
 					message: "Valid user credentials.",
 					token: token
 				});
 			}
-		});
+		} catch (error) {
+			res.sendStatus(500);
+		}
 	}
 }
 

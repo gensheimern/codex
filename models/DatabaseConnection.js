@@ -8,4 +8,13 @@ const dbConnection = mysql.createPool({
   database: 'lunch_planner',
 });
 
+dbConnection.queryp = function() {
+  const args = arguments;
+  return new Promise((resolve, reject) => {
+    dbConnection.query(...args, (err, res) => {
+      err ? reject(err) : resolve(res);
+    });
+  });
+};
+
 module.exports = dbConnection;
