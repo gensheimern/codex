@@ -54,10 +54,10 @@ UserController = {
 		req.body.Image = ""; // TODO Change
 
 		try {
-			let insertId = await User.addUser(req.body);
+			let result = await User.addUser(req.body);
 
 			res.status(201).json({
-				User_Id: insertId
+				User_Id: result.insertId
 			});
 		} catch (error) {
 			res.sendStatus(500);
@@ -67,9 +67,10 @@ UserController = {
 	deleteUser(req, res) {
 		const userID = req.token.User_Id;
 
-		if(req.params.id !== req.token.User_Id
-			&& !req.token.admin === true) {
+		if(!(parseInt(req.params.id) === parseInt(req.token.User_Id)
+			|| req.token.admin === true)) {
 			return res.status(403).json({
+				success: false,
 				message: "Invalid user id."
 			});
 		}
@@ -99,6 +100,7 @@ UserController = {
 
 		if(Number(req.params.id) !== userID) {
 			return res.status(403).json({
+				success: false,
 				message: "Invalid user id."
 			});
 		}
@@ -113,9 +115,9 @@ UserController = {
 				Password: req.body.Password || oldUser.Password
 			}
 
-			let affectedRows = User.updateUser(userID, newUser);
+			let result = await User.updateUser(userID, newUser);
 
-			if(affectedRows === 0) {
+			if(result.affectedRows === 0) {
 				res.status(404).json({
 					success: false,
 					message: "Invalid user id."
@@ -124,7 +126,7 @@ UserController = {
 			else {
 				res.json({
 					success: true,
-					message: "User updated."
+					message: "User successfully updated."
 				});
 			}
 		} catch (error) {
