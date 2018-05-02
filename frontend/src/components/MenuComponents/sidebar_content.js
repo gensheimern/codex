@@ -27,16 +27,16 @@ const styles = {
 const SidebarContent = (props) => {
   const links = [];
 
-  for (let ind = 0; ind < 10; ind++) {
+  for (let ind = 1; ind < 5; ind++) {
     links.push(
-      <a key={ind} href="/groupmanager" style={styles.sidebarLink}>Mock menu item {ind}</a>);
+      <a key={ind} href="/groupmanager" style={styles.sidebarLink}>Gruppe {ind}</a>);
   }
 
   return (
 
       <div style={styles.content}>
         <a href="index.html" style={styles.sidebarLink}>Home</a>
-        <a href="responsive_example.html" style={styles.sidebarLink}>Responsive Example</a>
+        <a href="responsive_example.html" style={styles.sidebarLink}>Deine Gruppen</a>
         <div style={styles.divider} />
         {links}
       </div>
