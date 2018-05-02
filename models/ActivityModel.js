@@ -3,7 +3,7 @@ const databaseConnection = require('./DatabaseConnection')
 const Activity = {
 
 	async getAllActivities(userId) {
-		return databaseConnection.queryp("SELECT * FROM Activity WHERE Private=0 UNION SELECT Activity.* FROM Activity INNER JOIN participates ON Activity.Activity_Id = participates.Activity_Id WHERE participates.User_Id=?", [userId]);
+		return databaseConnection.queryp("SELECT Activity.*, User.Firstname, User.Name, User.Image FROM Activity INNER JOIN User ON Activity.Host = User.User_Id WHERE Private = 0 UNION SELECT Activity.*, User.Firstname, User.Name, User.Image FROM Activity INNER JOIN User ON Activity.Host = User.User_Id INNER JOIN participates ON Activity.Activity_Id = participates.Activity_Id WHERE participates.User_Id=?", [userId]);
 	},
 
 	async getActivityById(activityId, userId) {

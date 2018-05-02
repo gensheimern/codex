@@ -14,7 +14,7 @@ ParticipatesController = {
 				Firstname: user.Firstname,
 				Name: user.Name,
 				Email: user.Email,
-				Image: user.Email
+				Image: user.Image
 			})));
 		} catch (error) {
 			res.sendStatus(500);

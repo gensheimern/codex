@@ -4,15 +4,15 @@ const encryptPassword = require('../routes/auth/CryptPassword');
 const User = {
 
 	async getAllUsers() {
-		return databaseConnection.queryp("SELECT User_Id, Firstname, Name, Email FROM User");
+		return databaseConnection.queryp("SELECT User_Id, Firstname, Name, Email, Image FROM User");
 	},
 
 	async getUserById(userID) {
-		return databaseConnection.queryp("SELECT User_Id, Firstname, Name, Email FROM User WHERE User_Id = ?", [userID]);
+		return databaseConnection.queryp("SELECT User_Id, Firstname, Name, Email, Image FROM User WHERE User_Id = ?", [userID]);
 	},
 
 	async getUserByIdWithPw(userID) {
-		return databaseConnection.queryp("SELECT User_Id, Firstname, Name, Email, Password FROM User WHERE User_Id = ?", [userID]);
+		return databaseConnection.queryp("SELECT User_Id, Firstname, Name, Email, Image, Password FROM User WHERE User_Id = ?", [userID]);
 	},
 
 	async getUserByEmail(email) {
