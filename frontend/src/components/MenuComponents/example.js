@@ -101,10 +101,7 @@ for(let i = 0; i < this.state.groups.length; i++) {
     onClick = {
           () => this.SendTeamToDelete.bind(this)(Tid)
       } >
-    <span className="glyphicon glyphicon-trash"></span> </Button> <Button onClick = {
-      () => this.SendTeamToDelete.bind(this)(Tid)
-  } >
-  Free Space </Button> </ButtonGroup >
+    <span className="glyphicon glyphicon-trash"></span> </Button> </ButtonGroup>
 
   // <button type="button" onClick={() => this.SendTeamToDelete.bind(this)(Tid)}>
   //   Delete the Group
@@ -148,6 +145,12 @@ this.setState({ show: true });
 handleSelect(eventKey) {
 if(eventKey === 2){
 this.handleShow();
+}
+if(eventKey === 3){
+if(this.state.docked == false)
+    this.setState({ docked: true });;
+  if(this.state.docked == true)
+    this.setState({ docked: false });;
 }
 }
   onSetOpen(open) {
@@ -234,13 +237,12 @@ this.handleShow();
                 <NavItem eventKey={2} href="">
                   Aktivität erstellen
                 </NavItem>
-                <NavDropdown eventKey={3} title="Gruppen" id="basic-nav-dropdown">
-                  <MenuItem eventKey={3.1}>Action</MenuItem>
-                  <MenuItem eventKey={3.2}>Another action</MenuItem>
-                  <MenuItem eventKey={3.3}>Something else here</MenuItem>
-                  <MenuItem divider />
-                  <MenuItem eventKey={3.3}>Separated link</MenuItem>
-                </NavDropdown>
+                <NavItem eventKey={2} href="/activity">
+                  Aktivitäten
+                </NavItem>
+                <NavItem eventKey={3} href="">
+                  Gruppen
+                </NavItem>
               </Nav>
               <Nav pullRight>
                 <NavDropdown eventKey={3} title="Sidebar Options" id="basic-nav-dropdown">
