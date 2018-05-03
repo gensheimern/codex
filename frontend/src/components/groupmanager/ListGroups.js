@@ -1,5 +1,6 @@
 import React from "react";
-import {} from "react-bootstrap";
+import {
+} from "react-bootstrap";
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import "./groupmanager.css";
 import config from '../../config';
@@ -54,7 +55,6 @@ export default class ListTeams extends React.Component {
     }
 
     render() {
-        console.log(this.props.teams);
         const columns = [{
             style: {},
             classes: 'span-1',
@@ -72,7 +72,7 @@ export default class ListTeams extends React.Component {
             text: 'Team Leiter'
         }, {
             classes: 'span-1',
-            dataField: 'button',
+            dataField: 'buttongroup',
             text: 'Eintrag löschen',
             allign: 'center'
         }];
