@@ -3,14 +3,13 @@ import ActivityItem from "./ActivityItem";
 import React from 'react';
 import Sidebar from '../MenuComponents/Sidebar.js';
 import SidebarContent from '../MenuComponents/sidebar_content';
+import SidebarCalender from '../MenuComponents/SidebarContentCalender';
 import {
     Button,
     ButtonGroup,Modal,Navbar,Nav,NavItem,MenuItem,NavDropdown
 } from "react-bootstrap";
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
-import CreateTeam from '../groupmanager/CreateTeam.js';
 import config from '../../config';
-import ListGroups from '../groupmanager/ListGroups.js'
 import CreateActivity from '../activity/CreateActivity.js'
 
 const styles = {
@@ -153,9 +152,9 @@ export default class Activity extends React.Component {
   this.handleShow();
   }
   if(eventKey === 3){
-  if(this.state.docked == false)
+  if(this.state.docked === false)
       this.setState({ docked: true });;
-    if(this.state.docked == true)
+    if(this.state.docked === true)
       this.setState({ docked: false });;
   }
   }
@@ -225,6 +224,7 @@ export default class Activity extends React.Component {
 
   render() {
     const sidebar = <SidebarContent/>;
+        const sidebarCalender = <SidebarCalender/>;
 
     const sidebarProps = {
       sidebar: sidebar,
@@ -237,6 +237,19 @@ export default class Activity extends React.Component {
       touchHandleWidth: this.state.touchHandleWidth,
       dragToggleDistance: this.state.dragToggleDistance,
       transitions: this.state.transitions,
+      onSetOpen: this.onSetOpen,
+    };
+    const sidebarProps2 = {
+      sidebar: sidebarCalender,
+      docked: true,
+      sidebarClassName: 'custom-sidebar-class',
+      open: this.state.open,
+      touch: this.state.touch,
+      shadow: this.state.shadow,
+      pullRight: true,
+      touchHandleWidth: this.state.touchHandleWidth,
+      dragToggleDistance: this.state.dragToggleDistance,
+      transitions:false,
       onSetOpen: this.onSetOpen,
     };
     let Item;
@@ -307,7 +320,9 @@ export default class Activity extends React.Component {
                   </React.Fragment>
               </div>
               <div className="Feed">
+            <Sidebar {...sidebarProps2}>
               {Item}
+            </Sidebar>
               </div>
           </Sidebar>
   );

@@ -147,9 +147,9 @@ if(eventKey === 2){
 this.handleShow();
 }
 if(eventKey === 3){
-if(this.state.docked == false)
+if(this.state.docked === false)
     this.setState({ docked: true });;
-  if(this.state.docked == true)
+  if(this.state.docked === true)
     this.setState({ docked: false });;
 }
 }

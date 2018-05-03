@@ -1,6 +1,7 @@
 import React from 'react';
 import Sidebar from '../MenuComponents/Sidebar.js';
 import SidebarContent from '../MenuComponents/sidebar_content';
+import SidebarCalender from '../MenuComponents/SidebarContentCalender';
 import {
     Button,
     ButtonGroup,Modal,Navbar,Nav,NavItem,MenuItem,NavDropdown
@@ -147,9 +148,9 @@ if(eventKey === 2){
 this.handleShow();
 }
 if(eventKey === 3){
-if(this.state.docked == false)
+if(this.state.docked === false)
     this.setState({ docked: true });;
-  if(this.state.docked == true)
+  if(this.state.docked === true)
     this.setState({ docked: false });;
 }
 }
@@ -190,6 +191,7 @@ if(this.state.docked == false)
 
   render() {
     const sidebar = <SidebarContent/>;
+    const sidebarCalender = <SidebarCalender/>;
 
     const sidebarProps = {
       sidebar: sidebar,
@@ -204,10 +206,22 @@ if(this.state.docked == false)
       transitions: this.state.transitions,
       onSetOpen: this.onSetOpen,
     };
+    const sidebarProps2 = {
+      sidebar: sidebarCalender,
+      docked: true,
+      sidebarClassName: 'custom-sidebar-class',
+      open: this.state.open,
+      touch: this.state.touch,
+      shadow: this.state.shadow,
+      pullRight: true,
+      touchHandleWidth: this.state.touchHandleWidth,
+      dragToggleDistance: this.state.dragToggleDistance,
+      transitions:false,
+      onSetOpen: this.onSetOpen,
+    };
 
     return (
       <Sidebar {...sidebarProps}>
-
           <div style={styles.content}>
             <React.Fragment>
                   <Modal show={this.state.show} onHide={this.handleClose}>
@@ -257,9 +271,10 @@ if(this.state.docked == false)
               </Nav>
               </Navbar.Collapse>
               </Navbar>
+                <Sidebar {...sidebarProps2}>
                     <CreateTeam update={this.loadContent}/>
                     <ListGroups update = {this.loadContent} teams = {this.state.groups}/>
-
+                  </Sidebar>
               </React.Fragment>
           </div>
 
