@@ -9,10 +9,11 @@ import {
 // Components
 import './App.css';
 import Login from './components/login/Login';
-import GroupManager from './components/groupmanager/Groupmanager';
 import Activity from './components/activity/Activity';
 import Logout from './components/login/Logout';
 import Signup from './components/signup/Signup';
+import Groupmanager from './components/groupmanager/Groupmanager';
+import Example from './components/MenuComponents/example';
 
 
 class App extends Component {
@@ -26,7 +27,8 @@ class App extends Component {
         return(<BrowserRouter>
             <React.Fragment>
                 <Route exact path="/" component={Login}/>
-                <Route exact path="/groupmanager" component={GroupManager}/>
+                <Route exact path="/groupmanager" component={Groupmanager}/>
+                <Route exact path="/example" component={Example}/>
                 <Route exact path="/signup" component={Signup}/>
                 <Route exact path="/logout" component={Logout}/>
                 <Route exact path="/activity" component={Activity}/>

@@ -1,0 +1,6 @@
+<Navbar.Form>
+  <FormGroup>
+    <FormControl type="text" placeholder="Search" />
+  </FormGroup>{' '}
+  <Button type="submit">Submit</Button>
+</Navbar.Form>

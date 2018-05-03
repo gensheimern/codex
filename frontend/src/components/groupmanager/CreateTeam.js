@@ -1,12 +1,11 @@
 import React from "react";
 import {
-    Button,
+    Alert,Button,
     FormGroup,
     FormControl,
     ControlLabel
 } from "react-bootstrap";
 import "./groupmanager.css";
-import logo from '../../IMG/codex_logo1x.png';
 import config from '../../config';
 import "./ListGroups.js";
 
@@ -21,7 +20,8 @@ export default class CreateTeam extends React.Component {
 
             this.state = {
                 name: "",
-                showError: false
+                showError: false,
+                errorPrompt: ""
             }
         }
         componentDidUpdate(prevProps, prevState) {
@@ -65,6 +65,12 @@ export default class CreateTeam extends React.Component {
                     }
                 }).then(() => {
                     this.props.update();
+                }).catch((err) => {
+                    console.log("display eror");
+                    this.setState({
+                        errorPrompt: (<Alert bsStyle = "warning"> <strong> Holy guacamole ! </strong>
+                          Best check yo self, youre not looking too good. </Alert>)
+                    });
                 });
                 console.log("Group '" + this.state.name + "' created.");
             } else {
@@ -76,12 +82,7 @@ export default class CreateTeam extends React.Component {
 
         render() {
                 return(<div className = "CreateTeam"> <div>
-            <img src={logo} className="img-responsive center-block" style={{
-                    width: "45%",
-                    margin: "auto",
-                    marginBottom: "0%"
-                }} alt=""/></div> <
-                form onSubmit = {
+                </div> <form onSubmit = {
                     this.handleClick
                 } >
                 <FormGroup controlId="errorprompt" bsSize="large">
