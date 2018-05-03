@@ -1,6 +1,6 @@
 import React from "react";
 import {
-    Button,
+    Alert,Button,
     FormGroup,
     FormControl,
     ControlLabel
@@ -20,7 +20,8 @@ export default class CreateTeam extends React.Component {
 
             this.state = {
                 name: "",
-                showError: false
+                showError: false,
+                errorPrompt: ""
             }
         }
         componentDidUpdate(prevProps, prevState) {
@@ -64,6 +65,12 @@ export default class CreateTeam extends React.Component {
                     }
                 }).then(() => {
                     this.props.update();
+                }).catch((err) => {
+                    console.log("display eror");
+                    this.setState({
+                        errorPrompt: (<Alert bsStyle = "warning"> <strong> Holy guacamole ! </strong>
+                          Best check yo self, youre not looking too good. </Alert>)
+                    });
                 });
                 console.log("Group '" + this.state.name + "' created.");
             } else {

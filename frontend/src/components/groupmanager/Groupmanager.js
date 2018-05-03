@@ -175,7 +175,6 @@ if(this.state.docked == false)
         <label htmlFor={prop}> {prop}</label>
       </p>);
   }
-
   renderPropNumber(prop) {
     const setMethod = (ev) => {
       const newState = {};
