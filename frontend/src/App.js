@@ -27,11 +27,12 @@ class App extends Component {
         return(<BrowserRouter>
             <React.Fragment>
                 <Route exact path="/" component={Login}/>
+                <Route exact path="/activity" component={Activity}/>
                 <Route exact path="/groupmanager" component={Groupmanager}/>
                 <Route exact path="/example" component={Example}/>
                 <Route exact path="/signup" component={Signup}/>
                 <Route exact path="/logout" component={Logout}/>
-                <Route exact path="/activity" component={Activity}/>
+
             </React.Fragment>
         </BrowserRouter>);
     }

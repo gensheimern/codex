@@ -11,7 +11,7 @@ const Activity = {
   },
 
   addActivity: function(activity, userid, callback) {
-    return databaseConnection.query("Insert into Activity values(?,?,?,?,?,?,?)", [activity.Activity_Id, activity.Description, activity.Activityname, activity.Place, activity.Time, activity.Eventtag, userid], callback);
+    return databaseConnection.query("Insert into Activity values(?,?,?,?,?,?,?,?,?,?)", [activity.Activity_Id, activity.Description, activity.Activityname, activity.Place, activity.Time, activity.Eventtag, activity.Private, userid, activity.Banner, activity.MaxParticipants], callback);
   },
 
   deleteActivity: function(id, callback) {

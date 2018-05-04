@@ -1,3 +1,6 @@
+/*
+ Author: Nico Gensheimer
+*/
 import React from "react";
 import { Card,  CardText } from 'reactstrap';
 import CalendarFA from 'react-icons/lib/fa/calendar-check-o';
@@ -99,8 +102,8 @@ loadParticipatesData(){
 }
 
     return (
-      <div>
-       <Card>
+      <div className="activity">
+
           <div className="image-container col-xs-12 col-sm-12 col-lg-12">
          <img className="image" src={this.props.activity.Banner} alt="Card cap" />
             <div className="after">
@@ -111,22 +114,22 @@ loadParticipatesData(){
            <div className="card-body">
            <div className="activity-group col-xs-12 col-sm-12 col-lg-12">
               <div className="activity-date col-xs-6 col-sm-6 col-lg-6">
-                <h2><CalendarFA />  {this.DateparserDate()} </h2>
+                <h4><CalendarFA />  {this.DateparserDate()} </h4>
 
-                <h2><GroupFA /> Already joining </h2>
+                <h4><GroupFA /> Already joining </h4>
 
                   {participatesIMG}
 
               </div>
               <div className="activity-time col-xs-6 col-sm-6 col-lg-6">
-                <h2><ClockFA />  {this.DateparserTime()} </h2>
+                <h4><ClockFA />  {this.DateparserTime()} </h4>
               </div>
               <div className="activity-meetingpoint col-xs-6 col-sm-6 col-lg-6">
-                <h2><BullseyeFA />  {this.props.activity.Place} </h2>
+                <h4><BullseyeFA />  {this.props.activity.Place} </h4>
               </div>
             </div>
            </div>
-       </Card>
+
      </div>
 
 

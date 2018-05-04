@@ -1,3 +1,8 @@
+/*
+ Author: Nico Gensheimer
+*/
+
+
 import "./activity.css";
 import ActivityItem from "./ActivityItem";
 import React from 'react';
@@ -319,9 +324,11 @@ export default class Activity extends React.Component {
 
                   </React.Fragment>
               </div>
-              <div className="Feed">
+              <div className="Feed" >
             <Sidebar {...sidebarProps2}>
+              <div style={{backgroundColor:"#D3D3D3"}}>
               {Item}
+              </div>
             </Sidebar>
               </div>
           </Sidebar>
