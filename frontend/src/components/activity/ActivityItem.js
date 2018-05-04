@@ -2,7 +2,7 @@
  Author: Nico Gensheimer
 */
 import React from "react";
-import { Card,  CardText } from 'reactstrap';
+import { Card } from 'reactstrap';
 import CalendarFA from 'react-icons/lib/fa/calendar-check-o';
 import ClockFA from 'react-icons/lib/fa/clock-o';
 import BullseyeFA from 'react-icons/lib/fa/bullseye';
