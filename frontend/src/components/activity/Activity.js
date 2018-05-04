@@ -2,7 +2,6 @@
  Author: Nico Gensheimer
 */
 
-
 import "./activity.css";
 import ActivityItem from "./ActivityItem";
 import React from 'react';
@@ -16,6 +15,8 @@ import {
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import config from '../../config';
 import CreateActivity from '../activity/CreateActivity.js'
+import MediaQuery from 'react-responsive';
+import NavbarMenu from "../MenuComponents/NavbarMenu.js";
 
 const styles = {
   contentHeaderMenuLink: {
@@ -274,62 +275,32 @@ export default class Activity extends React.Component {
 
               <div style={styles.content}>
                 <React.Fragment>
-                      <Modal show={this.state.show} onHide={this.handleClose}>
-                          <Modal.Header closeButton>
-                             <Modal.Title>Erstelle eine Aktivität</Modal.Title>
-                           </Modal.Header>
-                           <Modal.Body>
-                              <CreateActivity/>
-                           </Modal.Body>
-                          <Modal.Footer>
-                              <Button onClick={this.handleClose}>Close</Button>
-                          </Modal.Footer>
-                      </Modal>
-                  <Navbar inverse fixedTop collapseOnSelect activekey="1" onSelect={k => this.handleSelect(k)}>
-                  <Navbar.Header>
-                    <Navbar.Brand>
-                      <a href="#brand">CODEX</a>
-                    </Navbar.Brand>
-                    <Navbar.Toggle/>
-                  </Navbar.Header>
-                  <Navbar.Collapse>
-                    <Nav>
-                      <NavItem eventKey={1} href="/groupmanager">
-                        Home
-                      </NavItem>
-                      <NavItem eventKey={2.1} href="/activity">
-                        Aktivitäten
-                      </NavItem>
-                    <NavItem eventKey={2} href="">
-                      Aktivität erstellen
-                    </NavItem>
-                    <NavItem eventKey={3} href="">
-                      Gruppen
-                    </NavItem>
-                  </Nav>
-                  <Nav pullRight>
-                    <NavDropdown eventKey={3} title="Sidebar Options" id="basic-nav-dropdown">
-                      <MenuItem eventKey={3.1}>{['open'].map(this.renderPropCheckbox)}</MenuItem>
-                      <MenuItem eventKey={3.2}>{['docked'].map(this.renderPropCheckbox)}</MenuItem>
-                      <MenuItem eventKey={3.3}>{['transitions'].map(this.renderPropCheckbox)}</MenuItem>
-                      <MenuItem divider />
-                      <MenuItem eventKey={3.3}>{['pullRight'].map(this.renderPropCheckbox)}</MenuItem>
-                    </NavDropdown>
-                    <NavItem eventKey={6} href="/logout">
-                      Log Out
-                    </NavItem>
-                  </Nav>
-                  </Navbar.Collapse>
-                  </Navbar>
-
+                    <NavbarMenu/>
                   </React.Fragment>
               </div>
-              <div className="Feed" >
-            <Sidebar {...sidebarProps2}>
+              <MediaQuery minWidth={1000}>
+                {(matches) => {
+                  if (matches) {
+                    return   <div className="Feed" style={{backgroundColor:"#D3D3D3",width:"70%"}}>
+                          {Item}
+                            </div>
+              } else {
+                return       <div className="Feed" style={{backgroundColor:"#D3D3D3",width:"100%"}}>
+                            {Item}
+                            </div>;
+              }
+            }}
+          </MediaQuery>
               <div style={{backgroundColor:"#D3D3D3"}}>
-              {Item}
-              </div>
-            </Sidebar>
+                <MediaQuery minWidth={1000}>
+                  {(matches) => {
+                    if (matches) {
+                      return  <SidebarCalender/>
+                } else {
+                  return <div></div>;
+                }
+              }}
+            </MediaQuery>
               </div>
           </Sidebar>
   );
