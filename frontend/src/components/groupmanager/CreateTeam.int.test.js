@@ -29,7 +29,7 @@ describe("CreateTeam", () => {
         //do some fancy calculations
         //...
         //I don't know what thing is...
-        console.log("What is the thing?",thing);
+       //console.log("What is the thing?",thing);
         expect(thing).toBeFalsy();
     });
 });

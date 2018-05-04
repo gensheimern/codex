@@ -11,6 +11,7 @@ describe("Activity", () => {
             );
         }
         return mountedActivity;
+        // fetch mocken
     };
     
     it("always renders a div", () => {
