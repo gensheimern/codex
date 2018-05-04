@@ -104,7 +104,7 @@ joinActivity() {
     });
   }
 }
-
+/*
 handleClick = event => {
     event.preventDefault();
     console.log("clicked");
@@ -142,7 +142,7 @@ handleClick = event => {
     });
   }
 }
-
+*/
 
 DateparserDate() {
   var d = new Date(this.props.activity.Time);
