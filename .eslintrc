@@ -21,6 +21,7 @@
 	],
 	"rules": {
 		"indent": ["error", "tab"],
-		"no-tabs":"off"
+		"no-tabs": "off",
+		"linebreak-style": ["error", "windows"]
 	}
 }

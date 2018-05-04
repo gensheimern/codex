@@ -45,8 +45,6 @@ class User {
 			image: dbUser.Image,
 		};
 	}
-
-
 }
 
 module.exports = User;
