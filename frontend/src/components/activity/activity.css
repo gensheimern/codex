@@ -3,16 +3,19 @@
   overflow:auto;
   margin:70px;
   background-color:white;
-   border-radius: 15px 15px 0px 0px;
-}
-card {
+  border-radius: 15px 15px 0px 0px;
 
 }
+.card {
+  width:auto;
+  clear:both;
+  overflow:auto;
+}
+
 .card-body {
   margin-left:100px;
   margin-right:100px;
   background-color:white;
-
 }
 
 
