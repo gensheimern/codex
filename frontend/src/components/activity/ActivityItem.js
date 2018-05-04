@@ -9,7 +9,6 @@ import ClockFA from 'react-icons/lib/fa/clock-o';
 import BullseyeFA from 'react-icons/lib/fa/bullseye';
 import GroupFA from 'react-icons/lib/fa/group';
 import config from "../../config.js";
-import JoinButton from './buttons/joinButton';
 import "./activity.css";
 
 export default class ActivityItem extends React.Component {
