@@ -1,10 +1,18 @@
-.card {
-  height:auto;
+.activity {
+  min-height:auto;
+  overflow:auto;
+  margin:70px;
+  background-color:white;
+   border-radius: 15px 15px 0px 0px;
 }
+card {
 
+}
 .card-body {
   margin-left:100px;
-  margin-right:100px
+  margin-right:100px;
+  background-color:white;
+
 }
 
 
@@ -13,7 +21,7 @@
     padding-right:0px;
     padding-left:0px;
     width: 100%;
-    height: 300px;
+    height: 250px;
     -webkit-box-shadow: 0px 81px 40px -76px rgba(0,0,0,0.57);
     -moz-box-shadow: 0px 81px 40px -76px rgba(0,0,0,0.57);
     box-shadow: 0px 81px 40px -76px rgba(0,0,0,0.57);
@@ -36,7 +44,7 @@
 }
 .image-container .text2 {
   display:block;
-  font-size:5vh;
+  font-size:4vh;
   color:white;
   float: right;
   margin-right: 100px;
@@ -82,6 +90,7 @@ border-color:white;
 .activity-group {
   width: 100%;
   margin-top:30px;
+  padding-bottom: 2%;
 }
 
 .activity-date, .activity-time, .activity-meetingpoint {
@@ -171,4 +180,8 @@ button {
   top: 0px;
   box-shadow: 0px 0px 0px rgba( 15, 165, 60, 0.0 );
   background: rgba( 20, 224, 133, 1 );
+}
+
+.Feed {
+  background-color:grey;
 }
