@@ -61,7 +61,7 @@ export default class Login extends Component {
                 // TODO Code without local storage
             }
 
-            this.props.history.push("/groupmanager");
+            this.props.history.push("/activity");
         }).catch((err) => {
             this.setState({
                 errorPrompt: (<Alert bsStyle = "warning"> <strong> Holy guacamole ! </strong>

@@ -1,17 +1,30 @@
-.card {
+.activity {
+  min-height:auto;
+  overflow:auto;
+  margin:70px;
+  background-color:white;
+   border-radius: 15px 15px 0px 0px;
+}
+card {
 
-  height:auto;
-  border:1px solid;
-  -moz-box-shadow:    3px 3px 5px 6px #ccc;
-  -webkit-box-shadow: 3px 3px 5px 6px #ccc;
-  box-shadow:         3px 3px 5px 6px #ccc;
+}
+.card-body {
+  margin-left:100px;
+  margin-right:100px;
+  background-color:white;
+
 }
 
 
 .image-container, .image {
     position: relative;
+    padding-right:0px;
+    padding-left:0px;
     width: 100%;
-    height: 300px;
+    height: 250px;
+    -webkit-box-shadow: 0px 81px 40px -76px rgba(0,0,0,0.57);
+    -moz-box-shadow: 0px 81px 40px -76px rgba(0,0,0,0.57);
+    box-shadow: 0px 81px 40px -76px rgba(0,0,0,0.57);
 }
 .image-container .after {
     position: absolute;
@@ -29,18 +42,23 @@
   margin-top:80px;
   z-index:2;
 }
-.image-container:hover .text2 {
+.image-container .text2 {
   display:block;
-  font-size:60px;
+  font-size:4vh;
   color:white;
+  float: right;
+  margin-right: 100px;
 }
-.image-container:hover .text2 button{
+/*
+.image-container .text2 button{
 width:300px;
 height:auto;
 font-size:30px;
 background-color:transparent;
 border: solid 3px;
 border-color:white;
+margin-right:100px;
+float:right;
 }
 
 .image-container:hover .text2 button:hover{
@@ -58,6 +76,7 @@ border-color:white;
   color:white;
 
 }
+*/
 
 
 .image-container .after {
@@ -69,15 +88,17 @@ border-color:white;
 
 
 .activity-group {
-  margin-left: auto;
-  margin-right: auto;
-  width: 90%;
+  width: 100%;
+  margin-top:30px;
+  padding-bottom: 2%;
 }
 
 .activity-date, .activity-time, .activity-meetingpoint {
   float:left;
-  padding-left:200px;
-  padding-right:200px;
+  margin: 0 auto;
+
+
+
 }
 
 .activity-alreadyjoining {
@@ -86,11 +107,81 @@ border-color:white;
 }
 
 .myimage{
-  height:100px;
-  width:80px;
+  height:10vh;
+  width:auto;
    border-radius: 50%;
 }
 
 button {
   width:100%;
+}
+
+.activity-userimg {
+  float:left;
+  max-width:70%;
+}
+
+.activityname {
+  float:left;
+  margin-left: 100px;
+margin-top: 5%;
+}
+
+
+/*
+Button css
+*/
+
+button {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  outline: 0;
+  -webkit-appearance: none;
+}
+
+/* Custom */
+.text2 {
+  display: inline-block !important;
+  position: relative;
+  padding: 20px 38px;
+  top: 0;
+  font-size: 30px;
+  font-family: "Open Sans", Helvetica;
+  border-radius: 4px;
+  border-bottom: 1px solid #75a045;
+  background: #75a045;
+  color: #fff;
+  box-shadow: 0px 0px 0px rgba( 15, 165, 60, 0.1 );
+
+  -webkit-transform: translateZ(0);
+     -moz-transform: translateZ(0);
+      -ms-transform: translateZ(0);
+          transform: translateZ(0);
+
+  -webkit-transition: all 0.2s ease;
+     -moz-transition: all 0.2s ease;
+      -ms-transition: all 0.2s ease;
+          transition: all 0.2s ease;
+}
+
+.text2:hover {
+  top: -10px;
+  box-shadow: 0px 10px 10px rgba( 15, 165, 60, 0.2 );
+
+  -webkit-transform: rotateX(20deg);
+     -moz-transform: rotateX(20deg);
+      -ms-transform: rotateX(20deg);
+          transform: rotateX(20deg);
+}
+
+.text2:active {
+  top: 0px;
+  box-shadow: 0px 0px 0px rgba( 15, 165, 60, 0.0 );
+  background: rgba( 20, 224, 133, 1 );
+}
+
+.Feed {
+  background-color:grey;
 }

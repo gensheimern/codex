@@ -1,8 +1,11 @@
+/*
+ Author: Nico Gensheimer
+*/
 import React from "react";
-import { Card,  CardText } from 'reactstrap';
 import CalendarFA from 'react-icons/lib/fa/calendar-check-o';
 import ClockFA from 'react-icons/lib/fa/clock-o';
 import BullseyeFA from 'react-icons/lib/fa/bullseye';
+import GroupFA from 'react-icons/lib/fa/group';
 import config from "../../config.js";
 import "./activity.css";
 export default class ActivityItem extends React.Component {
@@ -97,47 +100,38 @@ loadParticipatesData(){
 			});
 }
 
-		return (
-			<div>
-			 <Card>
-					<div className="image-container">
-				 <img className="image" src={this.props.activity.Banner} alt="Card cap" />
-						<div className="after">
-							 <div className="text">{this.props.activity.Activityname}
-								<div className="text2"><button>JOIN </button></div>
-						</div></div>
-				 </div>
-					 <CardText>
-					 <span className="activity-group">
-							<span className="activity-date">
-								<span><CalendarFA />  {this.DateparserDate()} </span>
-							</span>
-							<span className="activity-time">
-								<span><ClockFA />  {this.DateparserTime()} </span>
-							</span>
-							<span className="activity-meetingpoint">
-								<span><BullseyeFA />  {this.props.activity.Place} </span>
-							</span>
-						</span>
-						<span className="activity-alreadyjoining">
-							<span>Already joining </span>
-							{participatesIMG}
-							<span className="activity-userimg">
-							</span>
-							<span className="activity-counter">
-							 <span>10/20 </span>
-							</span>
-						</span>
-					 </CardText>
+    return (
+      <div className="activity">
 
-					 <div className="activity-buttons">
-					 <button> join </button>
-					 </div>
+          <div className="image-container col-xs-12 col-sm-12 col-lg-12">
+         <img className="image" src={this.props.activity.Banner} alt="Card cap" />
+            <div className="after">
+               <div className="text"> <span className="activityname">{this.props.activity.Activityname}</span>
+                <div className="text2"><button>JOIN </button></div>
+            </div></div>
+         </div>
+           <div className="card-body">
+           <div className="activity-group col-xs-12 col-sm-12 col-lg-12">
+              <div className="activity-date col-xs-6 col-sm-6 col-lg-6">
+                <h4><CalendarFA />  {this.DateparserDate()} </h4>
 
-			 </Card>
-		 </div>
+                <h4><GroupFA /> Already joining </h4>
+
+                  {participatesIMG}
+
+              </div>
+              <div className="activity-time col-xs-6 col-sm-6 col-lg-6">
+                <h4><ClockFA />  {this.DateparserTime()} </h4>
+              </div>
+              <div className="activity-meetingpoint col-xs-6 col-sm-6 col-lg-6">
+                <h4><BullseyeFA />  {this.props.activity.Place} </h4>
+              </div>
+            </div>
+           </div>
+
+     </div>
 
 
-	);
+  );
 }
 }

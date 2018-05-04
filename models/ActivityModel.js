@@ -11,7 +11,7 @@ const Activity = {
 	},
 
 	async createActivity(activity, userId) {
-		return databaseConnection.queryp('INSERT INTO Activity VALUES (?,?,?,?,?,?,?)', [undefined, activity.Description, activity.Activityname, activity.Place, activity.Time, activity.Eventtag, userId]);
+		return databaseConnection.queryp('INSERT INTO Activity VALUES (?,?,?,?,?,?,?,?,?,?)', [undefined, activity.Description, activity.Activityname, activity.Place, activity.Time, activity.Eventtag, activity.Private, userId, activity.Banner, activity.MaxParticipants]);
 	},
 
 	async deleteActivity(activityId, userId) {
