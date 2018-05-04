@@ -1,19 +1,19 @@
 const mysql = require('mysql');
+const config = require('../config');
 
 const dbConnection = mysql.createPool({
-  connectionLimit: 100,
-  host: '159.65.115.221',
-  user: 'root',
-  password: 'teamcodex',
-  database: 'lunch_planner',
+	connectionLimit: 100,
+	host: config.DB_HOST,
+	user: config.DB_USER,
+	password: config.DB_PASS,
+	database: config.DB_NAME,
 });
 
-dbConnection.queryp = function(...args) {
-  return new Promise((resolve, reject) => {
-    dbConnection.query(...args, (err, res) => {
-      err ? reject(err) : resolve(res);
-    });
-  });
-};
+dbConnection.queryp = (...args) => new Promise((resolve, reject) => {
+	dbConnection.query(...args, (err, res) => {
+		if (err) reject(err);
+		else resolve(res);
+	});
+});
 
 module.exports = dbConnection;

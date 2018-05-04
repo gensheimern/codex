@@ -1,28 +1,27 @@
 const express = require('express');
-const app = express();
 const bodyParser = require('body-parser');
 const serveStatic = require('serve-static');
 const path = require('path');
-const mail = require('./mailservice/mailservice');
+// const mail = require('./mailservice/mailservice');
+const authenticateRouter = require('./routes/auth/AuthenticateRouter');
+const { verifyMiddleware } = require('./routes/auth/Auth');
 
-const jwt = require('jsonwebtoken');
-const authenticate = require('./routes/auth/AuthenticateRouter');
-const verifyToken = require('./routes/auth/verify');
+const app = express();
 
 // Middlewares
-app.use(serveStatic(path.join(__dirname + "/image/user")));
-app.use(serveStatic(path.join(__dirname + "/image/activity")));
-app.use(serveStatic(path.join(__dirname + "/frontend/build")));
+app.use(serveStatic(path.join(`${__dirname}/image/user`)));
+app.use(serveStatic(path.join(`${__dirname}/image/activity`)));
+app.use(serveStatic(path.join(`${__dirname}/frontend/build`)));
 app.use(bodyParser.json());
 
-
-app.use('/authenticate', authenticate);
-app.use('/mail', verifyToken, mail);
-
-
-const apiPath = "/";
+// API routes
+const apiPath = '/';
+app.use(`${apiPath}authenticate`, authenticateRouter);
 const apiRouter = require('./routes/MainRouter');
-app.use(apiPath, verifyToken, apiRouter);
+
+app.use(apiPath, verifyMiddleware, apiRouter);
+
+// app.use('/mail', verifyMiddleware, mail);
 
 
 module.exports = app;

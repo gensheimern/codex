@@ -1,19 +1,27 @@
 const Subscribe = require('../models/SubscribeModel');
 
-SubscribeController = {
+const SubscribeController = {
 
 	async getSubscriber(req, res) {
 		const userId = req.token.User_Id;
+		const targetId = req.params.userId;
+
+		if (Number(userId) !== Number(targetId)) {
+			res.status(403).json({
+				message: 'Invalid user id.',
+			});
+			return;
+		}
 
 		try {
-			let subscriber = await Subscribe.getSubscriber(userId);
+			const subscriberRow = await Subscribe.getSubscriber(targetId);
 
-			res.json(subscriber.map(subscriber => ({
-				User_Id: subscriber.User_Id,
-				Firstname: subscriber.Firstname,
-				Name: subscriber.Name,
-				Email: subscriber.Email,
-				Image: subscriber.Email
+			res.json(subscriberRow.map(subscriber => ({
+				userId: subscriber.User_Id,
+				firstName: subscriber.Firstname,
+				name: subscriber.Name,
+				email: subscriber.Email,
+				image: subscriber.Image,
 			})));
 		} catch (error) {
 			res.sendStatus(500);
@@ -22,16 +30,24 @@ SubscribeController = {
 
 	async getSubscribed(req, res) {
 		const userId = req.token.User_Id;
+		const targetId = req.params.userId;
+
+		if (Number(userId) !== Number(targetId)) {
+			res.status(403).json({
+				message: 'Invalid user id.',
+			});
+			return;
+		}
 
 		try {
-			let subscribed = await Subscribe.getSubscribed(userId);
+			const subscribed = await Subscribe.getSubscribed(targetId);
 
 			res.json(subscribed.map(subscriber => ({
-				User_Id: subscriber.User_Id,
-				Firstname: subscriber.Firstname,
-				Name: subscriber.Name,
-				Email: subscriber.Email,
-				Image: subscriber.Email
+				userId: subscriber.User_Id,
+				firstName: subscriber.Firstname,
+				name: subscriber.Name,
+				email: subscriber.Email,
+				image: subscriber.Image,
 			})));
 		} catch (error) {
 			res.sendStatus(500);
@@ -40,13 +56,21 @@ SubscribeController = {
 
 	async createSubscription(req, res) {
 		const userId = req.token.User_Id;
+		const targetId = req.params.userId;
 		const subscribedId = req.params.id;
 
+		if (Number(userId) !== Number(targetId)) {
+			res.status(403).json({
+				message: 'Invalid user id.',
+			});
+			return;
+		}
+
 		try {
-			let result = await Subscribe.addSubscription(subscribedId, userId);
+			await Subscribe.addSubscription(subscribedId, targetId);
 
 			res.status(201).json({
-				success: true
+				success: true,
 			});
 		} catch (error) {
 			res.sendStatus(500);
@@ -55,31 +79,38 @@ SubscribeController = {
 
 	async deleteSubscription(req, res) {
 		const userId = req.token.User_Id;
+		const targetId = req.params.userId;
 		const subscribedId = req.params.id;
 
-		try {
-			let result = await Subscribe.deleteSubscription(subscribedId, userId);
+		if (Number(userId) !== Number(targetId)) {
+			res.status(403).json({
+				message: 'Invalid user id.',
+			});
+			return;
+		}
 
-			if(result.affectedRows === 1) {
+		try {
+			const result = await Subscribe.deleteSubscription(subscribedId, targetId);
+
+			if (result.affectedRows === 1) {
 				res.json({
 					success: true,
-					message: "Subscription ended."
+					message: 'Subscription ended.',
 				});
-			}
-			else {
+			} else {
 				res.status(404).json({
 					success: false,
-					message: "Subscription not found."
+					message: 'Subscription not found.',
 				});
 			}
 			res.status(201).json({
-				success: true
+				success: true,
 			});
 		} catch (error) {
 			res.sendStatus(500);
 		}
-	}
+	},
 
-}
+};
 
 module.exports = SubscribeController;

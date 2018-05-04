@@ -1,12 +1,19 @@
-const User = require('../models/UserModel');
+const UserModel = require('../models/UserModel');
+const User = require('../models/User');
 
-UserController = {
+const UserController = {
 
 	async getAllUsers(req, res) {
 		try {
-			let users = await User.getAllUsers();
+			const users = await UserModel.getAllUsers();
 
-			res.json(users);
+			/* res.json(users.map(user => ({
+				id: user.User_Id,
+				email: user.Email,
+				firstName: user.Firstname,
+				name: user.Name,
+			}))); */
+			res.json(users.map(user => (new User(User.fromDBUser(user))).getUserWithoutPassword()));
 		} catch (error) {
 			res.sendStatus(500);
 		}
@@ -14,15 +21,14 @@ UserController = {
 
 	async getUserById(req, res) {
 		try {
-			let users = await User.getUserById(req.params.id);
+			const users = await UserModel.getUserById(req.params.id);
 
-			if(users.length === 0) {
+			if (users.length === 0) {
 				res.status(404).json({
-					message: "Invalid user id."
+					message: 'Invalid user id.',
 				});
-			}
-			else {
-				res.json(users[0]);
+			} else {
+				res.json((new User(User.fromDBUser(users[0]))).getUserWithoutPassword());
 			}
 		} catch (error) {
 			res.sendStatus(500);
@@ -30,34 +36,41 @@ UserController = {
 	},
 
 	userDataInvalid(user) {
-		return !user.Firstname
-		|| !user.Firstname instanceof String
-		|| user.Firstname.length <= 0
-		|| !user.Name
-		|| !user.Name instanceof String
-		|| user.Name.length <= 0
-		|| !user.Password
-		|| !user.Password instanceof String
-		|| user.Password.length <= 0
-		|| !user.Email
-		|| !user.Email instanceof String
-		|| !/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(user.Email);
+		const {
+			firstName, name, email, password, image,
+		} = user;
+
+		return !firstName
+		|| typeof firstName !== 'string'
+		|| firstName.length <= 0
+		|| !name
+		|| typeof name !== 'string'
+		|| name.length <= 0
+		|| !password
+		|| typeof password !== 'string'
+		|| password.length <= 0
+		|| !image
+		|| typeof image !== 'string'
+		|| !email
+		|| typeof email !== 'string'
+		|| !/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email);
+		// /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[
+		// [0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 	},
 
 	async addUser(req, res) {
-		if(UserController.userDataInvalid(req.body)) {
-			return res.status(400).json({
-				message: "Invalid user information."
+		if (UserController.userDataInvalid(req.body)) {
+			res.status(400).json({
+				message: 'Invalid user information.',
 			});
+			return;
 		}
 
-		req.body.Image = ""; // TODO Change
-
 		try {
-			let result = await User.addUser(req.body);
+			const result = await UserModel.addUser(req.body);
 
 			res.status(201).json({
-				User_Id: result.insertId
+				User_Id: result.insertId,
 			});
 		} catch (error) {
 			res.sendStatus(500);
@@ -65,29 +78,29 @@ UserController = {
 	},
 
 	deleteUser(req, res) {
-		const userID = req.token.User_Id;
+		const { userId, admin } = req.token;
 
-		if(!(parseInt(req.params.id) === parseInt(req.token.User_Id)
-			|| req.token.admin === true)) {
-			return res.status(403).json({
+		if (!(Number(req.params.id) === Number(userId)
+			|| admin === true)) {
+			res.status(403).json({
 				success: false,
-				message: "Invalid user id."
+				message: 'Invalid user id.',
 			});
+			return;
 		}
 
 		try {
-			let affectedRows = User.deleteUser(req.params.id);
+			const result = UserModel.deleteUser(req.params.id);
 
-			if(affectedRows === 0) {
+			if (result.affectedRows === 0) {
 				res.status(404).json({
 					success: false,
-					message: "Invalid user id."
+					message: 'Invalid user id.',
 				});
-			}
-			else {
+			} else {
 				res.json({
 					success: true,
-					message: "User deleted."
+					message: 'User deleted.',
 				});
 			}
 		} catch (error) {
@@ -96,44 +109,45 @@ UserController = {
 	},
 
 	async updateUser(req, res) {
-		const userID = req.token.User_Id;
+		const { userId } = req.token;
 
-		if(Number(req.params.id) !== userID) {
-			return res.status(403).json({
+		if (Number(req.params.id) !== userId) {
+			res.status(403).json({
 				success: false,
-				message: "Invalid user id."
+				message: 'Invalid user id.',
 			});
+			return;
 		}
 
 		try {
-			let oldUser = await User.getUserByIdWithPw(userID);
-			oldUser = oldUser[0];
-			let newUser = {
-				Firstname: req.body.Firstname || oldUser.Firstname,
-				Name: req.body.Name || oldUser.Name,
-				Email: req.body.Email || oldUser.Email,
-				Password: req.body.Password || oldUser.Password
-			}
+			const rows = await UserModel.getUserById(userId);
+			const oldUser = rows[0];
+			const newUser = {
+				firstName: req.body.firstName || oldUser.Firstname,
+				name: req.body.name || oldUser.Name,
+				email: req.body.email || oldUser.Email,
+				password: req.body.password || oldUser.Password,
+				image: req.body.image || oldUser.Image,
+			};
 
-			let result = await User.updateUser(userID, newUser);
+			const result = await UserModel.updateUser(userId, newUser);
 
-			if(result.affectedRows === 0) {
+			if (result.affectedRows === 0) {
 				res.status(404).json({
 					success: false,
-					message: "Invalid user id."
+					message: 'Invalid user id.',
 				});
-			}
-			else {
+			} else {
 				res.json({
 					success: true,
-					message: "User successfully updated."
+					message: 'User successfully updated.',
 				});
 			}
 		} catch (error) {
 			res.sendStatus(500);
 		}
-	}
+	},
 
-}
+};
 
 module.exports = UserController;

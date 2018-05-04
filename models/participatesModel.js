@@ -1,4 +1,4 @@
-const databaseConnection = require('./DatabaseConnection')
+const databaseConnection = require('./DatabaseConnection');
 
 const Participates = {
 
@@ -7,7 +7,7 @@ const Participates = {
 			INNER JOIN participates ON Member.User_Id = participates.User_Id
 			INNER JOIN (User INNER JOIN participates AS participates2 ON User.User_Id = participates2.User_Id) ON participates2.Activity_Id = participates.Activity_Id
 			WHERE participates.Activity_Id = ? AND User.User_Id = ?`, [activityId, userId]);
-	}
+	},
 
 };
 

@@ -4,11 +4,11 @@ const mock = require('node-mocks-http');
 const dbConnection = require('../models/DatabaseConnection');
 
 const token = {
-	User_Id: 5,
-	Firstname: 'Max',
-	Name: 'Mustermann',
-	Email: 'valid@email.de'
-}
+	userId: 5,
+	firstName: 'Max',
+	name: 'Mustermann',
+	email: 'valid@email.de',
+};
 
 const defaultDBServerVars = {
 	fieldCount: 0,
@@ -19,7 +19,7 @@ const defaultDBServerVars = {
 	message: '',
 	protocol41: true,
 	changedRows: 0,
-}
+};
 
 const TestTools = {
 	dbSelectEmpty: [],
@@ -53,55 +53,54 @@ const TestTools = {
 
 
 	mockDatabase(options = {}) {
-		if(!options instanceof Object)
-			throw new Error("Invalid options parameter.");
-
-		let mockDB = sinon.mock(dbConnection);
-
-		let query = options.query || "",
-			result = options.result || null,
-			error = options.error || null;
-
-		if(options.params) {
-			mockDB.expects('query')
-			.withArgs(query, options.params)
-			.callsArgWith(2, error, result);
+		if (!(options instanceof Object)) {
+			throw new Error('Invalid options parameter.');
 		}
-		else {
+
+		const mockDB = sinon.mock(dbConnection);
+
+		const query = options.query || '';
+		const result = options.result || null;
+		const error = options.error || null;
+
+		if (options.params) {
 			mockDB.expects('query')
-			.withArgs(query)
-			.callsArgWith(1, error, result);
+				.withArgs(query, options.params)
+				.callsArgWith(2, error, result);
+		} else {
+			mockDB.expects('query')
+				.withArgs(query)
+				.callsArgWith(1, error, result);
 		}
-		
+
 		return mockDB;
 	},
 
 	mockModel(model, method, error, result) {
-		//return sinon.stub(model, method).yields(error, result);
 		return error
 			? sinon.stub(model, method).rejects(error)
 			: sinon.stub(model, method).resolves(result);
 	},
 
 	mockNotCalled(model, method) {
-		return sinon.stub(model, method).throws("Should not be called.");
+		return sinon.stub(model, method).throws(new Error('Should not be called.'));
 	},
 
 	mockRequest(options = {}) {
-		options.token = token;
-		options.headers = options.headers || {
-			"content-type": "application/json"
+		const params = {
+			...options,
+			token,
+			headers: options.headers || { 'content-type': 'application/json' },
+			url: options.url || '/',
+			method: options.method || 'GET',
+			params: options.params || {},
 		};
-		options.url = options.url || '/';
-		options.method = options.method || 'GET';
 
-
-		return mock.createRequest(options);
+		return {
+			req: mock.createRequest(params),
+			res: mock.createResponse(),
+		};
 	},
-
-	mockResponse(options) {
-		return mock.createResponse(options);
-	}
-}
+};
 
 module.exports = TestTools;

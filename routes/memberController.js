@@ -1,88 +1,94 @@
 const Member = require('../models/MemberModel');
+const TeamModel = require('../models/TeamModel');
+const User = require('../models/User');
 
-MemberController = {
-	
+const MemberController = {
+
 	async getMemberOfTeam(req, res) {
-		const userID = req.token.User_Id;
-		const teamID = req.params.id;
+		const { userId } = req.token;
+		const { teamId } = req.params;
 
 		try {
-			let isMember = await Member.isMember(teamID, userID);
+			const isMember = Member.isMember(teamId, userId);
+			const memberOfTeam = Member.getMemberOfTeam(teamId);
 
-			if(isMember) {
-				let member = await Member.getMemberOfTeam(teamID);
+			if (await isMember) {
+				const member = await memberOfTeam;
 
-				res.json(member);
-			}
-			else {
-				res.status(400).json({
-					message: "Invalid team id."
+				res.json(member.map(user => (new User(User.fromDBUser(user)).getUserWithoutPassword())));
+			} else {
+				res.status(404).json({
+					message: 'Invalid team id.',
 				});
 			}
-		} catch (error) {console.error(error);
+		} catch (error) {
 			res.sendStatus(500);
 		}
 	},
 
 	async addMember(req, res) {
-		const userID = req.token.User_Id;
-		const memberID = req.body.User_Id;
-		const teamID = req.body.Team_Id;
+		const { userId } = req.token;
+		const { teamId, memberId } = req.params;
 
-		if(!memberID || !teamID) {
+		if (!memberId || !teamId) {
 			res.status(400).json({
-				message: "Invalid team or user id."
+				message: 'Invalid team id or user id.',
 			});
+			return;
 		}
 
 		try {
-			let teammanager = await TeamModel.getTeammanager(teamID);
+			const teammanager = await TeamModel.getTeammanager(teamId);
 
-			if(teammanager !== userID) {
+			if (teammanager.length !== 1 || !teammanager[0] || teammanager[0].User_Id !== userId) {
 				res.status(403).json({
-					message: "Only the creator of a group can add members."
+					message: 'Only the creator of a group can add members.',
 				});
-			}
-			else {
-				await Member.addMember(memberID, teamID);
-				res.json({
-					message: "Member added to team."
-				});
-			}
-		} catch (error) {
-			reject(error);
-		}
-	},
+			} else {
+				await Member.addMember(memberId, teamId);
 
-	async deleteMember(req, res) {
-		const userID = req.token.User_Id;
-		const teamID = req.body.Team_Id;
-
-		if(!teamID) {
-			res.status(400).json({
-				message: "Invalid team or user id."
-			});
-		}
-
-		try {
-			let isMember = await Member.isMember(teamID, userID);
-
-			if(!isMember) {
-				res.status(403).json({
-					message: "Invalid team or user id."
-				});
-			}
-			else {
-				await Member.deleteMember(teamID, userID);
-				res.json({
-					message: "Member deleted."
+				res.status(201).json({
+					message: 'Member added to team.',
 				});
 			}
 		} catch (error) {
 			res.sendStatus(500);
 		}
-	}
+	},
 
-}
+	async deleteMember(req, res) {
+		const { userId } = req.token;
+		const { memberId, teamId } = req.params;
+
+		if (!teamId || !memberId) {
+			res.status(400).json({
+				message: 'Invalid team or user id.',
+			});
+			return;
+		}
+
+		try {
+			const isMember = Member.isMember(teamId, memberId);
+			const managerRows = await TeamModel.getTeammanager(teamId);
+
+			const manager = managerRows[0];
+
+			if (!!manager || (await isMember && Number(userId) === Number(memberId))) {
+				await Member.deleteMember(teamId, memberId);
+
+				res.json({
+					message: 'Member deleted.',
+				});
+			} else {
+				res.status(403).json({
+					message: 'Invalid team or user id.',
+				});
+			}
+		} catch (error) {
+			res.sendStatus(500);
+		}
+	},
+
+};
 
 module.exports = MemberController;

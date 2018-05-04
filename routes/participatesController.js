@@ -1,34 +1,34 @@
 const Participates = require('../models/participatesModel');
 
-ParticipatesController = {
+const ParticipatesController = {
 
 	async getParticipates(req, res) {
 		const userId = req.token.User_Id;
-		const activityId = req.params.id;
+		const { activityId } = req.params;
 
 		try {
-			let member = await Participates.getMemberOfActivity(activityId, userId);
+			const member = await Participates.getMemberOfActivity(activityId, userId);
 
 			res.json(member.map(user => ({
-				User_Id: user.User_Id,
-				Firstname: user.Firstname,
-				Name: user.Name,
-				Email: user.Email,
-				Image: user.Image
+				userId: user.User_Id,
+				firstName: user.Firstname,
+				name: user.Name,
+				email: user.Email,
+				image: user.Image,
 			})));
 		} catch (error) {
 			res.sendStatus(500);
 		}
 	},
 
-	async addParticipation(req, res) {
+	async addParticipation() {
 		// TODO
 	},
 
-	async deleteParticipation(req, res) {
+	async deleteParticipation() {
 		// TODO
-	}
+	},
 
-}
+};
 
 module.exports = ParticipatesController;

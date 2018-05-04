@@ -13,7 +13,8 @@
 		"test": "mocha",
 		"test:coverage": "nyc mocha --timeout=3000",
 		"testclient": "npm run test --prefix frontend",
-		"testclient:coverage": "npm run test:coverage --prefix frontend"
+		"testclient:coverage": "npm run test:coverage --prefix frontend",
+		"lint": "eslint ."
 	},
 	"engines": {
 		"node": ">=6.9.1"
@@ -30,12 +31,17 @@
 	"author": "CODEX Team",
 	"license": "ISC",
 	"dependencies": {
-		"bcrypt-nodejs": "0.0.3",
+		"bcrypt": "^2.0.1",
 		"body-parser": "^1.18.2",
 		"concurrently": "^3.5.1",
 		"cookie-parser": "~1.4.3",
 		"debug": "~2.6.9",
 		"ejs": "~2.5.7",
+		"eslint": "^4.19.1",
+		"eslint-config-airbnb": "^16.1.0",
+		"eslint-plugin-import": "^2.11.0",
+		"eslint-plugin-jsx-a11y": "^6.0.3",
+		"eslint-plugin-react": "^7.7.0",
 		"express": "~4.16.0",
 		"express-mailer": "^0.3.1",
 		"http-errors": "~1.6.2",

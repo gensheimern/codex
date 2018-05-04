@@ -1,7 +1,5 @@
-const express = require('express');
-const router = express.Router();
-const jwt = require('jsonwebtoken');
 const TeamController = require('./TeamController');
+const router = require('express').Router();
 
 
 router.get('/', TeamController.getAllTeams);

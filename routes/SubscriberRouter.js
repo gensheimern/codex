@@ -1,6 +1,5 @@
-const express = require('express');
-const router = express.Router();
 const SubscribeController = require('./SubscribeController');
+const router = require('express').Router();
 
 
 router.get('/', SubscribeController.getSubscriber);

@@ -1,13 +1,12 @@
 const Activity = require('../models/ActivityModel');
-const jwt = require('jsonwebtoken');
 
-ActivityController = {
-	
+const ActivityController = {
+
 	async getAllActivities(req, res) {
 		const userId = req.token.User_Id;
 
 		try {
-			let activities = await Activity.getAllActivities(userId);
+			const activities = await Activity.getAllActivities(userId);
 
 			res.json(activities);
 		} catch (error) {
@@ -19,14 +18,13 @@ ActivityController = {
 		const userId = req.token.User_Id;
 
 		try {
-			let result = await Activity.getActivityById(req.params.id, userId);
+			const result = await Activity.getActivityById(req.params.id, userId);
 
-			if(result.length === 1) {
+			if (result.length === 1) {
 				res.json(result[0]);
-			}
-			else {
+			} else {
 				res.statsus(404).json({
-					message: "Activity not found"
+					message: 'Activity not found',
 				});
 			}
 		} catch (error) {
@@ -39,10 +37,10 @@ ActivityController = {
 		const activity = req.body;
 
 		try {
-			let result = await Activity.createActivity(activity, userId);
+			const result = await Activity.createActivity(activity, userId);
 
 			res.status(201).json({
-				Activity_Id: result.insertId
+				Activity_Id: result.insertId,
 			});
 		} catch (error) {
 			res.sendStatus(500);
@@ -55,18 +53,17 @@ ActivityController = {
 
 		try {
 			// TODO Check if user is admin of activity
-			let result = await Activity.deleteActivity(activityId, userId);
+			const result = await Activity.deleteActivity(activityId, userId);
 
-			if(result.affectedRows === 1) {
+			if (result.affectedRows === 1) {
 				res.json({
 					success: true,
-					message: "Activity successfully deleted."
+					message: 'Activity successfully deleted.',
 				});
-			}
-			else {
+			} else {
 				res.status(404).json({
 					success: false,
-					message: "Activity not found."
+					message: 'Activity not found.',
 				});
 			}
 		} catch (error) {
@@ -80,25 +77,24 @@ ActivityController = {
 
 		try {
 			// TODO Check if user is admin of activity
-			let result = await Activity.updateActivity(activityId, userId);
+			const result = await Activity.updateActivity(activityId, userId);
 
-			if(result.affectedRows === 1) {
+			if (result.affectedRows === 1) {
 				res.json({
 					success: true,
-					message: "Activity successfully updated."
+					message: 'Activity successfully updated.',
 				});
-			}
-			else {
+			} else {
 				res.status(404).json({
 					success: false,
-					message: "Activity not found."
+					message: 'Activity not found.',
 				});
 			}
 		} catch (error) {
 			res.sendStatus(500);
 		}
-	}
+	},
 
-}
+};
 
 module.exports = ActivityController;
