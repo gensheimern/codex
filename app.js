@@ -19,9 +19,7 @@ const apiPath = '/';
 app.use(`${apiPath}authenticate`, authenticateRouter);
 const apiRouter = require('./routes/MainRouter');
 
-app.use(apiPath, verifyMiddleware, apiRouter);app.get('', (req, res) => {
-	//
-});
+app.use(apiPath, verifyMiddleware, apiRouter);
 
 // app.use('/mail', verifyMiddleware, mail);
 

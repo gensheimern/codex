@@ -35,7 +35,7 @@ const ActivityController = {
 			const activity = await activityPromise;
 
 			if (activity === null) {
-				res.statsus(404).json({
+				res.status(404).json({
 					message: 'Activity not found',
 				});
 			} else {
@@ -50,6 +50,7 @@ const ActivityController = {
 		const { userId } = req.token;
 		const activity = req.body;
 		// TODO check body
+		// TODO: 2018-04-20 12:34:18 as time
 
 		try {
 			const result = await ActivityModel.createActivity(activity, userId);
@@ -100,6 +101,8 @@ const ActivityController = {
 	async updateActivity(req, res) {
 		const { userId } = req.token;
 		const { activityId } = req.params;
+		const newActivity = req.body;
+		// TODO: Check body
 
 		try {
 			// TODO Check if user is admin of activity
@@ -113,7 +116,7 @@ const ActivityController = {
 				return;
 			}
 
-			const result = await ActivityModel.updateActivity(activityId, userId);
+			const result = await ActivityModel.updateActivity(activityId, newActivity);
 
 			if (result.affectedRows === 1) {
 				res.json({

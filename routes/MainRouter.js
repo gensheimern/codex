@@ -18,16 +18,22 @@ router.use('/subscriber', subscriberRouter)
 router.use('/participates',participatesRouter);
 router.use('/member', memberRouter); */
 
-router.use('/team/:teamId/member', memberRouter);
+router.use('/team', memberRouter);
 router.use('/team', teamRouter);
 
-router.use('/user/:userId/subscribed', subscribedRouter);
-router.use('/user/:userId/subscriber', subscriberRouter);
+router.use('/user', subscribedRouter);
+router.use('/user', subscriberRouter);
 router.use('/user', userRouter);
 
-router.use('/activity/:activityId/participants', participatesRouter);
-router.use('/activity/:activityId/message', messageRouter);
+router.use('/activity', participatesRouter);
+router.use('/activity', messageRouter);
 router.use('/activity', activityRouter);
+
+router.use('*', (req, res) => {
+	res.status(404).json({
+		message: 'Invalid path.',
+	});
+});
 
 
 module.exports = router;

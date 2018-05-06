@@ -35,7 +35,7 @@ const User = {
 	 * @returns {Promise<DBResult>} The result of the database insertion.
 	 */
 	async addUser(user) {
-		return databaseConnection.queryp('INSERT INTO User (Firstname, Name, Email, Password, Image) VALUES (?,?,?,?,?)', [user.firstName, user.name, user.email, hashPassword(user.password), user.image]);
+		return databaseConnection.queryp('INSERT INTO User (Firstname, Name, Email, Password, Image) VALUES (?,?,?,?,?)', [user.firstName, user.name, user.email, await hashPassword(user.password), user.image]);
 	},
 
 	/**
@@ -54,7 +54,7 @@ const User = {
 	 * @returns {Promise<DBResult>} The result of the database update.
 	 */
 	async updateUser(userId, newUser) {
-		return databaseConnection.queryp('UPDATE User SET Firstname=?, Name=?, Email=?, Password=? where User_Id=?', [newUser.firstName, newUser.name, newUser.email, newUser.password, userId]);
+		return databaseConnection.queryp('UPDATE User SET Firstname=?, Name=?, Email=?, Password=?, Image=? where User_Id=?', [newUser.firstName, newUser.name, newUser.email, await hashPassword(newUser.password), newUser.image, userId]);
 	},
 
 };

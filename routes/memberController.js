@@ -84,6 +84,7 @@ const MemberController = {
 		}
 
 		try {
+			// TODO: Check if teammanager leaves => new team manager
 			const isMember = Member.isMember(teamId, memberId);
 			const isTeamManager = TeamModel.isTeammanager(userId, teamId);
 

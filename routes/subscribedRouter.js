@@ -2,11 +2,11 @@ const SubscribeController = require('./SubscribeController');
 const router = require('express').Router();
 
 
-router.get('/', SubscribeController.getSubscribed);
+router.get('/:userId/subscribed', SubscribeController.getSubscribed);
 
-router.post('/:subscribedId', SubscribeController.createSubscription);
+router.post('/:userId/subscribed/:subscribedId', SubscribeController.createSubscription);
 
-router.delete('/:subscribedId', SubscribeController.deleteSubscription);
+router.delete('/:userId/subscribed/:subscribedId', SubscribeController.deleteSubscription);
 
 
 module.exports = router;

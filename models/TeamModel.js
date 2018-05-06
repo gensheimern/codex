@@ -75,7 +75,7 @@ const Team = {
 	 * @returns {Promise<boolean>} Returns if the user is the manager of the team.
 	 */
 	async isTeammanager(userId, teamId) {
-		return databaseConnection.querypBool('SELECT Team_Id FROM Team WHERE Team Team_Id = ? AND Teammanager = ?', [teamId, userId]);
+		return databaseConnection.querypBool('SELECT Team_Id FROM Team WHERE Team_Id = ? AND Teammanager = ?', [teamId, userId]);
 	},
 
 };

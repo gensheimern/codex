@@ -37,7 +37,7 @@ const Subscribe = {
 	 * @returns {Promise<DBResult>} Returns if the subscription was deleted.
 	 */
 	async deleteSubscription(subscribedId, userId) {
-		return databaseConnection.queryp('DELETE FROM subscribed WHERE Subscribed_Id=? Subscriber_Id=?', [subscribedId, userId]);
+		return databaseConnection.queryp('DELETE FROM subscribed WHERE Subscribed_Id=? AND Subscriber_Id=?', [subscribedId, userId]);
 	},
 
 };

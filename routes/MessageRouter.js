@@ -2,13 +2,13 @@ const router = require('express').Router();
 const MessageController = require('./MessageController');
 
 
-router.get('/:messageId', MessageController.getMessagesOfActivity);
+router.get('/:activityId/message', MessageController.getMessagesOfActivity);
 
-router.post('/', MessageController.createMessage);
+router.post('/:activityId/message', MessageController.createMessage);
 
-router.put('/:messageId', MessageController.updateMessage);
+router.put('/:activityId/message/:messageId', MessageController.updateMessage);
 
-router.delete('/:messageId', MessageController.deleteMessage);
+router.delete('/:activityId/message/:messageId', MessageController.deleteMessage);
 
 
 module.exports = router;

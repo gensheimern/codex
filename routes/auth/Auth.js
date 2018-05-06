@@ -74,7 +74,7 @@ const Auth = {
 		const token = req.headers['x-access-token'];
 
 		try {
-			const decoded = await this.validateJWT(token);
+			const decoded = await Auth.validateJWT(token);
 			req.token = decoded;
 			next();
 		} catch (error) {

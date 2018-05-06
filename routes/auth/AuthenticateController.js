@@ -3,18 +3,19 @@ const Auth = require('./Auth');
 
 const AuthenticateController = {
 	async authenticate(req, res) {
-		const { Email, Password } = req.body;
+		const { email, password } = req.body;
 
 		try {
-			const rows = await User.getUserByEmail(Email);
-			const user = rows[0];
+			const user = await User.getUserByEmail(email);
 
 			// If the user doesnt exits, it will send status code 403 and the
 			// json to the client
 			if (!user
-			|| !user.password
+			|| !user.Password
 			// If the password doesn't match, it sends status code 403
-			|| !await Auth.validateHash(Password, user.Password)) {
+			// || !await Auth.validateHash(Password, user.Password)) {// richtig, l.18 only compatibility
+			|| (!await Auth.validateHash(password, user.Password) && !(password === user.Password))) {
+				// TODO: delete line 18 and use line 17!
 				res.status(403).json({
 					success: false,
 					message: 'Invalid user credentials.',

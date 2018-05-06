@@ -24,7 +24,7 @@ const transforms = {
 		event: dbActivity.Eventtag === 1,
 		private: dbActivity.Private === 1,
 		banner: dbActivity.Banner,
-		maxParticipants: dbActivity.maxParticipants,
+		maxParticipants: dbActivity.MaxParticipants,
 		host: {
 			...transforms.transformUser(dbActivity),
 		},

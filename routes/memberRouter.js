@@ -2,11 +2,11 @@ const router = require('express').Router();
 const MemberController = require('./memberController');
 
 
-router.get('/', MemberController.getMemberOfTeam);
+router.get('/:teamId/member', MemberController.getMemberOfTeam);
 
-router.post('/:memberId', MemberController.addMember);
+router.post('/:teamId/member/:memberId', MemberController.addMember);
 
-router.delete('/:memberId', MemberController.deleteMember);
+router.delete('/:teamId/member/:memberId', MemberController.deleteMember);
 
 
 module.exports = router;
