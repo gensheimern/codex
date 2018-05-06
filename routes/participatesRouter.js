@@ -2,11 +2,11 @@ const router = require('express').Router();
 const participatesController = require('./participatesController');
 
 
-router.get('/:id', participatesController.getParticipates);
+router.get('/', participatesController.getParticipates);
 
-router.post('/', participatesController.addParticipation);
+router.post('/:participantId', participatesController.addParticipation);
 
-router.delete('/', participatesController.deleteParticipation);
+router.delete('/:participantId', participatesController.deleteParticipation);
 
 
 module.exports = router;

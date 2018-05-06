@@ -16,12 +16,18 @@ describe('Team controller', () => {
 					Teamname: 'Test1',
 					Firstname: 'Max',
 					Name: 'Mustermann',
+					Email: 'valid@email.com',
+					Password: '1234',
+					Image: '/image.png',
 				},
 				{
 					Team_Id: 2,
 					Teamname: 'Test2',
 					Firstname: 'Nico',
 					Name: 'Mustermann',
+					Email: 'valid2@email.com',
+					Password: '5678',
+					Image: '/image2.png',
 				},
 			]);
 
@@ -45,20 +51,28 @@ describe('Team controller', () => {
 				{
 					id: 1,
 					name: 'Test1',
-					managerFirstName: 'Max',
-					managerName: 'Mustermann',
+					manager: {
+						firstName: 'Max',
+						name: 'Mustermann',
+						email: 'valid@email.com',
+						image: '/image.png',
+					},
 				},
 				{
 					id: 2,
 					name: 'Test2',
-					managerFirstName: 'Nico',
-					managerName: 'Mustermann',
+					manager: {
+						firstName: 'Nico',
+						name: 'Mustermann',
+						email: 'valid2@email.com',
+						image: '/image2.png',
+					},
 				},
 			]);
 		});
 	});
 
-	describe('GET one team by id', () => {
+	/* describe('GET one team by id', () => {
 		it('should send the data of one team if the user is a member', async () => {
 			// Mock user model
 			const mockModel = TestTools.mockModel(teamModel, 'getTeamById', null, [{
@@ -66,6 +80,8 @@ describe('Team controller', () => {
 				Teamname: 'Test1',
 				Firstname: 'Max',
 				Name: 'Mustermann',
+				Email: 'valid@email.com',
+				Image: '/image.png',
 			}]);
 
 			// Mock http request and response
@@ -73,7 +89,7 @@ describe('Team controller', () => {
 				method: 'GET',
 				baseUrl: '/team',
 				params: {
-					id: 5,
+					teamId: 5,
 				},
 			});
 
@@ -90,28 +106,36 @@ describe('Team controller', () => {
 			expect(JSON.parse(res._getData()), 'Correct respnse body').to.deep.equal({
 				id: 5,
 				name: 'Test1',
-				managerFirstName: 'Max',
-				managerName: 'Mustermann',
+				manager: {
+					firstName: 'Max',
+					name: 'Mustermann',
+					email: 'valid@email.com',
+					image: '/image.png',
+				},
 			});
 		});
-	});
+	}); */
 
 	describe('GET one team by id', () => {
 		it('should send the data of one team if the user is a member', async () => {
 			// Mock user model
-			const mockModel = TestTools.mockModel(teamModel, 'getTeamById', null, [{
+			const mockModel = TestTools.mockModel(teamModel, 'getTeamById', null, {
 				Team_Id: 5,
 				Teamname: 'Test1',
 				Firstname: 'Max',
 				Name: 'Mustermann',
-			}]);
+				Email: 'valid@email.com',
+				Password: '1234',
+				Image: '/image.png',
+			});
+			const mockModel2 = TestTools.mockModel(memberModel, 'isMember', null, true);
 
 			// Mock http request and response
 			const { req, res } = TestTools.mockRequest({
 				method: 'GET',
 				baseUrl: '/team',
 				params: {
-					id: 5,
+					teamId: 5,
 				},
 			});
 
@@ -120,6 +144,7 @@ describe('Team controller', () => {
 
 			// Restore mock
 			mockModel.restore();
+			mockModel2.restore();
 
 			expect(res._isEndCalled(), 'End called').to.be.true;
 			expect(res._getStatusCode(), 'Right status code').to.equal(200);
@@ -128,21 +153,26 @@ describe('Team controller', () => {
 			expect(JSON.parse(res._getData()), 'Correct respnse body').to.deep.equal({
 				id: 5,
 				name: 'Test1',
-				managerFirstName: 'Max',
-				managerName: 'Mustermann',
+				manager: {
+					firstName: 'Max',
+					name: 'Mustermann',
+					email: 'valid@email.com',
+					image: '/image.png',
+				},
 			});
 		});
 
 		it('should not send the data of one team the user is no member of', async () => {
 			// Mock user model
-			const mockModel = TestTools.mockModel(teamModel, 'getTeamById', null, []);
+			const mockModel = TestTools.mockModel(teamModel, 'getTeamById', null, null);
+			const mockModel2 = TestTools.mockModel(memberModel, 'isMember', null, false);
 
 			// Mock http request and response
 			const { req, res } = TestTools.mockRequest({
 				method: 'GET',
 				baseUrl: '/team',
 				params: {
-					id: 5,
+					teamId: 5,
 				},
 			});
 
@@ -151,6 +181,7 @@ describe('Team controller', () => {
 
 			// Restore mock
 			mockModel.restore();
+			mockModel2.restore();
 
 			expect(res._isEndCalled(), 'End called').to.be.true;
 			expect(res._getStatusCode(), 'Right status code').to.equal(404);
@@ -200,7 +231,7 @@ describe('Team controller', () => {
 				method: 'PUT',
 				baseUrl: '/team',
 				params: {
-					id: '8',
+					teamId: '8',
 				},
 				body: {
 					name: 'Test Team',

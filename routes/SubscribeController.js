@@ -1,9 +1,10 @@
 const Subscribe = require('../models/SubscribeModel');
+const transforms = require('./transforms');
 
 const SubscribeController = {
 
 	async getSubscriber(req, res) {
-		const userId = req.token.User_Id;
+		const { userId } = req.token;
 		const targetId = req.params.userId;
 
 		if (Number(userId) !== Number(targetId)) {
@@ -14,22 +15,16 @@ const SubscribeController = {
 		}
 
 		try {
-			const subscriberRow = await Subscribe.getSubscriber(targetId);
+			const subscriber = await Subscribe.getSubscriber(targetId);
 
-			res.json(subscriberRow.map(subscriber => ({
-				userId: subscriber.User_Id,
-				firstName: subscriber.Firstname,
-				name: subscriber.Name,
-				email: subscriber.Email,
-				image: subscriber.Image,
-			})));
+			res.json(subscriber.map(transforms.transformUser));
 		} catch (error) {
 			res.sendStatus(500);
 		}
 	},
 
 	async getSubscribed(req, res) {
-		const userId = req.token.User_Id;
+		const { userId } = req.token;
 		const targetId = req.params.userId;
 
 		if (Number(userId) !== Number(targetId)) {
@@ -42,22 +37,16 @@ const SubscribeController = {
 		try {
 			const subscribed = await Subscribe.getSubscribed(targetId);
 
-			res.json(subscribed.map(subscriber => ({
-				userId: subscriber.User_Id,
-				firstName: subscriber.Firstname,
-				name: subscriber.Name,
-				email: subscriber.Email,
-				image: subscriber.Image,
-			})));
+			res.json(subscribed.map(transforms.transformUser));
 		} catch (error) {
 			res.sendStatus(500);
 		}
 	},
 
 	async createSubscription(req, res) {
-		const userId = req.token.User_Id;
+		const { userId } = req.token;
 		const targetId = req.params.userId;
-		const subscribedId = req.params.id;
+		const { subscribedId } = req.params;
 
 		if (Number(userId) !== Number(targetId)) {
 			res.status(403).json({
@@ -78,9 +67,9 @@ const SubscribeController = {
 	},
 
 	async deleteSubscription(req, res) {
-		const userId = req.token.User_Id;
+		const { userId } = req.token;
 		const targetId = req.params.userId;
-		const subscribedId = req.params.id;
+		const { subscribedId } = req.params;
 
 		if (Number(userId) !== Number(targetId)) {
 			res.status(403).json({
@@ -103,9 +92,6 @@ const SubscribeController = {
 					message: 'Subscription not found.',
 				});
 			}
-			res.status(201).json({
-				success: true,
-			});
 		} catch (error) {
 			res.sendStatus(500);
 		}

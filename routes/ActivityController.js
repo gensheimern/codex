@@ -1,31 +1,45 @@
-const Activity = require('../models/ActivityModel');
+const ActivityModel = require('../models/ActivityModel');
+const ParticipatesModel = require('../models/participatesModel');
+const transforms = require('./transforms');
 
 const ActivityController = {
 
 	async getAllActivities(req, res) {
-		const userId = req.token.User_Id;
+		const { userId } = req.token;
 
 		try {
-			const activities = await Activity.getAllActivities(userId);
+			const activities = await ActivityModel.getAllActivities(userId);
 
-			res.json(activities);
+			res.json(activities.map(transforms.transformActivity));
 		} catch (error) {
 			res.sendStatus(500);
 		}
 	},
 
 	async getActivityById(req, res) {
-		const userId = req.token.User_Id;
+		const { userId } = req.token;
+		const { activityId } = req.params;
 
 		try {
-			const result = await Activity.getActivityById(req.params.id, userId);
+			const activityPromise = ActivityModel.getActivityById(activityId);
 
-			if (result.length === 1) {
-				res.json(result[0]);
-			} else {
+			const isParticipant = await ParticipatesModel.isParticipant(userId, activityId);
+
+			if (!isParticipant) {
+				res.status(404).json({
+					message: 'Activity not found.',
+				});
+				return;
+			}
+
+			const activity = await activityPromise;
+
+			if (activity === null) {
 				res.statsus(404).json({
 					message: 'Activity not found',
 				});
+			} else {
+				res.json(transforms.transformActivity(activity));
 			}
 		} catch (error) {
 			res.sendStatus(500);
@@ -33,14 +47,16 @@ const ActivityController = {
 	},
 
 	async createActivity(req, res) {
-		const userId = req.token.User_Id;
+		const { userId } = req.token;
 		const activity = req.body;
+		// TODO check body
 
 		try {
-			const result = await Activity.createActivity(activity, userId);
+			const result = await ActivityModel.createActivity(activity, userId);
+			// TODO add participation of initiator
 
 			res.status(201).json({
-				Activity_Id: result.insertId,
+				activityId: result.insertId,
 			});
 		} catch (error) {
 			res.sendStatus(500);
@@ -48,12 +64,22 @@ const ActivityController = {
 	},
 
 	async deleteActivity(req, res) {
-		const userId = req.token.User_Id;
-		const activityId = req.params.id;
+		const { userId } = req.token;
+		const { activityId } = req.params;
 
 		try {
 			// TODO Check if user is admin of activity
-			const result = await Activity.deleteActivity(activityId, userId);
+			const isHost = await ActivityModel.isHost(userId, activityId);
+
+			if (!isHost) {
+				res.status(403).json({
+					success: false,
+					message: 'Invalid activity id.',
+				});
+				return;
+			}
+
+			const result = await ActivityModel.deleteActivity(activityId, userId);
 
 			if (result.affectedRows === 1) {
 				res.json({
@@ -72,12 +98,22 @@ const ActivityController = {
 	},
 
 	async updateActivity(req, res) {
-		const userId = req.token.User_Id;
-		const activityId = req.params.id;
+		const { userId } = req.token;
+		const { activityId } = req.params;
 
 		try {
 			// TODO Check if user is admin of activity
-			const result = await Activity.updateActivity(activityId, userId);
+			const isHost = await ActivityModel.isHost(userId, activityId);
+
+			if (!isHost) {
+				res.status(403).json({
+					success: false,
+					message: 'Activity not found.',
+				});
+				return;
+			}
+
+			const result = await ActivityModel.updateActivity(activityId, userId);
 
 			if (result.affectedRows === 1) {
 				res.json({

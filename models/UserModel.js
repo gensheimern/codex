@@ -3,28 +3,58 @@ const { hashPassword } = require('../routes/auth/Auth');
 
 const User = {
 
+	/**
+	 * Returns all users.
+	 * @returns {Promise<Array<User>>} Returns an array of all users.
+	 */
 	async getAllUsers() {
 		return databaseConnection.queryp('SELECT * FROM User');
 	},
 
-	async getUserById(userID) {
-		return databaseConnection.queryp('SELECT * FROM User WHERE User_Id = ?', [userID]);
+	/**
+	 * Returns specific information about one user.
+	 * @param {number} userId The user id to get the information for.
+	 * @returns {Promise<User>} The data of the specified user.
+	 */
+	async getUserById(userId) {
+		return databaseConnection.querypFirst('SELECT * FROM User WHERE User_Id = ?', [userId]);
 	},
 
+	/**
+	 * Returns the corresponding user for a given e-mail address.
+	 * @param {string} email The email address to get the user for.
+	 * @returns {Promise<User>} The data of the user with the e-mail address.
+	 */
 	async getUserByEmail(email) {
-		return databaseConnection.queryp('SELECT * FROM User WHERE Email = ?', [email]);
+		return databaseConnection.querypFirst('SELECT * FROM User WHERE Email = ?', [email]);
 	},
 
+	/**
+	 * Adds a new user to the database.
+	 * @param {object} user The data of the new user to create.
+	 * @returns {Promise<DBResult>} The result of the database insertion.
+	 */
 	async addUser(user) {
 		return databaseConnection.queryp('INSERT INTO User (Firstname, Name, Email, Password, Image) VALUES (?,?,?,?,?)', [user.firstName, user.name, user.email, hashPassword(user.password), user.image]);
 	},
 
-	async deleteUser(id) {
-		return databaseConnection.queryp('DELETE FROM User WHERE User_Id = ?', [id]);
+	/**
+	 * Deletes the user with the id userId.
+	 * @param {number} userId The id of the user to delete.
+	 * @returns {Promise<DBResult>} The result of the database deletion.
+	 */
+	async deleteUser(userId) {
+		return databaseConnection.queryp('DELETE FROM User WHERE User_Id = ?', [userId]);
 	},
 
-	async updateUser(id, user) {
-		return databaseConnection.queryp('UPDATE User SET Firstname=?, Name=?, Email=?, Password=? where User_Id=?', [user.firstName, user.name, user.email, user.password, id]);
+	/**
+	 * Updates the data of a user.
+	 * @param {number} userId The id of the user to update.
+	 * @param {object} newUser The new data to update the user.
+	 * @returns {Promise<DBResult>} The result of the database update.
+	 */
+	async updateUser(userId, newUser) {
+		return databaseConnection.queryp('UPDATE User SET Firstname=?, Name=?, Email=?, Password=? where User_Id=?', [newUser.firstName, newUser.name, newUser.email, newUser.password, userId]);
 	},
 
 };

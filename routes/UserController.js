@@ -1,5 +1,14 @@
 const UserModel = require('../models/UserModel');
-const User = require('../models/User');
+const { transformUser } = require('./transforms');
+// const User = require('../models/User');
+
+/* const transformUser = dbUser => ({
+	id: dbUser.User_Id,
+	firstName: dbUser.Firstname,
+	name: dbUser.Name,
+	email: dbUser.Email,
+	image: dbUser.Image,
+}); */
 
 const UserController = {
 
@@ -7,29 +16,26 @@ const UserController = {
 		try {
 			const users = await UserModel.getAllUsers();
 
-			/* res.json(users.map(user => ({
-				id: user.User_Id,
-				email: user.Email,
-				firstName: user.Firstname,
-				name: user.Name,
-			}))); */
-			res.json(users.map(user => (new User(User.fromDBUser(user))).getUserWithoutPassword()));
+			res.json(users.map(transformUser));
 		} catch (error) {
 			res.sendStatus(500);
 		}
 	},
 
 	async getUserById(req, res) {
-		try {
-			const users = await UserModel.getUserById(req.params.id);
+		const { userId } = req.params;
 
-			if (users.length === 0) {
-				res.status(404).json({
-					message: 'Invalid user id.',
-				});
-			} else {
-				res.json((new User(User.fromDBUser(users[0]))).getUserWithoutPassword());
+		try {
+			const user = await UserModel.getUserById(userId);
+
+			if (user) {
+				res.json(transformUser(user));
+				return;
 			}
+
+			res.status(404).json({
+				message: 'Invalid user id.',
+			});
 		} catch (error) {
 			res.sendStatus(500);
 		}
@@ -77,10 +83,11 @@ const UserController = {
 		}
 	},
 
-	deleteUser(req, res) {
+	async deleteUser(req, res) {
 		const { userId, admin } = req.token;
+		const targetId = req.params.userId;
 
-		if (!(Number(req.params.id) === Number(userId)
+		if (!(Number(targetId) === Number(userId)
 			|| admin === true)) {
 			res.status(403).json({
 				success: false,
@@ -90,7 +97,8 @@ const UserController = {
 		}
 
 		try {
-			const result = UserModel.deleteUser(req.params.id);
+			const result = await UserModel.deleteUser(targetId);
+			// TODO delete all subscriptions
 
 			if (result.affectedRows === 0) {
 				res.status(404).json({
@@ -110,8 +118,9 @@ const UserController = {
 
 	async updateUser(req, res) {
 		const { userId } = req.token;
+		const targetId = req.params.userId;
 
-		if (Number(req.params.id) !== userId) {
+		if (Number(targetId) !== userId) {
 			res.status(403).json({
 				success: false,
 				message: 'Invalid user id.',
@@ -120,17 +129,14 @@ const UserController = {
 		}
 
 		try {
-			const rows = await UserModel.getUserById(userId);
-			const oldUser = rows[0];
+			const oldUser = await UserModel.getUserById(targetId);
 			const newUser = {
-				firstName: req.body.firstName || oldUser.Firstname,
-				name: req.body.name || oldUser.Name,
-				email: req.body.email || oldUser.Email,
-				password: req.body.password || oldUser.Password,
-				image: req.body.image || oldUser.Image,
+				...transformUser(oldUser),
+				password: oldUser.Password,
+				...req.body,
 			};
 
-			const result = await UserModel.updateUser(userId, newUser);
+			const result = await UserModel.updateUser(targetId, newUser);
 
 			if (result.affectedRows === 0) {
 				res.status(404).json({

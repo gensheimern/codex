@@ -1,32 +1,52 @@
 const Message = require('../models/MessageModel');
+const ParticipatesModel = require('../models/participatesModel');
+const transforms = require('./transforms');
 
 const MessageController = {
 
 	async getMessagesOfActivity(req, res) {
-		const userId = req.token.User_Id;
+		const { userId } = req.token;
 		const { activityId } = req.params;
 
 		try {
-			const messages = await Message.getMessagesOfActivity(activityId, userId);
+			const messagesPromise = Message.getMessagesOfActivity(activityId);
+			const isParticipant = await ParticipatesModel.isParticipant(userId, activityId);
 
-			res.json(messages);
+			if (!isParticipant) {
+				res.status(404).json({
+					message: 'Activity not found.',
+				});
+				return;
+			}
+
+			const messages = await messagesPromise;
+
+			res.json(messages.map(transforms.transformMessage));
 		} catch (error) {
 			res.sendStatus(500);
 		}
 	},
 
 	async createMessage(req, res) {
-		const userId = req.token.User_Id;
+		const { userId } = req.token;
 		const { activityId } = req.params;
-		const content = req.body.MessageContent;
+		const { content } = req.body;
 		// TODO Check body
 
 		try {
-			// TODO Check if user is in activity
+			const isParticipant = await ParticipatesModel.isParticipant(userId, activityId);
+
+			if (!isParticipant) {
+				res.status(404).json({
+					message: 'Activity not found.',
+				});
+				return;
+			}
+
 			const result = await Message.createMessage(content, activityId, userId);
 
 			res.status(201).json({
-				Message_Id: result.insertId,
+				messageId: result.insertId,
 			});
 		} catch (error) {
 			res.sendStatus(500);
@@ -34,17 +54,12 @@ const MessageController = {
 	},
 
 	async deleteMessage(req, res) {
-		const userId = req.token.User_Id;
-		const messageId = req.params.id;
-		const isAdmin = req.token.admin;
+		const { userId } = req.token;
+		const { messageId } = req.params;
 
 		try {
-			let result;
-			if (isAdmin) {
-				result = await Message.deleteMessageAdmin(messageId);
-			} else {
-				result = await Message.deleteMessage(messageId, userId);
-			}
+			// TODO check for admin
+			const result = await Message.deleteMessage(messageId, userId);
 
 			if (result.affectedRows === 1) {
 				res.json({
@@ -63,19 +78,14 @@ const MessageController = {
 	},
 
 	async updateMessage(req, res) {
-		const userId = req.token.User_Id;
-		const messageId = req.params.id;
-		const isAdmin = req.token.admin;
-		const content = `${req.body.Messagecontent} (Changed)`;
+		const { userId } = req.token;
+		const { messageId } = req.params;
+		const content = `${req.body.content} (Changed)`;
 		// TODO Check Message content
 
 		try {
-			let result;
-			if (isAdmin) {
-				result = await Message.updateMessageAdmin(messageId, content);
-			} else {
-				result = await Message.updateMessage(messageId, content, userId);
-			}
+			// TODO check for admin
+			const result = await Message.updateMessage(messageId, content, userId);
 
 			if (result.affectedRows === 1) {
 				res.json({

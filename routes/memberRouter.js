@@ -2,9 +2,9 @@ const router = require('express').Router();
 const MemberController = require('./memberController');
 
 
-router.get('/:memberId', MemberController.getMemberOfTeam);
+router.get('/', MemberController.getMemberOfTeam);
 
-router.post('/', MemberController.addMember);
+router.post('/:memberId', MemberController.addMember);
 
 router.delete('/:memberId', MemberController.deleteMember);
 

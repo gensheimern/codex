@@ -4,9 +4,9 @@ const router = require('express').Router();
 
 router.get('/', SubscribeController.getSubscribed);
 
-router.post('/:id', SubscribeController.createSubscription);
+router.post('/:subscribedId', SubscribeController.createSubscription);
 
-router.delete('/:id', SubscribeController.deleteSubscription);
+router.delete('/:subscribedId', SubscribeController.deleteSubscription);
 
 
 module.exports = router;

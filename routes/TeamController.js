@@ -1,5 +1,13 @@
-const Team = require('../models/TeamModel');
-const Member = require('../models/MemberModel');
+const TeamModel = require('../models/TeamModel');
+const MemberModel = require('../models/MemberModel');
+const { transformTeam } = require('./transforms');
+
+/* const transformTeam = dbTeam => ({
+	id: dbTeam.Team_Id,
+	name: dbTeam.Teamname,
+	managerName: dbTeam.Name,
+	managerFirstName: dbTeam.Firstname,
+}); */
 
 const TeamController = {
 
@@ -7,15 +15,9 @@ const TeamController = {
 		const { userId } = req.token;
 
 		try {
-			const teams = await Team.getAllTeams(userId);
+			const teams = await TeamModel.getAllTeams(userId);
 
-			res.json(teams.map(team => ({
-				id: team.Team_Id,
-				name: team.Teamname,
-				managerName: team.Name,
-				managerFirstName: team.Firstname,
-			}
-			)));
+			res.json(teams.map(transformTeam));
 		} catch (error) {
 			res.sendStatus(500);
 		}
@@ -23,23 +25,21 @@ const TeamController = {
 
 	async getTeamById(req, res) {
 		const { userId } = req.token;
+		const { teamId } = req.params;
 
 		try {
-			const teams = await Team.getTeamById(req.params.id, userId);
+			const isMember = MemberModel.isMember(teamId, userId);
 
-			if (teams.length === 0) {
+			const team = await TeamModel.getTeamById(teamId, userId);
+
+			if (team === null || !(await isMember)) {
 				res.status(404).json({
-					message: `Team with ID ${req.params.id} not found.`,
+					message: `Team with ID ${teamId} not found.`,
 				});
 				return;
 			}
 
-			res.json({
-				id: teams[0].Team_Id,
-				name: teams[0].Teamname,
-				managerFirstName: teams[0].Firstname,
-				managerName: teams[0].Name,
-			});
+			res.json(transformTeam(team));
 		} catch (error) {
 			res.sendStatus(500);
 		}
@@ -56,8 +56,8 @@ const TeamController = {
 		}
 
 		try {
-			const dbRes = await Team.addTeam(req.body.name, userId);
-			await Member.addMember(userId, dbRes.insertId);
+			const dbRes = await TeamModel.addTeam(req.body.name, userId);
+			await MemberModel.addMember(userId, dbRes.insertId);
 
 			res.status(201).json({
 				teamId: dbRes.insertId,
@@ -69,13 +69,15 @@ const TeamController = {
 
 	async deleteTeam(req, res) {
 		const { userId } = req.token;
+		const { teamId } = req.params;
 
 		try {
-			const dbRes = await Team.deleteTeam(req.params.id, userId);
+			const dbRes = await TeamModel.deleteTeam(teamId, userId);
+			// TODO delete all memberships
 
 			if (dbRes.affectedRows === 0) {
 				res.status(404).json({
-					message: `Team with ID ${req.params.id} not found.`,
+					message: `Team with ID ${teamId} not found.`,
 				});
 			} else {
 				res.status(200).json({
@@ -89,8 +91,10 @@ const TeamController = {
 
 	async updateTeam(req, res) {
 		const { userId } = req.token;
+		const { teamId } = req.params;
+		const newName = req.body.name;
 
-		if (!req.body.name) {
+		if (!newName) {
 			res.status(400).json({
 				success: false,
 				message: 'Invalid new team name.',
@@ -99,12 +103,12 @@ const TeamController = {
 		}
 
 		try {
-			const dbRes = await Team.updateTeam(req.params.id, req.body.name, userId);
+			const dbRes = await TeamModel.updateTeam(teamId, newName, userId);
 
 			if (dbRes.affectedRows === 0) {
 				res.status(404).json({
 					success: false,
-					message: `Team with ID ${req.params.id} not found.`,
+					message: `Team with ID ${teamId} not found.`,
 				});
 			} else {
 				res.status(200).json({

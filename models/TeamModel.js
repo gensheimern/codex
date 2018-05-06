@@ -8,78 +8,74 @@ const Team = {
 	 * @returns {Promise<Array<User>>} The result fetched from the database.
 	 */
 	async getAllTeams(userID) {
-		return databaseConnection.queryp(`SELECT User1.Firstname, User1.Name, Team.Team_Id, Team.Teamname
-			FROM Team, User AS User1, User AS User2, member_of
-			WHERE User1.User_Id = Team.Teammanager
-			  AND User2.User_Id = member_of.User_Id
+		return databaseConnection.queryp(`SELECT Manager.*, Team.*
+			FROM Team, User AS Manager, User AS Member, member_of
+			WHERE Manager.User_Id = Team.Teammanager
+			  AND Member.User_Id = member_of.User_Id
 			  AND Team.Team_Id = member_of.Team_Id
-			  AND User2.User_Id = ?`, [userID]);
+			  AND Member.User_Id = ?`, [userID]);
 	},
 
 	/**
-	 * Returns information about a team defined by an id if the user is a member of the team.
-	 * @param {number} teamID ID of the team.
-	 * @param {number} userID Id of the user.
-	 * @returns {Promise<Array<User>>} The result fetched from the database.
+	 * Returns information about a team specified by an id.
+	 * @param {number} teamId ID of the team.
+	 * @returns {Promise<User>} The result fetched from the database.
 	 */
-	async getTeamById(teamID, userID) {
-		return databaseConnection.queryp(
-			`SELECT User.Firstname, User.Name, Team.Team_Id, Team.Teamname
-			FROM Team, User, member_of
-			WHERE Team.Team_Id = member_of.Team_Id
-			  AND User.User_Id = member_of.User_Id
-			  AND Team.Team_Id = ?
-			  AND User.User_Id = ?;`,
-			[teamID, userID],
+	async getTeamById(teamId) {
+		return databaseConnection.querypFirst(
+			'SELECT User.*, Team.* FROM Team INNER JOIN User ON Team.Teammanager = User.User_Id WHERE Team.Team_Id = ?',
+			[teamId],
 		);
 	},
 
 	/**
 	 * Creates a new team.
 	 * @param {string} teamName Name of the team.
-	 * @param {number} userID ID of the user creating a team.
-	 * @returns {Promise<Array<User>>} The result fetched from the database.
+	 * @param {number} userId ID of the user creating a team.
+	 * @returns {Promise<DBResult>} The result fetched from the database.
 	 */
-	async addTeam(teamName, userID) {
-		return databaseConnection.queryp('INSERT INTO Team (Teamname, Teammanager) VALUES (?, ?);', [teamName, userID]);
+	async addTeam(teamName, userId) {
+		return databaseConnection.queryp('INSERT INTO Team (Teamname, Teammanager) VALUES (?, ?);', [teamName, userId]);
 	},
 
 	/**
 	 * Deletes a team if the user is the team manager.
-	 * @param {number} teamID The id of the team to delete.
-	 * @param {number} userID The id of the user deleting the team.
-	 * @returns {Promise<Array<User>>} The result fetched from the database.
+	 * @param {number} teamId The id of the team to delete.
+	 * @param {number} userId The id of the user deleting the team.
+	 * @returns {Promise<DBResult>} The result fetched from the database.
 	 */
-	async deleteTeam(teamID, userID) {
-		return databaseConnection.queryp('DELETE FROM Team WHERE Team_Id = ? AND Teammanager = ?', [teamID, userID]);
-
-		/* `DELETE FROM Team
-			WHERE Team_Id IN
-				(SELECT Team_Id FROM
-					(SELECT member_of.Team_Id
-					FROM User
-					INNER JOIN
-						(Team INNER JOIN member_of
-						ON Team.Team_Id = member_of.Team_Id)
-					ON (User.User_Id = member_of.User_Id)
-				WHERE User.User_Id = ?
-				AND Team.Team_Id = ?)
-				AS temp);`, */
+	async deleteTeam(teamId, userID) {
+		return databaseConnection.queryp('DELETE FROM Team WHERE Team_Id = ? AND Teammanager = ?', [teamId, userID]);
 	},
 
 	/**
 	 * Updates the name of a team if the user is the team manager.
-	 * @param {number} teamID ID of the team.
-	 * @param {string} teamName New name of the team.
-	 * @param {number} userID The id of the user changing the team.
-	 * @returns {Promise<Array<User>>} The result fetched from the database.
+	 * @param {number} teamId ID of the team.
+	 * @param {string} newName New name of the team.
+	 * @param {number} userId The id of the user changing the team.
+	 * @returns {Promise<DBResult>} The result fetched from the database.
 	 */
-	async updateTeam(teamID, teamName, userID) {
-		return databaseConnection.query('UPDATE Team SET Teamname=? WHERE Team_Id = ? AND Teammanager = ?', [teamName, teamID, userID]);
+	async updateTeam(teamId, newName, userId) {
+		return databaseConnection.query('UPDATE Team SET Teamname=? WHERE Team_Id = ? AND Teammanager = ?', [newName, teamId, userId]);
 	},
 
-	async getTeammanager(teamID) {
-		return databaseConnection.queryp('SELECT Teammanager FROM Team WHERE Team_Id = ?', [teamID]);
+	/**
+	 * returns the team manager of the team with the id teamId.
+	 * @param {number} teamId The id of the team.
+	 * @returns {Promise<User>} The team manager of the team with id teamId.
+	 */
+	async getTeammanager(teamId) {
+		return databaseConnection.querypFirst('SELECT Teammanager FROM Team WHERE Team_Id = ?', [teamId]);
+	},
+
+	/**
+	 * Returns if the user is the manager of a team.
+	 * @param {number} userId The user.
+	 * @param {number} teamId The team.
+	 * @returns {Promise<boolean>} Returns if the user is the manager of the team.
+	 */
+	async isTeammanager(userId, teamId) {
+		return databaseConnection.querypBool('SELECT Team_Id FROM Team WHERE Team Team_Id = ? AND Teammanager = ?', [teamId, userId]);
 	},
 
 };

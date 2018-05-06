@@ -66,20 +66,20 @@ describe('User controller', () => {
 	describe('GET one user by id', () => {
 		it('should send the data of one users when the id is valid', async () => {
 			// Mock user model
-			const mockModel = TestTools.mockModel(userModel, 'getUserById', null, [{
+			const mockModel = TestTools.mockModel(userModel, 'getUserById', null, {
 				User_Id: 5,
 				Firstname: 'Max',
 				Name: 'Mustermann',
 				Email: 'valid@email.com',
 				Image: '/image.png',
-			}]);
+			});
 
 			// Mock http request and response
 			const { req, res } = TestTools.mockRequest({
 				method: 'GET',
 				baseUrl: '/user',
 				params: {
-					id: '5',
+					userId: '5',
 				},
 			});
 
@@ -104,14 +104,14 @@ describe('User controller', () => {
 
 		it('should send "not found" when the id is invalid', async () => {
 			// Mock model
-			const mockModel = TestTools.mockModel(userModel, 'getUserById', null, []);
+			const mockModel = TestTools.mockModel(userModel, 'getUserById', null, null);
 
 			// Mock http request and response
 			const { req, res } = TestTools.mockRequest({
 				method: 'GET',
 				baseUrl: '/user',
 				params: {
-					id: '5',
+					userId: '5',
 				},
 			});
 
@@ -131,7 +131,7 @@ describe('User controller', () => {
 		});
 
 		it('should send "not found" when no id is passed', async () => {
-			const mockModel = TestTools.mockModel(userModel, 'getUserById', null, []);
+			const mockModel = TestTools.mockModel(userModel, 'getUserById', null, null);
 			// TODO let mockModel = TestTools.mockNotCalled(userModel, 'getUserById');
 
 			// Mock http request and response
@@ -194,11 +194,12 @@ describe('User controller', () => {
 		it('should update an existing user', async () => {
 			const mockModel = TestTools.mockModel(userModel, 'updateUser', null, TestTools.dbUpdateSuccess);
 			const mockModel2 = TestTools.mockModel(userModel, 'getUserById', null, {
-				firstName: 'Maxneu',
-				name: 'Mustermannneu',
-				email: 'neue@email.com',
-				password: 'very_new_password',
-				image: '/image.png',
+				User_Id: 5,
+				Firstname: 'Maxneu',
+				Name: 'Mustermannneu',
+				Email: 'neue@email.com',
+				Password: 'very_new_password',
+				Image: '/image.png',
 			});
 
 			// Mock http request and response
@@ -206,7 +207,7 @@ describe('User controller', () => {
 				method: 'PUT',
 				baseUrl: '/user',
 				params: {
-					id: '5',
+					userId: '5',
 				},
 				body: {
 					firstName: 'Maxneu',
@@ -244,7 +245,7 @@ describe('User controller', () => {
 				method: 'PUT',
 				baseUrl: '/user',
 				params: {
-					id: '6',
+					userId: '6',
 				},
 				body: {
 					firstName: 'Maxneu',
@@ -314,7 +315,7 @@ describe('User controller', () => {
 				method: 'DELETE',
 				baseUrl: '/user',
 				params: {
-					id: '5',
+					userId: '5',
 				},
 			});
 
@@ -342,7 +343,7 @@ describe('User controller', () => {
 				method: 'DELETE',
 				baseUrl: '/user',
 				params: {
-					id: '6',
+					userId: '6',
 				},
 			});
 

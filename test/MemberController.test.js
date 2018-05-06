@@ -113,19 +113,10 @@ describe('Member controller', () => {
 	});
 
 	describe('POST a new member', () => {
-		it('should post a new team', async () => {
+		it('should post a new member', async () => {
 			// Mock user model
 			const mockModel = TestTools.mockModel(memberModel, 'addMember', null, TestTools.dbInsertSuccess);
-			const mockModel2 = TestTools.mockModel(TeamModel, 'getTeammanager', null, [
-				{
-					User_Id: 5,
-					Firstname: 'Max',
-					Name: 'Mustermann',
-					Email: 'valid@email.com',
-					Password: '1234',
-					Image: '/image.png',
-				},
-			]);
+			const mockModel2 = TestTools.mockModel(TeamModel, 'isTeammanager', null, true);
 
 			// Mock http request and response
 			const { req, res } = TestTools.mockRequest({
@@ -154,16 +145,7 @@ describe('Member controller', () => {
 		it('should not add a new member when user is not teammanager', async () => {
 			// Mock user model
 			const mockModel = TestTools.mockModel(memberModel, 'addMember', null, TestTools.dbInsertSuccess);
-			const mockModel2 = TestTools.mockModel(TeamModel, 'getTeammanager', null, [
-				{
-					User_Id: 6,
-					Firstname: 'Max',
-					Name: 'Mustermann',
-					Email: 'valid@email.com',
-					Password: '1234',
-					Image: '/image.png',
-				},
-			]);
+			const mockModel2 = TestTools.mockModel(TeamModel, 'isTeammanager', null, false);
 
 			// Mock http request and response
 			const { req, res } = TestTools.mockRequest({
