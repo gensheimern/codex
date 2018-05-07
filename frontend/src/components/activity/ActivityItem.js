@@ -235,7 +235,7 @@ It sends a Delete request at the Backend and refresh the isJoined state.
                         this.setState({isJoined: true});
                           }
                         }
-                      });
+                      return null});
 
     }
 
@@ -312,12 +312,8 @@ It sends a Delete request at the Backend and refresh the isJoined state.
                 <h4><BullseyeFA />  {this.props.activity.Place} </h4>
               </div>
         </div> <div className = "activity-time col-xs-6 col-sm-6 col-lg-6" >
-            <h4> <ClockFA/> {
-                this.DateparserTime()
-            } </h4> </div> <div className = "activity-meetingpoint col-xs-6 col-sm-6 col-lg-6" >
-            <h4> <BullseyeFA/> {
-                this.props.activity.Place
-            } </h4> </div> </div> </div>
+          </div> <div className = "activity-meetingpoint col-xs-6 col-sm-6 col-lg-6" >
+            <h4>  </h4> </div> </div> </div>
      </div>;
           } else {
             return <div className = "activity"
@@ -359,12 +355,8 @@ It sends a Delete request at the Backend and refresh the isJoined state.
                 <h4><BullseyeFA />  {this.props.activity.Place} </h4>
               </div>
         </div> <div className = "activity-time col-xs-6 col-sm-6 col-lg-6" >
-            <h4> <ClockFA/> {
-                this.DateparserTime()
-            } </h4> </div> <div className = "activity-meetingpoint col-xs-6 col-sm-6 col-lg-6" >
-            <h4> <BullseyeFA/> {
-                this.props.activity.Place
-            } </h4> </div> </div> </div>
+             </div> <div className = "activity-meetingpoint col-xs-6 col-sm-6 col-lg-6" >
+          </div> </div> </div>
      </div>;
           }
         }}

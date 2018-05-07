@@ -47,7 +47,7 @@ class Example extends React.Component {
       eventTag: false,
       host: ""
     };
-this.displayControllerDockedSidebar = this.displayControllerDockedSidebar.bind(this);
+    this.displayControllerDockedSidebar = this.displayControllerDockedSidebar.bind(this);
     this.renderPropCheckbox = this.renderPropCheckbox.bind(this);
     this.renderPropNumber = this.renderPropNumber.bind(this);
     this.onSetOpen = this.onSetOpen.bind(this);

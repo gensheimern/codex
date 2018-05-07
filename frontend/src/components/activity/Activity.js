@@ -51,6 +51,7 @@ export default class Activity extends React.Component {
       host: ""
     };
 
+    this.displayControllerDockedSidebar = this.displayControllerDockedSidebar.bind(this);
     this.renderPropCheckbox = this.renderPropCheckbox.bind(this);
     this.renderPropNumber = this.renderPropNumber.bind(this);
     this.onSetOpen = this.onSetOpen.bind(this);
@@ -99,6 +100,13 @@ export default class Activity extends React.Component {
     });
   });
 
+  }
+  displayControllerDockedSidebar() {
+    if(this.state.docked === true){
+      this.setState({docked:false});
+    }else if(this.state.docked === false){
+      this.setState({docked:true});
+    }
   }
   createGroupDeleteButtons() {
   for(let i = 0; i < this.state.groups.length; i++) {
@@ -261,7 +269,7 @@ export default class Activity extends React.Component {
 
               <div style={styles.content}>
                 <React.Fragment>
-                    <NavbarMenu/>
+                    <NavbarMenu dockSidebar={this.displayControllerDockedSidebar}/>
                   </React.Fragment>
               </div>
               <MediaQuery minWidth={1000}>
