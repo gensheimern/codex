@@ -28,7 +28,7 @@ componentDidMount(){
 }
 
 DateparserDate() {
-	var d = new Date(this.props.activity.Time);
+	var d = new Date(this.props.activity.time);
 	var month = [];
 	month[0] = "January";
 	month[1] = "February";
@@ -47,7 +47,7 @@ return d.getDay() + " " + month[d.getMonth()];
 
 	DateparserTime(){
 
-		var d = new Date(this.props.activity.Time);
+		var d = new Date(this.props.activity.time);
 		var h = this.addZero(d.getHours());
 		var m = this.addZero(d.getMinutes());
 
@@ -63,8 +63,8 @@ addZero(i) {
 
 
 loadParticipatesData(){
-	fetch(config.apiPath + "/participates/"+ this.props.activity.Activity_Id, {
-		method: 'get',
+	fetch(config.apiPath + "/activity/"+ this.props.activity.id + "/participants", {
+		method: 'GET',
 		headers: {
 			'Content-Type': 'application/json',
 			'X-Access-Token': localStorage.getItem('apiToken')
@@ -95,7 +95,7 @@ loadParticipatesData(){
 				participatesIMG = this.state.participates.map( participatesItem => {
 
 				return (
-						<img key={participatesItem.User_Id} className="myimage" src={participatesItem.Image} alt="profile" />
+						<img key={participatesItem.id} className="myimage" src={participatesItem.image} alt="profile" />
 				);
 			});
 }
@@ -104,9 +104,9 @@ loadParticipatesData(){
       <div className="activity">
 
           <div className="image-container col-xs-12 col-sm-12 col-lg-12">
-         <img className="image" src={this.props.activity.Banner} alt="Card cap" />
+         <img className="image" src={this.props.activity.banner} alt="Card cap" />
             <div className="after">
-               <div className="text"> <span className="activityname">{this.props.activity.Activityname}</span>
+               <div className="text"> <span className="activityname">{this.props.activity.name}</span>
                 <div className="text2"><button>JOIN </button></div>
             </div></div>
          </div>
@@ -124,7 +124,7 @@ loadParticipatesData(){
                 <h4><ClockFA />  {this.DateparserTime()} </h4>
               </div>
               <div className="activity-meetingpoint col-xs-6 col-sm-6 col-lg-6">
-                <h4><BullseyeFA />  {this.props.activity.Place} </h4>
+                <h4><BullseyeFA />  {this.props.activity.place} </h4>
               </div>
             </div>
            </div>

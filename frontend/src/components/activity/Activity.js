@@ -201,7 +201,7 @@ export default class Activity extends React.Component {
 
   loadActivityData() {
     fetch(config.apiPath + "/activity/", {
-      method: 'get',
+      method: 'GET',
       headers: {
         'Content-Type': 'application/json',
         'X-Access-Token': localStorage.getItem('apiToken')

@@ -8,7 +8,7 @@ const Message = {
 	 * @returns {Promise<Array<Message>>} Returns all messages of an activity.
 	 */
 	async getMessagesOfActivity(activityId) {
-		return databaseConnection.queryp('SELECT Message.*, User.* FROM Message INNER JOIN User ON Message.User_Id = User.User_Id WHERE Activity.Activity_Id = ?', [activityId]);
+		return databaseConnection.queryp('SELECT Message.*, User.* FROM Message INNER JOIN User ON Message.User_Id = User.User_Id WHERE Message.Activity_Id = ?', [activityId]);
 	},
 
 	/**

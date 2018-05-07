@@ -54,7 +54,7 @@ const ActivityController = {
 
 		try {
 			const result = await ActivityModel.createActivity(activity, userId);
-			// TODO add participation of initiator
+			await ParticipatesModel.addParticipant(result.insertId, userId);
 
 			res.status(201).json({
 				activityId: result.insertId,

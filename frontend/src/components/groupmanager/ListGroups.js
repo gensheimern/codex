@@ -29,7 +29,7 @@ export default class ListTeams extends React.Component {
     // }
     SendTeamToDelete(Tid) {
         fetch(config.apiPath + "/team/" + Tid, {
-                method: 'delete',
+                method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
                     'X-Access-Token': localStorage.getItem('apiToken')
@@ -58,17 +58,17 @@ export default class ListTeams extends React.Component {
         const columns = [{
             style: {},
             classes: 'span-1',
-            dataField: 'Team_Id',
+            dataField: 'id',
             text: 'Team ID'
             // headerStyle: {
             //   backgroundColor: 'lightblue'
         }, {
             classes: 'span-2',
-            dataField: 'Teamname',
+            dataField: 'name',
             text: 'Team Name'
         }, {
             classes: 'span-2',
-            dataField: 'TMName',
+            dataField: 'manager.name',
             text: 'Team Leiter'
         }, {
             classes: 'span-1',

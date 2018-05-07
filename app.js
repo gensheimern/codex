@@ -15,8 +15,8 @@ app.use(serveStatic(path.join(`${__dirname}/frontend/build`)));
 app.use(bodyParser.json());
 
 // API routes
-const apiPath = '/';
-app.use(`${apiPath}authenticate`, authenticateRouter);
+const apiPath = '/api';
+app.use(`${apiPath}/authenticate`, authenticateRouter);
 const apiRouter = require('./routes/MainRouter');
 
 app.use(apiPath, verifyMiddleware, apiRouter);

@@ -72,6 +72,7 @@ const UserController = {
 			return;
 		}
 
+		// TODO: check for double email address
 		try {
 			const result = await UserModel.addUser(req.body);
 

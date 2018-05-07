@@ -39,12 +39,14 @@ export default class CreateActivity extends React.Component {
     fetch(config.apiPath + "/activity", {
         method: 'POST',
         body: JSON.stringify({
-          Description: this.state.description,
-          ActivityName: this.state.activityName,
-          Place: this.state.place,
-          Time: this.state.time,
-          EventTag: this.state.eventTag,
-          Host: this.state.host
+          description: this.state.description,
+          name: this.state.activityName,
+          place: this.state.place,
+          time: this.state.time,
+          event: this.state.eventTag,
+          private: false,
+          banner: '',
+          maxParticipants: 100,
         }),
         headers: {
             'Content-Type': 'application/json'

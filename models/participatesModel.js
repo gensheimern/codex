@@ -19,7 +19,7 @@ const Participates = {
 	},
 
 	async addParticipant(activityId, userId) {
-		return databaseConnection.queryp('INSERT INTO participates (User_Id, Activity_Id) VAULES (?, ?)', [userId, activityId]);
+		return databaseConnection.queryp('INSERT INTO participates (User_Id, Activity_Id) VALUES (?, ?)', [userId, activityId]);
 	},
 
 	async deleteParticipant(activityId, userId) {
