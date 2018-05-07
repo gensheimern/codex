@@ -24,10 +24,13 @@
     "react-calendar": "^2.14.0",
     "react-dom": "^16.3.1",
     "react-icons": "^2.2.7",
+    "react-responsive": "^4.1.0",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.1.2",
     "react-sidebar": "^2.3.2",
     "react-sidenav": "^2.1.2",
+    "react-sticky": "^6.0.2",
+    "react-stickynode": "^1.4.1",
     "react-test-renderer": "^16.3.1",
     "reactstrap": "^5.0.0-beta.3",
     "read-blob": "^1.1.0"

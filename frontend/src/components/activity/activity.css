@@ -1,7 +1,7 @@
 .activity {
   min-height:auto;
   overflow:auto;
-  margin:70px;
+  margin:4%;
   background-color:white;
   border-radius: 15px 15px 0px 0px;
 
@@ -11,6 +11,13 @@
   clear:both;
   overflow:auto;
 }
+
+.card-body {
+  margin-left:7%;
+  margin-right:5%;
+  background-color:white;
+}
+
 
 .image-container, .image {
     position: relative;
@@ -35,7 +42,7 @@
 .text {
   font-size:60px;
   color:white;
-  margin-top:80px;
+  margin-top:5%;
   z-index:2;
 }
 .image-container .text2 {
@@ -65,7 +72,10 @@
 
 .activity-date, .activity-time, .activity-meetingpoint {
   float:left;
-  margin: 0 auto;
+  margin:  auto;
+
+
+
 }
 
 .activity-alreadyjoining {
@@ -90,7 +100,7 @@ button {
 
 .activityname {
   float:left;
-  margin-left: 100px;
+  margin-left: 5%;
 margin-top: 5%;
 }
 
@@ -150,5 +160,9 @@ button {
 }
 
 .Feed {
-  background-color:grey;
+      width: 70%;
+      height: 96%;
+      overflow-y: scroll;
+      float: left;
 }
+
