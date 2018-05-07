@@ -1,27 +1,35 @@
-const databaseConnection = require('./DatabaseConnection')
+const databaseConnection = require('./DatabaseConnection');
 
 const Participates = {
 
-  getAllParticipates: function(callback) {
-    return databaseConnection.query("Select * From participates", callback);
-  },
+	async getMemberOfActivity(activityId, userId) {
+		return databaseConnection.queryp(
+			`SELECT Member.*
+			FROM User AS Member
+				INNER JOIN participates
+				ON Member.User_Id = participates.User_Id
+					INNER JOIN (User
+						INNER JOIN participates AS participates2
+						ON User.User_Id = participates2.User_Id)
+					ON participates2.Activity_Id = participates.Activity_Id
+			WHERE participates.Activity_Id = ?
+			AND User.User_Id = ?`,
+			[activityId, userId],
+		);
+	},
 
-  getParticipatesById: function(id, callback) {
-    return databaseConnection.query("SELECT * FROM participates inner join User on participates.User_Id = User.User_Id WHERE participates.Activity_Id=?", [id], callback);
-  },
+	async addParticipant(activityId, userId) {
+		return databaseConnection.queryp('INSERT INTO participates (User_Id, Activity_Id) VALUES (?, ?)', [userId, activityId]);
+	},
 
-  addParticipates: function(participates,userid, callback) {
-    return databaseConnection.query("Insert into participates (User_Id, Activity_Id) values(?,?)", [userid, participates.Activity_Id], callback);
-  },
+	async deleteParticipant(activityId, userId) {
+		return databaseConnection.queryp('DELETE FROM participates WHERE User_Id = ? AND Activity_Id = ?', [userId, activityId]);
+	},
 
-  deleteParticipatesSingle: function(userid, activityid, callback) {
-    return databaseConnection.query("Delete From participates where User_Id=? AND Activity_Id=?", [userid, activityid], callback);
-  },
+	async isParticipant(userId, activityId) {
+		return databaseConnection.querypBool('SELECT * FROM participates WHERE Activity_Id = ? AND User_Id = ?', [activityId, userId]);
+	},
 
-  updateParticipates: function(id, participates, callback) {
-    return databaseConnection.query("Update participates set User_Id=? where User_Id=? AND Activity_Id=?", [id, participates.User_Id, participates.Activity_Id], callback);
-  }
 };
-
 
 module.exports = Participates;

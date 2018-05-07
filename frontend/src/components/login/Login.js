@@ -39,8 +39,8 @@ export default class Login extends Component {
         fetch(config.apiPath + "/authenticate", {
             method: 'POST',
             body: JSON.stringify({
-                Email: this.state.email,
-                Password: this.state.password
+                email: this.state.email,
+                password: this.state.password
             }),
             headers: {
                 'Content-Type': 'application/json'

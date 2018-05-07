@@ -1,31 +1,62 @@
 const databaseConnection = require('./DatabaseConnection');
-const encryptPassword = require('../routes/auth/CryptPassword');
+const { hashPassword } = require('../routes/auth/Auth');
 
 const User = {
 
-	getAllUser: function(callback) {
-		return databaseConnection.query("Select * From User", callback);
+	/**
+	 * Returns all users.
+	 * @returns {Promise<Array<User>>} Returns an array of all users.
+	 */
+	async getAllUsers() {
+		return databaseConnection.queryp('SELECT * FROM User');
 	},
 
-	getUserById: function(id, callback) {
-		return databaseConnection.query("Select * from User where User_Id=?", [id], callback);
+	/**
+	 * Returns specific information about one user.
+	 * @param {number} userId The user id to get the information for.
+	 * @returns {Promise<User>} The data of the specified user.
+	 */
+	async getUserById(userId) {
+		return databaseConnection.querypFirst('SELECT * FROM User WHERE User_Id = ?', [userId]);
 	},
 
-	getUserByEmail: function(id, callback) {
-		return databaseConnection.query("Select * from User where Email=?", [id], callback);
+	/**
+	 * Returns the corresponding user for a given e-mail address.
+	 * @param {string} email The email address to get the user for.
+	 * @returns {Promise<User>} The data of the user with the e-mail address.
+	 */
+	async getUserByEmail(email) {
+		return databaseConnection.querypFirst('SELECT * FROM User WHERE Email = ?', [email]);
 	},
 
-	addUser: function(user, callback) {
-		return databaseConnection.query("Insert into User values(?,?,?,?,?)", [user.User_Id, user.Firstname, user.Name, user.Email, encryptPassword(user.Password)], callback);
+	/**
+	 * Adds a new user to the database.
+	 * @param {object} user The data of the new user to create.
+	 * @returns {Promise<DBResult>} The result of the database insertion.
+	 */
+	async addUser(user) {
+		return databaseConnection.queryp('INSERT INTO User (Firstname, Name, Email, Password, Image) VALUES (?,?,?,?,?)', [user.firstName, user.name, user.email, await hashPassword(user.password), user.image]);
 	},
 
-	deleteUser: function(id, callback) {
-		return databaseConnection.query("Delete From User where User_Id=?", [id], callback);
+	/**
+	 * Deletes the user with the id userId.
+	 * @param {number} userId The id of the user to delete.
+	 * @returns {Promise<DBResult>} The result of the database deletion.
+	 */
+	async deleteUser(userId) {
+		return databaseConnection.queryp('DELETE FROM User WHERE User_Id = ?', [userId]);
 	},
 
-	updateUser: function(id, user, callback) {
-		return databaseConnection.query("Update User set Firstname=?, Name=?, Email=?, Password=? where User_Id=?", [user.Firstname, user.Name, user.Email, user.Password, id], callback);
-	}
+	/**
+	 * Updates the data of a user.
+	 * @param {number} userId The id of the user to update.
+	 * @param {object} newUser The new data to update the user.
+	 * @returns {Promise<DBResult>} The result of the database update.
+	 */
+	async updateUser(userId, newUser) {
+		return databaseConnection.queryp('UPDATE User SET Firstname=?, Name=?, Email=?, Password=?, Image=? where User_Id=?', [newUser.firstName, newUser.name, newUser.email, await hashPassword(newUser.password), newUser.image, userId]);
+	},
+
 };
 
 

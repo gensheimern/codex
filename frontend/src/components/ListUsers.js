@@ -1,4 +1,5 @@
 import React from 'react';
+import config from '../config';
 
 class ListUsers extends React.Component {
 	constructor(props) {
@@ -7,7 +8,7 @@ class ListUsers extends React.Component {
 	}
 
 	componentDidMount() {
-		fetch("http://localhost:3000/user")
+		fetch(config.apiPath + "/user")
 			.then(res => res.json())
 			.then(res => {
 				this.setState({

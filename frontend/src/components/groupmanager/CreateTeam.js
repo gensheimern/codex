@@ -57,7 +57,7 @@ export default class CreateTeam extends React.Component {
                 fetch(config.apiPath + "/team ", {
                     method: 'POST',
                     body: JSON.stringify({
-                        Teamname: this.state.name
+                        name: this.state.name
                     }),
                     headers: {
                         'Content-Type': 'application/json',

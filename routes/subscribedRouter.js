@@ -1,89 +1,12 @@
-var express = require('express');
-var router = express.Router();
-var Subscriber = require('../models/subscribedModel');
-
-router.get('/:id?', function(req, res, next) {
-
-  if (req.params.id) {
-    Subscriber.getSubscriberById(req.params.id, function(err, rows) {
-      if (err) {
-        res.json(err);
-      } else {
-        res.json(rows);
-      }
-    });
-  } else {
-    Subscriber.getAllSubscriber(function(err, rows) {
-      if (err) {
-        res.json(err);
-      } else {
-        res.json(rows);
-      }
-
-    });
-  }
-});
-
-router.post('/', function(req, res, next) {
-
-  Subscriber.addSubscriber(req.body, function(err, count) {
-
-    console.log(req.body);
-
-    if (err) {
-      res.json(err);
-    } else {
-      res.json(req.body); //or return count for 1 & 0
-    }
-  });
-});
+const SubscribeController = require('./SubscribeController');
+const router = require('express').Router();
 
 
-router.delete('/subscriberid/:id', function(req, res, next) {
+router.get('/:userId/subscribed', SubscribeController.getSubscribed);
 
-  Subscriber.deleteSubscriberAll(req.body.Subscriber_Id, function(err, count) {
-    if (err) {
-      res.json(err);
-    } else {
-      res.json(count);
-    }
-  });
-});
+router.post('/:userId/subscribed/:subscribedId', SubscribeController.createSubscription);
 
-router.delete('/subscribedid/:id', function(req, res, next) {
+router.delete('/:userId/subscribed/:subscribedId', SubscribeController.deleteSubscription);
 
-  Subscriber.deleteSubscribedAll(req.params.id, function(err, count) {
-    if (err) {
-      res.json(err);
-    } else {
-      res.json(count);
-    }
-  });
-});
 
-router.delete('/subscriberid/subscribedid', function(req, res, next) {
-
-  Subscriber.deleteSubscribeSingle(req.body.Subscriber_Id, req.body.Subscribed_Id, function(err, count) {
-    if (err) {
-      res.json(err);
-    } else {
-      res.json(count);
-    }
-  });
-});
-/*
- ======================Fraglich ob es benötigt wird===============================
-
-router.put('/:id', function(req, res, next) {
-
-  Subscriber.updateSubscriber(req.params.id, req.body, function(err, rows) {
-
-    if (err) {
-      res.json(err);
-    } else {
-      res.json(rows);
-    }
-  });
-});
-*/
 module.exports = router;

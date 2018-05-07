@@ -92,7 +92,7 @@ fetch(config.apiPath + "/team", {
 }
 createGroupDeleteButtons() {
 for(let i = 0; i < this.state.groups.length; i++) {
-  let Tid = this.state.groups[i].Team_Id;
+  let Tid = this.state.groups[i].id;
   let resNM = this.state.groups;
 
   let theButtongroup

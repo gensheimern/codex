@@ -2,8 +2,6 @@
  Author: Nico Gensheimer
 */
 import React from "react";
-import {
-} from 'reactstrap';
 import CalendarFA from 'react-icons/lib/fa/calendar-check-o';
 import ClockFA from 'react-icons/lib/fa/clock-o';
 import BullseyeFA from 'react-icons/lib/fa/bullseye';
@@ -24,41 +22,30 @@ export default class ActivityItem extends React.Component {
 
         };
         this.leaveActivity = this.leaveActivity.bind(this);
-        this.joinActvitiy = this.joinActivity.bind(this);
+        this.joinActivity = this.joinActivity.bind(this);
     }
 
-/*
-This Method fires right before the Component gets rendered.
-The participates Array gets filled by fetching Data in loadParticipatesData().
-Date and Time which comes through props getting parsed.
-*/
-    componentWillMount() {
+	/*
+	This Method fires right before the Component gets rendered.
+	The participates Array gets filled by fetching Data in loadParticipatesData().
+	Date and Time which comes through props getting parsed.
+	*/
+    componentDidMount() {
         this.loadParticipatesData();
         this.DateparserTime();
         this.DateparserDate();
-
-
-
-
-
     }
 
-    componentDidMount() {
-
-
-
-    }
-
-/*
-This Method gets fired if someone Clicks on the "Leave Button" at the Activity.
-It sends a Delete request at the Backend and refresh the isJoined state.
-*/
+	/*
+	This Method gets fired if someone Clicks on the "Leave Button" at the Activity.
+	It sends a Delete request at the Backend and refresh the isJoined state.
+	*/
     leaveActivity() {
         if (this.state.isJoined === false) {
-            console.log("isJoined = false aber ich wolle leave" + this.props.activity.User_Id);
+            console.log("isJoined = false aber ich wolle leave" + this.props.activity.host.id);
         } else {
             console.log("isJoined = true");
-            fetch(config.apiPath + "/participates/" + this.props.activity.Activity_Id, {
+            fetch(config.apiPath + "/activity/" + this.props.activity.id + "/participants", {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
@@ -78,8 +65,8 @@ It sends a Delete request at the Backend and refresh the isJoined state.
                     throw new Error("Forbidden");
                 }
                 return res;
-            }).then(res => res.json()).then((res) => {
-
+			}).then(res => res.json())
+			.then((res) => {
                 //reloading Participates to display them dynamicly
                 this.loadParticipatesData();
                 this.setState({
@@ -89,25 +76,53 @@ It sends a Delete request at the Backend and refresh the isJoined state.
 
             });
         }
-    }
+	}
+	
+	DateparserDate() {
+		var d = new Date(this.props.activity.time);
+		var month = [];
+		month[0] = "January";
+		month[1] = "February";
+		month[2] = "March";
+		month[3] = "April";
+		month[4] = "May";
+		month[5] = "June";
+		month[6] = "July";
+		month[7] = "August";
+		month[8] = "September";
+		month[9] = "October";
+		month[10] = "November";
+		month[11] = "December";
+	return d.getDay() + " " + month[d.getMonth()];
+	}
+	
+		DateparserTime(){
+	
+			var d = new Date(this.props.activity.time);
+			var h = this.addZero(d.getHours());
+			var m = this.addZero(d.getMinutes());
+	
+			return h + ":" + m;
+	}
+	
+	addZero(i) {
+			if (i < 10) {
+					i = "0" + i;
+			}
+			return i;
+	}
 
     /*
     This Method gets fired if someone Clicks on the "JOIN Button" at the Activity.
     It sends a POST request at the Backend and refresh the isJoined state.
     */
-
     joinActivity() {
-        console.log("clicked");
 
         if (this.state.isJoined === true) {
-            console.log("isJoined = true " + this.props.activity.User_Id);
+            console.log("isJoined = true " + this.props.activity.host.id);
         } else {
-            console.log("isJoined = false");
-            fetch(config.apiPath + "/participates", {
+            fetch(config.apiPath + "/activity/" + this.props.activity.id + "/participants", {
                 method: 'POST',
-                body: JSON.stringify({
-                    Activity_Id: this.props.activity.Activity_Id
-                }),
                 headers: {
                     'Content-Type': 'application/json',
                     'X-Access-Token': localStorage.getItem('apiToken')
@@ -126,130 +141,88 @@ It sends a Delete request at the Backend and refresh the isJoined state.
                     throw new Error("Forbidden");
                 }
                 return res;
-            }).then(res => res.json()).then((res) => {
+			}).then(res => res.json())
+			.then((res) => {
                   //reloading Participates to display them dynamicly
                 this.loadParticipatesData();
                 this.setState({
                     isJoined: true
-                });
+				});
 
-
+				console.log("Joined!");
             });
         }
-    }
-
-    DateparserDate() {
-        var d = new Date(this.props.activity.Time);
-        var month = [];
-        month[0] = "January";
-        month[1] = "February";
-        month[2] = "March";
-        month[3] = "April";
-        month[4] = "May";
-        month[5] = "June";
-        month[6] = "July";
-        month[7] = "August";
-        month[8] = "September";
-        month[9] = "October";
-        month[10] = "November";
-        month[11] = "December";
-        return d.getDay() + " " + month[d.getMonth()];
-    }
-
-    DateparserTime() {
-
-        var d = new Date(this.props.activity.Time);
-        var h = this.addZero(d.getHours());
-        var m = this.addZero(d.getMinutes());
-
-        return h + ":" + m;
-    }
-
-    addZero(i) {
-        if (i < 10) {
-            i = "0" + i;
-        }
-        return i;
-    }
-
-
-    /*
+	}
+	
+	/*
     This Method gets fired when the component will render and if the User
     clicks on JOIN or LEAVE Button.
     It sends a GET request at the Backend and fills the participates array.
     */
+   loadParticipatesData() {
+	fetch(config.apiPath + "/activity/" + this.props.activity.id + "/participants", {
+		method: 'GET',
+		headers: {
+			'Content-Type': 'application/json',
+			'X-Access-Token': localStorage.getItem('apiToken')
+		}
+	}).then((resN) => {
+	  //hier sollten noch einige error codes erstellt werden (auch im Backend)
+		if (!resN.ok) {
+			throw new Error("Request failed.");
+		} else if (resN.status !== 200) {
+			throw new Error("Forbidden");
+		} else {
+			return resN;
 
-    loadParticipatesData() {
-        fetch(config.apiPath + "/participates/" + this.props.activity.Activity_Id, {
-            method: 'get',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-Access-Token': localStorage.getItem('apiToken')
-            }
-        }).then((resN) => {
-          //hier sollten noch einige error codes erstellt werden (auch im Backend)
-            if (!resN.ok) {
-                throw new Error("Request failed.");
-            } else if (resN.status !== 200) {
-                throw new Error("Forbidden");
-            } else {
-                return resN;
-
-            }
-        }).then(resN => resN.json()).then(resN => {
-              //reloading Participates to display them dynamicly
-
-            this.setState({
-                participates: resN
-            });
-            this.isJoinedTest();
-
-        });
-    }
+		}
+	}).then(resN => resN.json()).then(resN => {
+		  //reloading Participates to display them dynamicly
+		this.setState({
+			participates: resN
+		});
+		this.isJoinedTest();
+	});
+}
 
     //Returns either the Leave Button or the Join Button the the render method
     getJoinLeaveButton() {
         if (this.state.isJoined === false) {
-            return ( <
-                div className = "text2" > < button onClick = {
+            return ( <div className = "text2"> <button onClick = {
                     this.joinActivity.bind(this)
-                } > JOIN < /button></div >
-            );
+                }>JOIN</button></div>);
         } else {
-            return ( <
-                div className = "text2" > < button onClick = {
+            return (<div className = "text2"><button onClick = {
                     this.leaveActivity.bind(this)
-                } > LEAVE < /button></div >
-            );
+                }>LEAVE</button></div>);
         }
     }
 
-    isJoinedTest(){
+	isJoinedTest(){
 
 
-                    let decode = jwt_decode(localStorage.getItem('apiToken'));
-                    this.state.participates.map(user => {
+        let decode = jwt_decode(localStorage.getItem('apiToken'));
+        this.state.participates.map(user => {
 
-                      if(user.User_Id === decode.User_Id){
-                        if(this.state.isJoined=== false){
-                        this.setState({isJoined: true});
-                          }
-                        }
-                      return null});
-
+			if(user.userId === decode.id) {
+				if(!this.state.isJoined){
+					this.setState({isJoined: true});
+				}
+			}
+			return null;
+        });
     }
-
 
     render() {
         //Decoding the JWT Webtoken to get the User_Id of the User who´s logged in
         let participatesIMG;
         if (this.state.participates.length !== 0) {
           //Mapping trough the participates array and returning the profile picture
-            participatesIMG = this.state.participates.map((participatesItem,index) => {
+            participatesIMG = this.state.participates.map((participatesItem, index) => {
                 return ( <
                     img className = "myimage" key={index}
                     src = {
-                        participatesItem.Image
+                        participatesItem.image
                     }
                     alt = "profile" / >
                 );
@@ -269,99 +242,98 @@ It sends a Delete request at the Backend and refresh the isJoined state.
             };
         }
 
-    return (
-      <MediaQuery minWidth={1000}>
-        {(matches) => {
-          if (matches) {
-            return <div className = "activity"
-                style = {
-                    isJoinedBorder
-                } >
-                <div className = "card">
-                <div className = "image-container col-xs-12 col-sm-12 col-lg-12" >
-                <img className = "image"
-                src = {
-                    this.props.activity.Banner
-                }
-                alt = "Card cap" / >
-                <div className = "after" >
-                <div className = "text" > < span className = "activityname" > {
-                    this.props.activity.Activityname
-                } < /span> {
-                this.getJoinLeaveButton()
-            } </div>
-          </div>
-            </div> <div className = "card-body" >
-            <div className = "activity-group col-xs-12 col-sm-12 col-lg-12" >
-            <div className = "activity-date col-xs-6 col-sm-6 col-lg-6" >
-            <h4> <CalendarFA/> {
-                this.DateparserDate()
-            } </h4>
+		return (
+			<MediaQuery minWidth={1000}>
+				{(matches) => {
+					if (matches) {
+						return <div className = "activity"
+							style = {
+								isJoinedBorder
+							} >
+							<div className = "card">
+								<div className = "image-container col-xs-12 col-sm-12 col-lg-12" >
+									<img className = "image"
+										src = {
+											this.props.activity.banner
+										}
+									alt = "Card cap" />
+									<div className = "after" >
+										<div className = "text" >
+											<span className = "activityname" > {
+												this.props.activity.name
+											}
+											</span>
+											{
+				  								this.getJoinLeaveButton()
+											}
+										</div>
+									</div>
+								</div>
+								<div className = "card-body">
+									<div className = "activity-group col-xs-12 col-sm-12 col-lg-12">
+										<div className = "activity-date col-xs-6 col-sm-6 col-lg-6">
+											<h4> <CalendarFA/> { this.DateparserDate() } </h4>
+	  
+											<h4> <GroupFA/> Already joining </h4>
+	  
+											{ participatesIMG }
+	  
+										</div>
+										<div className="activity-time col-xs-6 col-sm-6 col-lg-6">
+											<h4><ClockFA />  {this.DateparserTime()} </h4>
+										</div>
+										<div className="activity-meetingpoint col-xs-6 col-sm-6 col-lg-6">
+											<h4><BullseyeFA />  {this.props.activity.place} </h4>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>;
+					} else {
+				  		return <div className = "activity"
+					  		style = {
+						  		isJoinedBorder
+					  		} >
+					  		<div className = "card">
+					  			<div className = "image-container col-xs-12 col-sm-12 col-lg-12" >
+					  				<img className = "image"
+					  					src = {
+						  					this.props.activity.banner
+					  					}
+					 					 alt = "Card cap" />
+					  				<div className = "after" >
+					  					<div className = "text">
+											< span className = "activityname"> { this.props.activity.name } </span>
+											{ this.getJoinLeaveButton() }
+										</div>
+									</div>
+								</div>
+								<div className = "card-body" >
+									<div className = "activity-group col-xs-12 col-sm-12 col-lg-12">
+				  						<div className = "activity-date col-xs-6 col-sm-6 col-lg-6">
+				  							<h4> <CalendarFA/> {this.DateparserDate()} </h4>
+	  
+											<h4> <GroupFA/> Already joining </h4>
 
-            <h4> <GroupFA/> Already joining </h4>
+											{ participatesIMG }
+	  
+										</div>
+										<div className="activity-time col-xs-6 col-sm-6 col-lg-6">
+											<h4><ClockFA />  {this.DateparserTime()} </h4>
+										</div>
+										<div className="activity-meetingpoint col-xs-6 col-sm-6 col-lg-6">
+											<h4><BullseyeFA />  {this.props.activity.place} </h4>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>;
+					}
+				}
+			}
+			</MediaQuery>
+		);
+	  
+	  }
 
-        {
-            participatesIMG
-        }
-
-              </div>
-              <div className="activity-time col-xs-6 col-sm-6 col-lg-6">
-                <h4><ClockFA />  {this.DateparserTime()} </h4>
-              </div>
-              <div className="activity-meetingpoint col-xs-6 col-sm-6 col-lg-6">
-                <h4><BullseyeFA />  {this.props.activity.Place} </h4>
-              </div>
-        </div> <div className = "activity-time col-xs-6 col-sm-6 col-lg-6" >
-          </div> <div className = "activity-meetingpoint col-xs-6 col-sm-6 col-lg-6" >
-            <h4>  </h4> </div> </div> </div>
-     </div>;
-          } else {
-            return <div className = "activity"
-                style = {
-                    isJoinedBorder
-                } >
-                <div className = "card">
-                <div className = "image-container col-xs-12 col-sm-12 col-lg-12" >
-                <img className = "image"
-                src = {
-                    this.props.activity.Banner
-                }
-                alt = "Card cap" / >
-                <div className = "after" >
-                <div className = "text" > < span className = "activityname" > {
-                    this.props.activity.Activityname
-                } < /span> {
-                this.getJoinLeaveButton()
-            } </div>
-          </div>
-            </div> <div className = "card-body" >
-            <div className = "activity-group col-xs-12 col-sm-12 col-lg-12" >
-            <div className = "activity-date col-xs-6 col-sm-6 col-lg-6" >
-            <h4> <CalendarFA/> {
-                this.DateparserDate()
-            } </h4>
-
-            <h4> <GroupFA/> Already joining </h4>
-
-        {
-            participatesIMG
-        }
-
-              </div>
-              <div className="activity-time col-xs-6 col-sm-6 col-lg-6">
-                <h4><ClockFA />  {this.DateparserTime()} </h4>
-              </div>
-              <div className="activity-meetingpoint col-xs-6 col-sm-6 col-lg-6">
-                <h4><BullseyeFA />  {this.props.activity.Place} </h4>
-              </div>
-        </div> <div className = "activity-time col-xs-6 col-sm-6 col-lg-6" >
-             </div> <div className = "activity-meetingpoint col-xs-6 col-sm-6 col-lg-6" >
-          </div> </div> </div>
-     </div>;
-          }
-        }}
-      </MediaQuery>
-  );
-
-}
 }

@@ -1,55 +1,139 @@
-const Activity = require('../models/ActivityModel');
-const jwt = require('jsonwebtoken');
+const ActivityModel = require('../models/ActivityModel');
+const ParticipatesModel = require('../models/participatesModel');
+const transforms = require('./transforms');
 
-ActivityController = {
+const ActivityController = {
 
-	getAllActivities(req, res) {
+	async getAllActivities(req, res) {
+		const { userId } = req.token;
 
-		Activity.getAllActivities(function(err, rows) {
-			if (err) return res.json(err);
+		try {
+			const activities = await ActivityModel.getAllActivities(userId);
 
-			res.json(rows);
-		});
+			res.json(activities.map(transforms.transformActivity));
+		} catch (error) {
+			res.sendStatus(500);
+		}
 	},
 
-	getActivityById(req, res, next) {
-		Activity.getActivityById(req.params.id, function(err, rows) {
-			if (err) return res.json(err);
+	async getActivityById(req, res) {
+		const { userId } = req.token;
+		const { activityId } = req.params;
 
-			count.affectedRows === 0 ? res.sendStatus(404) : res.json(rows[0]);
-		});
+		try {
+			const activityPromise = ActivityModel.getActivityById(activityId);
+
+			const isParticipant = await ParticipatesModel.isParticipant(userId, activityId);
+
+			if (!isParticipant) {
+				res.status(404).json({
+					message: 'Activity not found.',
+				});
+				return;
+			}
+
+			const activity = await activityPromise;
+
+			if (activity === null) {
+				res.status(404).json({
+					message: 'Activity not found',
+				});
+			} else {
+				res.json(transforms.transformActivity(activity));
+			}
+		} catch (error) {
+			res.sendStatus(500);
+		}
 	},
 
-	addActivity(req, res) {
+	async createActivity(req, res) {
+		const { userId } = req.token;
+		const activity = req.body;
+		// TODO check body
+		// TODO: 2018-04-20 12:34:18 as time
 
-		var token = req.headers['x-access-token'];
-		var decoded = jwt.decode(token, 'secret');
-
-		Activity.addActivity(req.body, decoded.User_Id, function(err, count) {
-			if (err) return res.json(err);
+		try {
+			const result = await ActivityModel.createActivity(activity, userId);
+			await ParticipatesModel.addParticipant(result.insertId, userId);
 
 			res.status(201).json({
-				Activity_Id: count.insertId
+				activityId: result.insertId,
 			});
-		});
+		} catch (error) {
+			res.sendStatus(500);
+		}
 	},
 
-	deleteActivity(req, res) {
-		Activity.deleteActivity(req.params.id, function(err, count) {
-			if (err) return res.json(err);
+	async deleteActivity(req, res) {
+		const { userId } = req.token;
+		const { activityId } = req.params;
 
-			count.affectedRows === 0 ? res.sendStatus(404) : res.sendStatus(200);
-		});
+		try {
+			// TODO Check if user is admin of activity
+			const isHost = await ActivityModel.isHost(userId, activityId);
+
+			if (!isHost) {
+				res.status(403).json({
+					success: false,
+					message: 'Invalid activity id.',
+				});
+				return;
+			}
+
+			const result = await ActivityModel.deleteActivity(activityId, userId);
+
+			if (result.affectedRows === 1) {
+				res.json({
+					success: true,
+					message: 'Activity successfully deleted.',
+				});
+			} else {
+				res.status(404).json({
+					success: false,
+					message: 'Activity not found.',
+				});
+			}
+		} catch (error) {
+			res.sendStatus(500);
+		}
 	},
 
-	updateActivity(req, res) {
-		Activity.updateActivity(req.params.id, function(err, count) {
-			if (err) return res.json(err);
+	async updateActivity(req, res) {
+		const { userId } = req.token;
+		const { activityId } = req.params;
+		const newActivity = req.body;
+		// TODO: Check body
 
-			count.affectedRows === 0 ? res.sendStatus(404) : res.sendStatus(200);
-		});
-	}
+		try {
+			// TODO Check if user is admin of activity
+			const isHost = await ActivityModel.isHost(userId, activityId);
 
-}
+			if (!isHost) {
+				res.status(403).json({
+					success: false,
+					message: 'Activity not found.',
+				});
+				return;
+			}
+
+			const result = await ActivityModel.updateActivity(activityId, newActivity);
+
+			if (result.affectedRows === 1) {
+				res.json({
+					success: true,
+					message: 'Activity successfully updated.',
+				});
+			} else {
+				res.status(404).json({
+					success: false,
+					message: 'Activity not found.',
+				});
+			}
+		} catch (error) {
+			res.sendStatus(500);
+		}
+	},
+
+};
 
 module.exports = ActivityController;

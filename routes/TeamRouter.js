@@ -1,18 +1,16 @@
-const express = require('express');
-const router = express.Router();
-const jwt = require('jsonwebtoken');
 const TeamController = require('./TeamController');
+const router = require('express').Router();
 
 
 router.get('/', TeamController.getAllTeams);
 
-router.get('/:id', TeamController.getTeamById);
+router.get('/:teamId', TeamController.getTeamById);
 
 router.post('/', TeamController.addTeam);
 
-router.delete('/:id', TeamController.deleteTeam);
+router.delete('/:teamId', TeamController.deleteTeam);
 
-router.put('/:id', TeamController.updateTeam);
+router.put('/:teamId', TeamController.updateTeam);
 
 
 module.exports = router;
