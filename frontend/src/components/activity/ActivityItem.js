@@ -34,17 +34,6 @@ export default class ActivityItem extends React.Component {
         this.loadParticipatesData();
         this.DateparserTime();
         this.DateparserDate();
-
-
-
-
-
-    }
-
-    componentDidMount() {
-
-
-
     }
 
 	/*
@@ -128,12 +117,10 @@ export default class ActivityItem extends React.Component {
     It sends a POST request at the Backend and refresh the isJoined state.
     */
     joinActivity() {
-        console.log("clicked");
 
         if (this.state.isJoined === true) {
             console.log("isJoined = true " + this.props.activity.host.id);
         } else {
-            console.log("isJoined = false Here");
             fetch(config.apiPath + "/activity/" + this.props.activity.id + "/participants", {
                 method: 'POST',
                 headers: {
@@ -217,13 +204,13 @@ export default class ActivityItem extends React.Component {
         let decode = jwt_decode(localStorage.getItem('apiToken'));
         this.state.participates.map(user => {
 
-			if(user.User_Id === decode.User_Id){
-				if(this.state.isJoined=== false){
+			if(user.userId === decode.id) {
+				if(!this.state.isJoined){
 					this.setState({isJoined: true});
 				}
 			}
+			return null;
         });
-
     }
 
     render() {
@@ -299,12 +286,6 @@ export default class ActivityItem extends React.Component {
 											<h4><BullseyeFA />  {this.props.activity.place} </h4>
 										</div>
 									</div>
-									<div className = "activity-time col-xs-6 col-sm-6 col-lg-6" >
-										<h4> <ClockFA/> { this.DateparserTime() } </h4>
-									</div>
-									<div className = "activity-meetingpoint col-xs-6 col-sm-6 col-lg-6" >
-										<h4> <BullseyeFA/> { this.props.activity.place } </h4>
-									</div>
 								</div>
 							</div>
 						</div>;
@@ -344,12 +325,6 @@ export default class ActivityItem extends React.Component {
 											<h4><BullseyeFA />  {this.props.activity.place} </h4>
 										</div>
 									</div>
-									<div className = "activity-time col-xs-6 col-sm-6 col-lg-6">
-										<h4> <ClockFA/> {this.DateparserTime()} </h4>
-									</div>
-									<div className = "activity-meetingpoint col-xs-6 col-sm-6 col-lg-6" >
-										<h4> <BullseyeFA/> { this.props.activity.place } </h4>
-			  						</div>
 								</div>
 							</div>
 						</div>;
@@ -360,4 +335,5 @@ export default class ActivityItem extends React.Component {
 		);
 	  
 	  }
+
 }
