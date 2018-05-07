@@ -19,6 +19,7 @@ export default class ActivityItem extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            loaded:false,
             isJoined: false, //Defines if the User who´s logged in joined the Event
             participates: []//Array of participates
 
@@ -36,6 +37,17 @@ Date and Time which comes through props getting parsed.
         this.loadParticipatesData();
         this.DateparserTime();
         this.DateparserDate();
+
+
+
+
+
+    }
+
+    componentDidMount() {
+
+
+
     }
 
 /*
@@ -187,9 +199,12 @@ It sends a Delete request at the Backend and refresh the isJoined state.
             }
         }).then(resN => resN.json()).then(resN => {
               //reloading Participates to display them dynamicly
+
             this.setState({
                 participates: resN
             });
+            this.isJoinedTest();
+
         });
     }
 
@@ -210,6 +225,22 @@ It sends a Delete request at the Backend and refresh the isJoined state.
         }
     }
 
+    isJoinedTest(){
+
+
+                    let decode = jwt_decode(localStorage.getItem('apiToken'));
+                    this.state.participates.map(user => {
+
+                      if(user.User_Id === decode.User_Id){
+                        if(this.state.isJoined=== false){
+                        this.setState({isJoined: true});
+                          }
+                        }
+                      });
+
+    }
+
+
     render() {
         //Decoding the JWT Webtoken to get the User_Id of the User who´s logged in
         let decode = jwt_decode(localStorage.getItem('apiToken'));
@@ -217,6 +248,8 @@ It sends a Delete request at the Backend and refresh the isJoined state.
         if (this.state.participates.length !== 0) {
           //Mapping trough the participates array and returning the profile picture
             participatesIMG = this.state.participates.map(participatesItem => {
+
+
                 return ( <
                     img className = "myimage"
                     src = {

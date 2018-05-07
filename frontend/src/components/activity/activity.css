@@ -12,13 +12,6 @@
   overflow:auto;
 }
 
-.card-body {
-  margin-left:100px;
-  margin-right:100px;
-  background-color:white;
-}
-
-
 .image-container, .image {
     position: relative;
     padding-right:0px;
@@ -52,43 +45,17 @@
   float: right;
   margin-right: 100px;
 }
-/*
-.image-container .text2 button{
-width:300px;
-height:auto;
-font-size:30px;
-background-color:transparent;
-border: solid 3px;
-border-color:white;
-margin-right:100px;
-float:right;
-}
-
-.image-container:hover .text2 button:hover{
-width:300px;
-height:auto;
-font-size:30px;
-background-color:white;
-color:black;
-border: solid 3px;
-border-color:white;
-}
-.text2 {
-  display:none;
-  font-size:60px;
-  color:white;
-
-}
-*/
-
 
 .image-container .after {
     display: block;
     background: rgba(0, 0, 0, .3);
 }
 
-
-
+.card-body {
+  margin-left:100px;
+  margin-right:100px;
+  background-color:white;
+}
 
 .activity-group {
   width: 100%;
@@ -99,9 +66,6 @@ border-color:white;
 .activity-date, .activity-time, .activity-meetingpoint {
   float:left;
   margin: 0 auto;
-
-
-
 }
 
 .activity-alreadyjoining {
