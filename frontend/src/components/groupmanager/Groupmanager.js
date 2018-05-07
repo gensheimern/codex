@@ -4,13 +4,13 @@ import SidebarContent from '../MenuComponents/sidebar_content';
 import SidebarCalender from '../MenuComponents/SidebarContentCalender';
 import {
     Button,
-    ButtonGroup,Modal,Navbar,Nav,NavItem,MenuItem,NavDropdown
+    ButtonGroup
 } from "react-bootstrap";
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import CreateTeam from '../groupmanager/CreateTeam.js';
 import config from '../../config';
 import ListGroups from '../groupmanager/ListGroups.js'
-import CreateActivity from '../activity/CreateActivity.js'
+
 import MediaQuery from 'react-responsive';
 import NavbarMenu from "../MenuComponents/NavbarMenu.js";
 
@@ -178,7 +178,6 @@ fetch(config.apiPath + "/team/" + Tid, {
 
   render() {
     const sidebar = <SidebarContent/>;
-    const sidebarCalender = <SidebarCalender/>;
 
     const sidebarProps = {
       sidebar: sidebar,
@@ -193,19 +192,7 @@ fetch(config.apiPath + "/team/" + Tid, {
       transitions: this.state.transitions,
       onSetOpen: this.onSetOpen,
     };
-    const sidebarProps2 = {
-      sidebar: sidebarCalender,
-      docked: true,
-      sidebarClassName: 'custom-sidebar-class',
-      open: this.state.open,
-      touch: this.state.touch,
-      shadow: this.state.shadow,
-      pullRight: true,
-      touchHandleWidth: this.state.touchHandleWidth,
-      dragToggleDistance: this.state.dragToggleDistance,
-      transitions:false,
-      onSetOpen: this.onSetOpen,
-    };
+
 
     return (     <Sidebar {...sidebarProps}>
                   <div style={styles.content}>

@@ -3,10 +3,7 @@
 */
 import React from "react";
 import {
-    Card,
-    CardText
 } from 'reactstrap';
-import jwt_decode from 'jwt-decode';
 import CalendarFA from 'react-icons/lib/fa/calendar-check-o';
 import ClockFA from 'react-icons/lib/fa/clock-o';
 import BullseyeFA from 'react-icons/lib/fa/bullseye';
@@ -213,13 +210,12 @@ It sends a Delete request at the Backend and refresh the isJoined state.
 
     render() {
         //Decoding the JWT Webtoken to get the User_Id of the User who´s logged in
-        let decode = jwt_decode(localStorage.getItem('apiToken'));
         let participatesIMG;
         if (this.state.participates.length !== 0) {
           //Mapping trough the participates array and returning the profile picture
-            participatesIMG = this.state.participates.map(participatesItem => {
+            participatesIMG = this.state.participates.map((participatesItem,index) => {
                 return ( <
-                    img className = "myimage"
+                    img className = "myimage" key={index}
                     src = {
                         participatesItem.Image
                     }
