@@ -11,6 +11,7 @@ import GroupFA from 'react-icons/lib/fa/group';
 import MediaQuery from 'react-responsive';
 import config from "../../config.js";
 import "./activity.css";
+import jwt_decode from 'jwt-decode';
 
 export default class ActivityItem extends React.Component {
 
