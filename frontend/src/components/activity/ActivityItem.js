@@ -9,12 +9,14 @@ import GroupFA from 'react-icons/lib/fa/group';
 import MediaQuery from 'react-responsive';
 import config from "../../config.js";
 import "./activity.css";
+import jwt_decode from 'jwt-decode';
 
 export default class ActivityItem extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
+            loaded:false,
             isJoined: false, //Defines if the User who´s logged in joined the Event
             participates: []//Array of participates
 
@@ -32,6 +34,17 @@ export default class ActivityItem extends React.Component {
         this.loadParticipatesData();
         this.DateparserTime();
         this.DateparserDate();
+
+
+
+
+
+    }
+
+    componentDidMount() {
+
+
+
     }
 
 	/*
@@ -181,6 +194,7 @@ export default class ActivityItem extends React.Component {
 		this.setState({
 			participates: resN
 		});
+		this.isJoinedTest();
 	});
 }
 
@@ -197,6 +211,20 @@ export default class ActivityItem extends React.Component {
         }
     }
 
+	isJoinedTest(){
+
+
+        let decode = jwt_decode(localStorage.getItem('apiToken'));
+        this.state.participates.map(user => {
+
+			if(user.User_Id === decode.User_Id){
+				if(this.state.isJoined=== false){
+					this.setState({isJoined: true});
+				}
+			}
+        });
+
+    }
 
     render() {
         //Decoding the JWT Webtoken to get the User_Id of the User who´s logged in
