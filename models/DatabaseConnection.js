@@ -39,7 +39,7 @@ const databaseConnection = {
 		return new Promise((resolve, reject) => {
 			dbConnection.query(...args, (err, res) => {
 				if (err) reject(err);
-				else resolve(res.length >= 0);
+				else resolve(res.length >= 1);
 			});
 		});
 	},

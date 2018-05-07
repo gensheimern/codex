@@ -1,0 +1,11 @@
+<Grid>
+<Row>
+  <Col xs={12} md={8} style={{}}>  {Item}
+  </Col>
+  <Col xs={6} md={4}>
+    <Sticky enabled={true} top={50} bottomBoundary={1200}>
+    <SidebarContentCalender/>
+      </Sticky>
+  </Col>
+</Row>
+</Grid>

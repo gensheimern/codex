@@ -19,15 +19,26 @@ const ParticipatesController = {
 
 	async addParticipation(req, res) {
 		const { userId } = req.token;
-		const { activityId, participantId } = req.params;
+		const { activityId } = req.params;
+		let { participantId } = req.params;
+
+		if (!participantId) participantId = userId;
 
 		try {
 			const isHost = ActivityModel.isHost(userId, activityId);
 			const isPrivate = ActivityModel.isPrivate(activityId);
+			const isParticipant = ParticipatesModel.isParticipant(participantId, activityId);
 
 			if (!(Number(userId) === Number(participantId) && !await isPrivate) && !await isHost) {
 				res.status(404).json({
 					message: 'Activity not found.',
+				});
+				return;
+			}
+
+			if (await isParticipant) {
+				res.json({
+					message: 'Already joined.',
 				});
 				return;
 			}
@@ -50,7 +61,10 @@ const ParticipatesController = {
 
 	async deleteParticipation(req, res) {
 		const { userId } = req.token;
-		const { activityId, participantId } = req.params;
+		const { activityId } = req.params;
+		let { participantId } = req.params;
+
+		if (!participantId) participantId = userId;
 
 		try {
 			const isHost = ActivityModel.isHost(userId, activityId);
