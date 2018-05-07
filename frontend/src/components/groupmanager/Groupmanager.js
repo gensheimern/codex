@@ -4,13 +4,15 @@ import SidebarContent from '../MenuComponents/sidebar_content';
 import SidebarCalender from '../MenuComponents/SidebarContentCalender';
 import {
     Button,
-    ButtonGroup,Modal,Navbar,Nav,NavItem,MenuItem,NavDropdown
+    ButtonGroup
 } from "react-bootstrap";
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import CreateTeam from '../groupmanager/CreateTeam.js';
 import config from '../../config';
 import ListGroups from '../groupmanager/ListGroups.js'
-import CreateActivity from '../activity/CreateActivity.js'
+
+import MediaQuery from 'react-responsive';
+import NavbarMenu from "../MenuComponents/NavbarMenu.js";
 
 const styles = {
   contentHeaderMenuLink: {
@@ -45,17 +47,14 @@ class Example extends React.Component {
       eventTag: false,
       host: ""
     };
-
+this.displayControllerDockedSidebar = this.displayControllerDockedSidebar.bind(this);
     this.renderPropCheckbox = this.renderPropCheckbox.bind(this);
     this.renderPropNumber = this.renderPropNumber.bind(this);
     this.onSetOpen = this.onSetOpen.bind(this);
     this.menuButtonClick = this.menuButtonClick.bind(this);
     this.loadContent = this.loadContent.bind(this);
     this.createGroupDeleteButtons = this.createGroupDeleteButtons.bind(this);
-      this.SendTeamToDelete = this.SendTeamToDelete.bind(this);
-      this.handleShow = this.handleShow.bind(this);
-      this.handleClose = this.handleClose.bind(this);
-      this.handleSelect = this.handleSelect.bind(this);
+      this.SendTeamToDelete = this.SendTeamToDelete.bind(this);;
   }
 
 loadContent() {
@@ -112,9 +111,16 @@ for(let i = 0; i < this.state.groups.length; i++) {
   this.setState({
       groups: resNM
   });
+}}
+
+displayControllerDockedSidebar() {
+  if(this.state.docked === true){
+    this.setState({docked:false});
+  }else if(this.state.docked === false){
+    this.setState({docked:true});
+  }
 }
 
-}
 SendTeamToDelete(Tid) {
 fetch(config.apiPath + "/team/" + Tid, {
       method: 'DELETE',
@@ -134,25 +140,6 @@ fetch(config.apiPath + "/team/" + Tid, {
   .then(() => {
       this.loadContent();
   });
-}
-handleClose() {
-this.setState({ show: false });
-}
-
-handleShow() {
-this.setState({ show: true });
-}
-
-handleSelect(eventKey) {
-if(eventKey === 2){
-this.handleShow();
-}
-if(eventKey === 3){
-if(this.state.docked === false)
-    this.setState({ docked: true });;
-  if(this.state.docked === true)
-    this.setState({ docked: false });;
-}
 }
   onSetOpen(open) {
     this.setState({open: open});
@@ -191,7 +178,6 @@ if(this.state.docked === false)
 
   render() {
     const sidebar = <SidebarContent/>;
-    const sidebarCalender = <SidebarCalender/>;
 
     const sidebarProps = {
       sidebar: sidebar,
@@ -206,79 +192,42 @@ if(this.state.docked === false)
       transitions: this.state.transitions,
       onSetOpen: this.onSetOpen,
     };
-    const sidebarProps2 = {
-      sidebar: sidebarCalender,
-      docked: true,
-      sidebarClassName: 'custom-sidebar-class',
-      open: this.state.open,
-      touch: this.state.touch,
-      shadow: this.state.shadow,
-      pullRight: true,
-      touchHandleWidth: this.state.touchHandleWidth,
-      dragToggleDistance: this.state.dragToggleDistance,
-      transitions:false,
-      onSetOpen: this.onSetOpen,
-    };
 
-    return (
-      <Sidebar {...sidebarProps}>
-          <div style={styles.content}>
-            <React.Fragment>
-                  <Modal show={this.state.show} onHide={this.handleClose}>
-                      <Modal.Header closeButton>
-                         <Modal.Title>Erstelle eine Aktivität</Modal.Title>
-                       </Modal.Header>
-                       <Modal.Body>
-                          <CreateActivity/>
-                       </Modal.Body>
-                      <Modal.Footer>
-                          <Button onClick={this.handleClose}>Close</Button>
-                      </Modal.Footer>
-                  </Modal>
-              <Navbar inverse fixedTop collapseOnSelect activekey="1" onSelect={k => this.handleSelect(k)}>
-              <Navbar.Header>
-                <Navbar.Brand>
-                  <a href="#brand">CODEX</a>
-                </Navbar.Brand>
-                <Navbar.Toggle/>
-              </Navbar.Header>
-              <Navbar.Collapse>
-                <Nav>
-                  <NavItem eventKey={1} href="/groupmanager">
-                    Home
-                  </NavItem>
-                  <NavItem eventKey={2.1} href="/activity">
-                    Aktivitäten
-                  </NavItem>
-                <NavItem eventKey={2} href="">
-                  Aktivität erstellen
-                </NavItem>
-                <NavItem eventKey={3} href="">
-                  Gruppen
-                </NavItem>
-              </Nav>
-              <Nav pullRight>
-                <NavDropdown eventKey={3} title="Sidebar Options" id="basic-nav-dropdown">
-                  <MenuItem eventKey={3.1}>{['open'].map(this.renderPropCheckbox)}</MenuItem>
-                  <MenuItem eventKey={3.2}>{['docked'].map(this.renderPropCheckbox)}</MenuItem>
-                  <MenuItem eventKey={3.3}>{['transitions'].map(this.renderPropCheckbox)}</MenuItem>
-                  <MenuItem divider />
-                  <MenuItem eventKey={3.3}>{['pullRight'].map(this.renderPropCheckbox)}</MenuItem>
-                </NavDropdown>
-                <NavItem eventKey={6} href="/logout">
-                  Log Out
-                </NavItem>
-              </Nav>
-              </Navbar.Collapse>
-              </Navbar>
-                <Sidebar {...sidebarProps2}>
-                    <CreateTeam update={this.loadContent}/>
-                    <ListGroups update = {this.loadContent} teams = {this.state.groups}/>
-                  </Sidebar>
-              </React.Fragment>
-          </div>
 
-      </Sidebar>
+    return (     <Sidebar {...sidebarProps}>
+                  <div style={styles.content}>
+                    <React.Fragment>
+                        <NavbarMenu dockSidebar={this.displayControllerDockedSidebar}/>
+                      <MediaQuery minWidth={1000}>
+                        {(matches) => {
+                          if (matches) {
+                            return <div className="groupdisplay">
+                               <CreateTeam update={this.loadContent}/>
+                                <ListGroups update = {this.loadContent} teams = {this.state.groups}/>
+                              </div>
+                      } else {
+                        return <div className="groupdisplay">
+                           <CreateTeam update={this.loadContent}/>
+                           <ListGroups update = {this.loadContent} teams = {this.state.groups}/>
+                         </div>
+                      }
+                    }}
+                  </MediaQuery>
+                      <div style={{backgroundColor:"#D3D3D3"}}>
+                        <MediaQuery minWidth={1000}>
+                          {(matches) => {
+                            if (matches) {
+                              return  <SidebarCalender/>
+                        } else {
+                          return <div></div>;
+                        }
+                      }}
+                    </MediaQuery>
+                  </div>
+                </React.Fragment>
+                </div>
+              </Sidebar>
+
     );
   }
 }

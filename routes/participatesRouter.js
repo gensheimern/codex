@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var participates = require('../models/participatesModel');
+var jwt = require('jsonwebtoken');
 
 router.get('/:id?', function(req, res, next) {
 
@@ -26,11 +27,19 @@ router.get('/:id?', function(req, res, next) {
 
 router.post('/', function(req, res, next) {
 
-  participates.addParticipates(req.body, function(err, count) {
+  var token = req.headers['x-access-token'];
+  var decoded = jwt.decode(token, 'secret');
 
-    console.log(req.body);
+  participates.addParticipates(req.body,decoded.User_Id, function(err, count) {
+
+    console.log(token);
 
     if (err) {
+      if (err.code === 'ER_DUP_ENTRY'){
+      res.status(400).json({
+        message: "Duplicate Entry"
+      });
+      }
       res.json(err);
     } else {
       res.json(req.body); //or return count for 1 & 0
@@ -39,9 +48,13 @@ router.post('/', function(req, res, next) {
 });
 
 
-router.delete('/:id', function(req, res, next) {
+router.delete('/:id?', function(req, res, next) {
 
-  participates.deleteParticipatesAll(req.params.id, function(err, count) {
+  var token = req.headers['x-access-token'];
+  var decoded = jwt.decode(token, 'secret');
+  console.log(decoded.User_Id + " " +req.params.id);
+  participates.deleteParticipatesSingle(decoded.User_Id, req.params.id, function(err, count) {
+
     if (err) {
       res.json(err);
     } else {
@@ -50,16 +63,6 @@ router.delete('/:id', function(req, res, next) {
   });
 });
 
-router.delete('/userid/activityid', function(req, res, next) {
-
-  participates.deleteParticipatesSingle(req.body.User_Id, req.body.Activity_Id, function(err, count) {
-    if (err) {
-      res.json(err);
-    } else {
-      res.json(count);
-    }
-  });
-});
 
 /*
 ==================================================================================
