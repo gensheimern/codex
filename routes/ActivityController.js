@@ -2,11 +2,12 @@ const Activity = require('../models/ActivityModel');
 const jwt = require('jsonwebtoken');
 
 ActivityController = {
-	
+
 	getAllActivities(req, res) {
+
 		Activity.getAllActivities(function(err, rows) {
 			if (err) return res.json(err);
-			
+
 			res.json(rows);
 		});
 	},
@@ -23,7 +24,7 @@ ActivityController = {
 
 		var token = req.headers['x-access-token'];
 		var decoded = jwt.decode(token, 'secret');
-	
+
 		Activity.addActivity(req.body, decoded.User_Id, function(err, count) {
 			if (err) return res.json(err);
 

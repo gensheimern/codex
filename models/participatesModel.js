@@ -10,12 +10,8 @@ const Participates = {
     return databaseConnection.query("SELECT * FROM participates inner join User on participates.User_Id = User.User_Id WHERE participates.Activity_Id=?", [id], callback);
   },
 
-  addParticipates: function(participates, callback) {
-    return databaseConnection.query("Insert into participates values(?,?)", [participates.User_Id, participates.Activity_Id], callback);
-  },
-
-  deleteParticipatesAll: function(id, callback) {
-    return databaseConnection.query("Delete From participates where Activity_Id=?", [id], callback);
+  addParticipates: function(participates,userid, callback) {
+    return databaseConnection.query("Insert into participates (User_Id, Activity_Id) values(?,?)", [userid, participates.Activity_Id], callback);
   },
 
   deleteParticipatesSingle: function(userid, activityid, callback) {
