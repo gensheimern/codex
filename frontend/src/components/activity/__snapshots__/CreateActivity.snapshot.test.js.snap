@@ -1,0 +1,93 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CreateActivity Snapshot renders 1`] = `
+<form
+  onSubmit={[Function]}
+>
+  <div
+    className="form-group form-group-lg"
+  />
+  <div
+    className="form-group form-group-lg"
+  />
+  <div
+    className="form-group form-group-lg"
+  >
+    <input
+      autoFocus="autoFocus"
+      className="form-control"
+      id="activityName"
+      onChange={[Function]}
+      placeholder="activityName"
+      type="text"
+      value=""
+    />
+  </div>
+  <div
+    className="form-group form-group-lg"
+  >
+    <input
+      autoFocus="autoFocus"
+      className="form-control"
+      id="description"
+      onChange={[Function]}
+      placeholder="description"
+      type="text"
+      value=""
+    />
+  </div>
+  <div
+    className="form-group form-group-lg"
+  >
+    <input
+      autoFocus="autoFocus"
+      className="form-control"
+      id="place"
+      onChange={[Function]}
+      placeholder="place"
+      type="text"
+      value=""
+    />
+  </div>
+  <div
+    className="form-group form-group-lg"
+  >
+    <input
+      autoFocus="autoFocus"
+      className="form-control"
+      id="time"
+      onChange={[Function]}
+      placeholder="time"
+      type="text"
+      value=""
+    />
+  </div>
+  <span>
+    Event
+    <div
+      className="checkbox"
+      style={undefined}
+    >
+      <label
+        title=""
+      >
+        <input
+          disabled={false}
+          id="eventTag"
+          onChange={[Function]}
+          type="checkbox"
+          value={false}
+        />
+      </label>
+    </div>
+  </span>
+  <button
+    className="btn btn-lg btn-primary btn-block"
+    disabled={true}
+    id="createBtn"
+    type="submit"
+  >
+    erstellen
+  </button>
+</form>
+`;

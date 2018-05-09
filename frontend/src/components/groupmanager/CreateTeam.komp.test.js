@@ -31,13 +31,7 @@ describe('<CreateTeam>', () =>{
      });
 
  
-     it('simulates click-event  the counter', () =>{
-       const wrapper = shallow(<CreateTeam />);
-       wrapper.setState({name: "1"});
-       wrapper.find('form').at(0).simulate('click');
-
-       expect(wrapper.state().name).toEqual("1");
-     });
+    
 
 
 });
