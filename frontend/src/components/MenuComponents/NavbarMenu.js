@@ -3,6 +3,7 @@ import {
 		Button,
 		Modal,Navbar,Nav,NavItem
 } from "react-bootstrap";
+import './navbar.css';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import CreateActivity from '../activity/CreateActivity.js'
 

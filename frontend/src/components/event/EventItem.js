@@ -12,9 +12,9 @@ export default class EvnentItem extends React.Component {
             loaded: false,
             isJoined: false, //Defines if the User who´s logged in joined the Event
             participants: [], //Array of participates
-			error: null,
+						error: null,
 		};
-		
+
 		this.toggleJoin = this.toggleJoin.bind(this);
 	}
 
@@ -40,7 +40,7 @@ export default class EvnentItem extends React.Component {
 			  } else if (res.status !== 200) {
 				throw new Error("Forbidden");
 			}
-			
+
 			return res;
 		})
 		.then(res => res.json())
@@ -49,7 +49,8 @@ export default class EvnentItem extends React.Component {
 				participants: res,
 				loaded: true,
 		  });
-	
+			this.isJoined();
+
 		})
 		.catch((err) => {
 			this.setState({
@@ -68,9 +69,9 @@ export default class EvnentItem extends React.Component {
 			}
         });
 	}
-	
+
 	toggleJoin() {
-		const join = this.isJoined;
+		const join = !this.state.isJoined;
 		fetch(config.apiPath + "/activity/" + this.props.event.id + "/participants", {
             method: join ? 'POST' : 'DELETE',
             headers: {
@@ -96,7 +97,7 @@ export default class EvnentItem extends React.Component {
             //reloading Participates to display them dynamicly
             this.loadParticipants();
             this.setState({
-                joined: join,
+                isJoined: join,
 			});
         });
 	}
@@ -105,11 +106,12 @@ export default class EvnentItem extends React.Component {
 		if (!this.state.loaded) {
 			return (<p>Loading...</p>);
 		}
-
 		return (
+
 			<EventCard
-				joined={this.state.joined}
-				participants={this.state.participates}
+				loaded = {this.state.loaded}
+				joined={this.state.isJoined}
+				participants={this.state.participants}
 				event={this.props.event}
 				date={new Date(this.props.event.time)}
 				toggleJoin={this.toggleJoin}

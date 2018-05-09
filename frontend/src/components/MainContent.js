@@ -6,7 +6,7 @@ export default class MainContent extends React.Component {
 		return (
 			<div style={{
 				width: this.props.width,
-				marginTop: "",
+				marginTop: "4%",
 				float: "left",
 				height: "100%",
 				overflowY: "scroll",

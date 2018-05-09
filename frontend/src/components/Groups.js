@@ -2,7 +2,7 @@ import React from 'react';
 
 export default class Groups extends React.Component {
 	render() {
-	return (<div style={{
+	return (<div className={this.props.id} style={{
 		width: this.props.width,
 		marginTop: "",
 		float: "left",

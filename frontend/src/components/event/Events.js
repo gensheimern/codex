@@ -2,6 +2,7 @@ import React from 'react';
 import EventItem from './EventItem';
 import AddButton from './AddButton';
 import config from '../../config';
+import MediaQuery from 'react-responsive';
 
 export default class Events extends React.Component {
 
@@ -38,7 +39,7 @@ export default class Events extends React.Component {
 		  	} else if (res.status !== 200) {
 				throw new Error("Forbidden");
 			}
-			
+
 			return res;
 		})
 		.then(res => res.json())
@@ -47,7 +48,7 @@ export default class Events extends React.Component {
 				events: res,
 				loaded: true,
 		  });
-	
+
 		})
 		.catch((err) => {
 			this.setState({
@@ -57,7 +58,7 @@ export default class Events extends React.Component {
 	}
 
 	render() {
-
+		console.log(this.state.events);
 		if (this.state.error) {
 			return (<p>{this.state.error}</p>);
 		}
@@ -65,17 +66,33 @@ export default class Events extends React.Component {
 		if(!this.state.loaded) {
 			return (<p>Loading</p>);
 		}
-		
+
 		return (
 			<React.Fragment>
-				<div id="feedInfo" style={{paddingLeft: "2%"}}>
-					<h3>PUBLIC</h3>
-					<p>12 | Welcome to the public channel of VSF Experts. You can find all your colleagues here.</p>
-				</div>
-				<hr />
-				<AddButton />
+				<div>
+				<MediaQuery query="(min-device-width: 768px)">
+					{(matches) => {
+						if (matches) {
+							return <div>
+							<div className="feedInfo" style={{paddingLeft: "2%"}}>
+								<h3>PUBLIC</h3>
+								<p>12 | Welcome to the public channel of VSF Experts. You can find all your colleagues here.</p>
+							</div>
+							<div className="addButton">
+							<hr />
+							<AddButton />
+							</div>
+							 </div>
+						}
+						else {
+							return null
+						}
+					}
+			}
+			</MediaQuery>
 				<div className="feed">
 					{ this.state.events.map(event => (<EventItem key={event.id} event={event} />)) }
+				</div>
 				</div>
 			</React.Fragment>
 		);

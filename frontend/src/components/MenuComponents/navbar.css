@@ -1,0 +1,8 @@
+.navbar-header {
+  background: linear-gradient(to right,rgb(0 186 177) ,rgb(98 194 169));
+  background: -prefix-linear-gradient(right, rgb(0 186 177) ,rgb(98 194 169));
+  border-bottom: none;
+}
+.navbar-inverse .navbar-toggle {
+  border-color:transparent;
+}
