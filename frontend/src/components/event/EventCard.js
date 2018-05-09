@@ -6,12 +6,16 @@ import BullseyeFA from 'react-icons/lib/fa/bullseye';
 import CollapseFA from 'react-icons/lib/fa/angle-down';
 import GroupFA from 'react-icons/lib/fa/group';
 import PropTypes from 'prop-types';
+import CollapsedContent from './CollapsedContent';
 import MediaQuery from 'react-responsive';
 
 export default class EventCard extends React.Component {
 
 	constructor(props) { // event, joined, participants
 		super(props);
+		this.State = {
+				collapse: false
+		};
 		}
 
 		DateparserDate() {
@@ -47,6 +51,7 @@ export default class EventCard extends React.Component {
 				}
 				return i;
 		}
+
 
 
 
@@ -108,10 +113,7 @@ export default class EventCard extends React.Component {
 								</div>
 							</div>
 							<hr className="activity-hr" />
-							<div className="collapse-activity">
-									<span id="collapseKommentare"><h6> 2 Kommentare </h6></span>
-									<span id="collapseFA"><h6> <CollapseFA /> </h6></span>
-							</div>
+								<CollapsedContent collapse = {this.props.collapse} />
 					</div>
 				</div>
 			</div>

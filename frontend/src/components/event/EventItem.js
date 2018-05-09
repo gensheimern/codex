@@ -13,6 +13,7 @@ export default class EvnentItem extends React.Component {
             isJoined: false, //Defines if the User who´s logged in joined the Event
             participants: [], //Array of participates
 						error: null,
+						collapsed: false,
 		};
 
 		this.toggleJoin = this.toggleJoin.bind(this);
@@ -115,6 +116,7 @@ export default class EvnentItem extends React.Component {
 				event={this.props.event}
 				date={new Date(this.props.event.time)}
 				toggleJoin={this.toggleJoin}
+				collapse={this.state.collapse}
 			/>
 		);
 	}
