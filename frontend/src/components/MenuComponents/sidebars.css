@@ -1,6 +1,7 @@
 .calenderUnit{
-        margin: 2%;
+        padding: 2%;
         width: 25%;
         height: 100%;
         float: left;
+        border-left: 2px dashed black;
 }

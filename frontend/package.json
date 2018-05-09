@@ -15,6 +15,8 @@
   "license": "ISC",
   "dependencies": {
     "jwt-decode": "^2.2.0",
+    "material-ui": "^0.20.0",
+    "prop-types": "^15.6.1",
     "react": "^16.3.1",
     "react-bootstrap": "^0.32.1",
     "react-bootstrap-table-next": "^0.1.7",
@@ -26,9 +28,9 @@
     "react-scripts": "1.1.2",
     "react-sidebar": "^2.3.2",
     "react-sidenav": "^2.1.2",
-    "react-test-renderer": "^16.3.1",
     "react-sticky": "^6.0.2",
-    "react-stickynode": "^1.4.1"
+    "react-stickynode": "^1.4.1",
+    "react-test-renderer": "^16.3.1"
   },
   "proxy": "http://localhost:5000",
   "devDependencies": {
