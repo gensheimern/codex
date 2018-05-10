@@ -17,8 +17,19 @@ export default class EvnentItem extends React.Component {
 		};
 
 		this.toggleJoin = this.toggleJoin.bind(this);
+		this.toggleColapse = this.toggleColapse.bind(this);
 	}
 
+/*
+	shouldComponentUpdate(nextProps, nextState){
+		if(this.state.collapsed !== nextState.collapsed) {
+			return true
+			console.log("true");
+		}
+
+		return false
+	}
+*/
 	componentDidMount() {
 		this.loadParticipants();
 	}
@@ -71,6 +82,15 @@ export default class EvnentItem extends React.Component {
         });
 	}
 
+	toggleColapse() {
+			
+			if(this.state.collapsed){
+				this.setState({collapsed : false});
+			}else {
+				this.setState({collapsed : true});
+			}
+	}
+
 	toggleJoin() {
 		const join = !this.state.isJoined;
 		fetch(config.apiPath + "/activity/" + this.props.event.id + "/participants", {
@@ -116,7 +136,8 @@ export default class EvnentItem extends React.Component {
 				event={this.props.event}
 				date={new Date(this.props.event.time)}
 				toggleJoin={this.toggleJoin}
-				collapse={this.state.collapse}
+				toggleCollapse={this.toggleColapse}
+				collapse={this.state.collapsed}
 			/>
 		);
 	}

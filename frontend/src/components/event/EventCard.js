@@ -13,10 +13,7 @@ export default class EventCard extends React.Component {
 
 	constructor(props) { // event, joined, participants
 		super(props);
-		this.State = {
-				collapse: false
-		};
-		}
+			}
 
 		DateparserDate() {
 			var d = new Date(this.props.event.time);
@@ -52,7 +49,9 @@ export default class EventCard extends React.Component {
 				return i;
 		}
 
-
+		toggle(){
+			console.log("jojojo");
+		}
 
 
 	render() {
@@ -83,7 +82,7 @@ export default class EventCard extends React.Component {
 		}
 
 		const date = new Date(this.props.event.time);
-
+		this.props.participants
 		return (
 			<div className ="card-wrapper">
 				<div className = "eventCard" style={isJoinedBorder}>
@@ -113,7 +112,9 @@ export default class EventCard extends React.Component {
 								</div>
 							</div>
 							<hr className="activity-hr" />
-								<CollapsedContent collapse = {this.props.collapse} />
+							<div onClick={this.props.toggleCollapse}>
+								<CollapsedContent participants = {this.props.participants} collapse = {this.props.collapse} />
+							</div>
 					</div>
 				</div>
 			</div>
