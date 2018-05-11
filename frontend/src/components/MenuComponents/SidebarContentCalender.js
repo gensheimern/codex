@@ -23,8 +23,12 @@ const styles = {
   },
   content: {
     padding: '16px',
+<<<<<<< HEAD
     backgroundColor: 'white',
     marginTop: '2%',
+=======
+    height: '100%',
+>>>>>>> development
   },
 };
 
@@ -37,6 +41,7 @@ const SidebarContent = (props) => {
   }
 
   return (
+    <div className="rightContent">
     <MediaQuery minWidth={1000}>
       {(matches) => {
         if (matches) {
@@ -80,6 +85,7 @@ const SidebarContent = (props) => {
         }
       }}
     </MediaQuery>
+  </div>
   );
 };
 
