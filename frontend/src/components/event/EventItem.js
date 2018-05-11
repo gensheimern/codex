@@ -2,6 +2,7 @@ import React from 'react';
 import config from '../../config';
 import jwt_decode from 'jwt-decode';
 import EventCard from './EventCard';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
 export default class EvnentItem extends React.Component {
 
@@ -83,7 +84,7 @@ export default class EvnentItem extends React.Component {
 	}
 
 	toggleColapse() {
-			
+
 			if(this.state.collapsed){
 				this.setState({collapsed : false});
 			}else {
@@ -128,7 +129,7 @@ export default class EvnentItem extends React.Component {
 			return (<p>Loading...</p>);
 		}
 		return (
-
+ <MuiThemeProvider>
 			<EventCard
 				loaded = {this.state.loaded}
 				joined={this.state.isJoined}
@@ -139,6 +140,7 @@ export default class EvnentItem extends React.Component {
 				toggleCollapse={this.toggleColapse}
 				collapse={this.state.collapsed}
 			/>
+	 </MuiThemeProvider>
 		);
 	}
 

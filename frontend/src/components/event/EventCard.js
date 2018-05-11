@@ -8,6 +8,10 @@ import GroupFA from 'react-icons/lib/fa/group';
 import PropTypes from 'prop-types';
 import CollapsedContent from './CollapsedContent';
 import MediaQuery from 'react-responsive';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+import TextField from 'material-ui/TextField';
+
+
 
 export default class EventCard extends React.Component {
 
@@ -83,6 +87,7 @@ export default class EventCard extends React.Component {
 
 		const date = new Date(this.props.event.time);
 		this.props.participants
+
 		return (
 			<div className ="card-wrapper">
 				<div className = "eventCard" style={isJoinedBorder}>
@@ -111,9 +116,12 @@ export default class EventCard extends React.Component {
 									{ participantsImages }
 								</div>
 							</div>
-							<hr className="activity-hr" />
+							<div >
+								<CollapsedContent event={this.props.event} participants = {this.props.participants} collapse = {this.props.collapse} />
+							</div>
 							<div onClick={this.props.toggleCollapse}>
-								<CollapsedContent participants = {this.props.participants} collapse = {this.props.collapse} />
+									<div id="collapseKommentare"><h6> 2 Kommentare </h6></div>
+									<div id="collapseFA"><h6> <CollapseFA /> </h6></div>
 							</div>
 					</div>
 				</div>

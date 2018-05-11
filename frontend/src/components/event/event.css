@@ -102,6 +102,8 @@
 		background-color: white;
 		padding-top:5pt;
 		padding-bottom:5pt;
+		padding-left: 20px;
+		padding-right: 20px;
 }
 
 .myimage{
@@ -119,12 +121,11 @@ border-radius: 50%;
 
 .dateInfo {
 	display: inline-block;
-	padding-right: 89pt;
-	padding-left: 20pt;
 }
 
 .timeInfo{
 	display:inline-block;
+	float:right;
 
 }
 
@@ -136,20 +137,66 @@ border-radius: 50%;
     border-top: 1px solid #eee;
 
 }
-.collapse-activity {
-	padding-left:20pt;
-}
 
 #collapseFA {
 	float: right;
-  padding-right: 10pt;
-
 }
 #collapseKommentare {
 	display:inline-block;
 
 }
+#participant-counter {
+	float:right;
+}
 
+.participants-row {
+	float:left;
+}
+
+.participants-counter-icon {
+	float:left;
+	height: 6vh;
+	width: 6vh;
+	background-color: rgb( 248 201 71);
+	text-align: center;
+	border-radius: 50%;
+}
+
+.card-wrapper:before,
+.card-wrapper:after {
+    content : "";
+    display : table;
+}
+.card-wrapper:after {
+    clear : both;
+}
+
+.alreadyJoining {
+	padding-top:10px;
+}
+.addComment hr {
+	border-color: rgb( 248 201 71) !important ;
+}
+
+.event-textfield img {
+	height:4vh;
+	width:4vh;
+	border-radius: 50%;
+
+}
+
+.myTextfield {
+	float: left;
+
+padding-left: 10px;
+}
+
+.texfield-profile-picture img {
+	height:6vh;
+	width:6vh;
+	float:left;
+
+}
 /*
 
 .activity-alreadyjoining {
