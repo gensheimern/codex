@@ -5,6 +5,8 @@ import {
 } from "react-bootstrap";
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import config from '../../config';
+import NavbarMenu from "../MenuComponents/NavbarMenu.js";
+
 
 export default class CreateActivity extends React.Component {
   constructor(props) {
@@ -14,8 +16,14 @@ export default class CreateActivity extends React.Component {
           show: false,
           description: "",
           activityName: "",
+          description: "Test Description",
+          activityName: "Test",
           place: "",
           time: "",
+          time: "2018.05.01 12:00",
+          Banner:"name.jpg",
+          Private:false,
+          MaxParticipants: 100,
           eventTag: false,
           showError: false
       };
@@ -37,26 +45,31 @@ export default class CreateActivity extends React.Component {
     e.preventDefault();
 
     fetch(config.apiPath + "/activity", {
-        method: 'POST',
-        body: JSON.stringify({
-          description: this.state.description,
-          name: this.state.activityName,
-          place: this.state.place,
-          time: this.state.time,
-          event: this.state.eventTag,
-          private: false,
-          banner: '',
-          maxParticipants: 100,
-        }),
-        headers: {
-            'Content-Type': 'application/json'
+      method: 'POST',
+      body: JSON.stringify({
+        Description: this.state.description,
+        ActivityName: this.state.activityName,
+        Activityname: this.state.activityName,
+        Place: this.state.place,
+        Time: this.state.time,
+        EventTag: this.state.eventTag,
+        Host: this.state.host,
+        Eventtag: this.state.eventTag,
+        Private: this.state.Private,
+        Banner: this.state.Banner,
+        MaxParticipants: this.state.MaxParticipants
+      }),
+      headers: {
+          'Content-Type': 'application/json',
+          'X-Access-Token': localStorage.getItem('apiToken')
         }
     }).then((res) => {
-        if(!res.ok) {
-            throw new Error("Invalid Entries");
-        } else if(res.status !== 200) {
-            throw new Error("Forbidden");
-        }
+      if(res.status !== 201) {
+          throw new Error("Invalid Entries");
+      } else if(res.status !== 200) {
+      } else if(res.status !== 201) {
+          throw new Error("Forbidden");
+      }
         return res;
     }).then(res => res.json()).then((res) => {
         //console.log("Token: " + res.token)
@@ -67,7 +80,7 @@ export default class CreateActivity extends React.Component {
             // TODO Code without local storage
         }
 
-        this.props.history.push("/groupmanager");
+        this.props.history.push("/activity");
     }).catch((err) => {
         this.setState({
             errorPrompt: (<Alert bsStyle = "warning"> <strong> Holy guacamole ! </strong>
@@ -104,5 +117,4 @@ render() {
                		  </form>
 
     )
-  }
-}
+  }}
