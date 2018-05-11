@@ -1,11 +1,4 @@
 .calenderUnit{
-<<<<<<< HEAD
-        padding: 2%;
-        width: 25%;
-        height: 100%;
-        float: left;
-        border-left: 2px dashed black;
-=======
         margin: 2%;
         margin-top:10%;
         width: 95%;
@@ -76,5 +69,4 @@
   width: 294px;
   height: 1px;
   border: solid 1px rgba(255, 255, 255, 0.53);
->>>>>>> development
 }
