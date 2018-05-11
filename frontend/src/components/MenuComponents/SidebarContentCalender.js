@@ -24,7 +24,6 @@ const styles = {
   content: {
     padding: '16px',
     height: '100%',
-    backgroundColor: 'white',
   },
 };
 
@@ -37,6 +36,7 @@ const SidebarContent = (props) => {
   }
 
   return (
+    <div className="rightContent">
     <MediaQuery minWidth={1000}>
       {(matches) => {
         if (matches) {
@@ -53,6 +53,7 @@ const SidebarContent = (props) => {
         }
       }}
     </MediaQuery>
+  </div>
   );
 };
 

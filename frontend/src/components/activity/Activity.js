@@ -33,9 +33,9 @@ export default class Activity extends React.Component {
 
     this.state = {
         activitys:[],
-      docked: false,
+      docked: true,
       open: false,
-      transitions: true,
+      transitions: false,
       touch: true,
       shadow: false,
       pullRight: false,
