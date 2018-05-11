@@ -6,6 +6,8 @@ import {
 import './navbar.css';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
 import CreateActivity from '../activity/CreateActivity.js'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+
 
 export default class NavbarMenu extends React.Component {
 
@@ -39,17 +41,19 @@ export default class NavbarMenu extends React.Component {
 	render(){
 		return (
 			<React.Fragment>
-				{/*<Modal show={this.state.show} onHide={this.handleClose}>
+				<Modal show={this.state.show} onHide={this.handleClose}>
 					<Modal.Header closeButton>
 						<Modal.Title>Erstelle eine Aktivität</Modal.Title>
 					</Modal.Header>
 					<Modal.Body>
+						<MuiThemeProvider>
 						<CreateActivity/>
+  			</MuiThemeProvider>
 					</Modal.Body>
 					<Modal.Footer>
 						<Button onClick={this.handleClose}>Close</Button>
 					</Modal.Footer>
-				</Modal>*/}
+				</Modal>
 				<Navbar inverse fixedTop collapseOnSelect activekey="1" onSelect={k => this.handleSelect(k)}>
 					<Navbar.Header>
 						<Navbar.Brand>
