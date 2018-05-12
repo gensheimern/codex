@@ -2,13 +2,6 @@ const UserModel = require('../models/UserModel');
 const { transformUser } = require('./transforms');
 // const User = require('../models/User');
 
-/* const transformUser = dbUser => ({
-	id: dbUser.User_Id,
-	firstName: dbUser.Firstname,
-	name: dbUser.Name,
-	email: dbUser.Email,
-	image: dbUser.Image,
-}); */
 
 const UserController = {
 
