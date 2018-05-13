@@ -191,12 +191,26 @@ border-radius: 50%;
 padding-left: 10px;
 }
 
-.texfield-profile-picture img {
+.texfield-profile-picture img  , .commentUserImage img {
 	height:6vh;
 	width:6vh;
 	float:left;
 
 }
+.commentWrapper {
+	display:flex;
+	padding-bottom:20px;
+}
+.commentWrapper h6{
+	margin-top:5px;
+	margin-bottom:2px;
+}
+.commentUserImage {
+	float:left;
+	height:100%;
+	padding-right:10px;
+}
+
 /*
 
 .activity-alreadyjoining {

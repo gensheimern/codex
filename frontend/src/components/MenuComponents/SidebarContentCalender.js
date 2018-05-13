@@ -23,12 +23,9 @@ const styles = {
   },
   content: {
     padding: '16px',
-<<<<<<< HEAD
     backgroundColor: 'white',
     marginTop: '2%',
-=======
     height: '100%',
->>>>>>> development
   },
 };
 
@@ -65,7 +62,7 @@ const SidebarContent = (props) => {
             }}>
               <p>Kommende Aktivität #1</p>
             </div>
-            
+
             <hr />
             <div style={{
               backgroundColor: "white",

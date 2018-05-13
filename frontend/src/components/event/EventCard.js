@@ -17,6 +17,18 @@ export default class EventCard extends React.Component {
 
 	constructor(props) { // event, joined, participants
 		super(props);
+		this.state = {
+			comments:false
+		}
+			}
+
+			updateComments() {
+				if(this.state.comments){
+				this.setState({comments: true});
+			} else {
+				console.log("bindrin");
+			}
+
 			}
 
 		DateparserDate() {
@@ -117,10 +129,10 @@ export default class EventCard extends React.Component {
 								</div>
 							</div>
 							<div >
-								<CollapsedContent event={this.props.event} participants = {this.props.participants} collapse = {this.props.collapse} />
+								<CollapsedContent comments={this.updateComments()}  messages={this.props.messages} postComment={this.props.postComment} event={this.props.event} participants = {this.props.participants} collapse = {this.props.collapse} />
 							</div>
 							<div onClick={this.props.toggleCollapse}>
-									<div id="collapseKommentare"><h6> 2 Kommentare </h6></div>
+									<div id="collapseKommentare"><h6> {this.props.messages.length + " Kommentare"} </h6></div>
 									<div id="collapseFA"><h6> <CollapseFA /> </h6></div>
 							</div>
 					</div>

@@ -1,4 +1,5 @@
 import React from 'react';
+import config from '../../config';
 import CollapseFA from 'react-icons/lib/fa/angle-down';
 import GroupFA from 'react-icons/lib/fa/group';
 import PlaceMUI from 'react-icons/lib/md/place';
@@ -10,14 +11,78 @@ export default class CollapsedContent extends React.Component {
   constructor(props){
     super(props);
 
+    this._onKeyPress = this._onKeyPress.bind(this);
   }
+
+  _onKeyPress(event) {
+  if (event.charCode === 13) { // enter key pressed
+    event.preventDefault();
+    this.props.comments;
+
+
+    fetch(config.apiPath + "/activity/" + this.props.event.id + "/message", {
+      method: 'POST',
+      body: JSON.stringify({
+        content: this.refs.myTextfield.getValue()
+
+              }),
+
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Access-Token': localStorage.getItem('apiToken')
+      }
+    })
+    .then((res) => {
+      if (!res.ok) {
+        throw new Error("Request failed.");
+        } else if (res.status !== 200) {
+        throw new Error("Forbidden");
+      }
+
+      return res;
+    })
+    .then(res => res.json())
+    .then(res => {
+      this.setState({loaded:true});
+
+    })
+    .catch((err) => {
+      this.setState({
+        error: 'An Error occured.',
+      });
+    });
+    // do something here
+  }
+}
 
 
   ToggleCollapse(){
+
     if(this.props.collapse){
       let participatesIMG;
       let participatesIMGPlus;
+      let message;
       let counter = 1;
+
+      if (this.props.messages.length !==0 ){
+        message = this.props.messages.map((messageItem, index) => {
+          return (
+            <div className="commentWrapper">
+              <div className="commentUserImage">
+                  <img src={messageItem.author.image} />
+              </div>
+              <div>
+                <span id="commentName"> {messageItem.author.name + " " + messageItem.author.firstName} </span>
+
+                <h6>{messageItem.content}</h6>
+
+                {messageItem.time}
+              </div>
+            </div>
+          )
+        });
+      }
+
       if (this.props.participants.length !== 0) {
         //Mapping trough the participates array and returning the profile picture
           participatesIMG = this.props.participants.map((participatesItem, index) => {
@@ -39,7 +104,6 @@ export default class CollapsedContent extends React.Component {
       }
 
     let decode = jwt_decode(localStorage.getItem('apiToken'));
-    console.log(decode);
       return (
         <div className="collapse-activity">
           <div className="event-extend-info">
@@ -60,14 +124,17 @@ export default class CollapsedContent extends React.Component {
             <div style={{clear:"both"}}> </div>
             <hr className="activity-hr" />
             <div className="event-textfield">
+                {message}
                 <div className="texfield-profile-picture">
                     <img src= {decode.image} />
                 </div>
-                <div className="myTextfield">
+                <div  className="myTextfield">
                 <TextField
                       hintText= "Add a new comment"
                       fullWidth={true}
                       className="addComment"
+                      onKeyPress={this._onKeyPress}
+                      ref="myTextfield"
                 />
                 </div>
             </div>

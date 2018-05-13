@@ -15,10 +15,12 @@ export default class EvnentItem extends React.Component {
             participants: [], //Array of participates
 						error: null,
 						collapsed: false,
+						messages: [],
 		};
 
 		this.toggleJoin = this.toggleJoin.bind(this);
 		this.toggleColapse = this.toggleColapse.bind(this);
+
 	}
 
 /*
@@ -33,7 +35,47 @@ export default class EvnentItem extends React.Component {
 */
 	componentDidMount() {
 		this.loadParticipants();
+		this.loadMessages();
 	}
+
+	loadMessages() {
+		this.setState({
+			error: null,
+		});
+
+		fetch(config.apiPath + "/activity/" + this.props.event.id + "/message", {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+				'X-Access-Token': localStorage.getItem('apiToken')
+			}
+		})
+		.then((res) => {
+			if (!res.ok) {
+				throw new Error("Request failed.");
+			  } else if (res.status !== 200) {
+				throw new Error("Forbidden");
+			}
+
+			return res;
+		})
+		.then(res => res.json())
+		.then(res => {
+			console.log(res);
+			this.setState({
+				messages: res,
+				loaded: true,
+		  });
+
+		})
+		.catch((err) => {
+			this.setState({
+				error: 'An Error occured.',
+			});
+		});
+	}
+
+
 
 	loadParticipants() {
 		this.setState({
@@ -139,6 +181,8 @@ export default class EvnentItem extends React.Component {
 				toggleJoin={this.toggleJoin}
 				toggleCollapse={this.toggleColapse}
 				collapse={this.state.collapsed}
+				postComment={this.postComment}
+				messages={this.state.messages}
 			/>
 	 </MuiThemeProvider>
 		);
