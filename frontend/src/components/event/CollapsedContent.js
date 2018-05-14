@@ -104,7 +104,7 @@ export default class CollapsedContent extends React.Component {
           return true;});
       }
 
-      if (this.props.participants.length >=4) {
+      if (this.props.participants.length >4) {
         participatesIMGPlus = <div className="participants-counter-icon"><h6> +{this.props.participants.length -4}</h6></div>
       }
 
