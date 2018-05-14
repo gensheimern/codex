@@ -2,7 +2,8 @@ import React from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
 import config from '../../config';
-import {TextField} from "material-ui";
+import {TextField,DatePicker,TimePicker} from "material-ui";
+import {DateValidator, Picker} from "../validation/ValidatedDatePicker";
 
 
 
@@ -11,70 +12,99 @@ export default class CreateActivity extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            events: {},
             groups: [],
             show: false,
-            description: "",
             description: "Test Description",
             activityName: "Test",
             place: "",
+            date: "",
             time: "",
-            time: "2018.05.01 12:00",
             Banner:"name.jpg",
             Private:false,
             MaxParticipants: "",
             eventTag: false,
         };
-        this.handleChange = this.handleChange.bind(this);
+        this.handleChangeActivityName = this.handleChangeActivityName.bind(this);
+        this.handleChangeDescription = this.handleChangeDescription.bind(this);
+        this.handleChangePlace = this.handleChangePlace.bind(this);
+        this.handleChangeTime = this.handleChangeTime.bind(this);
+        this.handleChangeEventTag = this.handleChangeEventTag.bind(this);
+        this.handleChangePrivate = this.handleChangePrivate.bind(this);
+        this.handleChangeMaxParticipants = this.handleChangeMaxParticipants.bind(this);
+        this.handleChangeDate = this.handleChangeDate.bind(this);
+        this.handleChangeTime = this.handleChangeTime.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.formatDate = this.formatDate.bind(this);
+        this.formatTime = this.formatTime.bind(this);
 
     }
 
-    componentWillMount() {
-        // custom rule will have name 'isPasswordMatch'
-        ValidatorForm.addValidationRule('isPasswordMatch', (value) => {
-            if (false) {
-                return false;
-            }
-            return true;
-        });
-    }
+    handleChangeActivityName = event => {
+      this.setState({activityName: event.target.value});
+      console.log(this.state);    }
 
-    handleChange(event) {
-      const { events } = this.state;
-      events[event.target.name] = event.target.value;
-      this.setState({ events });
-    }
+      handleChangeDescription = event => {
+        this.setState({description: event.target.value});
+        console.log(this.state);    }
+
+      handleChangePlace = event => {
+          this.setState({place: event.target.value});
+          console.log(this.state);    }
+
+      handleChangeTime = event => {
+            this.setState({time: event.target.value});
+            console.log(this.state);    }
+
+      handleChangeEventTag = event => {
+              this.setState({eventTag: event.target.value});
+              console.log(this.state);    }
+
+       handleChangePrivate = event => {
+                this.setState({private: event.target.value});
+                console.log(this.state);    }
+
+        handleChangeMaxParticipants = event => {
+                this.setState({MaxParticipants: event.target.value});
+                 console.log(this.state);    }
+
+        handleChangeDate = event => {
+                  console.log(event);
+                  this.setState({date: event});
+                  console.log(this.state);    }
+
+        handleChangeTime = event => {
+                  this.setState({time: event});
+                  console.log(this.state);    }
 
     handleSubmit() {
-
-                    const { events } = this.state;
+      let dateF = this.formatDate(this.state.date);
+      let timeF = this.formatTime(this.state.time);
+      let datetime = dateF + " " + timeF;
 
       fetch(config.apiPath + "/activity", {
         method: 'POST',
         body: JSON.stringify({
-          Description: events.description,
-          ActivityName: events.activityName,
-          Activityname: events.activityName,
-          Place: events.place,
-          Time: events.time,
-          EventTag: events.eventTag,
-          Host: events.host,
-          Eventtag: events.eventTag,
-          Private: events.Private,
-          Banner: events.Banner,
-          MaxParticipants: events.MaxParticipants
+          description: this.state.description,
+          name: this.state.activityName,
+          place: this.state.place,
+          time: datetime,
+          event: this.state.eventTag,
+          private: this.state.Private,
+          banner: this.state.Banner,
+          maxParticipants: this.state.MaxParticipants
         }),
         headers: {
             'Content-Type': 'application/json',
             'X-Access-Token': localStorage.getItem('apiToken')
           }
       }).then((res) => {
+        console.log(res);
+        console.log(this.state);
         if(res.status !== 201) {
-            throw new Error("Invalid Entries");
+          console.log(res.status);
         } else if(res.status !== 200) {
         } else if(res.status !== 201) {
-            throw new Error("Forbidden");
+          console.log(res.status);
         }
           return res;
       }).then(res => res.json()).then((res) => {
@@ -85,13 +115,19 @@ export default class CreateActivity extends React.Component {
           } else {
               // TODO Code without local storage
           }
-
-          this.props.history.push("/activity");
-      })
+      });
     }
 
+      formatDate(date){
+        return date.getFullYear() + "/" + (date.getMonth() + 1) + "/" + date.getDate();
+  }
+
+      formatTime(time){
+       console.log(time.getHours() + ":" + time.getMinutes() + ":" + time.getSeconds());
+        return time.getHours() + ":" + time.getMinutes() + ":" + time.getSeconds();
+      }
+
     render() {
-              const { events } = this.state;
 
         return (
             <ValidatorForm
@@ -99,46 +135,61 @@ export default class CreateActivity extends React.Component {
             >
                 <TextValidator
                     floatingLabelText="Name der Aktivität"
-                    onChange={this.handleChange}
+                    onChange={this.handleChangeActivityName}
                     name="activityName"
                     validators={['required']}
                     errorMessages={['this field is required']}
-                    value={events.activityName}
+                    value={this.state.activityName}
                 />
                 <TextValidator
                     floatingLabelText="Beschreibung"
-                    onChange={this.handleChange}
+                    onChange={this.handleChangeDescription}
                     name="description"
                     validators={['required']}
                     errorMessages={['this field is required']}
-                    value={events.description}
+                    value={this.state.description}
                     />
                 <TextValidator
                     floatingLabelText="Ort"
-                    onChange={this.handleChange}
+                    onChange={this.handleChangePlace}
                     name="place"
                     validators={['required']}
                     errorMessages={['this field is required']}
-                    value={events.place}
+                    value={this.state.place}
                 />
                 <TextValidator
                     floatingLabelText="Zeit"
-                    onChange={this.handleChange}
+                    onChange={this.handleChangeTime}
                     name="time"
                     validators={['required']}
                     errorMessages={['this field is required']}
-                    value={events.time}
+                    value={this.state.time}
                 />
                 <TextValidator
                     floatingLabelText="maximale Anzahl der Teilnehmer"
-                    onChange={this.handleChange}
+                    onChange={this.handleChangeMaxParticipants}
                     name="MaxParticipants"
                     validators={['required']}
                     errorMessages={['this field is required']}
-                    value={events.MaxParticipants}
+                    value={this.state.MaxParticipants}
                 />
+              <DatePicker
+                 hintText="Landscape Dialog"
+                 mode="landscape"
+                 value={this.state.date}
+                 onChange={(x, event) => {this.handleChangeDate(event)}}
+                 formatDate={this.formatDate}
+                 />
+              <TimePicker
+                   hintText="12hr Format with auto ok"
+                   value={this.state.date}
+                   format="24hr"
+                   onChange={(x, event) => {this.handleChangeTime(event)}}
+                   autoOk={true}
+                   formatDate={this.formatTime}
+                  />
 
-                <RaisedButton type="submit" />
+              <RaisedButton type="submit"> erstellen </RaisedButton>
             </ValidatorForm>
         );
     }}
