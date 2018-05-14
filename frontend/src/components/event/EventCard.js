@@ -99,9 +99,11 @@ export default class EventCard extends React.Component {
 							<div >
 								<CollapsedContent loadMessages={this.props.loadMessages} comments={this.updateComments}  messages={this.props.messages} postComment={this.props.postComment} event={this.props.event} participants = {this.props.participants} collapse = {this.props.collapse} />
 							</div>
-							<div onClick={this.props.toggleCollapse}>
+							<div className="collapseOnClick" onClick={this.props.toggleCollapse}>
+							<div style={{clear:"both"}}>
 									<div id="collapseKommentare"><h6> {this.props.messages.length + " Kommentare"} </h6></div>
 									<div id="collapseFA"><h6> <CollapseFA /> </h6></div>
+							</div>
 							</div>
 					</div>
 				</div>
