@@ -9,7 +9,17 @@ const ParticipatesController = {
 		const { activityId } = req.params;
 
 		try {
-			const member = await ParticipatesModel.getMemberOfActivity(activityId, userId);
+			const isParticipant = ParticipatesModel.isParticipant(userId, activityId);
+			const isPrivatePromise = ActivityModel.isPrivate(activityId);
+			const member = await ParticipatesModel.getMemberOfActivity(activityId);
+			const isPrivate = await isPrivatePromise;
+
+			if (!await isParticipant && isPrivate) {
+				res.status(404).json({
+					message: 'Invalid activity id.',
+				});
+				return;
+			}
 
 			res.json(member.map(transforms.transformUser));
 		} catch (error) {

@@ -1,4 +1,5 @@
 .calenderUnit{
+<<<<<<< HEAD
 
         padding: 2%;
         width: 25%;
@@ -6,6 +7,8 @@
         float: left;
         border-left: 2px dashed black;
 /*
+=======
+>>>>>>> development
         margin: 2%;
         margin-top:10%;
         width: 95%;
@@ -77,5 +80,9 @@
   width: 294px;
   height: 1px;
   border: solid 1px rgba(255, 255, 255, 0.53);
+<<<<<<< HEAD
 
 }
+=======
+}
+>>>>>>> development

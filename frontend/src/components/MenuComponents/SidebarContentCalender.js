@@ -23,8 +23,11 @@ const styles = {
   },
   content: {
     padding: '16px',
+<<<<<<< HEAD
     backgroundColor: 'white',
     marginTop: '2%',
+=======
+>>>>>>> development
     height: '100%',
   },
 };
