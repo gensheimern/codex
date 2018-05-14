@@ -3,14 +3,9 @@ import './event.css';
 import dateParser from './dateParser';
 import CalendarFA from 'react-icons/lib/fa/calendar-check-o';
 import ClockFA from 'react-icons/lib/fa/clock-o';
-import BullseyeFA from 'react-icons/lib/fa/bullseye';
 import CollapseFA from 'react-icons/lib/fa/angle-down';
 import GroupFA from 'react-icons/lib/fa/group';
-import PropTypes from 'prop-types';
 import CollapsedContent from './CollapsedContent';
-import MediaQuery from 'react-responsive';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-import TextField from 'material-ui/TextField';
 
 
 
@@ -65,8 +60,6 @@ export default class EventCard extends React.Component {
             };
 		}
 
-		const date = new Date(this.props.event.time);
-		this.props.participants
 
 		return (
 			<div className ="card-wrapper">

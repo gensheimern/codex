@@ -2,8 +2,8 @@ import React from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
 import config from '../../config';
-import {TextField,DatePicker,TimePicker} from "material-ui";
-import {DateValidator, Picker} from "../validation/ValidatedDatePicker";
+import {DatePicker,TimePicker} from "material-ui";
+import {} from "../validation/ValidatedDatePicker";
 
 
 
@@ -19,7 +19,7 @@ export default class CreateActivity extends React.Component {
             place: "",
             date: "",
             time: "",
-            Banner:"name.jpg",
+            Banner:"strandbar.jpg",
             Private:false,
             MaxParticipants: "",
             eventTag: false,

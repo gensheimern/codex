@@ -123,7 +123,7 @@ export default class EvnentItem extends React.Component {
 					isJoined: true
 				});
 			}
-        });
+      return true;  });
 	}
 
 	toggleColapse() {

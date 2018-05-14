@@ -1,7 +1,6 @@
 import React from 'react';
 import config from '../../config';
 import dateParser from './dateParser';
-import CollapseFA from 'react-icons/lib/fa/angle-down';
 import GroupFA from 'react-icons/lib/fa/group';
 import PlaceMUI from 'react-icons/lib/md/place';
 import TextField from 'material-ui/TextField';
@@ -73,9 +72,9 @@ export default class CollapsedContent extends React.Component {
       if (this.props.messages.length !==0 ){
         message = this.props.messages.map((messageItem, index) => {
           return (
-            <div className="commentWrapper">
+            <div className="commentWrapper" id={index}>
               <div className="commentUserImage">
-                  <img src={messageItem.author.image} />
+                  <img src={messageItem.author.image} alt="" />
               </div>
               <div>
                 <span id="commentName"> {messageItem.author.name + " " + messageItem.author.firstName} </span>
@@ -102,7 +101,7 @@ export default class CollapsedContent extends React.Component {
                   alt = "profile" / >
               );
             }
-          });
+          return true;});
       }
 
       if (this.props.participants.length >=4) {
@@ -132,7 +131,7 @@ export default class CollapsedContent extends React.Component {
             <div className="event-textfield">
                 {message}
                 <div className="texfield-profile-picture">
-                    <img src= {decode.image} />
+                    <img src= {decode.image} alt=""/>
                 </div>
                 <div  className="myTextfield">
                 <TextField
