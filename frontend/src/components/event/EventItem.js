@@ -4,7 +4,7 @@ import jwt_decode from 'jwt-decode';
 import EventCard from './EventCard';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
-export default class EvnentItem extends React.Component {
+export default class EventItem extends React.Component {
 
 	constructor(props) {
 		super(props);
@@ -118,7 +118,7 @@ export default class EvnentItem extends React.Component {
 	isJoined(){
         let decode = jwt_decode(localStorage.getItem('apiToken'));
         this.state.participants.map(user => {
-			if(user.userId === decode.id) {
+			if(user.id === decode.userId) {
 				this.setState({
 					isJoined: true
 				});
