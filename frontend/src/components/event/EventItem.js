@@ -20,6 +20,7 @@ export default class EvnentItem extends React.Component {
 
 		this.toggleJoin = this.toggleJoin.bind(this);
 		this.toggleColapse = this.toggleColapse.bind(this);
+		this.loadMessages = this.loadMessages.bind(this);
 
 	}
 
@@ -183,6 +184,7 @@ export default class EvnentItem extends React.Component {
 				collapse={this.state.collapsed}
 				postComment={this.postComment}
 				messages={this.state.messages}
+				loadMessages={this.loadMessages}
 			/>
 	 </MuiThemeProvider>
 		);

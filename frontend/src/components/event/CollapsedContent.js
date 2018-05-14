@@ -1,5 +1,6 @@
 import React from 'react';
 import config from '../../config';
+import dateParser from './dateParser';
 import CollapseFA from 'react-icons/lib/fa/angle-down';
 import GroupFA from 'react-icons/lib/fa/group';
 import PlaceMUI from 'react-icons/lib/md/place';
@@ -17,8 +18,6 @@ export default class CollapsedContent extends React.Component {
   _onKeyPress(event) {
   if (event.charCode === 13) { // enter key pressed
     event.preventDefault();
-    this.props.comments;
-
 
     fetch(config.apiPath + "/activity/" + this.props.event.id + "/message", {
       method: 'POST',
@@ -35,7 +34,7 @@ export default class CollapsedContent extends React.Component {
     .then((res) => {
       if (!res.ok) {
         throw new Error("Request failed.");
-        } else if (res.status !== 200) {
+      } else if (res.status !== 201) {
         throw new Error("Forbidden");
       }
 
@@ -43,16 +42,23 @@ export default class CollapsedContent extends React.Component {
     })
     .then(res => res.json())
     .then(res => {
-      this.setState({loaded:true});
+            this.props.loadMessages();
+      console.log("jupfetched");
 
     })
+
     .catch((err) => {
+      console.log(err);
+
       this.setState({
         error: 'An Error occured.',
       });
     });
-    // do something here
+
+
   }
+
+
 }
 
 
@@ -76,7 +82,7 @@ export default class CollapsedContent extends React.Component {
 
                 <h6>{messageItem.content}</h6>
 
-                {messageItem.time}
+                <h6>{dateParser.DateparserTime(messageItem.time)}</h6>
               </div>
             </div>
           )

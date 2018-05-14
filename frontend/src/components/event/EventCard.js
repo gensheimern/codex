@@ -1,5 +1,6 @@
 import React from 'react';
 import './event.css';
+import dateParser from './dateParser';
 import CalendarFA from 'react-icons/lib/fa/calendar-check-o';
 import ClockFA from 'react-icons/lib/fa/clock-o';
 import BullseyeFA from 'react-icons/lib/fa/bullseye';
@@ -18,52 +19,19 @@ export default class EventCard extends React.Component {
 	constructor(props) { // event, joined, participants
 		super(props);
 		this.state = {
-			comments:false
+			comments:0
 		}
+		this.updateComments = this.updateComments.bind(this);
 			}
 
 			updateComments() {
-				if(this.state.comments){
-				this.setState({comments: true});
-			} else {
-				console.log("bindrin");
-			}
+
+				this.setState({comments: this.state.comments + 1});
+				console.log("log");
+				this.props.loadMessages();
 
 			}
 
-		DateparserDate() {
-			var d = new Date(this.props.event.time);
-			var month = [];
-			month[0] = "January";
-			month[1] = "February";
-			month[2] = "March";
-			month[3] = "April";
-			month[4] = "May";
-			month[5] = "June";
-			month[6] = "July";
-			month[7] = "August";
-			month[8] = "September";
-			month[9] = "October";
-			month[10] = "November";
-			month[11] = "December";
-		return d.getDay() + " " + month[d.getMonth()];
-		}
-
-			DateparserTime(){
-
-				var d = new Date(this.props.event.time);
-				var h = this.addZero(d.getHours());
-				var m = this.addZero(d.getMinutes());
-
-				return h + ":" + m;
-		}
-
-		addZero(i) {
-				if (i < 10) {
-						i = "0" + i;
-				}
-				return i;
-		}
 
 		toggle(){
 			console.log("jojojo");
@@ -118,10 +86,10 @@ export default class EventCard extends React.Component {
 						<div className = "eventGroup">
 							<div className="eventInfo">
 								<div className="dateInfo">
-										<h4 > <CalendarFA/> {this.DateparserDate() } </h4>
+										<h4 > <CalendarFA/> {dateParser.DateparserDate(this.props.event.time) } </h4>
 								</div>
 								<div className="timeInfo">
-										<h4> <ClockFA/> {this.DateparserTime() } </h4>
+										<h4> <ClockFA/> {dateParser.DateparserTime(this.props.event.time) } </h4>
 								</div>
 								<div className="participates-image">
 									<h4> <GroupFA/> Already joining </h4>
@@ -129,7 +97,7 @@ export default class EventCard extends React.Component {
 								</div>
 							</div>
 							<div >
-								<CollapsedContent comments={this.updateComments()}  messages={this.props.messages} postComment={this.props.postComment} event={this.props.event} participants = {this.props.participants} collapse = {this.props.collapse} />
+								<CollapsedContent loadMessages={this.props.loadMessages} comments={this.updateComments}  messages={this.props.messages} postComment={this.props.postComment} event={this.props.event} participants = {this.props.participants} collapse = {this.props.collapse} />
 							</div>
 							<div onClick={this.props.toggleCollapse}>
 									<div id="collapseKommentare"><h6> {this.props.messages.length + " Kommentare"} </h6></div>

@@ -2,8 +2,8 @@ import React from 'react';
 
 export default class dateParser extends React.Component {
 
-  DateparserDate() {
-    var d = new Date(this.props.event.time);
+ static  DateparserDate(myDate) {
+    var d = new Date(myDate);
     var month = [];
     month[0] = "January";
     month[1] = "February";
@@ -20,16 +20,16 @@ export default class dateParser extends React.Component {
   return d.getDay() + " " + month[d.getMonth()];
   }
 
-    DateparserTime(){
+  static  DateparserTime(myDate){
 
-      var d = new Date(this.props.event.time);
+      var d = new Date(myDate);
       var h = this.addZero(d.getHours());
       var m = this.addZero(d.getMinutes());
 
       return h + ":" + m;
   }
 
-  addZero(i) {
+ static  addZero(i) {
       if (i < 10) {
           i = "0" + i;
       }
