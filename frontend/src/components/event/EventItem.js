@@ -2,8 +2,9 @@ import React from 'react';
 import config from '../../config';
 import jwt_decode from 'jwt-decode';
 import EventCard from './EventCard';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
-export default class EventItem extends React.Component {
+export default class EvnentItem extends React.Component {
 
 	constructor(props) {
 		super(props);
@@ -14,10 +15,13 @@ export default class EventItem extends React.Component {
             participants: [], //Array of participates
 						error: null,
 						collapsed: false,
+						messages: [],
 		};
 
 		this.toggleJoin = this.toggleJoin.bind(this);
 		this.toggleColapse = this.toggleColapse.bind(this);
+		this.loadMessages = this.loadMessages.bind(this);
+
 	}
 
 /*
@@ -32,7 +36,47 @@ export default class EventItem extends React.Component {
 */
 	componentDidMount() {
 		this.loadParticipants();
+		this.loadMessages();
 	}
+
+	loadMessages() {
+		this.setState({
+			error: null,
+		});
+
+		fetch(config.apiPath + "/activity/" + this.props.event.id + "/message", {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+				'X-Access-Token': localStorage.getItem('apiToken')
+			}
+		})
+		.then((res) => {
+			if (!res.ok) {
+				throw new Error("Request failed.");
+			  } else if (res.status !== 200) {
+				throw new Error("Forbidden");
+			}
+
+			return res;
+		})
+		.then(res => res.json())
+		.then(res => {
+			console.log(res);
+			this.setState({
+				messages: res,
+				loaded: true,
+		  });
+
+		})
+		.catch((err) => {
+			this.setState({
+				error: 'An Error occured.',
+			});
+		});
+	}
+
+
 
 	loadParticipants() {
 		this.setState({
@@ -74,7 +118,7 @@ export default class EventItem extends React.Component {
 	isJoined(){
         let decode = jwt_decode(localStorage.getItem('apiToken'));
         this.state.participants.map(user => {
-			if(user.id === decode.userId) {
+			if(user.userId === decode.id) {
 				this.setState({
 					isJoined: true
 				});
@@ -83,7 +127,7 @@ export default class EventItem extends React.Component {
 	}
 
 	toggleColapse() {
-			
+
 			if(this.state.collapsed){
 				this.setState({collapsed : false});
 			}else {
@@ -128,7 +172,7 @@ export default class EventItem extends React.Component {
 			return (<p>Loading...</p>);
 		}
 		return (
-
+ <MuiThemeProvider>
 			<EventCard
 				loaded = {this.state.loaded}
 				joined={this.state.isJoined}
@@ -138,7 +182,11 @@ export default class EventItem extends React.Component {
 				toggleJoin={this.toggleJoin}
 				toggleCollapse={this.toggleColapse}
 				collapse={this.state.collapsed}
+				postComment={this.postComment}
+				messages={this.state.messages}
+				loadMessages={this.loadMessages}
 			/>
+	 </MuiThemeProvider>
 		);
 	}
 

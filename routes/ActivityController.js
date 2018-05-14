@@ -25,14 +25,14 @@ const ActivityController = {
 
 			const isParticipant = await ParticipatesModel.isParticipant(userId, activityId);
 
-			const activity = await activityPromise;
-
-			if (!isParticipant && activity.Private) {
+			if (!isParticipant) {
 				res.status(404).json({
 					message: 'Activity not found.',
 				});
 				return;
 			}
+
+			const activity = await activityPromise;
 
 			if (activity === null) {
 				res.status(404).json({

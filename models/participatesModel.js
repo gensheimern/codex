@@ -2,14 +2,19 @@ const databaseConnection = require('./DatabaseConnection');
 
 const Participates = {
 
-	async getMemberOfActivity(activityId) {
+	async getMemberOfActivity(activityId, userId) {
 		return databaseConnection.queryp(
-			`SELECT User.*
-			FROM User
+			`SELECT Member.*
+			FROM User AS Member
 				INNER JOIN participates
-				ON User.User_Id = participates.User_Id
-			WHERE participates.Activity_Id = ?`,
-			[activityId],
+				ON Member.User_Id = participates.User_Id
+					INNER JOIN (User
+						INNER JOIN participates AS participates2
+						ON User.User_Id = participates2.User_Id)
+					ON participates2.Activity_Id = participates.Activity_Id
+			WHERE participates.Activity_Id = ?
+			AND User.User_Id = ?`,
+			[activityId, userId],
 		);
 	},
 
