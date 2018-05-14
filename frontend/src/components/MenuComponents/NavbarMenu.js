@@ -76,6 +76,9 @@ export default class NavbarMenu extends React.Component {
 							<NavItem eventKey={6} href="/logout">
 								Log Out
 							</NavItem>
+							<NavItem eventKey={7} href="/profileDropDown">
+								Profile
+							</NavItem>
 						</Nav>
 					</Navbar.Collapse>
 				</Navbar>
