@@ -210,6 +210,21 @@ padding-left: 10px;
 	height:100%;
 	padding-right:10px;
 }
+.commentInfoWrapper {
+	width:70%;
+}
+.commentContentWrapper {
+	
+	float:left;
+}
+
+.commentDelete {
+	float:right;
+}
+
+.collapseOnClick {
+	clear:both;
+}
 
 /*
 

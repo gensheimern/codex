@@ -4,6 +4,7 @@ import dateParser from './dateParser';
 import GroupFA from 'react-icons/lib/fa/group';
 import PlaceMUI from 'react-icons/lib/md/place';
 import TextField from 'material-ui/TextField';
+import DeleteMUI from 'react-icons/lib/md/delete';
 import jwt_decode from 'jwt-decode';
 
 export default class CollapsedContent extends React.Component {
@@ -63,6 +64,8 @@ export default class CollapsedContent extends React.Component {
 
   ToggleCollapse(){
 
+    let decode = jwt_decode(localStorage.getItem('apiToken'));
+
     if(this.props.collapse){
       let participatesIMG;
       let participatesIMGPlus;
@@ -76,12 +79,16 @@ export default class CollapsedContent extends React.Component {
               <div className="commentUserImage">
                   <img src={messageItem.author.image} alt="" />
               </div>
-              <div>
-                <span id="commentName"> {messageItem.author.name + " " + messageItem.author.firstName} </span>
+              <div className="commentInfoWrapper">
+                <div className="commentContentWrapper">
+                    <span id="commentName"> {messageItem.author.name + " " + messageItem.author.firstName} </span>
+                    <h6>{messageItem.content}</h6>
+                    <h6>{dateParser.DateparserTime(messageItem.time)}</h6>
+                </div>
+              </div>
+              <div className="commentDelete">
+              {decode.userId === messageItem.author.id ? <DeleteMUI /> : <span />} 
 
-                <h6>{messageItem.content}</h6>
-
-                <h6>{dateParser.DateparserTime(messageItem.time)}</h6>
               </div>
             </div>
           )
@@ -108,7 +115,7 @@ export default class CollapsedContent extends React.Component {
         participatesIMGPlus = <div className="participants-counter-icon"><h6> +{this.props.participants.length -4}</h6></div>
       }
 
-    let decode = jwt_decode(localStorage.getItem('apiToken'));
+
       return (
         <div className="collapse-activity">
           <div className="event-extend-info">
