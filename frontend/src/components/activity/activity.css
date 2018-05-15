@@ -169,4 +169,7 @@ button {
   float: left;
   margin: 2%;
 }
+.navbar-toggle{
+  width: 7%;
+}
 

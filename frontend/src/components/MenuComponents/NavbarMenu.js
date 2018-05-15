@@ -41,23 +41,10 @@ export default class NavbarMenu extends React.Component {
 	render(){
 		return (
 			<React.Fragment>
-				<Modal show={this.state.show} onHide={this.handleClose}>
-					<Modal.Header closeButton>
-						<Modal.Title>Erstelle eine Aktivität</Modal.Title>
-					</Modal.Header>
-					<Modal.Body>
-						<MuiThemeProvider>
-						<CreateActivity/>
-  			</MuiThemeProvider>
-					</Modal.Body>
-					<Modal.Footer>
-						<Button onClick={this.handleClose}>Close</Button>
-					</Modal.Footer>
-				</Modal>
-				<Navbar inverse fixedTop collapseOnSelect activekey="1" onSelect={k => this.handleSelect(k)}>
+				<Navbar inverse collapseOnSelect fixedTop activekey="1" onSelect={k => this.handleSelect(k)}>
 					<Navbar.Header>
 						<Navbar.Brand>
-							CODEX
+						<p>CODEX</p>
 						</Navbar.Brand>
 						<Navbar.Toggle/>
 					</Navbar.Header>
@@ -83,6 +70,20 @@ export default class NavbarMenu extends React.Component {
 						</Nav>
 					</Navbar.Collapse>
 				</Navbar>
+
+				<Modal show={this.state.show} onHide={this.handleClose}>
+					<Modal.Header closeButton>
+						<Modal.Title>Erstelle eine Aktivität</Modal.Title>
+					</Modal.Header>
+					<Modal.Body>
+						<MuiThemeProvider>
+						<CreateActivity/>
+				</MuiThemeProvider>
+					</Modal.Body>
+					<Modal.Footer>
+						<Button onClick={this.handleClose}>Close</Button>
+					</Modal.Footer>
+				</Modal>
 			</React.Fragment>
 		);
 	}
