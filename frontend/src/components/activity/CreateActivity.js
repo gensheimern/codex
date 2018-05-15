@@ -4,6 +4,7 @@ import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
 import config from '../../config';
 import {DatePicker,TimePicker} from "material-ui";
 import {} from "../validation/ValidatedDatePicker";
+import "./activity.css";
 
 
 
@@ -16,12 +17,12 @@ export default class CreateActivity extends React.Component {
             show: false,
             description: "Test Description",
             activityName: "Test",
-            place: "",
+            place: "Test Ort",
             date: "",
             time: "",
             Banner:"strandbar.jpg",
             Private:false,
-            MaxParticipants: "",
+            MaxParticipants: "99",
             eventTag: false,
         };
         this.handleChangeActivityName = this.handleChangeActivityName.bind(this);
@@ -140,6 +141,8 @@ export default class CreateActivity extends React.Component {
                     validators={['required']}
                     errorMessages={['this field is required']}
                     value={this.state.activityName}
+                    className="selection"
+
                 />
                 <TextValidator
                     floatingLabelText="Beschreibung"
@@ -148,6 +151,8 @@ export default class CreateActivity extends React.Component {
                     validators={['required']}
                     errorMessages={['this field is required']}
                     value={this.state.description}
+                    className="selection"
+
                     />
                 <TextValidator
                     floatingLabelText="Ort"
@@ -156,14 +161,8 @@ export default class CreateActivity extends React.Component {
                     validators={['required']}
                     errorMessages={['this field is required']}
                     value={this.state.place}
-                />
-                <TextValidator
-                    floatingLabelText="Zeit"
-                    onChange={this.handleChangeTime}
-                    name="time"
-                    validators={['required']}
-                    errorMessages={['this field is required']}
-                    value={this.state.time}
+                    className="selection"
+
                 />
                 <TextValidator
                     floatingLabelText="maximale Anzahl der Teilnehmer"
@@ -172,13 +171,17 @@ export default class CreateActivity extends React.Component {
                     validators={['required']}
                     errorMessages={['this field is required']}
                     value={this.state.MaxParticipants}
+                    className="selection"
+
                 />
+              <div>
               <DatePicker
                  hintText="Landscape Dialog"
                  mode="landscape"
                  value={this.state.date}
                  onChange={(x, event) => {this.handleChangeDate(event)}}
                  formatDate={this.formatDate}
+                 className="selection"
                  />
               <TimePicker
                    hintText="12hr Format with auto ok"
@@ -187,8 +190,10 @@ export default class CreateActivity extends React.Component {
                    onChange={(x, event) => {this.handleChangeTime(event)}}
                    autoOk={true}
                    formatDate={this.formatTime}
+                   className="selection"
                   />
 
+              </div>
               <RaisedButton type="submit"> erstellen </RaisedButton>
             </ValidatorForm>
         );
