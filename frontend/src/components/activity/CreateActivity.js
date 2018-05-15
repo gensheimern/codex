@@ -1,120 +1,200 @@
-import React from "react";
-import {
-    Button,Alert,Checkbox
-  ,FormGroup,FormControl
-} from "react-bootstrap";
-import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
+import React from 'react';
+import RaisedButton from 'material-ui/RaisedButton';
+import { TextValidator, ValidatorForm } from 'react-material-ui-form-validator';
 import config from '../../config';
-import NavbarMenu from "../MenuComponents/NavbarMenu.js";
+import {DatePicker,TimePicker} from "material-ui";
+import {} from "../validation/ValidatedDatePicker";
+import "./activity.css";
+
 
 
 export default class CreateActivity extends React.Component {
-  constructor(props) {
-      super(props);
-      this.state = {
-          groups: [],
-          show: false,
-          description: "",
-          activityName: "",
-          description: "Test Description",
-          activityName: "Test",
-          place: "",
-          time: "",
-          time: "2018.05.01 12:00",
-          Banner:"name.jpg",
-          Private:false,
-          MaxParticipants: 100,
-          eventTag: false,
-          showError: false
-      };
-          this.validateForm = this.validateForm.bind(this);
-            this.handleSubmit = this.handleSubmit.bind(this);
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            groups: [],
+            show: false,
+            description: "Test Description",
+            activityName: "Test",
+            place: "Test Ort",
+            date: "",
+            time: "",
+            Banner:"strandbar.jpg",
+            Private:false,
+            MaxParticipants: "99",
+            eventTag: false,
+        };
+        this.handleChangeActivityName = this.handleChangeActivityName.bind(this);
+        this.handleChangeDescription = this.handleChangeDescription.bind(this);
+        this.handleChangePlace = this.handleChangePlace.bind(this);
+        this.handleChangeTime = this.handleChangeTime.bind(this);
+        this.handleChangeEventTag = this.handleChangeEventTag.bind(this);
+        this.handleChangePrivate = this.handleChangePrivate.bind(this);
+        this.handleChangeMaxParticipants = this.handleChangeMaxParticipants.bind(this);
+        this.handleChangeDate = this.handleChangeDate.bind(this);
+        this.handleChangeTime = this.handleChangeTime.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.formatDate = this.formatDate.bind(this);
+        this.formatTime = this.formatTime.bind(this);
+
     }
-  validateForm() {
-      return this.state.activityName.length > 0 && this.state.place.length > 0;
-  }
 
-  handleChange = event => {
-      this.setState({
-          [event.target.id]: event.target.value
+    handleChangeActivityName = event => {
+      this.setState({activityName: event.target.value});
+      console.log(this.state);    }
+
+      handleChangeDescription = event => {
+        this.setState({description: event.target.value});
+        console.log(this.state);    }
+
+      handleChangePlace = event => {
+          this.setState({place: event.target.value});
+          console.log(this.state);    }
+
+      handleChangeTime = event => {
+            this.setState({time: event.target.value});
+            console.log(this.state);    }
+
+      handleChangeEventTag = event => {
+              this.setState({eventTag: event.target.value});
+              console.log(this.state);    }
+
+       handleChangePrivate = event => {
+                this.setState({private: event.target.value});
+                console.log(this.state);    }
+
+        handleChangeMaxParticipants = event => {
+                this.setState({MaxParticipants: event.target.value});
+                 console.log(this.state);    }
+
+        handleChangeDate = event => {
+                  console.log(event);
+                  this.setState({date: event});
+                  console.log(this.state);    }
+
+        handleChangeTime = event => {
+                  this.setState({time: event});
+                  console.log(this.state);    }
+
+    handleSubmit() {
+      let dateF = this.formatDate(this.state.date);
+      let timeF = this.formatTime(this.state.time);
+      let datetime = dateF + " " + timeF;
+
+      fetch(config.apiPath + "/activity", {
+        method: 'POST',
+        body: JSON.stringify({
+          description: this.state.description,
+          name: this.state.activityName,
+          place: this.state.place,
+          time: datetime,
+          event: this.state.eventTag,
+          private: this.state.Private,
+          banner: this.state.Banner,
+          maxParticipants: this.state.MaxParticipants
+        }),
+        headers: {
+            'Content-Type': 'application/json',
+            'X-Access-Token': localStorage.getItem('apiToken')
+          }
+      }).then((res) => {
+        console.log(res);
+        console.log(this.state);
+        if(res.status !== 201) {
+          console.log(res.status);
+        } else if(res.status !== 200) {
+        } else if(res.status !== 201) {
+          console.log(res.status);
+        }
+          return res;
+      }).then(res => res.json()).then((res) => {
+          //console.log("Token: " + res.token)
+
+          if(typeof (Storage) !== "undefined") {
+              localStorage.setItem("apiToken", res.token);
+          } else {
+              // TODO Code without local storage
+          }
       });
-      console.log(this.state);
+    }
+
+      formatDate(date){
+        return date.getFullYear() + "/" + (date.getMonth() + 1) + "/" + date.getDate();
   }
 
-  handleSubmit = e => {
-    e.preventDefault();
-
-    fetch(config.apiPath + "/activity", {
-      method: 'POST',
-      body: JSON.stringify({
-        Description: this.state.description,
-        ActivityName: this.state.activityName,
-        Activityname: this.state.activityName,
-        Place: this.state.place,
-        Time: this.state.time,
-        EventTag: this.state.eventTag,
-        Host: this.state.host,
-        Eventtag: this.state.eventTag,
-        Private: this.state.Private,
-        Banner: this.state.Banner,
-        MaxParticipants: this.state.MaxParticipants
-      }),
-      headers: {
-          'Content-Type': 'application/json',
-          'X-Access-Token': localStorage.getItem('apiToken')
-        }
-    }).then((res) => {
-      if(res.status !== 201) {
-          throw new Error("Invalid Entries");
-      } else if(res.status !== 200) {
-      } else if(res.status !== 201) {
-          throw new Error("Forbidden");
+      formatTime(time){
+       console.log(time.getHours() + ":" + time.getMinutes() + ":" + time.getSeconds());
+        return time.getHours() + ":" + time.getMinutes() + ":" + time.getSeconds();
       }
-        return res;
-    }).then(res => res.json()).then((res) => {
-        //console.log("Token: " + res.token)
 
-        if(typeof (Storage) !== "undefined") {
-            localStorage.setItem("apiToken", res.token);
-        } else {
-            // TODO Code without local storage
-        }
+    render() {
 
-        this.props.history.push("/activity");
-    }).catch((err) => {
-        this.setState({
-            errorPrompt: (<Alert bsStyle = "warning"> <strong> Holy guacamole ! </strong>
-              Best check yo self, youre not looking too good. </Alert>)
-        });
-    });
+        return (
+            <ValidatorForm
+                onSubmit={this.handleSubmit}
+            >
+                <TextValidator
+                    floatingLabelText="Name der Aktivität"
+                    onChange={this.handleChangeActivityName}
+                    name="activityName"
+                    validators={['required']}
+                    errorMessages={['this field is required']}
+                    value={this.state.activityName}
+                    className="selection"
 
-  }
+                />
+                <TextValidator
+                    floatingLabelText="Beschreibung"
+                    onChange={this.handleChangeDescription}
+                    name="description"
+                    validators={['required']}
+                    errorMessages={['this field is required']}
+                    value={this.state.description}
+                    className="selection"
 
-render() {
-    return(  <form onSubmit={this.handleSubmit}>
-      <FormGroup controlId="errorprompt" bsSize="large">
-          {this.errorPrompt}
-      </FormGroup>
-               	<FormGroup controlId="errorprompt" bsSize="large">
-               			{this.state.errorPrompt}
-               	</FormGroup>
-               	<FormGroup controlId="activityName" bsSize="large">
-               			 <FormControl id="activityName" placeholder="activityName" autoFocus="autoFocus" type="text" value={this.state.activityName} onChange={this.handleChange}/>
-               	 </FormGroup>
-                    <FormGroup controlId="description" bsSize="large">
-               			  <FormControl id="description" placeholder="description" autoFocus="autoFocus" type="text" value={this.state.description} onChange={this.handleChange}/>
-               			</FormGroup>
-                <FormGroup controlId="place" bsSize="large">
-                    <FormControl id="place" placeholder="place" autoFocus="autoFocus" type="text" value={this.state.place} onChange={this.handleChange}/>
-                </FormGroup>
-                <FormGroup controlId="time" bsSize="large">
-                  <FormControl id="time" placeholder="time" autoFocus="autoFocus" type="text" value={this.state.time} onChange={this.handleChange}/>
-                </FormGroup>
-                    <span>Event<Checkbox  id="eventTag" value={this.state.eventTag} onChange={this.handleChange}/></span>
-               			<Button id="createBtn" bsStyle="primary" block bsSize="large" disabled={!this.validateForm()} type="submit">
-               			  erstellen
-               			</Button>
-               		  </form>
+                    />
+                <TextValidator
+                    floatingLabelText="Ort"
+                    onChange={this.handleChangePlace}
+                    name="place"
+                    validators={['required']}
+                    errorMessages={['this field is required']}
+                    value={this.state.place}
+                    className="selection"
 
-    )
-  }}
+                />
+                <TextValidator
+                    floatingLabelText="maximale Anzahl der Teilnehmer"
+                    onChange={this.handleChangeMaxParticipants}
+                    name="MaxParticipants"
+                    validators={['required']}
+                    errorMessages={['this field is required']}
+                    value={this.state.MaxParticipants}
+                    className="selection"
+
+                />
+              <div>
+              <DatePicker
+                 hintText="Landscape Dialog"
+                 mode="landscape"
+                 value={this.state.date}
+                 onChange={(x, event) => {this.handleChangeDate(event)}}
+                 formatDate={this.formatDate}
+                 className="selection"
+                 />
+              <TimePicker
+                   hintText="12hr Format with auto ok"
+                   value={this.state.date}
+                   format="24hr"
+                   onChange={(x, event) => {this.handleChangeTime(event)}}
+                   autoOk={true}
+                   formatDate={this.formatTime}
+                   className="selection"
+                  />
+
+              </div>
+              <RaisedButton type="submit"> erstellen </RaisedButton>
+            </ValidatorForm>
+        );
+    }}

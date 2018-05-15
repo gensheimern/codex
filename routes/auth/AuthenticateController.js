@@ -22,12 +22,13 @@ const AuthenticateController = {
 				});
 				return;
 			}
-
+			
 			const payload = {
 				userId: user.User_Id,
 				firstName: user.Firstname,
 				name: user.Name,
 				email: user.Email,
+				image: user.Image
 			};
 			const token = await Auth.createJWT(payload);
 

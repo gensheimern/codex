@@ -1,19 +1,11 @@
 import React from 'react';
+import GroupSidebar from "./MenuComponents/sidebar_content"
 
 export default class Groups extends React.Component {
 	render() {
-	return (<div className={this.props.id} style={{
-		width: this.props.width,
-		marginTop: "",
-		float: "left",
-		height: "100%",
-		padding: "2%",
-		borderRight: "2px dashed black",
-		overflowY: "scroll",
-	}}>
-		<li>Developers</li>
-		<li>Designer</li>
-		<li>Gruppe</li>
-	</div>);
+	return (
+		<GroupSidebar/>
+
+	)
 	}
 }

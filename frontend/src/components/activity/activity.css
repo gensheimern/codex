@@ -165,4 +165,8 @@ button {
       overflow-y: scroll;
       float: left;
 }
+.selection{
+  float: left;
+  margin: 2%;
+}
 

@@ -35,7 +35,7 @@ class App extends Component {
                     						if (matches) {
                                   return(
                                     <div>
-                                    <Groups id="groups-wrapper" width="20%" />
+                                    <Groups id="groups-wrapper" height="100%" />
                                     <MainContent width="55%" />
                                     <SidebarContentCalender />
                                     </div>
