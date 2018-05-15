@@ -155,7 +155,7 @@ export default class CreateActivity extends React.Component {
 
                     />
                 <TextValidator
-                    floatingLabelText="Ort"
+                    floatingLabelText="Veranstaltungsort"
                     onChange={this.handleChangePlace}
                     name="place"
                     validators={['required']}
@@ -176,7 +176,7 @@ export default class CreateActivity extends React.Component {
                 />
               <div>
               <DatePicker
-                 hintText="Landscape Dialog"
+                 hintText="Datum des Events"
                  mode="landscape"
                  value={this.state.date}
                  onChange={(x, event) => {this.handleChangeDate(event)}}
@@ -184,7 +184,7 @@ export default class CreateActivity extends React.Component {
                  className="selection"
                  />
               <TimePicker
-                   hintText="12hr Format with auto ok"
+                   hintText="Zeit des Events"
                    value={this.state.date}
                    format="24hr"
                    onChange={(x, event) => {this.handleChangeTime(event)}}
@@ -194,7 +194,7 @@ export default class CreateActivity extends React.Component {
                   />
 
               </div>
-              <RaisedButton type="submit"> erstellen </RaisedButton>
+              <RaisedButton type="submit" fullWidth={true} backgroundColor="#1ea185"> Erstellen </RaisedButton>
             </ValidatorForm>
         );
     }}
