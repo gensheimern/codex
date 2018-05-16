@@ -48,16 +48,22 @@ export default class EventCard extends React.Component {
 
         // Styling the Activity with a border if the User who is logged in has joined
 		let isJoinedBorder;
+		let buttonColor;
 		if (this.props.joined && this.props.loaded) {
             isJoinedBorder = {
                 border: '4px solid rgb(0 186 177)',
-                boxShadow: '0 0 23px rgb(0 186 177)'
             };
+						buttonColor = {
+							backgroundColor:"rgb(237 101 89)",
+						};
+
         } else {
             isJoinedBorder = {
                 border: '0px solid white',
-                boxShadow: '0 0 0px white'
             };
+						buttonColor = {
+								backgroundColor:"rgb(248 201 71)",
+						};
 		}
 
 
@@ -70,8 +76,8 @@ export default class EventCard extends React.Component {
 								<div className="eventCardTitle">
 									<span className = "eventName"> {this.props.event.name} </span>
 									{/*this.getJoinLeaveButton()*/}
-									<div className="joinBtnWrapper" onClick={this.props.toggleJoin}>
-										<button className="joinBtn">{this.props.joined ? "LEAVE" : "JOIN"}</button>
+									<div style={buttonColor} className="joinBtnWrapper" onClick={this.props.toggleJoin}>
+										<button  className="joinBtn">{this.props.joined ? "LEAVE" : "JOIN"}</button>
 									</div>
 								</div>
 							</div>

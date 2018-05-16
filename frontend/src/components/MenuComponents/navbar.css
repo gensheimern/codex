@@ -10,6 +10,7 @@
 
 .navbar-toggle {
   border-color:transparent !important;
+  width:43px !important;
 }
 
 .navbar-toggle:focus {
