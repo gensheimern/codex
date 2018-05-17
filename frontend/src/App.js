@@ -14,6 +14,7 @@ import NavbarMenu from './components/MenuComponents/NavbarMenu';
 import MainContent from './components/MainContent';
 import SidebarContentCalender from './components/MenuComponents/SidebarContentCalender';
 import Groups from './components/Groups';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
 
 class App extends Component {
@@ -28,7 +29,7 @@ class App extends Component {
                         <NavbarMenu />
 
                         <div id="contentarea">
-
+                          <MuiThemeProvider>
                             {/* <Sidebar />*/}
                             <MediaQuery minWidth={768}>
                     					{(matches) => {
@@ -46,7 +47,7 @@ class App extends Component {
                             }
                           }
                             </MediaQuery>
-
+                            </MuiThemeProvider>
 
                         </div>
                     </React.Fragment>
