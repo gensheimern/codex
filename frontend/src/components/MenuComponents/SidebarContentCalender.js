@@ -39,10 +39,7 @@ const SidebarContent = (props) => {
 
   return (
     <div className="rightContent">
-    <MediaQuery minWidth={1000}>
-      {(matches) => {
-        if (matches) {
-          return <div className="calenderUnit">
+           <div className="calenderUnit">
             <p>Deine Events:</p>
             <Calender/>
 
@@ -77,11 +74,6 @@ const SidebarContent = (props) => {
               {links}
             </div>
           </div>;
-        } else {
-          return null;
-        }
-      }}
-    </MediaQuery>
   </div>
   );
 };

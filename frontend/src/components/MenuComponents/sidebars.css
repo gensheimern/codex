@@ -1,7 +1,7 @@
 .calenderUnit{
         margin: 2%;
-        margin-top:10%;
-        width: 95%;
+        margin-top:0%;
+        width: 90%;
         height: 100%;
         float: left;
 }
@@ -15,7 +15,6 @@
 
 }
 .rightContent{
-  width: 304px;
   height: 100%;
   background-color: #f2f2f2;
   float: left;

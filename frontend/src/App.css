@@ -33,3 +33,15 @@
   margin-top: 50px;
   background-color: #F1F1F1;
 }
+.mainContentMobile-wrapper{
+  overflow:hidden;
+  width: 100%;
+  height: 84vh;
+
+}
+.mobileContent-wrapper{
+  overflow: hidden;
+  width: 100%;
+}
+body { overflow: hidden; }
+

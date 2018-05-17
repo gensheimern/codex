@@ -14,16 +14,32 @@ import NavbarMenu from './components/MenuComponents/NavbarMenu';
 import MainContent from './components/MainContent';
 import SidebarContentCalender from './components/MenuComponents/SidebarContentCalender';
 import Groups from './components/Groups';
+import AppNavBottom from './components/MenuComponents/AppNavBottom';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 
 class App extends Component {
+  constructor(props) {
+		super(props);
+		this.state = {
+		mainContentNumber: 0,
+		};
+    this.changeContent = this.changeContent.bind(this);
+
+	}
+
+
+  changeContent(index){
+    this.setState({mainContentNumber:index});
+  }
+
 
     render() {
         return (<BrowserRouter>
             <React.Fragment>
                 <Route exact path="/" component={Login} />
                 <Route exact path="/login" component={Login} />
-                <Route path="/" render={() => (
+                <Route path="/activity" render={() => (
                     <React.Fragment>
                         <NavbarMenu />
 
@@ -41,8 +57,15 @@ class App extends Component {
                                     </div>
                                   )
                                 } else {
-                                  return <MainContent width="100%" />
-                              }
+                                  return <div className="mobileContent-wrapper">
+                                          <div className="mainContentMobile-wrapper">
+                                            <MainContent mainContentNumber={this.state.mainContentNumber}/>
+                                          </div>
+                                          <MuiThemeProvider>
+                                          <AppNavBottom changeContent={this.changeContent} width="100%"/>
+                                          </MuiThemeProvider>
+                                        </div>
+                                       }
                             }
                           }
                             </MediaQuery>
