@@ -15,6 +15,7 @@ import MainContent from './components/MainContent';
 import SidebarContentCalender from './components/MenuComponents/SidebarContentCalender';
 import Groups from './components/Groups';
 import AppNavBottom from './components/MenuComponents/AppNavBottom';
+import AppNavTop from './components/MenuComponents/AppNavTop';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 
@@ -41,8 +42,6 @@ class App extends Component {
                 <Route exact path="/login" component={Login} />
                 <Route path="/activity" render={() => (
                     <React.Fragment>
-                        <NavbarMenu />
-
                         <div id="contentarea">
 
                             {/* <Sidebar />*/}
@@ -51,18 +50,22 @@ class App extends Component {
                     						if (matches) {
                                   return(
                                     <div>
-                                    <Groups id="groups-wrapper" height="100%" />
-                                    <MainContent width="55%" />
-                                    <SidebarContentCalender />
+                                      <NavbarMenu />
+                                      <Groups id="groups-wrapper" height="100%" />
+                                      <MainContent mainContentNumber={5} width="55%" />
+                                      <SidebarContentCalender />
                                     </div>
                                   )
                                 } else {
                                   return <div className="mobileContent-wrapper">
+                                          <MuiThemeProvider>
+                                            <div>
+                                            <AppNavTop width="100%"/>
                                           <div className="mainContentMobile-wrapper">
                                             <MainContent mainContentNumber={this.state.mainContentNumber}/>
                                           </div>
-                                          <MuiThemeProvider>
-                                          <AppNavBottom changeContent={this.changeContent} width="100%"/>
+                                            <AppNavBottom changeContent={this.changeContent} width="100%"/>
+                                            </div>
                                           </MuiThemeProvider>
                                         </div>
                                        }

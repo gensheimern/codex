@@ -177,7 +177,7 @@ export default class CreateActivity extends React.Component {
               <div>
               <DatePicker
                  hintText="Datum des Events"
-                 mode="potrait"
+                 mode="portrait"
                  value={this.state.date}
                  onChange={(x, event) => {this.handleChangeDate(event)}}
                  formatDate={this.formatDate}

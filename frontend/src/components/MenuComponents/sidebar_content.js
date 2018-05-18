@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import "./sidebars.css"
+import "./sidebars.css";
+import config from '../../config';
+
 const styles = {
   sidebar: {
     width: 256,
@@ -13,21 +15,56 @@ const styles = {
     textDecoration: 'none',
   },
   content: {
-    padding: '16px',
+    padding: '1px',
     height: '100%',
   },
 };
+export default class SidebarContent extends React.Component {
+  constructor(props) {
+    super(props);
 
-const SidebarContent = (props) => {
-  const links = [];
-
-  for (let ind = 1; ind < 5; ind++) {
-    links.push(
-      <a key={ind} href="/#" className="groupName">Gruppe {ind}</a>);
+    this.state = {
+       groups : []
+    };
+    this.getMyGroups = this.getMyGroups.bind(this);
+    this.componentDidMount = this.componentDidMount.bind(this);
   }
 
-  return (
-<div className="leftContent">
+  getMyGroups() {
+  fetch(config.apiPath + "/team", {
+  	method: 'GET',
+    headers: {
+        'Content-Type': 'application/json',
+        'X-Access-Token': localStorage.getItem('apiToken')
+    }
+  }).then((res) => {
+    console.log(res.status);
+    if(!res.ok) {
+        throw new Error("Request failed.");
+    } else if(res.status !== 200) {
+        throw new Error("Forbidden");
+    } else {
+        return res;
+    }
+  }).then(res => res.json()).then(res => {
+    console.log(res);
+    this.setState({
+        groups: res
+    });
+    }
+  );
+
+  }
+  componentDidMount() {
+      this.getMyGroups();
+  }
+
+render(){
+  console.log(this.state.groups);
+  let myGroups =  this.state.groups.map(group => (<a className="groupName"> {group.name} </a>));
+  console.log(myGroups);
+
+  return (<div className="leftContent">
       <div style={styles.content}>
                 <div className="divider" />
         <a className="highlightSidebarContent" href="activity">PUBLIC</a>
@@ -36,14 +73,9 @@ const SidebarContent = (props) => {
                 <div className="divider" />
       <p className="groups">
       Gruppen</p>
-      {links}
+        {myGroups}
       </div>
-</div>
+    </div>
   );
-};
-
-SidebarContent.propTypes = {
-  style: PropTypes.object,
-};
-
-export default SidebarContent;
+}
+}

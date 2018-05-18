@@ -78,7 +78,18 @@ export default class MainContent extends React.Component {
 				}}>
 					<Events />
 				</div>);
-		}
+		}else	if(this.props.mainContentNumber === 5){
+				return (
+					<div style={{
+						width: this.props.width,
+						marginTop: "0%",
+						float: "left",
+						height: "100%",
+						overflowY: "scroll",
+					}}>
+						<Events />
+					</div>);
+			}
 
 	}
 }
