@@ -8,13 +8,27 @@ import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import CreateEventtCard from './event/CreateEventCard';
 
+
 export default class MainContent extends React.Component {
 
 	constructor(props) {
 		super(props);
 		this.state = {
 			open : false,
+			value: "",
+			address: "",
 		}
+	}
+
+
+
+	componentDidMount() {
+	  const script = document.createElement("script");
+
+	    script.src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyAZvkEYTPa9zx8xs99WxPQDled7GJ4pjcg&libraries=places";
+	    script.async = true;
+
+	    document.body.appendChild(script);
 	}
 
 	handleOpen = () => {
@@ -45,6 +59,7 @@ const actions = [
     ];
 
 
+
 		return (
 			<div style={{
 				width: this.props.width,
@@ -61,7 +76,11 @@ const actions = [
 		 onRequestClose={this.handleClose}
 		 contentStyle={{width:"100%",maxWidth:"none",}}
 	 >
-		 <CreateEventtCard />
+
+
+	 	<CreateEventtCard />
+
+
 	 </Dialog>
 
 
