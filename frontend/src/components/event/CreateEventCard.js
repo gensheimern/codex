@@ -5,9 +5,28 @@ import TextField from 'material-ui/TextField';
 import CreateEventTimePicker from './CreateEventTimePicker';
 import CreateEventDatePicker from './CreateEventDatePicker';
 import Maps from './GooglePlaces';
-import ImageGridList from './CreateEventImageGridList';
 import Dialog from 'material-ui/Dialog';
+import Children from './children';
 
+
+const eventImages = [
+{
+    img: "strandbar.jpg",
+    title:"strandbar",
+},
+{
+    img: "monsterag.jpg",
+    title:"strandbar",
+},
+{
+    img: "strandbar.jpg",
+    title:"strandbar",
+},
+{
+    img: "strandbar.jpg",
+    title:"strandbar",
+},
+]
 export default class CreateEventCard extends React.Component {
   constructor(props){
     super(props);
@@ -49,10 +68,10 @@ handleClose = () => {
                 onRequestClose={this.handleClose}
                 contentStyle={{width:"100%",maxWidth:"none",}}
                 bodyStyle={{padding:"0px",}}
+                children={Children}
               >
-              <ImageGridList />
+                < Children />
             </Dialog>
-
 
 
         <CardMedia
