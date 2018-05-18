@@ -75,6 +75,7 @@ const actions = [
 		 open={this.state.open}
 		 onRequestClose={this.handleClose}
 		 contentStyle={{width:"100%",maxWidth:"none",}}
+		 bodyStyle={{padding:"0px",}}
 	 >
 
 

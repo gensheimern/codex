@@ -5,6 +5,8 @@ import TextField from 'material-ui/TextField';
 import CreateEventTimePicker from './CreateEventTimePicker';
 import CreateEventDatePicker from './CreateEventDatePicker';
 import Maps from './GooglePlaces';
+import ImageGridList from './CreateEventImageGridList';
+import Dialog from 'material-ui/Dialog';
 
 export default class CreateEventCard extends React.Component {
   constructor(props){
@@ -12,10 +14,20 @@ export default class CreateEventCard extends React.Component {
 
     this.state = {
       address: "",
+      open:false,
     }
 
     this.callbackAddress = this.callbackAddress.bind(this);
   }
+
+  handleOpen = () => {
+	this.setState({open: true});
+};
+
+handleClose = () => {
+	this.setState({open: false});
+};
+
 
   callbackAddress(myAddress){
     console.log(myAddress);
@@ -23,20 +35,38 @@ export default class CreateEventCard extends React.Component {
   }
 
   render() {
+    const style = {
+  marginRight: 20,
+};
     return (
-      <Card>
+
+
+
+      <Card >
+            <Dialog
+                modal={false}
+                open={this.state.open}
+                onRequestClose={this.handleClose}
+                contentStyle={{width:"100%",maxWidth:"none",}}
+                bodyStyle={{padding:"0px",}}
+              >
+              <ImageGridList />
+            </Dialog>
+
+
+
         <CardMedia
           overlayContentStyle={{padding:"2px"}}
-          overlay={<CardTitle className="createEventEditPicture" subtitle= "Edit group picture" />}
+          overlay={<CardTitle onClick={this.handleOpen} className="createEventEditPicture" subtitle= "Edit group picture" />}
         >
           <img src="strandbar.jpg" alt="" />
         </CardMedia>
         <CardText>
-    
+
         <Maps myAddress={this.callbackAddress} value="40.000" onChange={value => this.setSTate({value})} >
         {renderFunc}
         </Maps>
-    
+
         <div className="timeDatePicker">
             <div className="timepicker"> <CreateEventTimePicker /> </div>
             <div className="datepicker"> <CreateEventDatePicker /> </div>
@@ -47,7 +77,7 @@ export default class CreateEventCard extends React.Component {
             floatingLabelText="Meeting Point"
             hintText="COA Restaurant"
           /><br />
-    
+
         </CardText>
       </Card>
     );
