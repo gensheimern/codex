@@ -32,12 +32,12 @@ export default class MainContent extends React.Component {
 	}
 
 	handleOpen = () => {
-	this.setState({open: true});
-};
+			this.setState({open: true});
+	};
 
-handleClose = () => {
-	this.setState({open: false});
-};
+	handleClose = () => {
+			this.setState({open: false});
+	};
 
 	render() {
 		const style = {
@@ -70,12 +70,16 @@ const actions = [
 			}}>
 
 	 <Dialog
+	 	 className="createEventWrapper"
 		 actions={actions}
 		 modal={false}
 		 open={this.state.open}
 		 onRequestClose={this.handleClose}
-		 contentStyle={{width:"100%",maxWidth:"none",}}
-		 bodyStyle={{padding:"0px",}}
+		 contentStyle={{ width:"95%",maxWidth:"none", paddingTop:"0px"}}
+		 bodyStyle={{padding:"0px",paddingTop:"0px"}}
+		 titleStyle={{paddingTop:"0px"}}
+		autoScrollBodyContent={true}
+
 	 >
 
 

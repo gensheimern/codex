@@ -31,7 +31,8 @@ export default class LocationSearchInput extends React.Component {
         {({ getInputProps, suggestions, getSuggestionItemProps }) => (
           <div>
           <TextField
-
+                floatingLabelFocusStyle={{color:"rgb(30 161 133)"}}
+                underlineFocusStyle={{borderColor:"rgb(30 161 133)"}}
                 floatingLabelFixed={true}
                 floatingLabelText="Address"
                 hintText="Mannheim Am Ried 123"

@@ -6,25 +6,25 @@ import CreateEventTimePicker from './CreateEventTimePicker';
 import CreateEventDatePicker from './CreateEventDatePicker';
 import Maps from './GooglePlaces';
 import Dialog from 'material-ui/Dialog';
-import Children from './children';
-
+import CollapseFA from 'react-icons/lib/fa/angle-down';
+import ReminderToggle from './ReminderToggle';
 
 const eventImages = [
 {
     img: "strandbar.jpg",
-    title:"strandbar",
+    title:"Pizza",
 },
 {
     img: "monsterag.jpg",
-    title:"strandbar",
+    title:"Döner",
 },
 {
     img: "strandbar.jpg",
-    title:"strandbar",
+    title:"Nudels",
 },
 {
     img: "strandbar.jpg",
-    title:"strandbar",
+    title:"bier",
 },
 ]
 export default class CreateEventCard extends React.Component {
@@ -34,8 +34,11 @@ export default class CreateEventCard extends React.Component {
     this.state = {
       address: "",
       open:false,
+      cardTitle:"Edit group picture",
+      cardImage: "events.jpg",
+      collapse: false,
     }
-
+    this.toggleCollapse = this.toggleCollapse.bind(this);
     this.callbackAddress = this.callbackAddress.bind(this);
   }
 
@@ -53,6 +56,45 @@ handleClose = () => {
     this.setState({address:myAddress});
   }
 
+  cardImage(title, img){
+    console.log(title);
+    this.handleClose();
+    this.setState({cardTitle: title, cardImage:img });
+  }
+
+  toggleCollapse(){
+    if(this.state.collapse){
+      this.setState({collapse:false});
+    }else{
+      this.setState({collapse:true});
+    }
+  }
+
+  collapsedContend(){
+    if(this.state.collapse){
+      return(
+          <div className="collapsedContentWrapper">
+            <div className="collapsedContendReminder">
+              < ReminderToggle />
+              <TextField
+              style={{widht:"200px"}}
+              floatingLabelFixed={true}
+              underlineFocusStyle={{borderColor:"rgb(30 161 133)"}}
+              hintText="Max. People"
+              />
+              </div>
+              <TextField
+                underlineFocusStyle={{borderColor:"rgb(30 161 133)"}}
+                floatingLabelFixed={true}
+                hintText="Description"
+              />
+          </div>
+      )
+    }
+  }
+
+
+
   render() {
     const style = {
   marginRight: 20,
@@ -68,35 +110,44 @@ handleClose = () => {
                 onRequestClose={this.handleClose}
                 contentStyle={{width:"100%",maxWidth:"none",}}
                 bodyStyle={{padding:"0px",}}
-                children={Children}
+
               >
-                < Children />
+                {eventImages.map((data) => (
+                  <img src={data.img} onClick={()=>this.cardImage(data.title,data.img)} height="100px" widht="100px"  />
+                ))}
             </Dialog>
 
 
         <CardMedia
           overlayContentStyle={{padding:"2px"}}
-          overlay={<CardTitle onClick={this.handleOpen} className="createEventEditPicture" subtitle= "Edit group picture" />}
+          overlay={<CardTitle onClick={this.handleOpen} className="createEventEditPicture" subtitle={this.state.cardTitle} />}
         >
-          <img src="strandbar.jpg" alt="" />
+          <img src={this.state.cardImage} alt="" />
         </CardMedia>
         <CardText>
-
-        <Maps myAddress={this.callbackAddress} value="40.000" onChange={value => this.setSTate({value})} >
-        {renderFunc}
-        </Maps>
 
         <div className="timeDatePicker">
             <div className="timepicker"> <CreateEventTimePicker /> </div>
             <div className="datepicker"> <CreateEventDatePicker /> </div>
             <div style={{clear:"both"}}></div>
         </div>
+
+        <Maps myAddress={this.callbackAddress} onChange={value => this.setSTate({value})} >
+        {renderFunc}
+        </Maps>
+
+
         <TextField
-        floatingLabelFixed={true}
+            floatingLabelFixed={true}
+            floatingLabelFocusStyle={{color:"rgb(30 161 133)"}}
+            underlineFocusStyle={{borderColor:"rgb(30 161 133)"}}
             floatingLabelText="Meeting Point"
             hintText="COA Restaurant"
           /><br />
 
+          <div className="MoreOptionsCreateEvent" onClick={this.toggleCollapse}> More Options <CollapseFA /> </div>
+          <div style={{clear:"both",paddingBottom:"20px"}} />
+          {this.collapsedContend()}
         </CardText>
       </Card>
     );

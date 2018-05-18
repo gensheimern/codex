@@ -7,6 +7,10 @@
 .isNotJoinedBorder {
 	/* TODO */
 }
+.createEventWrapper {
+  padding-top:10px !important;
+
+}
 
 .eventCard {
 	margin: 4%;
@@ -239,7 +243,15 @@ padding-left: 10px;
   padding-left: 5%;
 }
 
+.MoreOptionsCreateEvent {
+  float:right;
+  padding-right:20px;
+}
 
+.collapsedContendReminder {
+  width:82%;
+  float:left;
+}
 
 /*
 
