@@ -21,8 +21,8 @@ const transforms = {
 		name: dbActivity.Activityname,
 		place: dbActivity.Place,
 		time: dbActivity.Time,
-		event: dbActivity.Eventtag === 1,
-		private: dbActivity.Private === 1,
+		event: Boolean(dbActivity.Eventtag),
+		private: Boolean(dbActivity.Private),
 		banner: dbActivity.Banner,
 		maxParticipants: dbActivity.MaxParticipants,
 		host: {

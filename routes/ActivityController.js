@@ -24,10 +24,11 @@ const ActivityController = {
 			const activityPromise = ActivityModel.getActivityById(activityId);
 
 			const isParticipant = await ParticipatesModel.isParticipant(userId, activityId);
+			const isPrivate = await ActivityModel.isPrivate(activityId);
 
-			if (!isParticipant) {
-				res.status(404).json({
-					message: 'Activity not found.',
+			if (!isParticipant && isPrivate) {
+				res.status(403).json({
+					message: 'Permission denied.',
 				});
 				return;
 			}

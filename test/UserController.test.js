@@ -61,6 +61,26 @@ describe('User controller', () => {
 				image: '/image2.png',
 			}]);
 		});
+
+		it('should send 500 if there is a database error', async () => {
+			// Mock user model
+			const mockModel = TestTools.mockModel(userModel, 'getAllUsers', new Error('Test error'), null);
+
+			// Mock http request and response
+			const { req, res } = TestTools.mockRequest({
+				method: 'GET',
+				baseUrl: '/user',
+			});
+
+			// Call test method
+			await userController.getAllUsers(req, res);
+
+			// Check result with expected values
+			mockModel.restore();
+
+			expect(res._isEndCalled(), 'End called').to.be.true;
+			expect(res._getStatusCode(), 'Right status code').to.equal(500);
+		});
 	});
 
 	describe('GET one user by id', () => {
@@ -155,6 +175,29 @@ describe('User controller', () => {
 				message: 'Invalid user id.',
 			});
 		});
+
+		it('should send 500 if there is a database error', async () => {
+			// Mock user model
+			const mockModel = TestTools.mockModel(userModel, 'getUserById', new Error('Test error'), null);
+
+			// Mock http request and response
+			const { req, res } = TestTools.mockRequest({
+				method: 'GET',
+				baseUrl: '/user',
+				params: {
+					userId: '5',
+				},
+			});
+
+			// Call test method
+			await userController.getUserById(req, res);
+
+			// Check result with expected values
+			mockModel.restore();
+
+			expect(res._isEndCalled(), 'End called').to.be.true;
+			expect(res._getStatusCode(), 'Right status code').to.equal(500);
+		});
 	});
 
 	describe('POST a new user', () => {
@@ -187,6 +230,60 @@ describe('User controller', () => {
 			expect(JSON.parse(res._getData()), 'Correct response body').to.deep.equal({
 				User_Id: 10,
 			});
+		});
+
+		it('should send bad request if not all attributes are set', async () => {
+			const mockModel = TestTools.mockNotCalled(userModel, 'addUser');
+
+			// Mock http request and response
+			const { req, res } = TestTools.mockRequest({
+				method: 'POST',
+				baseUrl: '/user',
+				body: {
+					firstName: 'Max',
+					name: 'Mustermann',
+					password: 'very_secure_password',
+					image: '/image.png',
+				},
+			});
+
+			// Call test method
+			await userController.addUser(req, res);
+
+			// Check result with expected values
+			mockModel.restore();
+
+			expect(res._isEndCalled(), 'End called').to.be.true;
+			expect(res._getStatusCode(), 'Right status code').to.equal(400);
+			expect(res._isJSON(), 'JSON response').to.be.true;
+			expect(res._isUTF8(), 'UTF-8 encoding').to.be.true;
+			expect(JSON.parse(res._getData()).message, 'Error message').to.be.a('string');
+		});
+
+		it('should send 500 if there is a database error', async () => {
+			const mockModel = TestTools.mockModel(userModel, 'addUser', new Error('Test error'), null);
+
+			// Mock http request and response
+			const { req, res } = TestTools.mockRequest({
+				method: 'POST',
+				baseUrl: '/user',
+				body: {
+					firstName: 'Max',
+					name: 'Mustermann',
+					email: 'valid@email.com',
+					password: 'very_secure_password',
+					image: '/image.png',
+				},
+			});
+
+			// Call test method
+			await userController.addUser(req, res);
+
+			// Check result with expected values
+			mockModel.restore();
+
+			expect(res._isEndCalled(), 'End called').to.be.true;
+			expect(res._getStatusCode(), 'Right status code').to.equal(500);
 		});
 	});
 
@@ -235,6 +332,48 @@ describe('User controller', () => {
 				success: true,
 				message: 'User successfully updated.',
 			});
+		});
+
+		it('should return an error if the user does not exist', async () => {
+			const mockModel = TestTools.mockModel(userModel, 'updateUser', null, TestTools.dbUpdateFailed);
+			const mockModel2 = TestTools.mockModel(userModel, 'getUserById', null, {
+				User_Id: 5,
+				Firstname: 'Maxneu',
+				Name: 'Mustermannneu',
+				Email: 'neue@email.com',
+				Password: 'very_new_password',
+				Image: '/image.png',
+			});
+
+			// Mock http request and response
+			const { req, res } = TestTools.mockRequest({
+				method: 'PUT',
+				baseUrl: '/user',
+				params: {
+					userId: '5',
+				},
+				body: {
+					firstName: 'Maxneu',
+					name: 'Mustermannneu',
+					email: 'neue@email.com',
+					password: 'very_new_password',
+					image: '/new_image.png',
+				},
+			});
+
+			// Call test method
+			await userController.updateUser(req, res);
+
+			// Check result with expected values
+			mockModel.restore();
+			mockModel2.restore();
+
+			expect(res._isEndCalled(), 'End called').to.be.true;
+			expect(res._getStatusCode(), 'Right status code').to.equal(404);
+			expect(res._isJSON(), 'JSON response').to.be.true;
+			expect(res._isUTF8(), 'UTF-8 encoding').to.be.true;
+			const body = JSON.parse(res._getData());
+			expect(body.success, 'Update successful').to.be.false;
 		});
 
 		it('should not update user data of other user', async () => {
@@ -304,6 +443,37 @@ describe('User controller', () => {
 				message: 'Invalid user id.',
 			});
 		});
+
+		it('should send 500 if there is an db error', async () => {
+			const mockModel = TestTools.mockModel(userModel, 'updateUser', new Error('Test error.'), null);
+			const mockModel2 = TestTools.mockModel(userModel, 'getUserById', new Error('Test error'), null);
+
+			// Mock http request and response
+			const { req, res } = TestTools.mockRequest({
+				method: 'PUT',
+				baseUrl: '/user',
+				params: {
+					userId: '5',
+				},
+				body: {
+					firstName: 'Maxneu',
+					name: 'Mustermannneu',
+					email: 'neue@email.com',
+					password: 'very_new_password',
+					image: '/new_image.png',
+				},
+			});
+
+			// Call test method
+			await userController.updateUser(req, res);
+
+			// Check result with expected values
+			mockModel.restore();
+			mockModel2.restore();
+
+			expect(res._isEndCalled(), 'End called').to.be.true;
+			expect(res._getStatusCode(), 'Right status code').to.equal(500);
+		});
 	});
 
 	describe('DELETE user', () => {
@@ -333,6 +503,31 @@ describe('User controller', () => {
 				success: true,
 				message: 'User deleted.',
 			});
+		});
+
+		it('should return error if user does not exist', async () => {
+			const mockModel = TestTools.mockModel(userModel, 'deleteUser', null, TestTools.dbDeleteFailed);
+
+			// Mock http request and response
+			const { req, res } = TestTools.mockRequest({
+				method: 'DELETE',
+				baseUrl: '/user',
+				params: {
+					userId: '5',
+				},
+			});
+
+			// Call test method
+			await userController.deleteUser(req, res);
+
+			// Check result with expected values
+			mockModel.restore();
+
+			expect(res._isEndCalled(), 'End called').to.be.true;
+			expect(res._getStatusCode(), 'Right status code').to.equal(404);
+			expect(res._isJSON(), 'JSON response').to.be.true;
+			expect(res._isUTF8(), 'UTF-8 encoding').to.be.true;
+			expect(JSON.parse(res._getData()).success, 'Correct success state').to.be.false;
 		});
 
 		it('should not delete other user', async () => {
@@ -388,6 +583,28 @@ describe('User controller', () => {
 				success: false,
 				message: 'Invalid user id.',
 			});
+		});
+
+		it('should send 500 if there is an db error', async () => {
+			const mockModel = TestTools.mockModel(userModel, 'deleteUser', new Error('Test error'), null);
+
+			// Mock http request and response
+			const { req, res } = TestTools.mockRequest({
+				method: 'DELETE',
+				baseUrl: '/user',
+				params: {
+					userId: '5',
+				},
+			});
+
+			// Call test method
+			await userController.deleteUser(req, res);
+
+			// Check result with expected values
+			mockModel.restore();
+
+			expect(res._isEndCalled(), 'End called').to.be.true;
+			expect(res._getStatusCode(), 'Right status code').to.equal(500);
 		});
 	});
 });

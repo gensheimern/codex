@@ -48,6 +48,7 @@ const TeamController = {
 	async addTeam(req, res) {
 		const { userId } = req.token;
 
+		// TODO: Check name
 		if (!req.body.name) {
 			res.status(400).json({
 				message: 'Invalid team name',
@@ -77,10 +78,12 @@ const TeamController = {
 
 			if (dbRes.affectedRows === 0) {
 				res.status(404).json({
+					success: false,
 					message: `Team with ID ${teamId} not found.`,
 				});
 			} else {
 				res.status(200).json({
+					success: true,
 					message: 'Team deleted.',
 				});
 			}
@@ -94,6 +97,7 @@ const TeamController = {
 		const { teamId } = req.params;
 		const newName = req.body.name;
 
+		// TODO: check name
 		if (!newName) {
 			res.status(400).json({
 				success: false,

@@ -35,23 +35,23 @@
 		"body-parser": "^1.18.2",
 		"concurrently": "^3.5.1",
 		"cookie-parser": "~1.4.3",
+		"express": "~4.16.0",
+		"express-mailer": "^0.3.1",
+		"jsonwebtoken": "^8.2.1",
+		"mysql": "^2.15.0",
+		"nodemon": "^1.17.4",
+		"serve-static": "^1.13.2"
+	},
+	"devDependencies": {
+		"chai": "^4.1.2",
 		"eslint": "^4.19.1",
 		"eslint-config-airbnb": "^16.1.0",
 		"eslint-plugin-import": "^2.11.0",
 		"eslint-plugin-jsx-a11y": "^6.0.3",
 		"eslint-plugin-react": "^7.7.0",
-		"express": "~4.16.0",
-		"express-mailer": "^0.3.1",
-		"jsonwebtoken": "^8.2.1",
-		"mysql": "^2.15.0",
-		"nodemon": "^1.17.3",
-		"serve-static": "^1.13.2"
-	},
-	"devDependencies": {
-		"chai": "^4.1.2",
 		"mocha": "^5.1.1",
 		"node-mocks-http": "^1.5.8",
-		"nyc": "^11.7.1",
+		"nyc": "^11.7.2",
 		"sinon": "^4.5.0",
 		"supertest": "^3.0.0"
 	}

@@ -88,6 +88,20 @@ const Activity = {
 		return databaseConnection.querypBool('SELECT Activity_Id FROM Activity WHERE Activity_Id = ? AND Private = 1', [activityId]);
 	},
 
+	/**
+	 * Checks if the activity with id activityId is full (max participants joined).
+	 * @param {number} activityId Activity to check
+	 * @returns {Promise<boolean>} Returns if the activity is full.
+	 */
+	async isFull(activityId) {
+		return databaseConnection.querypBool(
+			`SELECT Activity_Id from Activity WHERE Activity_Id = ? AND MaxParticipants <= (
+				SELECT COUNT(*) FROM participates WHERE Activity_Id = ?
+			) AND MaxParticipants > 0;`,
+			[activityId, activityId],
+		);
+	},
+
 };
 
 module.exports = Activity;

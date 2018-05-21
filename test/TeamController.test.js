@@ -70,6 +70,26 @@ describe('Team controller', () => {
 				},
 			]);
 		});
+
+		it('should send 500 if there is a database error', async () => {
+			// Mock user model
+			const mockModel = TestTools.mockModel(teamModel, 'getAllTeams', new Error('Test error'), null);
+
+			// Mock http request and response
+			const { req, res } = TestTools.mockRequest({
+				method: 'GET',
+				baseUrl: '/team',
+			});
+
+			// Call test method
+			await teamController.getAllTeams(req, res);
+
+			// Restore mock
+			mockModel.restore();
+
+			expect(res._isEndCalled(), 'End called').to.be.true;
+			expect(res._getStatusCode(), 'Right status code').to.equal(500);
+		});
 	});
 
 	/* describe('GET one team by id', () => {
@@ -189,6 +209,31 @@ describe('Team controller', () => {
 			expect(res._isUTF8(), 'UTF-8 encoding').to.be.true;
 			expect(JSON.parse(res._getData()).message).to.be.a('string');
 		});
+
+		it('should send 500 if there is a database error', async () => {
+			// Mock user model
+			const mockModel = TestTools.mockModel(teamModel, 'getTeamById', new Error('Test error'), null);
+			const mockModel2 = TestTools.mockNotCalled(memberModel, 'isMember');
+
+			// Mock http request and response
+			const { req, res } = TestTools.mockRequest({
+				method: 'GET',
+				baseUrl: '/team',
+				params: {
+					teamId: 5,
+				},
+			});
+
+			// Call test method
+			await teamController.getTeamById(req, res);
+
+			// Restore mock
+			mockModel.restore();
+			mockModel2.restore();
+
+			expect(res._isEndCalled(), 'End called').to.be.true;
+			expect(res._getStatusCode(), 'Right status code').to.equal(500);
+		});
 	});
 
 	describe('POST new team', () => {
@@ -218,6 +263,56 @@ describe('Team controller', () => {
 			expect(res._isJSON(), 'JSON response').to.be.true;
 			expect(res._isUTF8(), 'UTF-8 encoding').to.be.true;
 			expect(JSON.parse(res._getData()).teamId).to.equal(10);
+		});
+
+		it('should send 400 if no name is passed', async () => {
+			// Mock user model
+			const mockTeamModel = TestTools.mockNotCalled(teamModel, 'addTeam');
+			const mockMemberModel = TestTools.mockNotCalled(memberModel, 'addMember');
+
+			// Mock http request and response
+			const { req, res } = TestTools.mockRequest({
+				method: 'POST',
+				baseUrl: '/team',
+			});
+
+			// Call test method
+			await teamController.addTeam(req, res);
+
+			// Restore mock
+			mockTeamModel.restore();
+			mockMemberModel.restore();
+
+			expect(res._isEndCalled(), 'End called').to.be.true;
+			expect(res._getStatusCode(), 'Right status code').to.equal(400);
+			expect(res._isJSON(), 'JSON response').to.be.true;
+			expect(res._isUTF8(), 'UTF-8 encoding').to.be.true;
+			expect(JSON.parse(res._getData()).message).to.be.a('string');
+		});
+
+		it('should send 500 if there is a database error', async () => {
+			// Mock user model
+			const mockTeamModel = TestTools.mockModel(teamModel, 'addTeam', new Error('Test error'), null);
+			const mockMemberModel = TestTools.mockModel(memberModel, 'addMember', new Error('Test error'), null);
+
+			// Mock http request and response
+			const { req, res } = TestTools.mockRequest({
+				method: 'POST',
+				baseUrl: '/team',
+				body: {
+					name: 'Test Team',
+				},
+			});
+
+			// Call test method
+			await teamController.addTeam(req, res);
+
+			// Restore mock
+			mockTeamModel.restore();
+			mockMemberModel.restore();
+
+			expect(res._isEndCalled(), 'End called').to.be.true;
+			expect(res._getStatusCode(), 'Right status code').to.equal(500);
 		});
 	});
 
@@ -254,7 +349,7 @@ describe('Team controller', () => {
 
 		it('should not update a team if the user is not the admin of the team.', async () => {
 			// Mock user model
-			const mockTeamModel = TestTools.mockModel(teamModel, 'updateTeam', null, TestTools.dbUpdateSuccess);
+			const mockTeamModel = TestTools.mockModel(teamModel, 'updateTeam', null, TestTools.dbUpdateFailed);
 
 			// Mock http request and response
 			const { req, res } = TestTools.mockRequest({
@@ -272,11 +367,142 @@ describe('Team controller', () => {
 			mockTeamModel.restore();
 
 			expect(res._isEndCalled(), 'End called').to.be.true;
+			expect(res._getStatusCode(), 'Right status code').to.equal(404);
+			expect(res._isJSON(), 'JSON response').to.be.true;
+			expect(res._isUTF8(), 'UTF-8 encoding').to.be.true;
+			expect(JSON.parse(res._getData()).success).to.be.false;
+			expect(JSON.parse(res._getData()).message).to.be.a('string');
+		});
+
+		it('should send 400 if no name is passed.', async () => {
+			// Mock user model
+			const mockTeamModel = TestTools.mockNotCalled(teamModel, 'updateTeam');
+
+			// Mock http request and response
+			const { req, res } = TestTools.mockRequest({
+				method: 'PUT',
+				baseUrl: '/team',
+				params: {
+					teamId: '8',
+				},
+			});
+
+			// Call test method
+			await teamController.updateTeam(req, res);
+
+			// Restore mock
+			mockTeamModel.restore();
+
+			expect(res._isEndCalled(), 'End called').to.be.true;
+			expect(res._getStatusCode(), 'Right status code').to.equal(400);
+			expect(res._isJSON(), 'JSON response').to.be.true;
+			expect(res._isUTF8(), 'UTF-8 encoding').to.be.true;
+			expect(JSON.parse(res._getData()).message).to.be.a('string');
+		});
+
+		it('should send 500 if there is a database error.', async () => {
+			// Mock user model
+			const mockTeamModel = TestTools.mockModel(teamModel, 'updateTeam', new Error('Test error'), null);
+
+			// Mock http request and response
+			const { req, res } = TestTools.mockRequest({
+				method: 'PUT',
+				baseUrl: '/team',
+				params: {
+					teamId: '8',
+				},
+				body: {
+					name: 'Test Team',
+				},
+			});
+
+			// Call test method
+			await teamController.updateTeam(req, res);
+
+			// Restore mock
+			mockTeamModel.restore();
+
+			expect(res._isEndCalled(), 'End called').to.be.true;
+			expect(res._getStatusCode(), 'Right status code').to.equal(500);
+		});
+	});
+
+	describe('DELETE team', () => {
+		it('should delete a team if the user is the admin of the team.', async () => {
+			// Mock user model
+			const mockTeamModel = TestTools.mockModel(teamModel, 'deleteTeam', null, TestTools.dbDeleteSuccess);
+
+			// Mock http request and response
+			const { req, res } = TestTools.mockRequest({
+				method: 'DELETE',
+				baseUrl: '/team',
+				params: {
+					teamId: '8',
+				},
+			});
+
+			// Call test method
+			await teamController.deleteTeam(req, res);
+
+			// Restore mock
+			mockTeamModel.restore();
+
+			expect(res._isEndCalled(), 'End called').to.be.true;
 			expect(res._getStatusCode(), 'Right status code').to.equal(200);
 			expect(res._isJSON(), 'JSON response').to.be.true;
 			expect(res._isUTF8(), 'UTF-8 encoding').to.be.true;
-			expect(JSON.parse(res._getData()).success).to.be.true;
-			expect(JSON.parse(res._getData()).message).to.be.a('string');
+			expect(JSON.parse(res._getData()).success, 'Correct success state').to.be.true;
+			expect(JSON.parse(res._getData()).message, 'Message property').to.be.a('string');
+		});
+
+		it('should not delete a team if the user is not the admin of the team.', async () => {
+			// Mock user model
+			const mockTeamModel = TestTools.mockModel(teamModel, 'deleteTeam', null, TestTools.dbDeleteFailed);
+
+			// Mock http request and response
+			const { req, res } = TestTools.mockRequest({
+				method: 'DELETE',
+				baseUrl: '/team',
+				params: {
+					teamId: '8',
+				},
+			});
+
+			// Call test method
+			await teamController.deleteTeam(req, res);
+
+			// Restore mock
+			mockTeamModel.restore();
+
+			expect(res._isEndCalled(), 'End called').to.be.true;
+			expect(res._getStatusCode(), 'Right status code').to.equal(404);
+			expect(res._isJSON(), 'JSON response').to.be.true;
+			expect(res._isUTF8(), 'UTF-8 encoding').to.be.true;
+			expect(JSON.parse(res._getData()).success, 'Correct success state').to.be.false;
+			expect(JSON.parse(res._getData()).message, 'Message property').to.be.a('string');
+		});
+
+		it('should send 500 if there is a database error.', async () => {
+			// Mock user model
+			const mockTeamModel = TestTools.mockModel(teamModel, 'deleteTeam', new Error('Test error'), null);
+
+			// Mock http request and response
+			const { req, res } = TestTools.mockRequest({
+				method: 'DELETE',
+				baseUrl: '/team',
+				params: {
+					teamId: '8',
+				},
+			});
+
+			// Call test method
+			await teamController.deleteTeam(req, res);
+
+			// Restore mock
+			mockTeamModel.restore();
+
+			expect(res._isEndCalled(), 'End called').to.be.true;
+			expect(res._getStatusCode(), 'Right status code').to.equal(500);
 		});
 	});
 });

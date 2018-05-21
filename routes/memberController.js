@@ -16,10 +16,9 @@ const MemberController = {
 
 		try {
 			const isMember = Member.isMember(teamId, userId);
-			const memberOfTeam = Member.getMemberOfTeam(teamId);
 
 			if (await isMember) {
-				const member = await memberOfTeam;
+				const member = await Member.getMemberOfTeam(teamId);
 
 				res.json(member.map(transforms.transformUser));
 			} else {
@@ -78,6 +77,7 @@ const MemberController = {
 
 		if (!teamId || !memberId) {
 			res.status(400).json({
+				success: false,
 				message: 'Invalid team or user id.',
 			});
 			return;
@@ -104,6 +104,7 @@ const MemberController = {
 				}
 			} else {
 				res.status(403).json({
+					success: false,
 					message: 'Invalid team or user id.',
 				});
 			}

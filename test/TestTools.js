@@ -22,6 +22,8 @@ const defaultDBServerVars = {
 };
 
 const TestTools = {
+	token,
+
 	dbSelectEmpty: [],
 
 	dbInsertSuccess: {
@@ -86,15 +88,16 @@ const TestTools = {
 		return sinon.stub(model, method).throws(new Error('Should not be called.'));
 	},
 
-	mockRequest(options = {}) {
+	mockRequest(options = {}, withToken = true) {
 		const params = {
 			...options,
-			token,
 			headers: options.headers || { 'content-type': 'application/json' },
 			url: options.url || '/',
 			method: options.method || 'GET',
 			params: options.params || {},
 		};
+
+		if (withToken) params.token = token;
 
 		return {
 			req: mock.createRequest(params),
