@@ -1,5 +1,5 @@
-const Subscribe = require('../models/SubscribeModel');
-const transforms = require('./transforms');
+const Subscribe = require('../../models/SubscribeModel');
+const transforms = require('../transforms');
 
 const SubscribeController = {
 

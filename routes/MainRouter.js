@@ -1,13 +1,13 @@
 const router = require('express').Router();
 
-const teamRouter = require('./TeamRouter');
-const userRouter = require('./UserRouter');
-const messageRouter = require('./MessageRouter');
-const activityRouter = require('./ActivityRouter');
-const subscribedRouter = require('./subscribedRouter');
-const subscriberRouter = require('./SubscriberRouter');
-const participatesRouter = require('./participatesRouter');
-const memberRouter = require('./memberRouter');
+const teamRouter =			require('./team/TeamRouter');
+const memberRouter =		require('./team/memberRouter');
+const subscribedRouter = 	require('./user/subscribedRouter');
+const subscriberRouter = 	require('./user/SubscriberRouter');
+const userRouter = 			require('./user/UserRouter');
+const participatesRouter = 	require('./activity/participatesRouter');
+const messageRouter = 		require('./activity/MessageRouter');
+const activityRouter = 		require('./activity/ActivityRouter');
 
 router.use('/team', memberRouter);
 router.use('/team', teamRouter);

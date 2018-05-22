@@ -1,6 +1,6 @@
-const Message = require('../models/MessageModel');
-const ParticipatesModel = require('../models/participatesModel');
-const transforms = require('./transforms');
+const Message = require('../../models/MessageModel');
+const ParticipatesModel = require('../../models/participatesModel');
+const transforms = require('../transforms');
 
 const MessageController = {
 

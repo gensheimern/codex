@@ -1,6 +1,6 @@
-const Member = require('../models/MemberModel');
-const TeamModel = require('../models/TeamModel');
-const transforms = require('./transforms');
+const Member = require('../../models/MemberModel');
+const TeamModel = require('../../models/TeamModel');
+const transforms = require('../transforms');
 
 const MemberController = {
 
@@ -33,7 +33,8 @@ const MemberController = {
 	 */
 	async addMember(req, res) {
 		const { userId } = req.token;
-		const { teamId, memberId } = req.params;
+		const { teamId } = req.params;
+		const memberId = req.params.userId;
 
 		if (!memberId || !teamId) {
 			res.status(400).json({
@@ -64,7 +65,8 @@ const MemberController = {
 	 */
 	async deleteMember(req, res) {
 		const { userId } = req.token;
-		const { memberId, teamId } = req.params;
+		const { teamId } = req.params;
+		const memberId = req.params.userId;
 
 		if (!teamId || !memberId) {
 			res.status(400).json({

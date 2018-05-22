@@ -1,6 +1,6 @@
-const ParticipatesModel = require('../models/participatesModel');
-const ActivityModel = require('../models/ActivityModel');
-const transforms = require('./transforms');
+const ParticipatesModel = require('../../models/participatesModel');
+const ActivityModel = require('../../models/ActivityModel');
+const transforms = require('../transforms');
 
 const ParticipatesController = {
 
@@ -28,7 +28,7 @@ const ParticipatesController = {
 	async addParticipation(req, res) {
 		const { userId } = req.token;
 		const { activityId } = req.params;
-		let { participantId } = req.params;
+		let participantId = req.params.userId;
 
 		if (!participantId) participantId = userId;
 
@@ -77,7 +77,7 @@ const ParticipatesController = {
 	async deleteParticipation(req, res) {
 		const { userId } = req.token;
 		const { activityId } = req.params;
-		let { participantId } = req.params;
+		let participantId = req.params.userId;
 
 		if (!participantId) participantId = userId;
 

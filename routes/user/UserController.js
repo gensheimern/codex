@@ -1,5 +1,6 @@
-const UserModel = require('../models/UserModel');
-const { transformUser } = require('./transforms');
+const UserModel = require('../../models/UserModel');
+const { transformUser } = require('../transforms');
+const { validUser } = require('./userValidation');
 
 const UserController = {
 
@@ -24,42 +25,27 @@ const UserController = {
 		});
 	},
 
-	userDataInvalid(user) {
-		const {
-			firstName, name, email, password, image,
-		} = user;
-
-		return !firstName
-		|| typeof firstName !== 'string'
-		|| firstName.length <= 0
-		|| !name
-		|| typeof name !== 'string'
-		|| name.length <= 0
-		|| !password
-		|| typeof password !== 'string'
-		|| password.length <= 0
-		|| !image
-		|| typeof image !== 'string'
-		|| !email
-		|| typeof email !== 'string'
-		|| !/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email);
-		// /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[
-		// [0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-	},
-
 	async addUser(req, res) {
-		if (UserController.userDataInvalid(req.body)) {
+		const userData = req.body;
+		if (validUser(userData)) {
 			res.status(400).json({
 				message: 'Invalid user information.',
 			});
 			return;
 		}
 
-		// TODO: check for double email address
-		const result = await UserModel.addUser(req.body);
+		const user = await UserModel.getUserByEmail(userData.email);
+		if (user) {
+			res.status(409).json({
+				message: 'E-Mail address already in use.',
+			});
+			return;
+		}
+
+		const result = await UserModel.addUser(userData);
 
 		res.status(201).json({
-			User_Id: result.insertId,
+			userId: result.insertId,
 		});
 	},
 

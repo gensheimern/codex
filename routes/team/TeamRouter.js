@@ -1,6 +1,6 @@
 const TeamController = require('./TeamController');
 const router = require('express').Router();
-const { asyncMiddleware } = require('./errorHandler');
+const asyncMiddleware = require('../asyncMiddleware');
 
 
 router.get('/', asyncMiddleware(TeamController.getAllTeams));

@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const MessageController = require('./MessageController');
-const { asyncMiddleware } = require('./errorHandler');
+const asyncMiddleware = require('../asyncMiddleware');
 
 router.get('/:activityId/message', asyncMiddleware(MessageController.getMessagesOfActivity));
 

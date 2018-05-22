@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const ActivityController = require('./ActivityController');
-const { asyncMiddleware } = require('./errorHandler');
+const asyncMiddleware = require('../asyncMiddleware');
 
 
 router.get('/', asyncMiddleware(ActivityController.getAllActivities));

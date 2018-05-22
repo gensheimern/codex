@@ -6,7 +6,7 @@ const path = require('path');
 const authenticateRouter = require('./routes/auth/AuthenticateRouter');
 const { verifyMiddleware } = require('./routes/auth/Auth');
 const apiRouter = require('./routes/MainRouter');
-const { errorHandler } = require('./routes/errorHandler');
+const errorHandler = require('./middleware/errorHandler');
 
 const app = express();
 

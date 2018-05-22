@@ -1,6 +1,6 @@
-const ActivityModel = require('../models/ActivityModel');
-const ParticipatesModel = require('../models/participatesModel');
-const transforms = require('./transforms');
+const ActivityModel = require('../../models/ActivityModel');
+const ParticipatesModel = require('../../models/participatesModel');
+const transforms = require('../transforms');
 
 const ActivityController = {
 

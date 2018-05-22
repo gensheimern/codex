@@ -1,6 +1,6 @@
-const TeamModel = require('../models/TeamModel');
-const MemberModel = require('../models/MemberModel');
-const { transformTeam } = require('./transforms');
+const TeamModel = require('../../models/TeamModel');
+const MemberModel = require('../../models/MemberModel');
+const { transformTeam } = require('../transforms');
 
 const TeamController = {
 
