@@ -1,16 +1,17 @@
 const router = require('express').Router();
 const ActivityController = require('./ActivityController');
+const { asyncMiddleware } = require('./errorHandler');
 
 
-router.get('/', ActivityController.getAllActivities);
+router.get('/', asyncMiddleware(ActivityController.getAllActivities));
 
-router.get('/:activityId', ActivityController.getActivityById);
+router.get('/:activityId', asyncMiddleware(ActivityController.getActivityById));
 
-router.post('/', ActivityController.createActivity);
+router.post('/', asyncMiddleware(ActivityController.createActivity));
 
-router.delete('/:activityId', ActivityController.deleteActivity);
+router.delete('/:activityId', asyncMiddleware(ActivityController.deleteActivity));
 
-router.put('/:activityId', ActivityController.updateActivity);
+router.put('/:activityId', asyncMiddleware(ActivityController.updateActivity));
 
 
 module.exports = router;

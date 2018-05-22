@@ -1,14 +1,14 @@
 const router = require('express').Router();
 const MessageController = require('./MessageController');
+const { asyncMiddleware } = require('./errorHandler');
 
+router.get('/:activityId/message', asyncMiddleware(MessageController.getMessagesOfActivity));
 
-router.get('/:activityId/message', MessageController.getMessagesOfActivity);
+router.post('/:activityId/message', asyncMiddleware(MessageController.createMessage));
 
-router.post('/:activityId/message', MessageController.createMessage);
+router.put('/:activityId/message/:messageId', asyncMiddleware(MessageController.updateMessage));
 
-router.put('/:activityId/message/:messageId', MessageController.updateMessage);
-
-router.delete('/:activityId/message/:messageId', MessageController.deleteMessage);
+router.delete('/:activityId/message/:messageId', asyncMiddleware(MessageController.deleteMessage));
 
 
 module.exports = router;

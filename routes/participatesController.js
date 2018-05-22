@@ -8,24 +8,21 @@ const ParticipatesController = {
 		const { userId } = req.token;
 		const { activityId } = req.params;
 
-		try { // TODO: Performance optimisation
-			const isPrivatePromise = await ActivityModel.isPrivate(activityId);
-			const isParticipantPromise = await ParticipatesModel.isParticipant(userId, activityId);
-			const member = await ParticipatesModel.getMemberOfActivity(activityId, userId);
-			const isPrivate = await isPrivatePromise;
-			const isParticipant = await isParticipantPromise;
+		// TODO: Performance optimisation
+		const isPrivatePromise = await ActivityModel.isPrivate(activityId);
+		const isParticipantPromise = await ParticipatesModel.isParticipant(userId, activityId);
+		const member = await ParticipatesModel.getMemberOfActivity(activityId, userId);
+		const isPrivate = await isPrivatePromise;
+		const isParticipant = await isParticipantPromise;
 
-			if (isPrivate && !isParticipant) {
-				res.status(404).json({
-					message: 'Activity not found.',
-				});
-				return;
-			}
-
-			res.json(member.map(transforms.transformUser));
-		} catch (error) {
-			res.sendStatus(500);
+		if (isPrivate && !isParticipant) {
+			res.status(404).json({
+				message: 'Activity not found.',
+			});
+			return;
 		}
+
+		res.json(member.map(transforms.transformUser));
 	},
 
 	async addParticipation(req, res) {
@@ -35,49 +32,45 @@ const ParticipatesController = {
 
 		if (!participantId) participantId = userId;
 
-		try {
-			// TODO: Performance optimization
-			const isHost = await ActivityModel.isHost(userId, activityId);
-			const isPrivate = await ActivityModel.isPrivate(activityId);
-			const isParticipant = await ParticipatesModel.isParticipant(participantId, activityId);
+		// TODO: Performance optimization
+		const isHost = await ActivityModel.isHost(userId, activityId);
+		const isPrivate = await ActivityModel.isPrivate(activityId);
+		const isParticipant = await ParticipatesModel.isParticipant(participantId, activityId);
 
-			const activityFull = await ActivityModel.isFull(activityId);
+		const activityFull = await ActivityModel.isFull(activityId);
 
-			if (isParticipant) {
-				res.json({
-					message: 'Already joined.',
-				});
-				return;
-			}
+		if (isParticipant) {
+			res.json({
+				message: 'Already joined.',
+			});
+			return;
+		}
 
-			if ((isPrivate && !isHost)
-			|| (Number(userId) !== Number(participantId) && !isHost)) {
-				res.status(403).json({
-					message: 'Permission denied.',
-				});
-				return;
-			}
+		if ((isPrivate && !isHost)
+		|| (Number(userId) !== Number(participantId) && !isHost)) {
+			res.status(403).json({
+				message: 'Permission denied.',
+			});
+			return;
+		}
 
-			if (activityFull) {
-				res.status(409).json({
-					message: 'Activity has reached member limit.',
-				});
-				return;
-			}
+		if (activityFull) {
+			res.status(409).json({
+				message: 'Activity has reached member limit.',
+			});
+			return;
+		}
 
-			const result = await ParticipatesModel.addParticipant(activityId, participantId);
+		const result = await ParticipatesModel.addParticipant(activityId, participantId);
 
-			if (result.affectedRows === 1) {
-				res.status(201).json({
-					message: 'Participation successful added.',
-				});
-			} else {
-				res.status(400).json({
-					message: 'Participation not possible.',
-				});
-			}
-		} catch (error) {
-			res.sendStatus(500);
+		if (result.affectedRows === 1) {
+			res.status(201).json({
+				message: 'Participation successful added.',
+			});
+		} else {
+			res.status(400).json({
+				message: 'Participation not possible.',
+			});
 		}
 	},
 
@@ -88,29 +81,25 @@ const ParticipatesController = {
 
 		if (!participantId) participantId = userId;
 
-		try {
-			const isHost = ActivityModel.isHost(userId, activityId);
+		const isHost = ActivityModel.isHost(userId, activityId);
 
-			if ((Number(userId) !== Number(participantId)) && !await isHost) {
-				res.status(403).json({
-					message: 'Permission denied.',
-				});
-				return;
-			}
+		if ((Number(userId) !== Number(participantId)) && !await isHost) {
+			res.status(403).json({
+				message: 'Permission denied.',
+			});
+			return;
+		}
 
-			const result = await ParticipatesModel.deleteParticipant(activityId, participantId);
+		const result = await ParticipatesModel.deleteParticipant(activityId, participantId);
 
-			if (result.affectedRows === 1) {
-				res.json({
-					message: 'Participation successfully ended.',
-				});
-			} else {
-				res.status(404).json({
-					message: 'Participation deletion not possible.',
-				});
-			}
-		} catch (error) {
-			res.sendStatus(500);
+		if (result.affectedRows === 1) {
+			res.json({
+				message: 'Participation successfully ended.',
+			});
+		} else {
+			res.status(404).json({
+				message: 'Participation deletion not possible.',
+			});
 		}
 	},
 

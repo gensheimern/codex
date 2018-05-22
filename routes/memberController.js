@@ -1,6 +1,5 @@
 const Member = require('../models/MemberModel');
 const TeamModel = require('../models/TeamModel');
-// const User = require('../models/User');
 const transforms = require('./transforms');
 
 const MemberController = {
@@ -14,20 +13,16 @@ const MemberController = {
 		const { userId } = req.token;
 		const { teamId } = req.params;
 
-		try {
-			const isMember = Member.isMember(teamId, userId);
+		const isMember = await Member.isMember(teamId, userId);
 
-			if (await isMember) {
-				const member = await Member.getMemberOfTeam(teamId);
+		if (isMember) {
+			const member = await Member.getMemberOfTeam(teamId);
 
-				res.json(member.map(transforms.transformUser));
-			} else {
-				res.status(404).json({
-					message: 'Invalid team id.',
-				});
-			}
-		} catch (error) {
-			res.sendStatus(500);
+			res.json(member.map(transforms.transformUser));
+		} else {
+			res.status(404).json({
+				message: 'Invalid team id.',
+			});
 		}
 	},
 
@@ -47,22 +42,18 @@ const MemberController = {
 			return;
 		}
 
-		try {
-			const isTeamManager = await TeamModel.isTeammanager(userId, teamId);
+		const isTeamManager = await TeamModel.isTeammanager(userId, teamId);
 
-			if (!isTeamManager) {
-				res.status(403).json({
-					message: 'Only the creator of a group can add members.',
-				});
-			} else {
-				await Member.addMember(memberId, teamId);
+		if (!isTeamManager) {
+			res.status(403).json({
+				message: 'Only the creator of a group can add members.',
+			});
+		} else {
+			await Member.addMember(memberId, teamId);
 
-				res.status(201).json({
-					message: 'Member added to team.',
-				});
-			}
-		} catch (error) {
-			res.sendStatus(500);
+			res.status(201).json({
+				message: 'Member added to team.',
+			});
 		}
 	},
 
@@ -83,33 +74,29 @@ const MemberController = {
 			return;
 		}
 
-		try {
-			// TODO: Check if teammanager leaves => new team manager
-			const isMember = Member.isMember(teamId, memberId);
-			const isTeamManager = TeamModel.isTeammanager(userId, teamId);
+		// TODO: Check if teammanager leaves => new team manager
+		const isMember = Member.isMember(teamId, memberId);
+		const isTeamManager = TeamModel.isTeammanager(userId, teamId);
 
-			if ((await isTeamManager) || (Number(userId) === Number(memberId) && await isMember)) {
-				const response = await Member.deleteMember(teamId, memberId);
+		if ((await isTeamManager) || (Number(userId) === Number(memberId) && await isMember)) {
+			const response = await Member.deleteMember(teamId, memberId);
 
-				if (response.affectedRows === 1) {
-					res.json({
-						success: true,
-						message: 'Member deleted.',
-					});
-				} else {
-					res.status(404).json({
-						success: false,
-						message: 'Invalid team or user id.',
-					});
-				}
+			if (response.affectedRows === 1) {
+				res.json({
+					success: true,
+					message: 'Member deleted.',
+				});
 			} else {
-				res.status(403).json({
+				res.status(404).json({
 					success: false,
 					message: 'Invalid team or user id.',
 				});
 			}
-		} catch (error) {
-			res.sendStatus(500);
+		} else {
+			res.status(403).json({
+				success: false,
+				message: 'Invalid team or user id.',
+			});
 		}
 	},
 
