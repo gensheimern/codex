@@ -58,7 +58,6 @@ export default class Events extends React.Component {
 	}
 
 	render() {
-		console.log(this.state.events);
 		if (this.state.error) {
 			return (<p>{this.state.error}</p>);
 		}

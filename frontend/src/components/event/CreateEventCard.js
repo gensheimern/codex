@@ -8,6 +8,8 @@ import Maps from './GooglePlaces';
 import Dialog from 'material-ui/Dialog';
 import CollapseFA from 'react-icons/lib/fa/angle-down';
 import ReminderToggle from './ReminderToggle';
+import InvitePeople from './CreateEventInvitePeople';
+import InviteChip from './CreateEventChip';
 
 const eventImages = [
 {
@@ -37,9 +39,11 @@ export default class CreateEventCard extends React.Component {
       cardTitle:"Edit group picture",
       cardImage: "events.jpg",
       collapse: false,
+      invitePeople:[],
     }
     this.toggleCollapse = this.toggleCollapse.bind(this);
     this.callbackAddress = this.callbackAddress.bind(this);
+    this.callBackInvitePeople = this.callBackInvitePeople.bind(this);
   }
 
   handleOpen = () => {
@@ -50,14 +54,15 @@ handleClose = () => {
 	this.setState({open: false});
 };
 
-
+  callBackInvitePeople(people){
+    this.setState({invitePeople: people})
+    console.log(this.state.invitePeople);
+  }
   callbackAddress(myAddress){
-    console.log(myAddress);
     this.setState({address:myAddress});
   }
 
   cardImage(title, img){
-    console.log(title);
     this.handleClose();
     this.setState({cardTitle: title, cardImage:img });
   }
@@ -72,6 +77,11 @@ handleClose = () => {
 
   collapsedContend(){
     if(this.state.collapse){
+     let images =  this.state.invitePeople.map( image => {
+    //    return  <img key={image} src={image} />
+        return (< InviteChip name={image.textKey} peopleImage={image.ValueImage} />)
+      });
+      console.log(images);
       return(
           <div className="collapsedContentWrapper">
             <div className="collapsedContendReminder">
@@ -88,6 +98,10 @@ handleClose = () => {
                 floatingLabelFixed={true}
                 hintText="Description"
               />
+              <InvitePeople people={this.callBackInvitePeople}/>
+              {images}
+
+
           </div>
       )
     }
