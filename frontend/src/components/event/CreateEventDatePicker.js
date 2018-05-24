@@ -6,10 +6,26 @@ import DatePicker from 'material-ui/DatePicker';
  * You can also disable the Dialog passing `true` to the `disabled` property.
  * To display the year selection first, set the `openToYearSelection` property to `true`.
  */
-const DatePickerExampleSimple = () => (
-  <div>
-    <DatePicker autoOk={true} hintText="Portrait Dialog" />
-  </div>
+
+export default class CreateEventDatePicker extends React.Component{
+
+constructor(props){
+  super(props);
+
+}
+
+
+
+render(){
+    return(
+      <div>
+        <DatePicker
+          onChange={this.props.date}
+          autoOk={true}
+          hintText="Portrait Dialog"
+        />
+      </div>
 );
 
-export default DatePickerExampleSimple;
+}
+}

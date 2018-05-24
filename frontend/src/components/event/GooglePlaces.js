@@ -8,15 +8,29 @@ export default class LocationSearchInput extends React.Component {
     this.state = {
       address: '',
     }
+    this.parseAddress = this.parseAddress.bind(this);
   }
 
   handleChange = (address) => {
     this.setState({ address })
   }
 
+  parseAddress(results){
+    let parsedAddress = results.map(e =>{
+      return(
+      e.address_components.map(f => {
+           if( f.types[0] === 'street_number' ||  f.types[0] ==='route' || f.types[0] === 'locality'){
+              return(this.props.myAddress(f))
+          }
+      }))
+
+    })
+
+  }
+
   handleSelect = (address) => {
     geocodeByAddress(address)
-      .then(results => this.props.myAddress(results[0].formatted_address))
+      .then(results => this.parseAddress(results))
       .then(latLng => console.log('Success', latLng))
       .catch(error => console.error('Error', error))
   }

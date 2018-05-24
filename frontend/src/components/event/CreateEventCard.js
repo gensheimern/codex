@@ -10,6 +10,7 @@ import CollapseFA from 'react-icons/lib/fa/angle-down';
 import ReminderToggle from './ReminderToggle';
 import InvitePeople from './CreateEventInvitePeople';
 import InviteChip from './CreateEventChip';
+import DateTimeParser from './dateParser';
 
 const eventImages = [
 {
@@ -34,16 +35,32 @@ export default class CreateEventCard extends React.Component {
     super(props);
 
     this.state = {
-      address: "",
+      address: [],
+      meetingPoint: '',
       open:false,
       cardTitle:"Edit group picture",
       cardImage: "events.jpg",
       collapse: false,
       invitePeople:[],
+      time:'',
+      date:'',
+      reminder : false,
+      private: false,
+      meetingPointValue: '',
+      maxPeopleValue: '',
+      descriptionValue: '',
     }
     this.toggleCollapse = this.toggleCollapse.bind(this);
     this.callbackAddress = this.callbackAddress.bind(this);
     this.callBackInvitePeople = this.callBackInvitePeople.bind(this);
+    this.callbackTime = this.callbackTime.bind(this);
+    this.callbackDate = this.callbackDate.bind(this);
+    this.callbackToggleReminder = this.callbackToggleReminder.bind(this);
+    this.callbackTogglePrivate = this.callbackTogglePrivate.bind(this);
+    this.handleChangeMeetingPoint = this.handleChangeMeetingPoint.bind(this);
+    this.handleChangeDescription = this.handleChangeDescription.bind(this);
+    this.handleChangeMaxPeople = this.handleChangeMaxPeople.bind(this);
+
   }
 
   handleOpen = () => {
@@ -56,10 +73,24 @@ handleClose = () => {
 
   callBackInvitePeople(people){
     this.setState({invitePeople: people})
-    console.log(this.state.invitePeople);
   }
   callbackAddress(myAddress){
-    this.setState({address:myAddress});
+    this.setState({ address: [...this.state.address, myAddress.long_name ] });
+    this.combineAddress();
+  }
+  callbackTime(event, time){
+    this.setState({time:time});
+    console.log(this.state.time);
+  }
+  callbackDate(event, date){
+    this.setState({date:date});
+    console.log(this.state.date);
+  }
+  callbackToggleReminder(event,isInputChecked){
+    this.setState({reminder:isInputChecked});
+  }
+  callbackTogglePrivate(event,isInputChecked){
+    this.setState({private:isInputChecked});
   }
 
   cardImage(title, img){
@@ -75,6 +106,62 @@ handleClose = () => {
     }
   }
 
+handleChangeMeetingPoint(e){
+  this.setState({ meetingPointValue: e.target.value});
+}
+handleChangeMaxPeople(e){
+  this.setState({ maxPeopleValue: e.target.value});
+}
+handleChangeDescription(e){
+  this.setState({ descriptionValue: e.target.value});
+}
+
+combineAddress(){
+console.log(this.state.address.reverse().toString());
+
+
+}
+/*
+
+createEvent(){
+  fetch(config.apiPath + "/activity", {
+    method: 'POST',
+    body: JSON.stringify({
+      description: this.state.descriptionValue,
+      name: this.state.cardTitle,
+      place: this.state.address,
+      time: datetime,
+      event: false,
+      private: this.state.private,
+      banner: this.state.cardImage,
+      maxParticipants: this.state.maxPeopleValue
+    }),
+    headers: {
+        'Content-Type': 'application/json',
+        'X-Access-Token': localStorage.getItem('apiToken')
+      }
+  }).then((res) => {
+    console.log(res);
+    console.log(this.state);
+    if(res.status !== 201) {
+      console.log(res.status);
+    } else if(res.status !== 200) {
+    } else if(res.status !== 201) {
+      console.log(res.status);
+    }
+      return res;
+  }).then(res => res.json()).then((res) => {
+      //console.log("Token: " + res.token)
+
+      if(typeof (Storage) !== "undefined") {
+          localStorage.setItem("apiToken", res.token);
+      } else {
+          // TODO Code without local storage
+      }
+  });
+}
+
+*/
   collapsedContend(){
     if(this.state.collapse){
      let images =  this.state.invitePeople.map( image => {
@@ -85,19 +172,26 @@ handleClose = () => {
       return(
           <div className="collapsedContentWrapper">
             <div className="collapsedContendReminder">
-              < ReminderToggle />
+              < ReminderToggle label={'Reminder'} toggleMe={this.callbackToggleReminder} />
+              < ReminderToggle label={'Private'} toggleMe={this.callbackTogglePrivate} />
+
               <TextField
               style={{widht:"200px"}}
               floatingLabelFixed={true}
               underlineFocusStyle={{borderColor:"rgb(30 161 133)"}}
               hintText="Max. People"
+              value={this.state.maxPeopleValue}
+              onChange={this.handleChangeMaxPeople}
               />
               </div>
               <TextField
                 underlineFocusStyle={{borderColor:"rgb(30 161 133)"}}
                 floatingLabelFixed={true}
                 hintText="Description"
+                value={this.state.descriptionValue}
+                onChange={this.handleChangeDescription}
               />
+
               <InvitePeople people={this.callBackInvitePeople}/>
               {images}
 
@@ -114,9 +208,6 @@ handleClose = () => {
   marginRight: 20,
 };
     return (
-
-
-
       <Card >
             <Dialog
                 modal={false}
@@ -141,12 +232,12 @@ handleClose = () => {
         <CardText>
 
         <div className="timeDatePicker">
-            <div className="timepicker"> <CreateEventTimePicker /> </div>
-            <div className="datepicker"> <CreateEventDatePicker /> </div>
+            <div className="timepicker"> <CreateEventTimePicker time={this.callbackTime}/> </div>
+            <div className="datepicker"> <CreateEventDatePicker date={this.callbackDate} /> </div>
             <div style={{clear:"both"}}></div>
         </div>
 
-        <Maps myAddress={this.callbackAddress} onChange={value => this.setSTate({value})} >
+        <Maps myAddress={this.callbackAddress} >
         {renderFunc}
         </Maps>
 
@@ -156,7 +247,9 @@ handleClose = () => {
             floatingLabelFocusStyle={{color:"rgb(30 161 133)"}}
             underlineFocusStyle={{borderColor:"rgb(30 161 133)"}}
             floatingLabelText="Meeting Point"
-            hintText="COA Restaurant"
+            hintText="at the address point"
+            value={this.state.inputValue}
+            onChange={this.handleChangeMeetingPoint}
           /><br />
 
           <div className="MoreOptionsCreateEvent" onClick={this.toggleCollapse}> More Options <CollapseFA /> </div>
