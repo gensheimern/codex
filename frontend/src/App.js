@@ -40,7 +40,9 @@ class App extends Component {
                   {
                     (matches) => {
                       if (matches) {
-                        return (<div>
+                        return (<div style={{
+                            marginTop: "5%"
+                          }}>
                           <NavbarMenu/>
                           <Groups id="groups-wrapper" height="100%"/>
                           <MainContent mainContentNumber={5} width="55%"/>

@@ -17,7 +17,7 @@ export default class MainContent extends React.Component {
     super(props);
 
     this.state = {
-      displayedContent: "1",
+      displayedContent: "0",
       open: false,
       value: "",
       address: ""
@@ -63,23 +63,6 @@ export default class MainContent extends React.Component {
           height: "100%",
           overflowY: "scroll"
         }}>
-        <Dialog className="createEventWrapper" actions={actions} modal={false} open={this.state.open} onRequestClose={this.handleClose} contentStyle={{
-            width: "95%",
-            maxWidth: "none",
-            paddingTop: "0px"
-          }} bodyStyle={{
-            padding: "0px",
-            paddingTop: "0px"
-          }} titleStyle={{
-            paddingTop: "0px"
-          }} autoScrollBodyContent={true}>
-          <CreateEventtCard ref={instance => {
-              this.child = instance;
-            }}/>
-        </Dialog>
-        <FloatingActionButton onClick={this.handleOpen} style={style}>
-          <ContentAdd/>
-        </FloatingActionButton>
         <Events/>
       </div>);
     } else if (this.props.mainContentNumber === 1) {
@@ -102,9 +85,9 @@ export default class MainContent extends React.Component {
           overflowY: "scroll",
           margin: "10%"
         }}>
-        <MuiThemeProvider>
-          <CreateEvent/>
-        </MuiThemeProvider>
+        <CreateEventtCard ref={instance => {
+            this.child = instance;
+          }}/>
       </div>);
     } else if (this.props.mainContentNumber === 3) {
       return (<div style={{
@@ -134,52 +117,26 @@ export default class MainContent extends React.Component {
           height: "100%",
           overflowY: "scroll"
         }}>
+        <Dialog className="createEventWrapper" actions={actions} modal={false} open={this.state.open} onRequestClose={this.handleClose} contentStyle={{
+            width: "95%",
+            maxWidth: "none",
+            paddingTop: "0px"
+          }} bodyStyle={{
+            padding: "0px",
+            paddingTop: "0px"
+          }} titleStyle={{
+            paddingTop: "0px"
+          }} autoScrollBodyContent={true}>
+          <CreateEventtCard ref={instance => {
+              this.child = instance;
+            }}/>
+        </Dialog>
+        <FloatingActionButton onClick={this.handleOpen} style={style}>
+          <ContentAdd/>
+        </FloatingActionButton>
         <Events/>
       </div>);
     }
 
-  }
-
-  render() {
-    const style = {
-      marginRight: 20
-    };
-
-    const actions = [
-      <FlatButton label="Cancel" primary={true} onClick={this.handleClose}/>,
-      <FlatButton label="Submit" primary={true} keyboardFocused={true} onClick={this.handleSubmit}/>
-    ];
-
-    return (<div style={{
-        width: this.props.width,
-        marginTop: "0%",
-        float: "left",
-        height: "100%",
-        overflowY: "scroll"
-      }}>
-
-      <Dialog className="createEventWrapper" actions={actions} modal={false} open={this.state.open} onRequestClose={this.handleClose} contentStyle={{
-          width: "95%",
-          maxWidth: "none",
-          paddingTop: "0px"
-        }} bodyStyle={{
-          padding: "0px",
-          paddingTop: "0px"
-        }} titleStyle={{
-          paddingTop: "0px"
-        }} autoScrollBodyContent={true}>
-
-        <CreateEventtCard ref={instance => {
-            this.child = instance;
-          }}/>
-
-      </Dialog>
-
-      <FloatingActionButton onClick={this.handleOpen} style={style}>
-        <ContentAdd/>
-      </FloatingActionButton>
-
-      <Events/>
-    </div>);
   }
 }
