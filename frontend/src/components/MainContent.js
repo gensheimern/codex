@@ -39,6 +39,11 @@ export default class MainContent extends React.Component {
 			this.setState({open: false});
 	};
 
+	handleSubmit = () => {
+			this.child.createEvent();
+			this.setState({open: false});
+	}
+
 	render() {
 		const style = {
   marginRight: 20,
@@ -54,7 +59,7 @@ const actions = [
         label="Submit"
         primary={true}
         keyboardFocused={true}
-        onClick={this.handleClose}
+        onClick={this.handleSubmit}
       />,
     ];
 
@@ -83,7 +88,7 @@ const actions = [
 	 >
 
 
-	 	<CreateEventtCard />
+	 	<CreateEventtCard ref={instance => { this.child = instance; }}/>
 
 
 	 </Dialog>

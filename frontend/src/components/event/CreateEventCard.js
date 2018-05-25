@@ -11,6 +11,7 @@ import ReminderToggle from './ReminderToggle';
 import InvitePeople from './CreateEventInvitePeople';
 import InviteChip from './CreateEventChip';
 import DateTimeParser from './dateParser';
+import config from '../../config';
 
 const eventImages = [
 {
@@ -36,6 +37,7 @@ export default class CreateEventCard extends React.Component {
 
     this.state = {
       address: [],
+      addressString:'',
       meetingPoint: '',
       open:false,
       cardTitle:"Edit group picture",
@@ -49,6 +51,11 @@ export default class CreateEventCard extends React.Component {
       meetingPointValue: '',
       maxPeopleValue: '',
       descriptionValue: '',
+      year: '',
+      month: '',
+      day: '',
+      hours: '',
+      minutes: '',
     }
     this.toggleCollapse = this.toggleCollapse.bind(this);
     this.callbackAddress = this.callbackAddress.bind(this);
@@ -76,15 +83,15 @@ handleClose = () => {
   }
   callbackAddress(myAddress){
     this.setState({ address: [...this.state.address, myAddress.long_name ] });
-    this.combineAddress();
   }
   callbackTime(event, time){
-    this.setState({time:time});
-    console.log(this.state.time);
+    this.setState({hours:time.getUTCHours()});
+    this.setState({minutes:time.getUTCMinutes()});
   }
-  callbackDate(event, date){
-    this.setState({date:date});
-    console.log(this.state.date);
+  callbackDate(event, mydate){
+    this.setState({year:mydate.getUTCFullYear()});
+    this.setState({day:mydate.getUTCDate()});
+    this.setState({month:mydate.getUTCMonth()});
   }
   callbackToggleReminder(event,isInputChecked){
     this.setState({reminder:isInputChecked});
@@ -118,10 +125,8 @@ handleChangeDescription(e){
 
 combineAddress(){
 console.log(this.state.address.reverse().toString());
-
-
 }
-/*
+
 
 createEvent(){
   fetch(config.apiPath + "/activity", {
@@ -129,8 +134,8 @@ createEvent(){
     body: JSON.stringify({
       description: this.state.descriptionValue,
       name: this.state.cardTitle,
-      place: this.state.address,
-      time: datetime,
+      place: this.state.address.reverse().toString(),
+      time: this.state.year + "-" + this.state.month + "-" + this.state.day + " " + this.state.hours + ":" + this.state.minutes,
       event: false,
       private: this.state.private,
       banner: this.state.cardImage,
@@ -161,7 +166,7 @@ createEvent(){
   });
 }
 
-*/
+
   collapsedContend(){
     if(this.state.collapse){
      let images =  this.state.invitePeople.map( image => {

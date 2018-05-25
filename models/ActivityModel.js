@@ -45,7 +45,7 @@ const Activity = {
 		const eventTag = activity.event ? 1 : 0;
 		const privateTag = activity.private ? 1 : 0;
 
-		return databaseConnection.queryp('INSERT INTO Activity (Description, Activityname, Place, Time, Eventtag, Private, Host, Banner, MaxParticipants) VALUES (?,?,?,?,?,?,?,?,?)', [activity.description, activity.name, activity.place, activity.time, eventTag, activity.privateTag, userId, activity.banner, activity.maxParticipants]);
+		return databaseConnection.queryp('INSERT INTO Activity (Description, Activityname, Place, Time, Eventtag, Private, Host, Banner, MaxParticipants) VALUES (?,?,?,?,?,?,?,?,?)', [activity.description, activity.name, activity.place, activity.time, eventTag, privateTag, userId, activity.banner, activity.maxParticipants]);
 	},
 
 	/**
