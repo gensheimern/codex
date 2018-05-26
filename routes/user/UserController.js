@@ -27,7 +27,7 @@ const UserController = {
 
 	async addUser(req, res) {
 		const userData = req.body;
-		if (validUser(userData)) {
+		if (!validUser(userData)) {
 			res.status(400).json({
 				message: 'Invalid user information.',
 			});
@@ -81,6 +81,14 @@ const UserController = {
 	async updateUser(req, res) {
 		const { userId } = req.token;
 		const targetId = req.params.userId;
+
+		if (!validUser(req.body)) {
+			res.status(400).json({
+				success: false,
+				message: 'Invalid user information.',
+			});
+			return;
+		}
 
 		if (Number(targetId) !== userId) {
 			res.status(403).json({

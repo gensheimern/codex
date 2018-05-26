@@ -1,6 +1,7 @@
 const ActivityModel = require('../../models/ActivityModel');
 const ParticipatesModel = require('../../models/participatesModel');
 const transforms = require('../transforms');
+const { validActivity } = require('./activityValidation');
 
 const ActivityController = {
 
@@ -41,8 +42,13 @@ const ActivityController = {
 	async createActivity(req, res) {
 		const { userId } = req.token;
 		const activity = req.body;
-		// TODO check body
-		// TODO: 2018-04-20 12:34:18 as time
+
+		if (!validActivity(activity)) {
+			res.status(400).json({
+				message: 'Invalid event information.',
+			});
+			return;
+		}
 
 		const result = await ActivityModel.createActivity(activity, userId);
 		await ParticipatesModel.addParticipant(result.insertId, userId);
@@ -56,7 +62,7 @@ const ActivityController = {
 		const { userId } = req.token;
 		const { activityId } = req.params;
 
-		// TODO Check if user is admin of activity
+		// TODO: Check if user is admin of activity
 		const isHost = await ActivityModel.isHost(userId, activityId);
 
 		if (!isHost) {
@@ -86,9 +92,15 @@ const ActivityController = {
 		const { userId } = req.token;
 		const { activityId } = req.params;
 		const newActivity = req.body;
-		// TODO: Check body
 
-		// TODO Check if user is admin of activity
+		if (!validActivity(newActivity)) {
+			res.status(400).json({
+				message: 'Invalid event information.',
+			});
+			return;
+		}
+
+		// TODO: Check if user is admin of activity
 		const isHost = await ActivityModel.isHost(userId, activityId);
 
 		if (!isHost) {

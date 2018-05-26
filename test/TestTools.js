@@ -1,5 +1,6 @@
 const sinon = require('sinon');
 const mock = require('node-mocks-http');
+const TestError = require('./TestError');
 
 const dbConnection = require('../models/DatabaseConnection');
 
@@ -56,7 +57,7 @@ const TestTools = {
 
 	mockDatabase(options = {}) {
 		if (!(options instanceof Object)) {
-			throw new Error('Invalid options parameter.');
+			throw new TestError('Invalid options parameter.');
 		}
 
 		const mockDB = sinon.mock(dbConnection);
@@ -85,7 +86,7 @@ const TestTools = {
 	},
 
 	mockNotCalled(model, method) {
-		return sinon.stub(model, method).throws(new Error('Should not be called.'));
+		return sinon.stub(model, method).throws(new TestError('Should not be called.'));
 	},
 
 	mockRequest(options = {}, withToken = true) {
@@ -99,9 +100,14 @@ const TestTools = {
 
 		if (withToken) params.token = token;
 
+		const mockRequest = mock.createRequest(params);
+		const mockResponse = mock.createResponse();
+
+		mockResponse.body = () => JSON.parse(mockResponse._getData());
+
 		return {
-			req: mock.createRequest(params),
-			res: mock.createResponse(),
+			req: mockRequest,
+			res: mockResponse,
 		};
 	},
 };

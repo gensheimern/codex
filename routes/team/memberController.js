@@ -77,10 +77,10 @@ const MemberController = {
 		}
 
 		// TODO: Check if teammanager leaves => new team manager
-		const isMember = Member.isMember(teamId, memberId);
-		const isTeamManager = TeamModel.isTeammanager(userId, teamId);
+		const isMember = await Member.isMember(teamId, memberId);
+		const isTeamManager = await TeamModel.isTeammanager(userId, teamId);
 
-		if ((await isTeamManager) || (Number(userId) === Number(memberId) && await isMember)) {
+		if ((isTeamManager) || (Number(userId) === Number(memberId) && isMember)) {
 			const response = await Member.deleteMember(teamId, memberId);
 
 			if (response.affectedRows === 1) {

@@ -1,6 +1,7 @@
 const TeamModel = require('../../models/TeamModel');
 const MemberModel = require('../../models/MemberModel');
 const { transformTeam } = require('../transforms');
+const { validTeam } = require('./teamValidation');
 
 const TeamController = {
 
@@ -17,8 +18,11 @@ const TeamController = {
 		const { teamId } = req.params;
 
 		const isMember = MemberModel.isMember(teamId, userId);
+		const teamPromise = TeamModel.getTeamById(teamId, userId);
 
-		const team = await TeamModel.getTeamById(teamId, userId);
+		await Promise.all([isMember, teamPromise]);
+
+		const team = await teamPromise;
 
 		if (team === null || !(await isMember)) {
 			res.status(404).json({
@@ -32,16 +36,16 @@ const TeamController = {
 
 	async addTeam(req, res) {
 		const { userId } = req.token;
+		const { name } = req.body;
 
-		// TODO: Check name
-		if (!req.body.name) {
+		if (!validTeam(name)) {
 			res.status(400).json({
 				message: 'Invalid team name',
 			});
 			return;
 		}
 
-		const dbRes = await TeamModel.addTeam(req.body.name, userId);
+		const dbRes = await TeamModel.addTeam(name, userId);
 		await MemberModel.addMember(userId, dbRes.insertId);
 
 		res.status(201).json({
@@ -74,8 +78,7 @@ const TeamController = {
 		const { teamId } = req.params;
 		const newName = req.body.name;
 
-		// TODO: check name
-		if (!newName) {
+		if (!validTeam(newName)) {
 			res.status(400).json({
 				success: false,
 				message: 'Invalid new team name.',

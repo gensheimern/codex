@@ -1,6 +1,7 @@
 const Message = require('../../models/MessageModel');
 const ParticipatesModel = require('../../models/participatesModel');
 const transforms = require('../transforms');
+const { validMessage } = require('./messageValidation');
 
 const MessageController = {
 
@@ -27,7 +28,13 @@ const MessageController = {
 		const { userId } = req.token;
 		const { activityId } = req.params;
 		const { content } = req.body;
-		// TODO Check body
+
+		if (!validMessage(content)) {
+			res.status(400).json({
+				message: 'Invalid message content.',
+			});
+			return;
+		}
 
 		const isParticipant = await ParticipatesModel.isParticipant(userId, activityId);
 
@@ -69,9 +76,15 @@ const MessageController = {
 		const { userId } = req.token;
 		const { messageId } = req.params;
 		const content = `${req.body.content} (Changed)`;
-		// TODO Check Message content
 
-		// TODO check for admin
+		if (!validMessage(content)) {
+			res.status(400).json({
+				message: 'Invalid message content.',
+			});
+			return;
+		}
+
+		// TODO: check for admin
 		const result = await Message.updateMessage(messageId, content, userId);
 
 		if (result.affectedRows === 1) {
