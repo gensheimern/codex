@@ -5,6 +5,8 @@
   "scripts": {
     "start": "react-scripts start",
     "server": "react-scripts build && cd server && node server",
+    "clean": "rimraf build",
+		"prebuild": "npm run clean",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "test:coverage": "npm test -- --coverage",
@@ -26,9 +28,10 @@
     "react-scripts": "1.1.2",
     "react-sidebar": "^2.3.2",
     "react-sidenav": "^2.1.2",
-    "react-test-renderer": "^16.3.1",
     "react-sticky": "^6.0.2",
-    "react-stickynode": "^1.4.1"
+    "react-stickynode": "^1.4.1",
+    "react-test-renderer": "^16.3.1",
+    "rimraf": "^2.6.2"
   },
   "proxy": "http://localhost:5000",
   "devDependencies": {
