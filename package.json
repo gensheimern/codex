@@ -15,9 +15,8 @@
 
 		"lint": "eslint .",
 		"pretest": "npm run lint",
-		"test": "mocha",
-		"pretest:coverage": "npm run lint",
-		"test:coverage": "nyc --reporter=text --reporter=html mocha --timeout=3000"
+		"test": "mocha test --recursive",
+		"test:coverage": "nyc --reporter=text --reporter=html npm test"
 	},
 	"engines": {
 		"node": ">=6.9.1"
