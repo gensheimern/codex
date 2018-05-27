@@ -12,7 +12,7 @@ const MessageController = {
 		const messagesPromise = Message.getMessagesOfActivity(activityId);
 		const isParticipant = await ParticipatesModel.isParticipant(userId, activityId);
 
-		if (!isParticipant) {
+		if (!isParticipant) { // TODO: !participant || !isPrivate
 			res.status(404).json({
 				message: 'Activity not found.',
 			});
