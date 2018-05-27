@@ -1,7 +1,8 @@
 const chai = require('chai');
 const chaiAsPromised = require('chai-as-promised');
 const TestTools = require('./TestTools');
-const TestError = require('./TestError');
+// const TestError = require('./TestError');
+// TODO: Check for error case
 
 chai.use(chaiAsPromised);
 const { expect } = chai;
