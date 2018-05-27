@@ -55,8 +55,6 @@ describe('Participates controller', () => {
 
 			// Mock http request and response
 			const { req, res } = TestTools.mockRequest({
-				method: 'GET',
-				baseUrl: '/team/5/member',
 				params: {
 					teamId: 5,
 				},
@@ -109,8 +107,6 @@ describe('Participates controller', () => {
 
 			// Mock http request and response
 			const { req, res } = TestTools.mockRequest({
-				method: 'GET',
-				baseUrl: '/team/5/member',
 				params: {
 					teamId: 5,
 				},
@@ -132,8 +128,6 @@ describe('Participates controller', () => {
 
 			// Mock http request and response
 			const { req, res } = TestTools.mockRequest({
-				method: 'GET',
-				baseUrl: '/team/5/member',
 				params: {
 					teamId: 5,
 				},
@@ -150,56 +144,301 @@ describe('Participates controller', () => {
 	describe('POST a new participation', () => {
 		it('should add a participation if the activity is public', async () => {
 			// Mock user model
-			mockModels.push(TestTools.mockModel(ParticipatesModel, 'getMemberOfActivity', null, [{
-				User_Id: 1,
-				Firstname: 'Max',
-				Name: 'Mustermann',
-				Email: 'valid@email.com',
-				Password: '1234',
-				Image: '/image.png',
-			},
-			{
-				User_Id: 2,
-				Firstname: 'Max2',
-				Name: 'Mustermann2',
-				Email: 'valid2@email.com',
-				Password: '5678',
-				Image: '/image2.png',
-			},
-			]));
+			mockModels.push(TestTools.mockModel(ActivityModel, 'isHost', null, false));
 			mockModels.push(TestTools.mockModel(ActivityModel, 'isPrivate', null, false));
 			mockModels.push(TestTools.mockModel(ParticipatesModel, 'isParticipant', null, false));
+			mockModels.push(TestTools.mockModel(ActivityModel, 'isFull', null, false));
+			mockModels.push(TestTools.mockModel(ParticipatesModel, 'addParticipant', null, TestTools.dbInsertSuccess));
 
 			// Mock http request and response
 			const { req, res } = TestTools.mockRequest({
-				method: 'GET',
-				baseUrl: '/team/5/member',
 				params: {
-					teamId: 5,
+					activityId: 8,
+					userId: 5,
 				},
 			});
 
 			// Call test method
-			await ParticipatesController.getParticipates(req, res);
+			await ParticipatesController.addParticipation(req, res);
+
+			// Validate result
+			correctResponseType(res, 201);
+			expect(res.body().message, 'Message set').to.be.a('string');
+		});
+
+		it('should add a participation to private activity if user is host', async () => {
+			// Mock user model
+			mockModels.push(TestTools.mockModel(ActivityModel, 'isHost', null, true));
+			mockModels.push(TestTools.mockModel(ActivityModel, 'isPrivate', null, true));
+			mockModels.push(TestTools.mockModel(ParticipatesModel, 'isParticipant', null, false));
+			mockModels.push(TestTools.mockModel(ActivityModel, 'isFull', null, false));
+			mockModels.push(TestTools.mockModel(ParticipatesModel, 'addParticipant', null, TestTools.dbInsertSuccess));
+
+			// Mock http request and response
+			const { req, res } = TestTools.mockRequest({
+				params: {
+					activityId: 8,
+					userId: 5,
+				},
+			});
+
+			// Call test method
+			await ParticipatesController.addParticipation(req, res);
+
+			// Validate result
+			correctResponseType(res, 201);
+			expect(res.body().message, 'Message set').to.be.a('string');
+		});
+
+		it('should add a participation if no user id is specified', async () => {
+			// Mock user model
+			mockModels.push(TestTools.mockModel(ActivityModel, 'isHost', null, false));
+			mockModels.push(TestTools.mockModel(ActivityModel, 'isPrivate', null, false));
+			mockModels.push(TestTools.mockModel(ParticipatesModel, 'isParticipant', null, false));
+			mockModels.push(TestTools.mockModel(ActivityModel, 'isFull', null, false));
+			mockModels.push(TestTools.mockModel(ParticipatesModel, 'addParticipant', null, TestTools.dbInsertSuccess));
+
+			// Mock http request and response
+			const { req, res } = TestTools.mockRequest({
+				params: {
+					activityId: 8,
+				},
+			});
+
+			// Call test method
+			await ParticipatesController.addParticipation(req, res);
+
+			// Validate result
+			correctResponseType(res, 201);
+			expect(res.body().message, 'Message set').to.be.a('string');
+		});
+
+		it('should send message if already participating', async () => {
+			// Mock user model
+			mockModels.push(TestTools.mockModel(ActivityModel, 'isHost', null, false));
+			mockModels.push(TestTools.mockModel(ActivityModel, 'isPrivate', null, false));
+			mockModels.push(TestTools.mockModel(ParticipatesModel, 'isParticipant', null, true));
+			mockModels.push(TestTools.mockModel(ActivityModel, 'isFull', null, false));
+			mockModels.push(TestTools.mockNotCalled(ParticipatesModel, 'addParticipant'));
+
+			// Mock http request and response
+			const { req, res } = TestTools.mockRequest({
+				params: {
+					activityId: 8,
+					userId: 5,
+				},
+			});
+
+			// Call test method
+			await ParticipatesController.addParticipation(req, res);
 
 			// Validate result
 			correctResponseType(res, 200);
-			expect(res.body(), 'Correct respnse body').to.deep.equal([
-				{
-					id: 1,
-					firstName: 'Max',
-					name: 'Mustermann',
-					email: 'valid@email.com',
-					image: '/image.png',
+			expect(res.body().message, 'Message set').to.be.a('string');
+		});
+
+		it('should send error if activity is private and user is not host', async () => {
+			// Mock user model
+			mockModels.push(TestTools.mockModel(ActivityModel, 'isHost', null, false));
+			mockModels.push(TestTools.mockModel(ActivityModel, 'isPrivate', null, true));
+			mockModels.push(TestTools.mockModel(ParticipatesModel, 'isParticipant', null, false));
+			mockModels.push(TestTools.mockModel(ActivityModel, 'isFull', null, false));
+			mockModels.push(TestTools.mockNotCalled(ParticipatesModel, 'addParticipant', null, TestTools.dbInsertSuccess));
+
+			// Mock http request and response
+			const { req, res } = TestTools.mockRequest({
+				params: {
+					activityId: 8,
+					userId: 5,
 				},
-				{
-					id: 2,
-					firstName: 'Max2',
-					name: 'Mustermann2',
-					email: 'valid2@email.com',
-					image: '/image2.png',
+			});
+
+			// Call test method
+			await ParticipatesController.addParticipation(req, res);
+
+			// Validate result
+			correctResponseType(res, 403);
+			expect(res.body().message, 'Message set').to.be.a('string');
+		});
+
+		it('should send error if user is not participant or host', async () => {
+			// Mock user model
+			mockModels.push(TestTools.mockModel(ActivityModel, 'isHost', null, false));
+			mockModels.push(TestTools.mockModel(ActivityModel, 'isPrivate', null, false));
+			mockModels.push(TestTools.mockModel(ParticipatesModel, 'isParticipant', null, false));
+			mockModels.push(TestTools.mockModel(ActivityModel, 'isFull', null, false));
+			mockModels.push(TestTools.mockNotCalled(ParticipatesModel, 'addParticipant', null, TestTools.dbInsertSuccess));
+
+			// Mock http request and response
+			const { req, res } = TestTools.mockRequest({
+				params: {
+					activityId: 8,
+					userId: 6,
 				},
-			]);
+			});
+
+			// Call test method
+			await ParticipatesController.addParticipation(req, res);
+
+			// Validate result
+			correctResponseType(res, 403);
+			expect(res.body().message, 'Message set').to.be.a('string');
+		});
+
+		it('should send error if activity is full', async () => {
+			// Mock user model
+			mockModels.push(TestTools.mockModel(ActivityModel, 'isHost', null, false));
+			mockModels.push(TestTools.mockModel(ActivityModel, 'isPrivate', null, false));
+			mockModels.push(TestTools.mockModel(ParticipatesModel, 'isParticipant', null, false));
+			mockModels.push(TestTools.mockModel(ActivityModel, 'isFull', null, true));
+			mockModels.push(TestTools.mockNotCalled(ParticipatesModel, 'addParticipant'));
+
+			// Mock http request and response
+			const { req, res } = TestTools.mockRequest({
+				params: {
+					activityId: 8,
+					userId: 5,
+				},
+			});
+
+			// Call test method
+			await ParticipatesController.addParticipation(req, res);
+
+			// Validate result
+			correctResponseType(res, 409);
+			expect(res.body().message, 'Message set').to.be.a('string');
+		});
+
+		it('should send error if participating is not possible', async () => {
+			// Mock user model
+			mockModels.push(TestTools.mockModel(ActivityModel, 'isHost', null, false));
+			mockModels.push(TestTools.mockModel(ActivityModel, 'isPrivate', null, false));
+			mockModels.push(TestTools.mockModel(ParticipatesModel, 'isParticipant', null, false));
+			mockModels.push(TestTools.mockModel(ActivityModel, 'isFull', null, false));
+			mockModels.push(TestTools.mockModel(ParticipatesModel, 'addParticipant', null, TestTools.dbInsertFailed));
+
+			// Mock http request and response
+			const { req, res } = TestTools.mockRequest({
+				params: {
+					activityId: 8,
+					userId: 5,
+				},
+			});
+
+			// Call test method
+			await ParticipatesController.addParticipation(req, res);
+
+			// Validate result
+			correctResponseType(res, 400);
+			expect(res.body().message, 'Message set').to.be.a('string');
+		});
+
+		it('should send error if database not available', async () => {
+			// Mock user model
+			mockModels.push(TestTools.mockModel(ActivityModel, 'isHost', new TestError('Test error'), null));
+			mockModels.push(TestTools.mockModel(ActivityModel, 'isPrivate', new TestError('Test error'), null));
+			mockModels.push(TestTools.mockModel(ParticipatesModel, 'isParticipant', new TestError('Test error'), null));
+			mockModels.push(TestTools.mockModel(ActivityModel, 'isFull', new TestError('Test error'), null));
+			mockModels.push(TestTools.mockModel(ParticipatesModel, 'addParticipant', new TestError('Test error'), null));
+
+			// Mock http request and response
+			const { req, res } = TestTools.mockRequest({
+				params: {
+					activityId: 8,
+					userId: 5,
+				},
+			});
+
+			// Call test method
+			const result = ParticipatesController.addParticipation(req, res);
+
+			// Validate result
+			expect(result, 'Correct error thrown').to.eventually.be.rejectedWith(TestError);
+		});
+	});
+
+	describe('delete a participation', () => {
+		it('should delete a participation of user', async () => {
+			// Mock user model
+			mockModels.push(TestTools.mockModel(ActivityModel, 'isHost', null, false));
+			mockModels.push(TestTools.mockModel(ParticipatesModel, 'deleteParticipant', null, TestTools.dbDeleteSuccess));
+
+			// Mock http request and response
+			const { req, res } = TestTools.mockRequest({
+				params: {
+					activityId: 8,
+				},
+			});
+
+			// Call test method
+			await ParticipatesController.deleteParticipation(req, res);
+
+			// Validate result
+			correctResponseType(res, 200);
+			expect(res.body().message, 'Message set').to.be.a('string');
+		});
+
+		it('should delete a participation of other user if host', async () => {
+			// Mock user model
+			mockModels.push(TestTools.mockModel(ActivityModel, 'isHost', null, true));
+			mockModels.push(TestTools.mockModel(ParticipatesModel, 'deleteParticipant', null, TestTools.dbDeleteSuccess));
+
+			// Mock http request and response
+			const { req, res } = TestTools.mockRequest({
+				params: {
+					activityId: 8,
+					userId: 6,
+				},
+			});
+
+			// Call test method
+			await ParticipatesController.deleteParticipation(req, res);
+
+			// Validate result
+			correctResponseType(res, 200);
+			expect(res.body().message, 'Message set').to.be.a('string');
+		});
+
+		it('should send error if user has no permission', async () => {
+			// Mock user model
+			mockModels.push(TestTools.mockModel(ActivityModel, 'isHost', null, false));
+			mockModels.push(TestTools.mockModel(ParticipatesModel, 'deleteParticipant', null, TestTools.dbDeleteSuccess));
+
+			// Mock http request and response
+			const { req, res } = TestTools.mockRequest({
+				params: {
+					activityId: 8,
+					userId: 6,
+				},
+			});
+
+			// Call test method
+			await ParticipatesController.deleteParticipation(req, res);
+
+			// Validate result
+			correctResponseType(res, 403);
+			expect(res.body().message, 'Message set').to.be.a('string');
+		});
+
+		it('should send error if no participation found', async () => {
+			// Mock user model
+			mockModels.push(TestTools.mockModel(ActivityModel, 'isHost', null, true));
+			mockModels.push(TestTools.mockModel(ParticipatesModel, 'deleteParticipant', null, TestTools.dbDeleteFailed));
+
+			// Mock http request and response
+			const { req, res } = TestTools.mockRequest({
+				params: {
+					activityId: 8,
+					userId: 5,
+				},
+			});
+
+			// Call test method
+			await ParticipatesController.deleteParticipation(req, res);
+
+			// Validate result
+			correctResponseType(res, 404);
+			expect(res.body().message, 'Message set').to.be.a('string');
 		});
 	});
 });

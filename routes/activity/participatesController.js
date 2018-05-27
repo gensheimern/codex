@@ -28,9 +28,7 @@ const ParticipatesController = {
 	async addParticipation(req, res) {
 		const { userId } = req.token;
 		const { activityId } = req.params;
-		let participantId = req.params.userId;
-
-		if (!participantId) participantId = userId;
+		const participantId = req.params.userId || userId;
 
 		// TODO: Performance optimization
 		const isHost = await ActivityModel.isHost(userId, activityId);
@@ -39,7 +37,7 @@ const ParticipatesController = {
 
 		const activityFull = await ActivityModel.isFull(activityId);
 
-		if (isParticipant) {
+		if (isParticipant && (Number(userId) === Number(participantId) || isHost)) {
 			res.json({
 				message: 'Already joined.',
 			});
@@ -77,13 +75,11 @@ const ParticipatesController = {
 	async deleteParticipation(req, res) {
 		const { userId } = req.token;
 		const { activityId } = req.params;
-		let participantId = req.params.userId;
+		const participantId = req.params.userId || userId;
 
-		if (!participantId) participantId = userId;
+		const isHost = await ActivityModel.isHost(userId, activityId);
 
-		const isHost = ActivityModel.isHost(userId, activityId);
-
-		if ((Number(userId) !== Number(participantId)) && !await isHost) {
+		if ((Number(userId) !== Number(participantId)) && !isHost) {
 			res.status(403).json({
 				message: 'Permission denied.',
 			});

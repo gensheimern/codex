@@ -40,6 +40,7 @@ const SubscribeController = {
 		const targetId = req.params.userId;
 		const { subscribedId } = req.params;
 
+		// TODO: Check for existing subscriptions
 		if (Number(userId) !== Number(targetId)) {
 			res.status(403).json({
 				message: 'Invalid user id.',
@@ -51,6 +52,7 @@ const SubscribeController = {
 
 		res.status(201).json({
 			success: true,
+			message: 'Subscription created.',
 		});
 	},
 
@@ -61,6 +63,7 @@ const SubscribeController = {
 
 		if (Number(userId) !== Number(targetId)) {
 			res.status(403).json({
+				success: false,
 				message: 'Invalid user id.',
 			});
 			return;

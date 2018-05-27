@@ -155,6 +155,23 @@ describe('User controller', () => {
 			expect(res.body().userId, 'Correct response body').to.equal(10);
 		});
 
+		it('should create a new user', async () => {
+			mockModels.push(TestTools.mockModel(userModel, 'addUser', null, TestTools.dbInsertSuccess));
+			mockModels.push(TestTools.mockModel(userModel, 'getUserByEmail', null, true));
+
+			// Mock http request and response
+			const { req, res } = TestTools.mockRequest({
+				body: testData.postUserData,
+			});
+
+			// Call test method
+			await userController.addUser(req, res);
+
+			// Validate result
+			correctResponseType(res, 409);
+			expect(res.body().message, 'Correct response body').to.be.a('string');
+		});
+
 		it('should send bad request if not all attributes are set', async () => {
 			mockModels.push(TestTools.mockNotCalled(userModel, 'addUser'));
 
@@ -231,6 +248,33 @@ describe('User controller', () => {
 			// Validate result
 			correctResponseType(res, 200);
 			expect(res.body().success, 'Update successful').to.be.true;
+			expect(res.body().message, 'Message set').to.be.a('string');
+		});
+
+		it('should reject invalid user data', async () => {
+			mockModels.push(TestTools.mockNotCalled(userModel, 'updateUser'));
+			mockModels.push(TestTools.mockModel(userModel, 'getUserById', null, {
+				User_Id: 5,
+				Firstname: 'Maxneu',
+				Name: 'Mustermannneu',
+				Email: 'neue@email.com',
+				Password: 'very_new_password',
+				Image: '/image.png',
+			}));
+
+			// Mock http request and response
+			const { req, res } = TestTools.mockRequest({
+				params: {
+					userId: '5',
+				},
+			});
+
+			// Call test method
+			await userController.updateUser(req, res);
+
+			// Validate result
+			correctResponseType(res, 400);
+			expect(res.body().success, 'Update successful').to.be.false;
 			expect(res.body().message, 'Message set').to.be.a('string');
 		});
 

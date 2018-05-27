@@ -33,6 +33,11 @@ const TestTools = {
 		insertId: 10,
 	},
 
+	dbInsertFailed: {
+		...defaultDBServerVars,
+		affectedRows: 0,
+	},
+
 	dbUpdateSuccess: {
 		...defaultDBServerVars,
 		affectedRows: 1,
