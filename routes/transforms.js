@@ -32,7 +32,7 @@ const transforms = {
 
 	transformMessage: dbMessage => ({
 		id: dbMessage.Message_Id,
-		time: dbMessage.Date,
+		time: new Date(dbMessage.Date.getTime() - (new Date().getTimezoneOffset() * 2 * 60 * 1000)),
 		content: dbMessage.Messagecontent,
 		author: {
 			...transforms.transformUser(dbMessage),

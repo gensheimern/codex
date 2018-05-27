@@ -99,7 +99,7 @@ describe('Transformation of database output', () => {
 	it('should transform message data', () => {
 		const dbMessage = {
 			Message_Id: 2,
-			Date: 'Test date',
+			Date: new Date('2018-05-23T01:34:16.452Z'),
 			Messagecontent: 'Test comment content.',
 			User_Id: 1,
 			Firstname: 'Max',
@@ -114,7 +114,7 @@ describe('Transformation of database output', () => {
 
 		expect(result).to.deep.equal({
 			id: 2,
-			time: 'Test date',
+			time: new Date('2018-05-23T05:34:16.452Z'),
 			content: 'Test comment content.',
 			author: {
 				id: 1,

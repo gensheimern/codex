@@ -1,5 +1,6 @@
 const Message = require('../../models/MessageModel');
 const ParticipatesModel = require('../../models/participatesModel');
+const ActivityModel = require('../../models/ActivityModel');
 const transforms = require('../transforms');
 const { validMessage } = require('./messageValidation');
 
@@ -11,8 +12,9 @@ const MessageController = {
 
 		const messagesPromise = Message.getMessagesOfActivity(activityId);
 		const isParticipant = await ParticipatesModel.isParticipant(userId, activityId);
+		const isPrivate = await ActivityModel.isPrivate(activityId);
 
-		if (!isParticipant) { // TODO: !participant || !isPrivate
+		if (!isParticipant && isPrivate) {
 			res.status(404).json({
 				message: 'Activity not found.',
 			});
@@ -36,9 +38,10 @@ const MessageController = {
 			return;
 		}
 
+		const isPrivate = await ActivityModel.isPrivate(activityId);
 		const isParticipant = await ParticipatesModel.isParticipant(userId, activityId);
 
-		if (!isParticipant) {
+		if (!isParticipant && isPrivate) {
 			res.status(404).json({
 				message: 'Activity not found.',
 			});

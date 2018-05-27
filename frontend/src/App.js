@@ -5,34 +5,52 @@ import {
     BrowserRouter,
     Route
 } from 'react-router-dom';
+import MediaQuery from 'react-responsive';
 
 // Components
 import './App.css';
 import Login from './components/login/Login';
-import Activity from './components/activity/Activity';
-import Logout from './components/login/Logout';
-import Signup from './components/signup/Signup';
-import Groupmanager from './components/groupmanager/Groupmanager';
-import Example from './components/MenuComponents/example';
+import NavbarMenu from './components/MenuComponents/NavbarMenu';
+import MainContent from './components/MainContent';
+import SidebarContentCalender from './components/MenuComponents/SidebarContentCalender';
+import Groups from './components/Groups';
 
 
 class App extends Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {};
-    }
 
     render() {
-        return(<BrowserRouter>
+        return (<BrowserRouter>
             <React.Fragment>
-                <Route exact path="/" component={Login}/>
-                <Route exact path="/activity" component={Activity}/>
-                <Route exact path="/groupmanager" component={Groupmanager}/>
-                <Route exact path="/example" component={Example}/>
-                <Route exact path="/signup" component={Signup}/>
-                <Route exact path="/logout" component={Logout}/>
+                <Route exact path="/" component={Login} />
+                <Route exact path="/login" component={Login} />
+                <Route path="/" render={() => (
+                    <React.Fragment>
+                        <NavbarMenu />
 
+                        <div id="contentarea">
+
+                            {/* <Sidebar />*/}
+                            <MediaQuery minWidth={768}>
+                    					{(matches) => {
+                    						if (matches) {
+                                  return(
+                                    <div>
+                                    <Groups id="groups-wrapper" height="100%" />
+                                    <MainContent width="55%" />
+                                    <SidebarContentCalender />
+                                    </div>
+                                  )
+                                } else {
+                                  return <MainContent width="100%" />
+                              }
+                            }
+                          }
+                            </MediaQuery>
+
+
+                        </div>
+                    </React.Fragment>
+                )} />
             </React.Fragment>
         </BrowserRouter>);
     }

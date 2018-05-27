@@ -23,8 +23,9 @@ const styles = {
   },
   content: {
     padding: '16px',
-    height: '100%',
     backgroundColor: 'white',
+    marginTop: '2%',
+    height: '100%',
   },
 };
 
@@ -37,12 +38,40 @@ const SidebarContent = (props) => {
   }
 
   return (
+    <div className="rightContent">
     <MediaQuery minWidth={1000}>
       {(matches) => {
         if (matches) {
           return <div className="calenderUnit">
             <p>Deine Events:</p>
             <Calender/>
+
+            <hr />
+            <div style={{
+              position: "relative",
+              top: "-30px",
+              color: "white",
+              backgroundColor: "grey",
+              left: "80px",
+              width: "40px",
+            }}>Heute</div>
+            <div style={{
+              backgroundColor: "white",
+              padding: "4%",
+              borderRadius: "10px",
+            }}>
+              <p>Kommende Aktivität #1</p>
+            </div>
+
+            <hr />
+            <div style={{
+              backgroundColor: "white",
+              padding: "4%",
+              borderRadius: "10px",
+            }}>
+              <p>Kommende Aktivität #2</p>
+            </div>
+
             <div style={styles.content}>
               <div style={styles.divider} />
               {links}
@@ -53,6 +82,7 @@ const SidebarContent = (props) => {
         }
       }}
     </MediaQuery>
+  </div>
   );
 };
 
