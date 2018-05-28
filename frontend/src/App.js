@@ -33,7 +33,12 @@ class App extends Component {
       <React.Fragment>
         <Route exact path="/" component={Login}/>
         <Route exact path="/login" component={Login}/>
-        <Route exact path="/signup" component={Signup}/>
+        {/* TODO: Remove Signup route and show when needed. */}
+        <Route exact path="/signup" render={() => (
+          <MuiThemeProvider>
+            <Signup />
+          </MuiThemeProvider>
+        )}/>
         <Route path="/activity" render={() => (<React.Fragment>
             <div id="contentarea">
               <MuiThemeProvider>

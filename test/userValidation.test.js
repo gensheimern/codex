@@ -77,7 +77,7 @@ describe('User validation', () => {
 				name: 'Mustermann',
 				email: 'valid@email.com',
 				password: 'a/sg63(§7v',
-				image: '',
+				image: null,
 			};
 			const result = userValidation.validUser(user);
 			expect(result, 'Correct validation').to.be.false;
@@ -166,12 +166,12 @@ describe('User validation', () => {
 
 		it('should reject no value', () => {
 			const result = userValidation.validImage();
-			expect(result, 'Correct validation').to.be.false;
+			expect(result, 'Empty path').to.be.false;
 		});
 
 		it('should reject wrong type', () => {
 			const result = userValidation.validImage(123);
-			expect(result, 'Correct validation').to.be.false;
+			expect(result, 'Wrong type').to.be.false;
 		});
 	});
 });

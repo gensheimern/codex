@@ -1,10 +1,15 @@
 import React from 'react';
 import {FormGroup, FormControl, Button} from 'react-bootstrap';
 import config from '../../config';
+import TextField from 'material-ui/TextField';
+import RaisedButton from 'material-ui/RaisedButton';
+
 
 import './signup.css';
 
 export default class Signup extends React.Component {
+	emailRegExp = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
 	constructor(props) {
 		super(props);
 
@@ -21,17 +26,19 @@ export default class Signup extends React.Component {
 		}
 	}
 
-	handleChange = e => {
+	handleChange = name => e => {
 		this.setState({
-			[e.target.id]: e.target.value
+			[name]: e.target.value
 		});
 	}
 
 	validateForm() {
-		return this.state.email !== ""
+		return this.emailRegExp.test(this.state.email)
 			&& this.state.firstName !== ""
 			&& this.state.name !== ""
-			&& this.state.password !== "";
+			&& this.state.password !== ""
+			&& this.state.retypePassword !== ""
+			&& this.state.password === this.state.retypePassword;
 	}
 
 	signupUser = (e) => {
@@ -54,29 +61,71 @@ export default class Signup extends React.Component {
 	}
 
 	render() {
+		let retypeError = {};
+		if (this.state.password !== this.state.retypePassword) {
+			retypeError = {
+				errorText: 'Passwords do not match.',
+			};
+		}
 		return(
 			<form className="signup" onSubmit={this.signupUser}>
-				<h1>Signup</h1>
+				<h1>Sign Up</h1>
 
-                <FormGroup controlId="email" bsSize="large">
-                    <FormControl id="email" placeholder="E-Mail" type="email" value={this.state.email} onChange={this.handleChange}/>
-                </FormGroup>
+				<TextField
+					id="firstName"
+					label="first name"
+					value={this.state.firstName}
+					onChange={this.handleChange('firstName')}
+					floatingLabelText="First name"
+				/>
+				<br/>
 
-				<FormGroup controlId="password" bsSize="large">
-                    <FormControl id="password" placeholder="Password" type="password" value={this.state.password} onChange={this.handleChange}/>
-                </FormGroup>
+				<TextField
+					id="name"
+					label="Last name"
+					value={this.state.name}
+					onChange={this.handleChange('name')}
+					floatingLabelText="Last name"
+				/>
+				<br/>
 
-				<FormGroup controlId="firstName" bsSize="large">
-					<FormControl id="firstName" placeholder="First name" type="text" value={this.state.firstName} onChange={this.handleChange}/>
-				</FormGroup>
+				<TextField
+					id="email"
+					label="E-Mail"
+					value={this.state.email}
+					onChange={this.handleChange('email')}
+					floatingLabelText="E-Mail"
+				/>
+				<br/>
 
-				<FormGroup controlId="name" bsSize="large">
-					<FormControl id="name" placeholder="Name" type="text" value={this.state.name} onChange={this.handleChange}/>
-				</FormGroup>
+				<TextField
+					id="password"
+					label="Password"
+					type="password"
+					value={this.state.password}
+					onChange={this.handleChange('password')}
+					floatingLabelText="Password"
+				/>
+				<br/>
 
-                <Button bsStyle="primary" block={true} bsSize="large" disabled={!this.validateForm()} type="submit">
-                    Create user
-                </Button>
+				<TextField
+					id="retypePassword"
+					label="Retype password"
+					type="password"
+					value={this.state.retypePassword}
+					onChange={this.handleChange('retypePassword')}
+					floatingLabelText="Retype Password"
+					{ ...retypeError }
+				/>
+				<br/>
+				<br/>
+
+				<RaisedButton
+					type="submit"
+					label="Sign Up"
+					primary={true}
+					disabled={!this.validateForm()}
+				/>
             </form>
 			
 		);
