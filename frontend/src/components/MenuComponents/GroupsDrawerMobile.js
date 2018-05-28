@@ -1,12 +1,9 @@
 import React from 'react';
 import Drawer from 'material-ui/Drawer';
-import MenuItem from 'material-ui/MenuItem';
 import FlatButton from 'material-ui/RaisedButton';
 import Groups from '../Groups';
 
 import IconGroup from 'material-ui/svg-icons/social/group';
-
-const GroupIcon = <IconGroup />;
 
 export default class GroupsDrawer extends React.Component {
 
@@ -33,7 +30,7 @@ export default class GroupsDrawer extends React.Component {
           open={this.state.open}
           onRequestChange={(open) => this.setState({open})}
         >
-        <Groups id="groups-wrapper" height="100%" />
+        <Groups changeContent={this.props.changeContent} closeDrawer={this.handleClose} id="groups-wrapper" height="100%" />
         </Drawer>
       </div>
     );

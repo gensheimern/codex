@@ -1,13 +1,7 @@
 import React, {Component} from 'react';
-import FontIcon from 'material-ui/FontIcon';
-import {BottomNavigation, BottomNavigationItem} from 'material-ui/BottomNavigation';
-import Paper from 'material-ui/Paper';
 import GroupsDrawer from './GroupsDrawerMobile.js';
 import SearchFeed from './SearchFeed';
 import "./sidebars.css";
-
-import IconSearch from 'material-ui/svg-icons/action/search';
-const SearchIcon = <IconSearch/>;
 
 
 /**
@@ -28,7 +22,7 @@ class AppNavBottom extends Component {
   render() {
     return (
       <div className="MobileNavTop">
-      <GroupsDrawer/>
+      <GroupsDrawer changeContent={this.props.changeContent}/>
       <div className="AppNameDisplay">
         Lunch-Planner
       </div>

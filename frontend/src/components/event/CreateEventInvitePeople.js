@@ -50,7 +50,7 @@ export default class CreateEventInvitePeople extends React.Component {
       this.setState({usersListLong: res});
       res.map(users => {
      this.setState({ usersList: [...this.state.usersList,{textKey: users.firstName + " " + users.name, ValueImage:users.image , ValueKey: users.id} ] })
-      })
+        return true;})
     })
     .catch((err) => {
       this.setState({

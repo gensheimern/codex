@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import MediaQuery from 'react-responsive';
 import Calender from './Calender.js';
 import "./sidebars.css";
 

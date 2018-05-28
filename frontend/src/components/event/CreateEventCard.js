@@ -1,6 +1,5 @@
 import React from 'react';
-import {Card, CardActions,  CardMedia, CardTitle, CardText} from 'material-ui/Card';
-import FlatButton from 'material-ui/FlatButton';
+import {Card, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import TextField from 'material-ui/TextField';
 import CreateEventTimePicker from './CreateEventTimePicker';
 import CreateEventDatePicker from './CreateEventDatePicker';
@@ -10,7 +9,6 @@ import CollapseFA from 'react-icons/lib/fa/angle-down';
 import ReminderToggle from './ReminderToggle';
 import InvitePeople from './CreateEventInvitePeople';
 import InviteChip from './CreateEventChip';
-import DateTimeParser from './dateParser';
 import config from '../../config';
 
 const eventImages = [
@@ -169,9 +167,9 @@ createEvent(){
 
   collapsedContend(){
     if(this.state.collapse){
-     let images =  this.state.invitePeople.map( image => {
+     let images =  this.state.invitePeople.map((image,index) => {
     //    return  <img key={image} src={image} />
-        return (< InviteChip name={image.textKey} peopleImage={image.ValueImage} />)
+        return (<InviteChip key={"chip"+index} name={image.textKey} peopleImage={image.ValueImage} />)
       });
       console.log(images);
       return(
@@ -209,9 +207,6 @@ createEvent(){
 
 
   render() {
-    const style = {
-  marginRight: 20,
-};
     return (
       <Card >
             <Dialog
@@ -222,8 +217,8 @@ createEvent(){
                 bodyStyle={{padding:"0px",}}
 
               >
-                {eventImages.map((data) => (
-                  <img src={data.img} onClick={()=>this.cardImage(data.title,data.img)} height="100px" widht="100px"  />
+                {eventImages.map((data,index) => (
+                  <img key={"profilePicture"+index} src={data.img} onClick={()=>this.cardImage(data.title,data.img)} height="100px" widht="100px" alt=""/>
                 ))}
             </Dialog>
 

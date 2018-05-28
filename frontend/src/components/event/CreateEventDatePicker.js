@@ -9,13 +9,6 @@ import DatePicker from 'material-ui/DatePicker';
 
 export default class CreateEventDatePicker extends React.Component{
 
-constructor(props){
-  super(props);
-
-}
-
-
-
 render(){
     return(
       <div>

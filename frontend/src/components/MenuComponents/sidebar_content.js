@@ -1,7 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import "./sidebars.css";
 import config from '../../config';
+import CreateTeamButton from './CreateTeamButton.js';
 
 const styles = {
   sidebar: {
@@ -58,7 +58,7 @@ export default class SidebarContent extends React.Component {
 
   render() {
     console.log(this.state.groups);
-    let myGroups = this.state.groups.map(group => (<a className="groupName">
+    let myGroups = this.state.groups.map((group,index) => (<a key={"group"+index} className="groupName">
       {group.name}
     </a>));
     console.log(myGroups);
@@ -73,6 +73,7 @@ export default class SidebarContent extends React.Component {
         <p className="groups">
           Gruppen</p>
         {myGroups}
+        <CreateTeamButton changeContent={this.props.changeContent} closeDrawer={this.props.closeDrawer}/>
       </div>
     </div>);
   }

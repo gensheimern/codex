@@ -1,6 +1,5 @@
 import React from 'react';
 import EventItem from './EventItem';
-import AddButton from './AddButton';
 import config from '../../config';
 import MediaQuery from 'react-responsive';
 

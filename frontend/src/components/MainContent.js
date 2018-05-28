@@ -2,15 +2,13 @@ import React from 'react';
 import Events from './event/Events';
 
 import Personal from './MenuComponents/SidebarContentCalender';
-import CreateEvent from './activity/CreateActivity';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import ProfileContent from './Profile.js';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
-import RaisedButton from 'material-ui/RaisedButton';
 import CreateEventtCard from './event/CreateEventCard';
+import CreateTeam from './groupmanager/CreateTeam';
 
 export default class MainContent extends React.Component {
   constructor(props) {
@@ -135,6 +133,16 @@ export default class MainContent extends React.Component {
           <ContentAdd/>
         </FloatingActionButton>
         <Events/>
+      </div>);
+    } else if (this.props.mainContentNumber === 6) {
+      return (<div style={{
+          width: this.props.width,
+          marginTop: "0%",
+          float: "left",
+          height: "100%",
+          overflowY: "scroll"
+        }}>
+        <CreateTeam/>
       </div>);
     }
 

@@ -18,7 +18,7 @@ export default class CreateEventTimePicker extends React.Component {
     <TimePicker
       format="24hr"
       hintText="12:00"
-      minutesSteps={10}
+      minutesStep={10}
       autoOk={true}
       onChange={this.props.time}
       value={this.state.value}

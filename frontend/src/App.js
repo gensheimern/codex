@@ -30,8 +30,8 @@ class App extends Component {
   render() {
     return (<BrowserRouter>
       <React.Fragment>
-        <Route exact="exact" path="/" component={Login}/>
-        <Route exact="exact" path="/login" component={Login}/>
+        <Route exact path="/" component={Login}/>
+        <Route exact path="/login" component={Login}/>
         <Route path="/activity" render={() => (<React.Fragment>
             <div id="contentarea">
               <MuiThemeProvider>
@@ -44,7 +44,7 @@ class App extends Component {
                             marginTop: "5%"
                           }}>
                           <NavbarMenu/>
-                          <Groups id="groups-wrapper" height="100%"/>
+                          <Groups changeContent={this.changeContent} id="groups-wrapper" height="100%"/>
                           <MainContent mainContentNumber={5} width="55%"/>
                           <SidebarContentCalender/>
                         </div>)
@@ -52,7 +52,7 @@ class App extends Component {
                         return <div className="mobileContent-wrapper">
                           <MuiThemeProvider>
                             <div>
-                              <AppNavTop width="100%"/>
+                              <AppNavTop changeContent={this.changeContent} width="100%"/>
                               <div className="mainContentMobile-wrapper">
                                 <MainContent mainContentNumber={this.state.mainContentNumber}/>
                               </div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
+import PlacesAutocomplete, { geocodeByAddress } from 'react-places-autocomplete';
 import TextField from 'material-ui/TextField';
 
 export default class LocationSearchInput extends React.Component {
@@ -22,10 +22,11 @@ export default class LocationSearchInput extends React.Component {
            if( f.types[0] === 'street_number' ||  f.types[0] ==='route' || f.types[0] === 'locality'){
               return(this.props.myAddress(f))
           }
+          return true;
       }))
 
     })
-
+    console.log(parsedAddress);
   }
 
   handleSelect = (address) => {

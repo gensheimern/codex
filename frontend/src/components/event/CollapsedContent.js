@@ -75,7 +75,7 @@ export default class CollapsedContent extends React.Component {
       if (this.props.messages.length !==0 ){
         message = this.props.messages.map((messageItem, index) => {
           return (
-            <div className="commentWrapper" id={index}>
+            <div className="commentWrapper" key={"messageItem"+index}>
               <div className="commentUserImage">
                   <img src={messageItem.author.image} alt="" />
               </div>
@@ -87,7 +87,7 @@ export default class CollapsedContent extends React.Component {
                 </div>
               </div>
               <div className="commentDelete">
-              {decode.userId === messageItem.author.id ? <DeleteMUI /> : <span />} 
+              {decode.userId === messageItem.author.id ? <DeleteMUI /> : <span />}
 
               </div>
             </div>
