@@ -1,5 +1,6 @@
 const sinon = require('sinon');
 const mock = require('node-mocks-http');
+const TestError = require('./TestError');
 
 const dbConnection = require('../models/DatabaseConnection');
 
@@ -22,12 +23,19 @@ const defaultDBServerVars = {
 };
 
 const TestTools = {
+	token,
+
 	dbSelectEmpty: [],
 
 	dbInsertSuccess: {
 		...defaultDBServerVars,
 		affectedRows: 1,
 		insertId: 10,
+	},
+
+	dbInsertFailed: {
+		...defaultDBServerVars,
+		affectedRows: 0,
 	},
 
 	dbUpdateSuccess: {
@@ -54,7 +62,7 @@ const TestTools = {
 
 	mockDatabase(options = {}) {
 		if (!(options instanceof Object)) {
-			throw new Error('Invalid options parameter.');
+			throw new TestError('Invalid options parameter.');
 		}
 
 		const mockDB = sinon.mock(dbConnection);
@@ -83,22 +91,28 @@ const TestTools = {
 	},
 
 	mockNotCalled(model, method) {
-		return sinon.stub(model, method).throws(new Error('Should not be called.'));
+		return sinon.stub(model, method).throws(new TestError('Should not be called.'));
 	},
 
-	mockRequest(options = {}) {
+	mockRequest(options = {}, withToken = true) {
 		const params = {
 			...options,
-			token,
 			headers: options.headers || { 'content-type': 'application/json' },
 			url: options.url || '/',
 			method: options.method || 'GET',
 			params: options.params || {},
 		};
 
+		if (withToken) params.token = token;
+
+		const mockRequest = mock.createRequest(params);
+		const mockResponse = mock.createResponse();
+
+		mockResponse.body = () => JSON.parse(mockResponse._getData());
+
 		return {
-			req: mock.createRequest(params),
-			res: mock.createResponse(),
+			req: mockRequest,
+			res: mockResponse,
 		};
 	},
 };

@@ -5,6 +5,8 @@
   "scripts": {
     "start": "react-scripts start",
     "server": "react-scripts build && cd server && node server",
+    "clean": "rimraf build",
+    "prebuild": "npm run clean",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "test:coverage": "npm test -- --coverage",
@@ -31,12 +33,14 @@
     "react-sidenav": "^2.1.2",
     "react-sticky": "^6.0.2",
     "react-stickynode": "^1.4.1",
-    "react-test-renderer": "^16.3.1"
+    "react-test-renderer": "^16.3.1",
+    "rimraf": "^2.6.2"
   },
   "proxy": "http://localhost:5000",
   "devDependencies": {
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
+    "fetch-mock": "^6.4.2",
     "jest-enzyme": "^6.0.0"
   }
 }

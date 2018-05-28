@@ -9,6 +9,7 @@ install:
   - npm install
   - cd frontend && npm install && cd ..
 script:
+  - npm run lint
   - npm test
   - npm test --prefix frontend
   - npm run build

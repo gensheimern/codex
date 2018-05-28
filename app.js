@@ -5,6 +5,8 @@ const path = require('path');
 // const mail = require('./mailservice/mailservice');
 const authenticateRouter = require('./routes/auth/AuthenticateRouter');
 const { verifyMiddleware } = require('./routes/auth/Auth');
+const apiRouter = require('./routes/MainRouter');
+const errorHandler = require('./middleware/errorHandler');
 
 const app = express();
 
@@ -17,9 +19,9 @@ app.use(bodyParser.json());
 // API routes
 const apiPath = '/api';
 app.use(`${apiPath}/authenticate`, authenticateRouter);
-const apiRouter = require('./routes/MainRouter');
-
 app.use(apiPath, verifyMiddleware, apiRouter);
+
+app.use(errorHandler);
 
 // app.use('/mail', verifyMiddleware, mail);
 

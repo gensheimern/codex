@@ -1,5 +1,5 @@
-const Subscribe = require('../models/SubscribeModel');
-const transforms = require('./transforms');
+const Subscribe = require('../../models/SubscribeModel');
+const transforms = require('../transforms');
 
 const SubscribeController = {
 
@@ -14,13 +14,9 @@ const SubscribeController = {
 			return;
 		}
 
-		try {
-			const subscriber = await Subscribe.getSubscriber(targetId);
+		const subscriber = await Subscribe.getSubscriber(targetId);
 
-			res.json(subscriber.map(transforms.transformUser));
-		} catch (error) {
-			res.sendStatus(500);
-		}
+		res.json(subscriber.map(transforms.transformUser));
 	},
 
 	async getSubscribed(req, res) {
@@ -34,13 +30,9 @@ const SubscribeController = {
 			return;
 		}
 
-		try {
-			const subscribed = await Subscribe.getSubscribed(targetId);
+		const subscribed = await Subscribe.getSubscribed(targetId);
 
-			res.json(subscribed.map(transforms.transformUser));
-		} catch (error) {
-			res.sendStatus(500);
-		}
+		res.json(subscribed.map(transforms.transformUser));
 	},
 
 	async createSubscription(req, res) {
@@ -48,6 +40,7 @@ const SubscribeController = {
 		const targetId = req.params.userId;
 		const { subscribedId } = req.params;
 
+		// TODO: Check for existing subscriptions
 		if (Number(userId) !== Number(targetId)) {
 			res.status(403).json({
 				message: 'Invalid user id.',
@@ -55,15 +48,12 @@ const SubscribeController = {
 			return;
 		}
 
-		try {
-			await Subscribe.addSubscription(subscribedId, targetId);
+		await Subscribe.addSubscription(subscribedId, targetId);
 
-			res.status(201).json({
-				success: true,
-			});
-		} catch (error) {
-			res.sendStatus(500);
-		}
+		res.status(201).json({
+			success: true,
+			message: 'Subscription created.',
+		});
 	},
 
 	async deleteSubscription(req, res) {
@@ -73,27 +63,24 @@ const SubscribeController = {
 
 		if (Number(userId) !== Number(targetId)) {
 			res.status(403).json({
+				success: false,
 				message: 'Invalid user id.',
 			});
 			return;
 		}
 
-		try {
-			const result = await Subscribe.deleteSubscription(subscribedId, targetId);
+		const result = await Subscribe.deleteSubscription(subscribedId, targetId);
 
-			if (result.affectedRows === 1) {
-				res.json({
-					success: true,
-					message: 'Subscription ended.',
-				});
-			} else {
-				res.status(404).json({
-					success: false,
-					message: 'Subscription not found.',
-				});
-			}
-		} catch (error) {
-			res.sendStatus(500);
+		if (result.affectedRows === 1) {
+			res.json({
+				success: true,
+				message: 'Subscription ended.',
+			});
+		} else {
+			res.status(404).json({
+				success: false,
+				message: 'Subscription not found.',
+			});
 		}
 	},
 
