@@ -32,7 +32,7 @@ export default class ReminderToggle extends React.Component{
         thumbSwitchedStyle={styles.thumbSwitched}
         trackSwitchedStyle={styles.trackSwitched}
         labelStyle={styles.labelStyle}
-        onToggle={this.props.toggleReminder}
+        onToggle={this.props.toggle}
       />
     )
   }

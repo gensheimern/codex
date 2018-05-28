@@ -177,8 +177,8 @@ createEvent(){
       return(
           <div className="collapsedContentWrapper">
             <div className="collapsedContendReminder">
-              < ReminderToggle label={'Reminder'} toggleMe={this.callbackToggleReminder} />
-              < ReminderToggle label={'Private'} toggleMe={this.callbackTogglePrivate} />
+              < ReminderToggle label={'Reminder'} toggle={this.callbackToggleReminder} />
+              < ReminderToggle label={'Private'} toggle={this.callbackTogglePrivate} />
 
               <TextField
               style={{widht:"200px"}}
