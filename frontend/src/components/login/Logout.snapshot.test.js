@@ -6,7 +6,11 @@ import Logout from './Logout';
 describe('Logout Snapshot', () => {
     test('renders', () =>{
         const component = renderer.create(
-            <MemoryRouter><Logout/> </MemoryRouter>
+            <MemoryRouter>
+                <React.Fragment>
+                    <Logout />
+                </React.Fragment>
+            </MemoryRouter>
         );
         let tree= component.toJSON();
         expect(tree).toMatchSnapshot();
