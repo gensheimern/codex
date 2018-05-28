@@ -95,34 +95,4 @@ describe('Transformation of database output', () => {
 			},
 		});
 	});
-
-	it('should transform message data', () => {
-		const dbMessage = {
-			Message_Id: 2,
-			Date: new Date('2018-05-23T01:34:16.452Z'),
-			Messagecontent: 'Test comment content.',
-			User_Id: 1,
-			Firstname: 'Max',
-			Name: 'Mustermann',
-			Email: 'valid@email.de',
-			Password: 'Password123',
-			Image: '/path.png',
-			Test: 'Test value',
-		};
-
-		const result = transforms.transformMessage(dbMessage);
-
-		expect(result).to.deep.equal({
-			id: 2,
-			time: new Date('2018-05-23T05:34:16.452Z'),
-			content: 'Test comment content.',
-			author: {
-				id: 1,
-				firstName: 'Max',
-				name: 'Mustermann',
-				email: 'valid@email.de',
-				image: '/path.png',
-			},
-		});
-	});
 });
