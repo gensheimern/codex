@@ -16,6 +16,7 @@
   "author": "CODEX Team",
   "license": "ISC",
   "dependencies": {
+    "@material-ui/icons": "^1.0.0-rc.0",
     "jwt-decode": "^2.2.0",
     "material-ui": "^0.20.0",
     "prop-types": "^15.6.1",
@@ -26,6 +27,7 @@
     "react-dom": "^16.3.1",
     "react-icons": "^2.2.7",
     "react-material-ui-form-validator": "^1.1.4",
+    "react-places-autocomplete": "^7.1.1",
     "react-responsive": "^4.1.0",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.1.2",
