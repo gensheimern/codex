@@ -11,7 +11,7 @@ export default class Events extends React.Component {
     this.state = {
       events: [],
       loaded: false,
-      error: null
+      error: null,
     };
   }
 
@@ -53,6 +53,46 @@ export default class Events extends React.Component {
       return (<p>Loading</p>);
     }
 
+    if(!(this.props.filterWord === null)){
+      switch(this.props.filterWord) {
+          case 'TimeDown':
+          this.state.events.sort(function(obj1, obj2){
+          return new Date(obj1.time) - new Date(obj2.time)})
+    ;break
+          case 'TimeUp':
+          this.state.events.sort(function(obj1, obj2){
+          return new Date(obj2.time) - new Date(obj1.time)})
+    ;break
+          case 'NameDown':
+          this.state.events.sort(function(obj1, obj2){
+          return (obj1.name.localeCompare(obj2.name))})
+    ;break
+          case 'NameUp':
+          this.state.events.sort(function(obj1, obj2){
+          return (obj2.name.localeCompare(obj1.name))})
+    ;break
+          case 'Oldest':
+          this.state.events.sort(function(obj1, obj2){
+          return (obj1.id) - (obj2.id)})
+    ;break
+          case 'Newest':
+          this.state.events.sort(function(obj1, obj2){
+          return (obj2.id) - (obj1.id)})
+    ;break
+          default:
+          this.state.events.sort(function(obj1, obj2){
+          return (obj1.time) - (obj2.time)})
+    }
+      }
+      let filterData;
+    if(!(this.props.searchWord === null)){
+      filterData = this.state.events.filter(event => event.name.includes(this.props.searchWord));
+      console.log(this.props.searchWord);
+      console.log(filterData);
+    } else {
+      filterData = this.state.events;
+    }
+
     return (<React.Fragment>
       <div>
         <MediaQuery query="(min-device-width: 768px)">
@@ -78,7 +118,7 @@ export default class Events extends React.Component {
           }
         </MediaQuery>
         <div className="feed">
-          {this.state.events.map(event => (<EventItem key={event.id} event={event}/>))}
+          {filterData.map(event => (<EventItem key={event.id} event={event}/>))}
         </div>
       </div>
     </React.Fragment>);

@@ -10,7 +10,7 @@ export default class SearchFeed extends React.Component {
     this.state = {open: false};
   }
 
-  handleClick = () => console.log("serached for nothing!");
+  handleClick = () => this.props.searchfilterFeed("a","Search");
 
 
 

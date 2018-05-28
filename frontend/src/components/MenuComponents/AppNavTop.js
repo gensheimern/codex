@@ -26,7 +26,7 @@ class AppNavBottom extends Component {
       <div className="AppNameDisplay">
         Lunch-Planner
       </div>
-      <SearchFeed/>
+      <SearchFeed searchfilterFeed={this.props.searchfilterFeed}/>
       </div>
     );
   }

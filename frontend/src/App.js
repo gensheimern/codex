@@ -17,14 +17,35 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      mainContentNumber: 0
+      mainContentNumber: 0,
+      filterWord:"Newest",
+      searchWord:null,
     };
     this.changeContent = this.changeContent.bind(this);
+    this.searchfilterFeed = this.searchfilterFeed.bind(this);
 
   }
 
   changeContent(index) {
     this.setState({mainContentNumber: index});
+  }
+  searchfilterFeed(value,type){
+    switch(type) {
+        case 'Filter':
+                  this.setState({filterWord: value});
+                  console.log("!")
+  ;break
+        case 'Search':
+                  this.setState({searchWord: value});
+                  console.log("?")
+
+  ;break
+        default:
+            return null;
+  }
+
+
+
   }
 
   render() {
@@ -52,9 +73,9 @@ class App extends Component {
                         return <div className="mobileContent-wrapper">
                           <MuiThemeProvider>
                             <div>
-                              <AppNavTop changeContent={this.changeContent} width="100%"/>
+                              <AppNavTop changeContent={this.changeContent} searchfilterFeed={this.searchfilterFeed} width="100%"/>
                               <div className="mainContentMobile-wrapper">
-                                <MainContent mainContentNumber={this.state.mainContentNumber}/>
+                                <MainContent mainContentNumber={this.state.mainContentNumber} filterWord={this.state.filterWord} searchWord={this.state.searchWord}/>
                               </div>
                               <AppNavBottom changeContent={this.changeContent} width="100%"/>
                             </div>

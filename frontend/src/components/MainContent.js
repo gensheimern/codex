@@ -52,6 +52,7 @@ export default class MainContent extends React.Component {
       <FlatButton label="Cancel" primary={true} onClick={this.handleClose}/>,
       <FlatButton label="Submit" primary={true} keyboardFocused={true} onClick={this.handleSubmit}/>
     ];
+    console.log(this.props.filterWord);
 
     if (this.props.mainContentNumber === 0) {
       return (<div style={{
@@ -61,7 +62,7 @@ export default class MainContent extends React.Component {
           height: "100%",
           overflowY: "scroll"
         }}>
-        <Events/>
+        <Events filterWord={this.props.filterWord} searchWord={this.props.searchWord} />
       </div>);
     } else if (this.props.mainContentNumber === 1) {
       return (<div style={{
@@ -132,7 +133,7 @@ export default class MainContent extends React.Component {
         <FloatingActionButton onClick={this.handleOpen} style={style}>
           <ContentAdd/>
         </FloatingActionButton>
-        <Events/>
+        <Events filterWord={this.props.filterWord} searchWord={this.props.searchWord} />
       </div>);
     } else if (this.props.mainContentNumber === 6) {
       return (<div style={{
