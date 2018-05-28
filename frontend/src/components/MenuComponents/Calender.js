@@ -11,6 +11,8 @@ export default class Calender extends React.Component {
       return (
         <div>
           <Calendar
+            onClickDay={(date=this.state.date.getDay()) =>console.log( {date})}
+            showWeekNumbers
             onChange={this.onChange}
             value={this.state.date}
           />

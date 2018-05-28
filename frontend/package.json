@@ -14,26 +14,29 @@
   "author": "CODEX Team",
   "license": "ISC",
   "dependencies": {
-    "enzyme": "^3.3.0",
-    "enzyme-adapter-react-16": "^1.1.1",
-    "jest-enzyme": "^6.0.0",
+    "jwt-decode": "^2.2.0",
+    "material-ui": "^0.20.0",
+    "prop-types": "^15.6.1",
     "react": "^16.3.1",
     "react-bootstrap": "^0.32.1",
     "react-bootstrap-table-next": "^0.1.7",
     "react-calendar": "^2.14.0",
     "react-dom": "^16.3.1",
     "react-icons": "^2.2.7",
+    "react-material-ui-form-validator": "^1.1.4",
+    "react-responsive": "^4.1.0",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.1.2",
     "react-sidebar": "^2.3.2",
     "react-sidenav": "^2.1.2",
-    "react-test-renderer": "^16.3.1",
-    "reactstrap": "^5.0.0-beta.3",
-    "read-blob": "^1.1.0"
+    "react-sticky": "^6.0.2",
+    "react-stickynode": "^1.4.1",
+    "react-test-renderer": "^16.3.1"
   },
   "proxy": "http://localhost:5000",
   "devDependencies": {
-    "file-loader": "^1.1.11",
-    "url-loader": "^1.0.1"
+    "enzyme": "^3.3.0",
+    "enzyme-adapter-react-16": "^1.1.1",
+    "jest-enzyme": "^6.0.0"
   }
 }

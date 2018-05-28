@@ -3,18 +3,22 @@
 }
 
 .listTeams {
-  width: 90%;
+  width: 100%;
   font-size: 12pt;
-  margin: auto;
   margin-top: 0%;
   padding: 1% 5%;
   /* border: 7px solid blue; */
 }
 
 .CreateTeam {
-  width: 45%;
-  font-size: 13pt;
+  width: 55%;
+  font-size: 12pt;
   margin: auto;
-  margin-top: 5%;
   padding: 1% 5%;
 }
+.groupdisplay{
+        width: 70%;
+        height: 96%;
+        overflow-y: scroll;
+        float: left;
+  }

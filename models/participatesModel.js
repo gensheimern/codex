@@ -1,31 +1,30 @@
-const databaseConnection = require('./DatabaseConnection')
+const databaseConnection = require('./DatabaseConnection');
 
 const Participates = {
 
-  getAllParticipates: function(callback) {
-    return databaseConnection.query("Select * From participates", callback);
-  },
+	async getMemberOfActivity(activityId) {
+		return databaseConnection.queryp(
+			`SELECT User.*
+			FROM User
+				INNER JOIN participates
+				ON User.User_Id = participates.User_Id
+			WHERE participates.Activity_Id = ?`,
+			[activityId],
+		);
+	},
 
-  getParticipatesById: function(id, callback) {
-    return databaseConnection.query("SELECT * FROM participates inner join User on participates.User_Id = User.User_Id WHERE participates.Activity_Id=?", [id], callback);
-  },
+	async addParticipant(activityId, userId) {
+		return databaseConnection.queryp('INSERT INTO participates (User_Id, Activity_Id) VALUES (?, ?)', [userId, activityId]);
+	},
 
-  addParticipates: function(participates, callback) {
-    return databaseConnection.query("Insert into participates values(?,?)", [participates.User_Id, participates.Activity_Id], callback);
-  },
+	async deleteParticipant(activityId, userId) {
+		return databaseConnection.queryp('DELETE FROM participates WHERE User_Id = ? AND Activity_Id = ?', [userId, activityId]);
+	},
 
-  deleteParticipatesAll: function(id, callback) {
-    return databaseConnection.query("Delete From participates where Activity_Id=?", [id], callback);
-  },
+	async isParticipant(userId, activityId) {
+		return databaseConnection.querypBool('SELECT * FROM participates WHERE Activity_Id = ? AND User_Id = ?', [activityId, userId]);
+	},
 
-  deleteParticipatesSingle: function(userid, activityid, callback) {
-    return databaseConnection.query("Delete From participates where User_Id=? AND Activity_Id=?", [userid, activityid], callback);
-  },
-
-  updateParticipates: function(id, participates, callback) {
-    return databaseConnection.query("Update participates set User_Id=? where User_Id=? AND Activity_Id=?", [id, participates.User_Id, participates.Activity_Id], callback);
-  }
 };
-
 
 module.exports = Participates;

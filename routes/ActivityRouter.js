@@ -1,17 +1,16 @@
-const express = require('express');
-const router = express.Router();
+const router = require('express').Router();
 const ActivityController = require('./ActivityController');
 
 
 router.get('/', ActivityController.getAllActivities);
 
-router.get('/:id', ActivityController.getActivityById);
+router.get('/:activityId', ActivityController.getActivityById);
 
-router.post('/', ActivityController.addActivity);
+router.post('/', ActivityController.createActivity);
 
-router.delete('/:id', ActivityController.deleteActivity);
+router.delete('/:activityId', ActivityController.deleteActivity);
 
-router.put('/:id', ActivityController.updateActivity);
+router.put('/:activityId', ActivityController.updateActivity);
 
 
 module.exports = router;

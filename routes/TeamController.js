@@ -1,64 +1,126 @@
-const Team = require('../models/TeamModel');
+const TeamModel = require('../models/TeamModel');
+const MemberModel = require('../models/MemberModel');
+const { transformTeam } = require('./transforms');
 
-TeamController = {
-	getAllTeams(req, res) {
-		Team.getAllTeam(function(err, rows) {
-			if (err) return res.sendStatus(500);
+/* const transformTeam = dbTeam => ({
+	id: dbTeam.Team_Id,
+	name: dbTeam.Teamname,
+	managerName: dbTeam.Name,
+	managerFirstName: dbTeam.Firstname,
+}); */
 
-			res.json(rows);
-		});
+const TeamController = {
+
+	async getAllTeams(req, res) {
+		const { userId } = req.token;
+
+		try {
+			const teams = await TeamModel.getAllTeams(userId);
+
+			res.json(teams.map(transformTeam));
+		} catch (error) {
+			res.sendStatus(500);
+		}
 	},
 
-	getTeamById(req, res) {
-		Team.getTeamById(req.params.id, function(err, rows) {
-			if (err) return res.sendStatus(500);
+	async getTeamById(req, res) {
+		const { userId } = req.token;
+		const { teamId } = req.params;
 
-			if(rows.length === 0) {
-				res.sendStatus(404);
+		try {
+			const isMember = MemberModel.isMember(teamId, userId);
+
+			const team = await TeamModel.getTeamById(teamId, userId);
+
+			if (team === null || !(await isMember)) {
+				res.status(404).json({
+					message: `Team with ID ${teamId} not found.`,
+				});
+				return;
 			}
-			else {
-				res.json(rows[0]);
-			}
-		});
+
+			res.json(transformTeam(team));
+		} catch (error) {
+			res.sendStatus(500);
+		}
 	},
 
-	addTeam(req, res) {
-		Team.addTeam(req.body, req.token.User_Id, function(err, count) {
-			if (err) return res.sendStatus(500);
+	async addTeam(req, res) {
+		const { userId } = req.token;
+
+		if (!req.body.name) {
+			res.status(400).json({
+				message: 'Invalid team name',
+			});
+			return;
+		}
+
+		try {
+			const dbRes = await TeamModel.addTeam(req.body.name, userId);
+			await MemberModel.addMember(userId, dbRes.insertId);
 
 			res.status(201).json({
-				Team_Id: count.insertId,
-				Teamname: req.body.Teamname,
-				Teammanager:  req.token.User_Id
+				teamId: dbRes.insertId,
 			});
-		});
+		} catch (error) {
+			res.sendStatus(500);
+		}
 	},
 
-	deleteTeam(req, res) {
-		Team.deleteTeam(req.params.id, function(err, count) {
-			if (err) return res.sendStatus(500);
+	async deleteTeam(req, res) {
+		const { userId } = req.token;
+		const { teamId } = req.params;
 
-			if(count.affectedRows === 0) {
-				res.sendStatus(404);
+		try {
+			const dbRes = await TeamModel.deleteTeam(teamId, userId);
+			// TODO delete all memberships
+
+			if (dbRes.affectedRows === 0) {
+				res.status(404).json({
+					message: `Team with ID ${teamId} not found.`,
+				});
+			} else {
+				res.status(200).json({
+					message: 'Team deleted.',
+				});
 			}
-			else {
-				res.sendStatus(200);
-			}
-		});
+		} catch (error) {
+			res.sendStatus(500);
+		}
 	},
 
-	updateTeam(req, res) {
-		Team.updateTeam(req.params.id, req.body, function(err, rows) {
-			if (err) return res.sendStatus(500);
+	async updateTeam(req, res) {
+		const { userId } = req.token;
+		const { teamId } = req.params;
+		const newName = req.body.name;
 
-			if(rows.affectedRows === 0) {
-				res.sendStatus(404);
+		if (!newName) {
+			res.status(400).json({
+				success: false,
+				message: 'Invalid new team name.',
+			});
+			return;
+		}
+
+		try {
+			const dbRes = await TeamModel.updateTeam(teamId, newName, userId);
+
+			if (dbRes.affectedRows === 0) {
+				res.status(404).json({
+					success: false,
+					message: `Team with ID ${teamId} not found.`,
+				});
+			} else {
+				res.status(200).json({
+					success: true,
+					message: 'Team information updated.',
+				});
 			}
-			else {
-				res.sendStatus(200);
-			}
-		});
-	}
-}
+		} catch (error) {
+			res.sendStatus(500);
+		}
+	},
+
+};
 
 module.exports = TeamController;
