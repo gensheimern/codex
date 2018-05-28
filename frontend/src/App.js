@@ -12,6 +12,7 @@ import Groups from './components/Groups';
 import AppNavBottom from './components/MenuComponents/AppNavBottom';
 import AppNavTop from './components/MenuComponents/AppNavTop';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import Signup from './components/signup/Signup';
 
 class App extends Component {
   constructor(props) {
@@ -32,6 +33,7 @@ class App extends Component {
       <React.Fragment>
         <Route exact path="/" component={Login}/>
         <Route exact path="/login" component={Login}/>
+        <Route exact path="/signup" component={Signup}/>
         <Route path="/activity" render={() => (<React.Fragment>
             <div id="contentarea">
               <MuiThemeProvider>

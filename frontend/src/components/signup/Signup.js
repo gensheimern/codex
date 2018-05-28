@@ -16,7 +16,8 @@ export default class Signup extends React.Component {
 			name: "",
 			firstName: "",
 			password: "",
-			retypePassword: ""
+			retypePassword: "",
+			img: "",
 		}
 	}
 
@@ -42,7 +43,8 @@ export default class Signup extends React.Component {
 				firstName: this.state.firstName,
 				name: this.state.name,
 				email: this.state.email,
-				password: this.state.password
+				password: this.state.password,
+				image: this.state.img,
 			}),
 			headers: {
 				'Content-Type': 'application/json',
