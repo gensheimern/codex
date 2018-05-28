@@ -1,49 +1,80 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import "./sidebars.css"
+import "./sidebars.css";
+import config from '../../config';
+import CreateTeamButton from './CreateTeamButton.js';
+
 const styles = {
   sidebar: {
     width: 256,
-    height: '100%',
+    height: '100%'
   },
   sidebarLink: {
     display: 'block',
     padding: '16px 0px',
     color: '#ffffff',
-    textDecoration: 'none',
+    textDecoration: 'none'
   },
   content: {
-    padding: '16px',
-    height: '100%',
-  },
+    padding: '1px',
+    height: '100%'
+  }
 };
+export default class SidebarContent extends React.Component {
+  constructor(props) {
+    super(props);
 
-const SidebarContent = (props) => {
-  const links = [];
-
-  for (let ind = 1; ind < 5; ind++) {
-    links.push(
-      <a key={ind} href="/#" className="groupName">Gruppe {ind}</a>);
+    this.state = {
+      groups: []
+    };
+    this.getMyGroups = this.getMyGroups.bind(this);
+    this.componentDidMount = this.componentDidMount.bind(this);
   }
 
-  return (
-<div className="leftContent">
+  getMyGroups() {
+    fetch(config.apiPath + "/team", {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Access-Token': localStorage.getItem('apiToken')
+      }
+    }).then((res) => {
+      console.log(res.status);
+      if (!res.ok) {
+        throw new Error("Request failed.");
+      } else if (res.status !== 200) {
+        throw new Error("Forbidden");
+      } else {
+        return res;
+      }
+    }).then(res => res.json()).then(res => {
+      console.log(res);
+      this.setState({groups: res});
+    });
+
+  }
+  componentDidMount() {
+    this.getMyGroups();
+  }
+
+  render() {
+    console.log(this.state.groups);
+    let myGroups = this.state.groups.map((group,index) => (<a key={"group"+index} className="groupName">
+      {group.name}
+    </a>));
+    console.log(myGroups);
+
+    return (<div className="leftContent">
       <div style={styles.content}>
-                <div className="divider" />
+        <div className="divider"/>
         <a className="highlightSidebarContent" href="activity">PUBLIC</a>
-                <div className="divider" />
+        <div className="divider"/>
         <a className="highlightSidebarContent" href="activity">PERSONAL</a>
-                <div className="divider" />
-      <p className="groups">
-      Gruppen</p>
-      {links}
+        <div className="divider"/>
+        <p className="groups">
+          Gruppen</p>
+        {myGroups}
+        <CreateTeamButton changeContent={this.props.changeContent} closeDrawer={this.props.closeDrawer}/>
       </div>
-</div>
-  );
-};
-
-SidebarContent.propTypes = {
-  style: PropTypes.object,
-};
-
-export default SidebarContent;
+    </div>);
+  }
+}

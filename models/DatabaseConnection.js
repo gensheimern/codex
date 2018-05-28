@@ -1,7 +1,7 @@
 const mysql = require('mysql');
 const config = require('../config');
 
-const dbConnection = mysql.createPool({
+const pool = mysql.createPool({
 	connectionLimit: 100,
 	host: config.DB_HOST,
 	user: config.DB_USER,
@@ -13,12 +13,12 @@ const dbConnection = mysql.createPool({
 const databaseConnection = {
 
 	query(...args) {
-		return dbConnection.query(...args);
+		return pool.query(...args);
 	},
 
 	queryp(...args) {
 		return new Promise((resolve, reject) => {
-			dbConnection.query(...args, (err, res) => {
+			pool.query(...args, (err, res) => {
 				if (err) reject(err);
 				else resolve(res);
 			});
@@ -27,7 +27,7 @@ const databaseConnection = {
 
 	querypFirst(...args) {
 		return new Promise((resolve, reject) => {
-			dbConnection.query(...args, (err, res) => {
+			pool.query(...args, (err, res) => {
 				if (err) reject(err);
 				else if (res.length === 0) resolve(null);
 				else resolve(res[0]);
@@ -37,7 +37,7 @@ const databaseConnection = {
 
 	querypBool(...args) {
 		return new Promise((resolve, reject) => {
-			dbConnection.query(...args, (err, res) => {
+			pool.query(...args, (err, res) => {
 				if (err) reject(err);
 				else resolve(res.length >= 1);
 			});
@@ -45,19 +45,19 @@ const databaseConnection = {
 	},
 
 	getConnection(...args) {
-		return dbConnection.getConnection(...args);
+		return pool.getConnection(...args);
 	},
 
 	acquireConnection(...args) {
-		return dbConnection.acquireConnection(...args);
+		return pool.acquireConnection(...args);
 	},
 
 	releaseConnection(...args) {
-		return dbConnection.releaseConnection(...args);
+		return pool.releaseConnection(...args);
 	},
 
 	end(...args) {
-		return dbConnection.end(...args);
+		return pool.end(...args);
 	},
 
 };

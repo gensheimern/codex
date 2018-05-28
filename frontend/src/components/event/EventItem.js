@@ -62,7 +62,6 @@ export default class EventItem extends React.Component {
 		})
 		.then(res => res.json())
 		.then(res => {
-			console.log(res);
 			this.setState({
 				messages: res,
 				loaded: true,
