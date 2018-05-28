@@ -6,7 +6,7 @@
     "start": "react-scripts start",
     "server": "react-scripts build && cd server && node server",
     "clean": "rimraf build",
-		"prebuild": "npm run clean",
+    "prebuild": "npm run clean",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "test:coverage": "npm test -- --coverage",
