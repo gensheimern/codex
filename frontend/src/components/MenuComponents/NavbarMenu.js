@@ -5,7 +5,6 @@ import {
 } from "react-bootstrap";
 import './navbar.css';
 import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
-import CreateActivity from '../activity/CreateActivity.js'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 
@@ -77,7 +76,6 @@ export default class NavbarMenu extends React.Component {
 					</Modal.Header>
 					<Modal.Body>
 						<MuiThemeProvider>
-						<CreateActivity/>
 				</MuiThemeProvider>
 					</Modal.Body>
 					<Modal.Footer>
