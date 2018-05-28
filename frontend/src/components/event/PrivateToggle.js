@@ -32,7 +32,7 @@ export default class PrivateToggle extends React.Component{
         thumbSwitchedStyle={styles.thumbSwitched}
         trackSwitchedStyle={styles.trackSwitched}
         labelStyle={styles.labelStyle}
-        onToggle={this.props.togglePrivate}
+        onToggle={this.props.toggle}
       />
     )
   }
