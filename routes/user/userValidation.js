@@ -41,8 +41,7 @@ const userValidation = {
 
 	validImage(imagePath) {
 		// TODO: Check for valid path
-		return !!imagePath
-			&& typeof imagePath === 'string';
+		return typeof imagePath === 'string';
 	},
 };
 
