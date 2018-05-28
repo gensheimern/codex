@@ -7,6 +7,10 @@
 .isNotJoinedBorder {
 	/* TODO */
 }
+.createEventWrapper {
+  padding-top:10px !important;
+
+}
 
 .eventCard {
 	margin: 4%;
@@ -43,7 +47,7 @@
 
 .eventCardTitle {
 	color: white;
-	margin-top: 15%;
+	margin-top: 50px;
 	z-index: 2;
 }
 
@@ -59,8 +63,8 @@
 
 .joinBtnWrapper {
 	position: relative;
-	    width: 80pt;
-	    height: 30pt;
+      width: 30%;
+      height: 30px;
 	    border-radius: 4px;
 	    background: rgb( 248 201 71);
 	    color: white;
@@ -102,6 +106,9 @@
 		padding-right: 20px;
 }
 
+.eventGroup h4 {
+  font-size:13px;
+}
 .myimage{
 height:6vh;
 width:6vh;
@@ -220,6 +227,31 @@ padding-left: 10px;
 
 .collapseOnClick {
 	clear:both;
+}
+
+.createEventEditPicture {
+  padding:0 !important;
+}
+.timepicker {
+  width: 37%;
+  overflow: hidden;
+  float: left;
+}
+.datepicker {
+  width: 37%;
+  overflow: hidden;
+  padding-left: 5%;
+}
+
+.MoreOptionsCreateEvent {
+  float:right;
+  padding-right:20px;
+  padding-top:20px;
+}
+
+.collapsedContendReminder {
+  width:82%;
+  float:left;
 }
 
 /*

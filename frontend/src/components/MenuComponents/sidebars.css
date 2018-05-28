@@ -1,13 +1,13 @@
 .calenderUnit{
         margin: 2%;
-        margin-top:10%;
-        width: 95%;
+        margin-top:0%;
+        width: 90%;
         height: 100%;
         float: left;
 }
 .leftContent{
   width: 230px;
-  height: 95vh;
+  height: 100vh;
   background-image: linear-gradient(197deg, #1ea185, #b0e8d2);
   box-shadow: 3px 0 4px 1px rgba(0, 0, 0, 0.19);
   overflow: hidden;
@@ -15,15 +15,14 @@
 
 }
 .rightContent{
-  width: 304px;
   height: 100%;
   background-color: #f2f2f2;
   float: left;
 }
 .groupName{
-  margin-left: 35%;
+  margin-left: 25%;
   display: block;
-  padding: 36px 0px;
+  padding: 26px 0px;
   color: #757575;
   text-decoration: none;
   height: 22px;
@@ -39,7 +38,7 @@
 }
 .highlightSidebarContent{
   width: 213px;
-  padding: 26px 0px;
+  padding: 16px 0px;
   text-decoration: none;
   display: block;
   background-image: linear-gradient(to left, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0));
@@ -54,7 +53,7 @@
   color: #ffffff;
 }
 .groups{
-  margin-top: 18px;
+  margin-top: 10px;
   height:0px;
   font-family: TrebuchetMS;
   font-size: 14px;
@@ -71,4 +70,27 @@
   height: 1px;
   border: solid 1px rgba(255, 255, 255, 0.53);
 
+}
+.MobileNavTop{
+  width: 100%;
+  height: 15%;
+}
+.SearchFeed{
+  width: 15%;
+  float: left
+}
+.GroupsDrawer{
+  width: 15%;
+  float: left
+}
+.AppNameDisplay{
+  text-align: center;
+  width: 34%;
+  margin-left: 18%;
+  margin-right: 10%;
+  float: left
+}
+.CreateTeamButton{
+  margin-top: 10px;
+  color: white;
 }

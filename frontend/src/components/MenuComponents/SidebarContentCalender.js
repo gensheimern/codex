@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import MediaQuery from 'react-responsive';
 import Calender from './Calender.js';
 import "./sidebars.css";
 
@@ -39,10 +38,7 @@ const SidebarContent = (props) => {
 
   return (
     <div className="rightContent">
-    <MediaQuery minWidth={1000}>
-      {(matches) => {
-        if (matches) {
-          return <div className="calenderUnit">
+           <div className="calenderUnit">
             <p>Deine Events:</p>
             <Calender/>
 
@@ -77,11 +73,6 @@ const SidebarContent = (props) => {
               {links}
             </div>
           </div>;
-        } else {
-          return null;
-        }
-      }}
-    </MediaQuery>
   </div>
   );
 };

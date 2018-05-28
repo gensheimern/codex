@@ -81,12 +81,6 @@ fetch(config.apiPath + "/team", {
       TMNameR = this.state.groups[i].Firstname + " " + this.state.groups[i].Name;
       resNM[i].TMName = TMNameR;
   }
-  this.createGroupDeleteButtons();
-}).catch((err) => {
-  this.setState({
-      groups: [],
-      errorPrompt:""
-  });
 });
 
 }
