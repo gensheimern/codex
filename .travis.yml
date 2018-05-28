@@ -1,0 +1,15 @@
+language: node_js
+node_js:
+  - stable
+cache:
+  directories:
+    - node_modules
+    - frontend/node_modules
+install:
+  - npm install
+  - cd frontend && npm install && cd ..
+script:
+  - npm run lint
+  - npm test
+  - npm test --prefix frontend
+  - npm run build

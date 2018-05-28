@@ -1,0 +1,12 @@
+.centered {
+  text-align: center;
+}
+
+.Login {
+  width: 45%;
+  font-size: 12pt;
+  margin: auto;
+  margin-top: 3%;
+  padding: 1% 5%;
+  /* border: 7px solid blue; */
+}

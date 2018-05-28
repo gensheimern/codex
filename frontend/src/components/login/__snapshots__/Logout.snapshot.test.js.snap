@@ -1,0 +1,56 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Logout Snapshot renders 1`] = `
+<div
+  className="static-modal"
+>
+  <div
+    className="modal"
+    role="dialog"
+    style={
+      Object {
+        "display": "block",
+      }
+    }
+    tabIndex="-1"
+  >
+    <div
+      className="modal-dialog"
+    >
+      <div
+        className="modal-content"
+        role="document"
+      >
+        <div
+          className="modal-header"
+        >
+          <strong>
+            Logout
+          </strong>
+        </div>
+        <div
+          className="modal-body"
+        >
+          Logout successful!
+        </div>
+        <div
+          className="modal-footer"
+        >
+          <a
+            href="/"
+            onClick={[Function]}
+          >
+            <button
+              className="btn btn-primary"
+              disabled={false}
+              type="button"
+            >
+              Login
+            </button>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

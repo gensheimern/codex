@@ -1,0 +1,59 @@
+{
+	"name": "lunch-planner-backend",
+	"version": "0.0.1",
+	"private": true,
+	"scripts": {
+		"installclient": "cd frontend && npm install",
+		"start": "node server",
+		"server": "nodemon server.js",
+		"client": "npm start --prefix frontend",
+		"all": "concurrently \"npm start\" \"npm start --prefix frontend\" --kill-others",
+		"preprod": "npm run build --prefix frontend",
+		"prod": "npm start",
+		"build": "npm run build --prefix frontend",
+		"lint": "eslint .",
+		"test": "mocha test --recursive",
+		"test:coverage": "nyc --reporter=text --reporter=html npm test"
+	},
+	"engines": {
+		"node": ">=6.9.1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/gensheimern/codex.git"
+	},
+	"bugs": {
+		"url": "https://github.com/gensheimern/codex/issues"
+	},
+	"website": "https://github.com/gensheimern/codex#readme",
+	"keywords": [],
+	"author": "CODEX Team",
+	"license": "ISC",
+	"dependencies": {
+		"bcrypt": "^2.0.1",
+		"body-parser": "^1.18.2",
+		"concurrently": "^3.5.1",
+		"cookie-parser": "~1.4.3",
+		"express": "~4.16.0",
+		"express-mailer": "^0.3.1",
+		"jsonwebtoken": "^8.2.1",
+		"mysql": "^2.15.0",
+		"mysql2": "^1.5.3",
+		"nodemon": "^1.17.4",
+		"serve-static": "^1.13.2"
+	},
+	"devDependencies": {
+		"chai": "^4.1.2",
+		"chai-as-promised": "^7.1.1",
+		"eslint": "^4.19.1",
+		"eslint-config-airbnb": "^16.1.0",
+		"eslint-plugin-import": "^2.11.0",
+		"eslint-plugin-jsx-a11y": "^6.0.3",
+		"eslint-plugin-react": "^7.7.0",
+		"mocha": "^5.1.1",
+		"node-mocks-http": "^1.5.8",
+		"nyc": "^11.7.2",
+		"sinon": "^4.5.0",
+		"supertest": "^3.0.0"
+	}
+}
