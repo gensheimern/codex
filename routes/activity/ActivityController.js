@@ -9,7 +9,7 @@ const ActivityController = {
 		const { userId } = req.token;
 
 		const activities = await ActivityModel.getAllActivities(userId);
-		res.json(activities.map(transforms.transformActivity));
+		res.json(activities.map(transforms(userId).transformActivity));
 	},
 
 	async getActivityById(req, res) {
@@ -35,7 +35,7 @@ const ActivityController = {
 				message: 'Activity not found',
 			});
 		} else {
-			res.json(transforms.transformActivity(activity));
+			res.json(transforms(userId).transformActivity(activity));
 		}
 	},
 

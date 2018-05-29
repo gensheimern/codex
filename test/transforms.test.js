@@ -15,7 +15,7 @@ describe('Transformation of database output', () => {
 			Test: 'Test value',
 		};
 
-		const result = transforms.transformUser(dbUser);
+		const result = transforms().transformUser(dbUser);
 
 		expect(result).to.deep.equal({
 			id: 1,
@@ -23,6 +23,7 @@ describe('Transformation of database output', () => {
 			name: 'Mustermann',
 			email: 'valid@email.de',
 			image: '/path.png',
+			me: false,
 		});
 	});
 
@@ -39,7 +40,7 @@ describe('Transformation of database output', () => {
 			Test: 'Test value',
 		};
 
-		const result = transforms.transformTeam(dbTeam);
+		const result = transforms().transformTeam(dbTeam);
 
 		expect(result).to.deep.equal({
 			id: 2,
@@ -50,6 +51,7 @@ describe('Transformation of database output', () => {
 				name: 'Mustermann',
 				email: 'valid@email.de',
 				image: '/path.png',
+				me: false,
 			},
 		});
 	});
@@ -74,7 +76,7 @@ describe('Transformation of database output', () => {
 			Test: 'Test value',
 		};
 
-		const result = transforms.transformActivity(dbActivity);
+		const result = transforms().transformActivity(dbActivity);
 
 		expect(result).to.deep.equal({
 			id: 2,
@@ -92,6 +94,7 @@ describe('Transformation of database output', () => {
 				name: 'Mustermann',
 				email: 'valid@email.de',
 				image: '/path.png',
+				me: false,
 			},
 		});
 	});
