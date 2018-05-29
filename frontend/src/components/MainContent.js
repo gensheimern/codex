@@ -96,7 +96,7 @@ export default class MainContent extends React.Component {
           height: "100%",
           overflowY: "scroll"
         }}>
-        <Events/>
+        <Events filterWord={this.props.filterWord} searchWord={this.props.searchWord} />
       </div>);
     } else if (this.props.mainContentNumber === 4) {
       return (<div style={{

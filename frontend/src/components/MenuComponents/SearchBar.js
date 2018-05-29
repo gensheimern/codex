@@ -86,7 +86,7 @@ render(){
               <DropDownMenu
                  value={this.state.value}
                  onChange={this.handleFilterChange}
-                 style={{ width: "140px",
+                 style={{ width: "30%",
                  float:"left", margin:"0%", fontSize:"8pt"}}
                  autoWidth={false}
                >
@@ -102,21 +102,21 @@ render(){
                  id="text-field-controlled"
                  value={this.state.searchWord}
                  onChange={this.handleChange}
-                 style={{float:"left",margin:"0%",marginTop:"4%", width:"15vh", height:"6vh"}}
+                 style={{float:"left",margin:"0%",marginTop:"4%", width:"40%", height:"6vh"}}
                 />
 
               <FlatButton
                 icon={<IconDelete style={{
                 width:"50%"}}/>}
                 onClick={this.handleClose}
-                style={{float:"left", width:"10vh", minWidth:"6vh",marginTop:"2%",}}
+                style={{float:"left", width:"10%", minWidth:"15%",marginTop:"2%",}}
               />
 
               <FlatButton
                 icon={<IconSearch style={{
                 width:"50%"}}/>}
                 onClick={this.handleSearch}
-                style={{float:"left", width:"10vh", minWidth:"6vh",marginTop:"2%",}}
+                style={{float:"left", width:"10%", minWidth:"15%",marginTop:"2%",}}
               />
             </div>
           }

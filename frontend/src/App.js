@@ -20,7 +20,7 @@ class App extends Component {
     this.state = {
       mainContentNumber: 0,
       filterWord:"Newest",
-      searchWord:null,
+      searchWord:"",
     };
     this.changeContent = this.changeContent.bind(this);
     this.searchFilterFeed = this.searchFilterFeed.bind(this);
@@ -73,7 +73,7 @@ class App extends Component {
                           }}>
                           <NavbarMenu/>
                           <Groups changeContent={this.changeContent} id="groups-wrapper" height="100%"/>
-                          <MainContent mainContentNumber={5} width="55%"/>
+                          <MainContent mainContentNumber={5} filterWord={this.state.filterWord} searchWord={this.state.searchWord} width="55%"/>
                           <SidebarContentCalender/>
                         </div>)
                       } else {

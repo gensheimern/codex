@@ -86,9 +86,8 @@ export default class Events extends React.Component {
       }
       let filterData;
     if(!(this.props.searchWord === null)){
+            console.log(this.props.searchWord);
       filterData = this.state.events.filter(event => event.name.toUpperCase().includes(this.props.searchWord.toUpperCase()));
-      console.log(this.props.searchWord);
-      console.log(filterData);
     } else {
       filterData = this.state.events;
     }
