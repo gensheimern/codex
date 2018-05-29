@@ -5,7 +5,7 @@
 	"scripts": {
 		"installclient": "cd frontend && npm install",
 		"start": "node server",
-		"server": "nodemon server.js",
+		"server": "nodemon server.js --ignore frontend/",
 		"client": "npm start --prefix frontend",
 		"all": "concurrently \"npm start\" \"npm start --prefix frontend\" --kill-others",
 		"preprod": "npm run build --prefix frontend",
@@ -40,7 +40,8 @@
 		"mysql": "^2.15.0",
 		"mysql2": "^1.5.3",
 		"nodemon": "^1.17.4",
-		"serve-static": "^1.13.2"
+		"serve-static": "^1.13.2",
+		"socket.io": "^2.1.1"
 	},
 	"devDependencies": {
 		"chai": "^4.1.2",

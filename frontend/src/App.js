@@ -13,6 +13,7 @@ import AppNavBottom from './components/MenuComponents/AppNavBottom';
 import AppNavTop from './components/MenuComponents/AppNavTop';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Signup from './components/signup/Signup';
+import Messages from './components/message/Messages';
 
 class App extends Component {
   constructor(props) {
@@ -58,6 +59,11 @@ class App extends Component {
         <Route exact path="/signup" render={() => (
           <MuiThemeProvider>
             <Signup />
+          </MuiThemeProvider>
+        )}/>
+        <Route exact path="/message" render={() => (
+          <MuiThemeProvider>
+            <Messages/>
           </MuiThemeProvider>
         )}/>
         <Route path="/activity" render={() => (<React.Fragment>

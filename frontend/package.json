@@ -36,7 +36,8 @@
     "react-sticky": "^6.0.2",
     "react-stickynode": "^1.4.1",
     "react-test-renderer": "^16.3.1",
-    "rimraf": "^2.6.2"
+    "rimraf": "^2.6.2",
+    "socket.io-client": "^2.1.1"
   },
   "proxy": "http://localhost:5000",
   "devDependencies": {
