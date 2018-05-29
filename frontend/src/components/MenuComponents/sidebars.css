@@ -94,3 +94,8 @@
   margin-top: 10px;
   color: white;
 }
+.imputSearch{
+  width: '100%';
+  border: 0;
+  float:left;
+}

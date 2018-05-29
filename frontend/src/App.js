@@ -22,14 +22,14 @@ class App extends Component {
       searchWord:null,
     };
     this.changeContent = this.changeContent.bind(this);
-    this.searchfilterFeed = this.searchfilterFeed.bind(this);
+    this.searchFilterFeed = this.searchFilterFeed.bind(this);
 
   }
 
   changeContent(index) {
     this.setState({mainContentNumber: index});
   }
-  searchfilterFeed(value,type){
+  searchFilterFeed(value,type){
     switch(type) {
         case 'Filter':
                   this.setState({filterWord: value});
@@ -73,7 +73,7 @@ class App extends Component {
                         return <div className="mobileContent-wrapper">
                           <MuiThemeProvider>
                             <div>
-                              <AppNavTop changeContent={this.changeContent} searchfilterFeed={this.searchfilterFeed} width="100%"/>
+                              <AppNavTop changeContent={this.changeContent} searchFilterFeed={this.searchFilterFeed} width="100%"/>
                               <div className="mainContentMobile-wrapper">
                                 <MainContent mainContentNumber={this.state.mainContentNumber} filterWord={this.state.filterWord} searchWord={this.state.searchWord}/>
                               </div>
