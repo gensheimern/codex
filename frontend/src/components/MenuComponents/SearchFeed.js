@@ -1,8 +1,7 @@
 import React from 'react';
 import FlatButton from 'material-ui/FlatButton';
 import IconSearch from 'material-ui/svg-icons/hardware/keyboard-arrow-down';
-import Popover from 'material-ui/Popover';
-import TextField from 'material-ui/TextField';
+
 
 import "./sidebars.css"
 

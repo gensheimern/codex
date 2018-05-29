@@ -2,7 +2,6 @@ import React from 'react';
 import FlatButton from 'material-ui/FlatButton';
 import IconSearch from 'material-ui/svg-icons/action/search';
 import IconDelete from 'material-ui/svg-icons/navigation/close';
-import IconFilter from 'material-ui/svg-icons/hardware/keyboard-arrow-down';
 import TextField from 'material-ui/TextField';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';

@@ -9,6 +9,8 @@ import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import CreateEventtCard from './event/CreateEventCard';
 import CreateTeam from './groupmanager/CreateTeam';
+import Paper from 'material-ui/Paper';
+
 
 export default class MainContent extends React.Component {
   constructor(props) {
@@ -79,14 +81,24 @@ export default class MainContent extends React.Component {
       return (<div style={{
           width: this.props.width,
           marginTop: "0%",
+          marginBottom: "10%",
           float: "left",
-          height: "100%",
+          height: "90%",
           overflowY: "scroll",
           margin: "10%"
         }}>
-        <CreateEventtCard ref={instance => {
-            this.child = instance;
-          }}/>
+      <div>
+        <Paper className="createEventWrapper">
+          <CreateEventtCard ref={instance => {
+              this.child = instance;
+            }}/>
+            <FlatButton
+              onClick={this.handleSubmit}
+              label="erstelle dein Event" fullWidth={true}
+            />
+
+        </Paper>
+      </div>
       </div>);
     } else if (this.props.mainContentNumber === 3) {
       return (<div style={{

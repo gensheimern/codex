@@ -112,7 +112,7 @@ handleClose = () => {
   }
 
 handleChangeMeetingPoint(e){
-  this.setState({ meetingPointValue: e.target.value});
+  this.setState({ meetingPoint: e.target.value});
 }
 handleChangeMaxPeople(e){
   this.setState({ maxPeopleValue: e.target.value});
@@ -248,7 +248,7 @@ createEvent(){
             underlineFocusStyle={{borderColor:"rgb(30 161 133)"}}
             floatingLabelText="Meeting Point"
             hintText="at the address point"
-            value={this.state.inputValue}
+            value={this.state.meetingPoint}
             onChange={this.handleChangeMeetingPoint}
           /><br />
 

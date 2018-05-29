@@ -12,7 +12,6 @@ export default class CreateEventTimePicker extends React.Component {
   }
 
   render(){
-    console.log(this.state.time);
     return(
   <div>
     <TimePicker
