@@ -12,6 +12,7 @@ import Groups from './components/Groups';
 import AppNavBottom from './components/MenuComponents/AppNavBottom';
 import AppNavTop from './components/MenuComponents/AppNavTop';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import Signup from './components/signup/Signup';
 
 class App extends Component {
   constructor(props) {
@@ -53,6 +54,12 @@ class App extends Component {
       <React.Fragment>
         <Route exact path="/" component={Login}/>
         <Route exact path="/login" component={Login}/>
+        {/* TODO: Remove Signup route and show when needed. */}
+        <Route exact path="/signup" render={() => (
+          <MuiThemeProvider>
+            <Signup />
+          </MuiThemeProvider>
+        )}/>
         <Route path="/activity" render={() => (<React.Fragment>
             <div id="contentarea">
               <MuiThemeProvider>
