@@ -1,6 +1,5 @@
 import React from 'react';
 import config from '../../config';
-import jwt_decode from 'jwt-decode';
 import EventCard from './EventCard';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
@@ -115,14 +114,10 @@ export default class EventItem extends React.Component {
 	}
 
 	isJoined(){
-        let decode = jwt_decode(localStorage.getItem('apiToken'));
-        this.state.participants.map(user => {
-			if(user.id === decode.userId) {
-				this.setState({
-					isJoined: true
-				});
-			}
-      return true;  });
+		const isJoined = this.state.participants.reduce(false, (total, user) => (total || user.me));
+		this.setState({
+			isJoined
+		});
 	}
 
 	toggleColapse() {
