@@ -51,9 +51,8 @@ export default class SearchFeed extends React.Component {
     return (
       <div className="SearchFeed">
         <FlatButton
-          backgroundColor="#a4c639"
-          hoverColor="#8AA62F"
-          icon={<IconSearch/>}
+          backgroundColor="#1EA185"
+          icon={<IconSearch color="#FFFFFF"/>}
           onClick={this.props.changeShow}
         />
       </div>
