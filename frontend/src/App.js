@@ -18,14 +18,35 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      mainContentNumber: 0
+      mainContentNumber: 0,
+      filterWord:"Newest",
+      searchWord:"",
     };
     this.changeContent = this.changeContent.bind(this);
+    this.searchFilterFeed = this.searchFilterFeed.bind(this);
 
   }
 
   changeContent(index) {
     this.setState({mainContentNumber: index});
+  }
+  searchFilterFeed(value,type){
+    switch(type) {
+        case 'Filter':
+                  this.setState({filterWord: value});
+                  console.log("!")
+  ;break
+        case 'Search':
+                  this.setState({searchWord: value});
+                  console.log("?")
+
+  ;break
+        default:
+            return null;
+  }
+
+
+
   }
 
   render() {
@@ -52,16 +73,16 @@ class App extends Component {
                           }}>
                           <NavbarMenu/>
                           <Groups changeContent={this.changeContent} id="groups-wrapper" height="100%"/>
-                          <MainContent mainContentNumber={5} width="55%"/>
+                          <MainContent mainContentNumber={5} filterWord={this.state.filterWord} searchWord={this.state.searchWord} width="55%"/>
                           <SidebarContentCalender/>
                         </div>)
                       } else {
                         return <div className="mobileContent-wrapper">
                           <MuiThemeProvider>
                             <div>
-                              <AppNavTop changeContent={this.changeContent} width="100%"/>
+                              <AppNavTop changeContent={this.changeContent} searchFilterFeed={this.searchFilterFeed} width="100%"/>
                               <div className="mainContentMobile-wrapper">
-                                <MainContent mainContentNumber={this.state.mainContentNumber}/>
+                                <MainContent mainContentNumber={this.state.mainContentNumber} filterWord={this.state.filterWord} searchWord={this.state.searchWord}/>
                               </div>
                               <AppNavBottom changeContent={this.changeContent} width="100%"/>
                             </div>

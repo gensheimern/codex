@@ -22,7 +22,7 @@ const ParticipatesController = {
 			return;
 		}
 
-		res.json(member.map(transforms.transformUser));
+		res.json(member.map(transforms(userId).transformUser));
 	},
 
 	async addParticipation(req, res) {

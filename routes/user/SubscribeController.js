@@ -16,7 +16,7 @@ const SubscribeController = {
 
 		const subscriber = await Subscribe.getSubscriber(targetId);
 
-		res.json(subscriber.map(transforms.transformUser));
+		res.json(subscriber.map(transforms(userId).transformUser));
 	},
 
 	async getSubscribed(req, res) {
@@ -32,7 +32,7 @@ const SubscribeController = {
 
 		const subscribed = await Subscribe.getSubscribed(targetId);
 
-		res.json(subscribed.map(transforms.transformUser));
+		res.json(subscribed.map(transforms(userId).transformUser));
 	},
 
 	async createSubscription(req, res) {
