@@ -1,6 +1,6 @@
 import React from 'react';
 import Drawer from 'material-ui/Drawer';
-import FlatButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton';
 import Groups from '../Groups';
 
 import IconGroup from 'material-ui/svg-icons/social/group';
@@ -20,8 +20,8 @@ export default class GroupsDrawer extends React.Component {
     return (
       <div className="GroupsDrawer">
         <FlatButton
-          backgroundColor="#a4c639"
-           icon={ <IconGroup/> }
+          backgroundColor="#1EA185"
+          icon={ <IconGroup color="#FFFFFF"/> }
           onClick={this.handleToggle}
         />
         <Drawer

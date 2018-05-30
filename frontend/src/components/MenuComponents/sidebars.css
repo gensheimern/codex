@@ -72,8 +72,7 @@
 
 }
 .MobileNavTop{
-  width: 100%;
-  height: 15%;
+height: 6vh;	width: 100%;	background-color: #1EA185;	box-shadow: 0 2px 4px 0 rgba(0,0,0,0.23);
 }
 .SearchFeed{
   width: 15%;
@@ -85,12 +84,19 @@
 }
 .AppNameDisplay{
   text-align: center;
-  width: 34%;
-  margin-left: 18%;
-  margin-right: 10%;
-  float: left
+  color: white;
+  font-size: 20px;
+  margin-left: 19%;
+  margin-right: 11%;
+  float: left;
+  margin-top: 1%;
 }
 .CreateTeamButton{
   margin-top: 10px;
   color: white;
+}
+.imputSearch{
+  width: '100%';
+  border: 0;
+  float:left;
 }

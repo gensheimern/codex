@@ -5,6 +5,7 @@ const testData = {
 		name: 'Mustermann',
 		email: 'valid@email.com',
 		image: '/image.png',
+		me: false,
 	},
 	{
 		id: 2,
@@ -12,6 +13,7 @@ const testData = {
 		name: 'Mustermann2',
 		email: 'valid2@email.com',
 		image: '/image2.png',
+		me: false,
 	}],
 
 	userData: {
@@ -20,6 +22,7 @@ const testData = {
 		name: 'Mustermann',
 		email: 'valid@email.com',
 		image: '/image.png',
+		me: false,
 	},
 
 	postUserData: {

@@ -18,7 +18,7 @@ const MemberController = {
 		if (isMember) {
 			const member = await Member.getMemberOfTeam(teamId);
 
-			res.json(member.map(transforms.transformUser));
+			res.json(member.map(transforms(userId).transformUser));
 		} else {
 			res.status(404).json({
 				message: 'Invalid team id.',
