@@ -254,6 +254,13 @@ padding-left: 10px;
   float:left;
 }
 
+.createEventPickImageWrapper {
+  padding:0px !important;
+}
+.createEventPickImageWrapper img {
+  width:100%;
+}
+
 /*
 
 .activity-alreadyjoining {

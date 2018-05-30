@@ -12,21 +12,63 @@ import InviteChip from './CreateEventChip';
 import config from '../../config';
 
 const eventImages = [
+
 {
-    img: "strandbar.jpg",
-    title:"Pizza",
+    img: "asia_card@3x.jpg",
+    title:"ASIAN FODD",
+},
+
+{
+    img: "baker_cardx3.jpg",
+    title:"BAKER",
 },
 {
-    img: "monsterag.jpg",
-    title:"Döner",
+    img: "burger_card@3x.jpg",
+    title:"BURGER",
 },
 {
-    img: "strandbar.jpg",
-    title:"Nudels",
+    img: "coffee_cardx3.jpg",
+    title:"COFFEE",
 },
 {
-    img: "strandbar.jpg",
-    title:"bier",
+    img: "fisch_card@3x.jpg",
+    title:"FISH",
+},
+{
+    img: "grillen_card@3x.jpg",
+    title:"GRILL",
+},
+{
+    img: "bratwurst_card@3x.jpg",
+    title:"SNACK",
+},
+{
+    img: "kebab_card@3x.jpg",
+    title:"KEBAB",
+},
+{
+    img: "fastfood_card@3x.jpg",
+    title:"FAST FOOD",
+},
+{
+    img: "pasta_card@3x.jpg",
+    title:"PASTA",
+},
+{
+    img: "pizza_card@3x.jpg",
+    title:"PIZZA",
+},
+{
+    img: "steak_card@3x.jpg",
+    title:"STEAK",
+},
+{
+    img: "sushi_card@3x.jpg",
+    title:"SUSHI",
+},
+{
+    img: "wraps_card@3x.jpg",
+    title:"WRAP",
 },
 ]
 export default class CreateEventCard extends React.Component {
@@ -209,13 +251,14 @@ createEvent(){
   render() {
     return (
       <Card >
-            <Dialog
+            <Dialog className="createEventPickImageWrapper"
+                autoScrollBodyContent={true}
                 modal={false}
                 open={this.state.open}
                 onRequestClose={this.handleClose}
-                contentStyle={{width:"100%",maxWidth:"none",}}
+                contentStyle={{width:"100%",maxWidth:"none",padding:"0px",}}
                 bodyStyle={{padding:"0px",}}
-
+                autoDetectWindowHeight={true}
               >
                 {eventImages.map((data,index) => (
                   <img key={"profilePicture"+index} src={data.img} onClick={()=>this.cardImage(data.title,data.img)} height="100px" widht="100px" alt=""/>
