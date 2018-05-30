@@ -64,16 +64,22 @@ export default class SidebarContent extends React.Component {
     console.log(myGroups);
 
     return (<div className="leftContent">
-      <div style={styles.content}>
+      <div>
+        <p className="highlightSidebarContent" href="activity">PUBLIC</p>
         <div className="divider"/>
-        <a className="highlightSidebarContent" href="activity">PUBLIC</a>
+        <p className="highlightSidebarContent" href="activity">PERSONAL</p>
         <div className="divider"/>
-        <a className="highlightSidebarContent" href="activity">PERSONAL</a>
-        <div className="divider"/>
-        <p className="groups">
-          Gruppen</p>
-        {myGroups}
-        <CreateTeamButton changeContent={this.props.changeContent} closeDrawer={this.props.closeDrawer}/>
+        <p style={{
+          textAlign: "left",
+          color: "#ffffff",
+          margin:"5%",
+          float:"left"
+          }}>
+          GROUPS</p>
+        <CreateTeamButton style={{float:"left",minHeight:"38px", width:"15%"}} changeContent={this.props.changeContent} closeDrawer={this.props.closeDrawer}/>
+        <div className="groups">
+                {myGroups}
+        </div>
       </div>
     </div>);
   }

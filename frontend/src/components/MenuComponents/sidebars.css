@@ -6,10 +6,9 @@
         float: left;
 }
 .leftContent{
-  width: 230px;
-  height: 100vh;
-  background-image: linear-gradient(197deg, #1ea185, #b0e8d2);
-  box-shadow: 3px 0 4px 1px rgba(0, 0, 0, 0.19);
+  height: 100%;
+  	background-color: #1EA185;
+  	box-shadow: 0 2px 4px 0 rgba(0,0,0,0.5);
   overflow: hidden;
   float: left;
 
@@ -37,12 +36,14 @@
   color: #ffffff;
 }
 .highlightSidebarContent{
-  width: 213px;
-  padding: 16px 0px;
+  height: 9.9%;
+  width: 84.27%;
+  opacity: 0.5;
+  background-color:
+   #B0E8D2;
+   margin:5%;
   text-decoration: none;
   display: block;
-  background-image: linear-gradient(to left, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0));
-  font-family: TrebuchetMS;
   font-size: 18px;
   font-weight: normal;
   font-style: normal;
@@ -50,7 +51,7 @@
   line-height: normal;
   letter-spacing: normal;
   text-align: left;
-  color: #ffffff;
+  color: "white";
 }
 .groups{
   margin-top: 10px;

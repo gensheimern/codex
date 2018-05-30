@@ -22,7 +22,6 @@ export default class CreateTeamButton extends React.Component {
         <FlatButton
           icon={<IconAdd color="#FFFFFF"/>}
           onClick={this.handleClick}
-          label="erstelle ein Team"
           target="_blank"
           style={{color:"white"}}/>
       </div>
