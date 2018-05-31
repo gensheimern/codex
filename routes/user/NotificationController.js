@@ -18,7 +18,7 @@ const NotificationController = {
 
 		await NotificationModel.notificationsSeen(targetId);
 
-		res.json(notifications.map(transforms.transformNotification));
+		res.json(notifications.map(transforms().transformNotification));
 	},
 
 	async deleteNotification(req, res) {
