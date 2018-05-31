@@ -63,19 +63,6 @@ class LiveMessages {
 	}
 }
 
-
-/*module.exports = {
-	createLiveMessage(server) {console.log('Live message created')
-		liveMessage = new LiveMessages(server);
-	},
-
-	getLiveMessage() {
-		console.log('Live message get:')
-		console.log(liveMessage)
-		return liveMessage;
-	},
-};*/
-
 module.exports = (() => {
 	let liveMessage = null;
 

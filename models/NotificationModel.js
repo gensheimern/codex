@@ -1,8 +1,6 @@
 const databaseConnection = require('./DatabaseConnection');
 const liveMessages = require('../LiveMessages');
 
-let liveMessage = null;
-
 const Notification = {
 
 	async getAllNotifications(userId) {
@@ -14,11 +12,7 @@ const Notification = {
 	},
 
 	async addNotification(userId, type, title, message, targetId) {
-		if (!liveMessage) {
-			liveMessage = liveMessages.getLiveMessage();
-		}
-
-		liveMessage.publish('notification', {
+		liveMessages.getLiveMessage().publish('notification', {
 			type,
 			title,
 			message,

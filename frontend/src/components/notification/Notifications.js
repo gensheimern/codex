@@ -6,6 +6,7 @@ import JoinNotification from './JoinNotification';
 import ReminderNotification from './ReminderNotification';
 import CircularProgress from 'material-ui/CircularProgress';
 import RaisedButton from 'material-ui/RaisedButton';
+import Push from '../Push';
 
 export default class Notifications extends React.Component {
 	constructor(props) {
@@ -17,12 +18,20 @@ export default class Notifications extends React.Component {
 			loaded: false,
 			error: null,
 		};
+
+		this.handleNotification = this.handleNotification.bind(this);
 	}
 
 	componentDidMount() {
-		this.state.socket.subscribe('notification', console.log);
+		this.state.socket.subscribe('notification', this.handleNotification);
 
 		this.loadNotifications();
+	}
+
+	handleNotification(notification) {
+		const { title, message } = notification;
+
+		Push.sendPush(title, message);
 	}
 
 	loadNotifications() {
