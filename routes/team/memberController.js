@@ -1,5 +1,6 @@
 const Member = require('../../models/MemberModel');
 const TeamModel = require('../../models/TeamModel');
+const NotificationModel = require('../../models/NotificationModel');
 const transforms = require('../transforms');
 
 const MemberController = {
@@ -50,7 +51,13 @@ const MemberController = {
 				message: 'Only the creator of a group can add members.',
 			});
 		} else {
-			await Member.addMember(memberId, teamId);
+			await Member.addMember(memberId, teamId, userId === memberId);
+
+			const team = await TeamModel.getTeamById(teamId);
+
+			if (userId !== memberId) {
+				await NotificationModel.addNotification(memberId, 'joinTeam', 'Team invitation', `You are invited to join the team ${team.Teamname}.`, teamId);
+			}
 
 			res.status(201).json({
 				message: 'Member added to team.',

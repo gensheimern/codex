@@ -1,4 +1,5 @@
 const NotificationModel = require('../../models/NotificationModel');
+const MemberModel = require('../../models/MemberModel');
 const transforms = require('../transforms');
 
 const NotificationController = {
@@ -51,7 +52,7 @@ const NotificationController = {
 	async decideNotification(req, res) {
 		const { userId } = req.token;
 		const targetId = req.params.userId;
-		// const { notificationId } = req.params;
+		const { notificationId } = req.params;
 		const { accepted } = req.body;
 
 		if (typeof accepted !== 'boolean') {
@@ -70,15 +71,46 @@ const NotificationController = {
 			return;
 		}
 
-		// TODO: Save decision,
-		// TODO: Save Placeholder with decision
+		const dbNotification = await NotificationModel.getNotification(notificationId);
+		const notification = transforms().transformNotification(dbNotification);
 
-		res.json({
-			success: true,
-			message: 'Decision saved',
-		});
+		if (!notification || notification.user.id !== userId) {
+			res.status(404).json({
+				success: false,
+				message: 'Notification not found.',
+			});
+		}
+
+		if (notification.type === 'joinTeam') {
+			if (accepted) {
+				await MemberModel.acceptMember(notification.targetId, userId);
+			} else {
+				await MemberModel.declineMember(notification.targetId, userId);
+			}
+
+			await NotificationModel.addNotification(notification.user.id, 'notification', accepted ? 'Team invitation accepted.' : 'Team invitation declined', notification.message, notification.targetId);
+
+			await NotificationModel.deleteNotification(notificationId);
+
+			res.json({
+				success: true,
+				message: 'Decision saved.',
+			});
+		} else if (notification.type === 'joinEvent') {
+			res.status(501).json({
+				message: 'Not implemented.',
+			});
+
+			// TODO: Save decision,
+			// TODO: Delete notification
+			// TODO: Save Placeholder with decision
+		} else {
+			res.status(409).json({
+				success: false,
+				message: 'Notification cannot be accepted.',
+			});
+		}
 	},
-
 };
 
 module.exports = NotificationController;

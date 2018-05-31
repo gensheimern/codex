@@ -1,24 +1,30 @@
 const databaseConnection = require('./DatabaseConnection');
-const liveMessage = require('../LiveMessages').getLiveMessage();
+const liveMessages = require('../LiveMessages');
+
+let liveMessage = null;
 
 const Notification = {
 
 	async getAllNotifications(userId) {
-		return databaseConnection.queryp('SELECT * FROM Notification WHERE User_Id = ?', [userId]);
+		return databaseConnection.queryp('SELECT Notification.*, User.* FROM Notification INNER JOIN User ON Notification.User_Id = User.User_Id WHERE User.User_Id = ? ORDER BY Time DESC', [userId]);
 	},
 
 	async getNotification(notificationId) {
 		return databaseConnection.querypFirst('SELECT * FROM Notification WHERE Notification_Id = ?', [notificationId]);
 	},
 
-	async addNotification(userId, type, title, message) {
+	async addNotification(userId, type, title, message, targetId) {
+		if (!liveMessage) {
+			liveMessage = liveMessages.getLiveMessage();
+		}
+
 		liveMessage.publish('notification', {
 			type,
 			title,
 			message,
 		}, userId);
 
-		return databaseConnection.queryp('INSERT INTO Notification (Type, Title, Message, Time, User_Id) VALUES (?, ?, ?, ?, ?)', [type, title, message, Date.now(), userId]);
+		return databaseConnection.queryp('INSERT INTO Notification (Type, Title, Message, Time, Target_Id, User_Id) VALUES (?, ?, ?, CURRENT_TIMESTAMP(), ?, ?)', [type, title, message, targetId, userId]);
 	},
 
 	async deleteNotification(notificationId) {

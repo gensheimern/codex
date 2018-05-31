@@ -46,7 +46,7 @@ const TeamController = {
 		}
 
 		const dbRes = await TeamModel.addTeam(name, userId);
-		await MemberModel.addMember(userId, dbRes.insertId);
+		await MemberModel.addMember(userId, dbRes.insertId, false);
 
 		res.status(201).json({
 			teamId: dbRes.insertId,

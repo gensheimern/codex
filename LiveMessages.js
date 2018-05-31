@@ -1,8 +1,6 @@
 const socketIO = require('socket.io');
 const Auth = require('./routes/auth/Auth');
 
-let liveMessage = null;
-
 class LiveMessages {
 	constructor(http) {
 		this.io = socketIO(http);
@@ -66,12 +64,28 @@ class LiveMessages {
 }
 
 
-module.exports = {
-	createLiveMessage(server) {
+/*module.exports = {
+	createLiveMessage(server) {console.log('Live message created')
 		liveMessage = new LiveMessages(server);
 	},
 
 	getLiveMessage() {
+		console.log('Live message get:')
+		console.log(liveMessage)
 		return liveMessage;
 	},
-};
+};*/
+
+module.exports = (() => {
+	let liveMessage = null;
+
+	return {
+		createLiveMessage(server) {
+			liveMessage = new LiveMessages(server);
+		},
+
+		getLiveMessage() {
+			return liveMessage;
+		},
+	};
+})();

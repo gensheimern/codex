@@ -4,6 +4,7 @@ import FlatButton from 'material-ui/FlatButton';
 import CircularProgress from 'material-ui/CircularProgress';
 import Snackbar from 'material-ui/Snackbar';
 import config from '../../config';
+import dateUtils from './dateUtils';
 
 export default class JoinNotification extends React.Component {
 	constructor(props) {
@@ -79,7 +80,8 @@ export default class JoinNotification extends React.Component {
 	}
 
 	render() {
-		const { id, title, type, message } = this.props.notification;
+		const { id, title, type, message, time, seen } = this.props.notification;
+		const created = dateUtils.formatDate(new Date(time));
 
 		let actions = (
 			<CardActions>
@@ -105,12 +107,17 @@ export default class JoinNotification extends React.Component {
 			}
 		}
 
+		const seenStyle = seen ? null : {backgroundColor: '#b5daff'};
+
 		return (
 			<React.Fragment>
-				<Card key={id} style={{margin: '5px'}}>
+				<Card key={id} style={{
+					margin: '5px',
+					...seenStyle
+				}}>
 						<CardHeader
 							title={`${title} - ${type}`}
-							subtitle={message}
+							subtitle={`${message} - ${created}`}
 							style={{
 								paddingTop: '10px',
 								paddingBottom: 0,

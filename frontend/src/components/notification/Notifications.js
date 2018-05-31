@@ -42,7 +42,7 @@ export default class Notifications extends React.Component {
             if(!res.ok) {
                 throw new Error("Response not ok.");
             } else if(res.status !== 200) {
-                throw new Error("Forbidden");
+                throw new Error("An error occured.");
             }
             return res;
 		})
