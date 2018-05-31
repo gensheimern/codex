@@ -3,7 +3,7 @@ import { Card, CardHeader } from 'material-ui/Card';
 
 export default class TextNotification extends React.Component {
 	render() {
-		const { id, title, type, message, targetId } = this.props.notification;
+		const { title, type, message } = this.props.notification;
 		return(
 			<React.Fragment>
 				<Card style={{margin: '5px'}}>

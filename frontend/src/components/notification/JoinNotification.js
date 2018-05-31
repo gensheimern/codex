@@ -79,7 +79,7 @@ export default class JoinNotification extends React.Component {
 	}
 
 	render() {
-		const { id, title, type, message, targetId } = this.props.notification;
+		const { id, title, type, message } = this.props.notification;
 
 		let actions = (
 			<CardActions>
