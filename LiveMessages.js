@@ -21,7 +21,7 @@ class LiveMessages {
 
 			socket.on('subscribe', (msg) => {
 				if (!msg || !msg.token || !msg.topic) {
-					socket.emit('error', new Error('Invalid token provided.'));
+					socket.emit('err', 'Invalid token provided.');
 				}
 
 				const { token } = msg;
@@ -31,15 +31,12 @@ class LiveMessages {
 						this.subscribe(socket, decoded.userId, msg.topic);
 
 						user = decoded.userId;
+					})
+					.catch(() => {
+						socket.emit('err', 'Invalid token provided.');
 					});
 			});
 		});
-
-		setInterval(() => {
-			this.publish('test', 'Hi', 1);
-			this.publish('test', 'Ho', 2);
-			this.publish('test2', 'Hu', 1);
-		}, 1000);
 	}
 
 	subscribe(socket, userId, topic) {

@@ -38,6 +38,19 @@ const transforms = {
 			...transforms.transformUser(dbMessage),
 		},
 	}),
+
+	transformNotification: dbNotification => ({
+		id: dbNotification.Notification_Id,
+		type: dbNotification.Type,
+		title: dbNotification.Title,
+		message: dbNotification.Message,
+		time: dbNotification.Time,
+		seen: Boolean(dbNotification.Seen),
+		target: dbNotification.Target_Id,
+		user: {
+			...transforms.transformUser(dbNotification),
+		},
+	}),
 };
 
 module.exports = transforms;

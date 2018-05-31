@@ -1,8 +1,11 @@
 import openSocket from 'socket.io-client';
+import config from './config';
+
+let socket = null;
 
 class Socket {
 	constructor() {
-		this.connection = openSocket();
+		this.connection = openSocket(config.wsPath);
 	}
 
 	subscribe(topic, callback) {
@@ -19,4 +22,8 @@ class Socket {
 	}
 }
 
-export default Socket;
+function getSocket()  {
+	return socket || new Socket();
+}
+
+export default getSocket;
