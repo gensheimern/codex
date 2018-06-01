@@ -53,7 +53,6 @@ export default class Login extends Component {
             }
             return res;
         }).then(res => res.json()).then((res) => {
-            //console.log("Token: " + res.token)
 
             if(typeof (Storage) !== "undefined") {
                 localStorage.setItem("apiToken", res.token);

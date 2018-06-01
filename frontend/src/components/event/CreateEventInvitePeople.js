@@ -23,11 +23,6 @@ export default class CreateEventInvitePeople extends React.Component {
     this.loadUsers();
   }
 
-  handleNewRequest(){
-    console.log("jup");
-  }
-
-
   loadUsers(){
     fetch(config.apiPath + "/user/", {
       method: 'GET',

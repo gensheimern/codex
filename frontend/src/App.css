@@ -33,15 +33,20 @@
   margin-top: 0px;
   background-color: #F1F1F1;
 }
+
 .mainContentMobile-wrapper{
   overflow:hidden;
-  width: 100%;
+  width: 100vw;
   height: 86vh;
-
+	overflow-x: hidden;
+	overflow-y: scroll;
 }
+
 .mobileContent-wrapper{
   overflow: hidden;
   width: 100%;
+  height: 100vh;
 }
+
 body { overflow: hidden; }
 

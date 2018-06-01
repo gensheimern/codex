@@ -26,7 +26,6 @@ export default class SidebarContent extends React.Component {
         'X-Access-Token': localStorage.getItem('apiToken')
       }
     }).then((res) => {
-      console.log(res.status);
       if (!res.ok) {
         throw new Error("Request failed.");
       } else if (res.status !== 200) {
@@ -35,7 +34,6 @@ export default class SidebarContent extends React.Component {
         return res;
       }
     }).then(res => res.json()).then(res => {
-      console.log(res);
       this.setState({groups: res});
     });
 
@@ -64,7 +62,6 @@ export default class SidebarContent extends React.Component {
   }
 
   render() {
-    console.log(this.state.groups);
     let myGroups = this.state.groups.map((group,index) => (
       <GroupSidebarButton
          key={"group"+index}
@@ -74,8 +71,6 @@ export default class SidebarContent extends React.Component {
          name={group.name}
          main={false}>
        </GroupSidebarButton>));
-
-    console.log(myGroups);
 
     return (<div className="leftContent">
       <div>

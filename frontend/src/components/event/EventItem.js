@@ -23,16 +23,6 @@ export default class EventItem extends React.Component {
 
 	}
 
-/*
-	shouldComponentUpdate(nextProps, nextState){
-		if(this.state.collapsed !== nextState.collapsed) {
-			return true
-			console.log("true");
-		}
-
-		return false
-	}
-*/
 	componentDidMount() {
 		this.loadParticipants();
 		this.loadMessages();
