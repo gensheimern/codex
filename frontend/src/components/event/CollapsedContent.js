@@ -5,12 +5,15 @@ import GroupFA from 'react-icons/lib/fa/group';
 import PlaceMUI from 'react-icons/lib/md/place';
 import TextField from 'material-ui/TextField';
 import DeleteMUI from 'react-icons/lib/md/delete';
-import jwt_decode from 'jwt-decode';
 
 export default class CollapsedContent extends React.Component {
 
   constructor(props){
     super(props);
+
+    this.state = {
+      imgPath: '',
+    };
 
     this._onKeyPress = this._onKeyPress.bind(this);
   }
@@ -61,10 +64,36 @@ export default class CollapsedContent extends React.Component {
 
 }
 
+  componentDidMount() {
+    fetch(config.apiPath + "/user/me", {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Access-Token': localStorage.getItem('apiToken')
+      },
+    })
+    .then((res) => {
+      if (!res.ok) {
+        throw new Error("Request failed.");
+      } else if (res.status !== 200) {
+        throw new Error("Forbidden");
+      }
+
+      return res;
+    })
+    .then(res => res.json())
+    .then(res => {
+      this.setState({
+        imgPath: res.image
+      });
+    })
+    .catch((err) => {
+      // TODO
+    });
+  }
+
 
   ToggleCollapse(){
-
-    let decode = jwt_decode(localStorage.getItem('apiToken'));
 
     if(this.props.collapse){
       let participatesIMG;
@@ -87,7 +116,7 @@ export default class CollapsedContent extends React.Component {
                 </div>
               </div>
               <div className="commentDelete">
-              {decode.userId === messageItem.author.id ? <DeleteMUI /> : <span />}
+              {messageItem.author.me ? <DeleteMUI /> : <span />}
 
               </div>
             </div>
@@ -138,7 +167,7 @@ export default class CollapsedContent extends React.Component {
             <div className="event-textfield">
                 {message}
                 <div className="texfield-profile-picture">
-                    <img src= {decode.image} alt=""/>
+                    <img src= {this.state.imgPath} alt=""/>
                 </div>
                 <div  className="myTextfield">
                 <TextField

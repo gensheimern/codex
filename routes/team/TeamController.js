@@ -1,6 +1,6 @@
 const TeamModel = require('../../models/TeamModel');
 const MemberModel = require('../../models/MemberModel');
-const { transformTeam } = require('../transforms');
+const transforms = require('../transforms');
 const { validTeam } = require('./teamValidation');
 
 const TeamController = {
@@ -10,7 +10,7 @@ const TeamController = {
 
 		const teams = await TeamModel.getAllTeams(userId);
 
-		res.json(teams.map(transformTeam));
+		res.json(teams.map(transforms(userId).transformTeam));
 	},
 
 	async getTeamById(req, res) {
@@ -31,7 +31,7 @@ const TeamController = {
 			return;
 		}
 
-		res.json(transformTeam(team));
+		res.json(transforms(userId).transformTeam(team));
 	},
 
 	async addTeam(req, res) {
