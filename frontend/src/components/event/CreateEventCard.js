@@ -10,6 +10,8 @@ import ReminderToggle from './ReminderToggle';
 import InvitePeople from './CreateEventInvitePeople';
 import InviteChip from './CreateEventChip';
 import config from '../../config';
+import Snackbar from 'material-ui/Snackbar';
+import RaisedButton from 'material-ui/RaisedButton';
 
 const eventImages = [
 
@@ -76,26 +78,28 @@ export default class CreateEventCard extends React.Component {
     super(props);
 
     this.state = {
-      address: [],
+      address:[],
       addressString:'',
+      addressValue:'',
       meetingPoint: '',
       open:false,
       cardTitle:"Edit group picture",
-      cardImage: "events.jpg",
+      cardImage: "pasta_card@3x.jpg",
       collapse: false,
       invitePeople:[],
       time:'',
-      date:'',
+      date:new Date(),
       reminder : false,
       private: false,
       meetingPointValue: '',
       maxPeopleValue: '',
       descriptionValue: '',
-      year: '',
-      month: '',
-      day: '',
-      hours: '',
-      minutes: '',
+      year: (new Date()).getUTCFullYear(),
+      month: (new Date()).getUTCMonth(),
+      day: (new Date()).getUTCDate(),
+      hours: '12',
+      minutes: '0',
+      snackbaropen: false,
     }
     this.toggleCollapse = this.toggleCollapse.bind(this);
     this.callbackAddress = this.callbackAddress.bind(this);
@@ -107,10 +111,11 @@ export default class CreateEventCard extends React.Component {
     this.handleChangeMeetingPoint = this.handleChangeMeetingPoint.bind(this);
     this.handleChangeDescription = this.handleChangeDescription.bind(this);
     this.handleChangeMaxPeople = this.handleChangeMaxPeople.bind(this);
-
+    this.handleChangeAddressValue = this.handleChangeAddressValue.bind(this);
   }
 
   handleOpen = () => {
+    console.log("lkjlkj")
 	this.setState({open: true});
 };
 
@@ -122,7 +127,7 @@ handleClose = () => {
     this.setState({invitePeople: people})
   }
   callbackAddress(myAddress){
-    this.setState({ address: [...this.state.address, myAddress.long_name ] });
+    this.setState({ address: myAddress.split(',') });
   }
   callbackTime(event, time){
     this.setState({hours:time.getUTCHours()});
@@ -159,13 +164,34 @@ handleChangeMeetingPoint(e){
 handleChangeMaxPeople(e){
   this.setState({ maxPeopleValue: e.target.value});
 }
+handleChangeAddressValue(e){
+  this.setState({ addressValue: e.target.value});
+      console.log(e.target.value+ "dddd");
+}
 handleChangeDescription(e){
   this.setState({ descriptionValue: e.target.value});
 }
 
 combineAddress(){
-console.log(this.state.address.reverse().toString());
+  if(!this.state.address[1]){
+    return this.state.address[0]
+  } else {
+    return (this.state.address[1] + " " + this.state.address[2])
+  }
+
 }
+
+
+  renderSnackbar = () => {
+   this.setState({
+     snackbaropen: true,
+   });
+ };
+ renderSnackbarClose = () => {
+    this.setState({
+      snackbaropen: false,
+    });
+  };
 
 
 createEvent(){
@@ -173,21 +199,23 @@ createEvent(){
     method: 'POST',
     body: JSON.stringify({
       description: this.state.descriptionValue,
-      name: this.state.cardTitle,
-      place: this.state.address.reverse().toString(),
+      name: this.state.address[0],
+      place: this.combineAddress(),
       time: this.state.year + "-" + this.state.month + "-" + this.state.day + " " + this.state.hours + ":" + this.state.minutes,
       event: false,
       private: this.state.private,
       banner: this.state.cardImage,
-      maxParticipants: this.state.maxPeopleValue
+      maxParticipants: parseInt(this.state.maxPeopleValue),
     }),
     headers: {
         'Content-Type': 'application/json',
         'X-Access-Token': localStorage.getItem('apiToken')
       }
   }).then((res) => {
-    console.log(res);
-    console.log(this.state);
+    if(res.status=== 201){
+        this.renderSnackbar();
+        this.props.changeContent(0);
+    }
     if(res.status !== 201) {
       console.log(res.status);
     } else if(res.status !== 200) {
@@ -196,14 +224,7 @@ createEvent(){
     }
       return res;
   }).then(res => res.json()).then((res) => {
-      //console.log("Token: " + res.token)
-
-      if(typeof (Storage) !== "undefined") {
-          localStorage.setItem("apiToken", res.token);
-      } else {
-          // TODO Code without local storage
-      }
-  });
+});
 }
 
 
@@ -251,6 +272,13 @@ createEvent(){
   render() {
     return (
       <Card >
+              <Snackbar
+                open={this.state.snackbaropen}
+                message="Event added to your calendar"
+                autoHideDuration={4000}
+                onRequestClose={this.renderSnackbarClose}
+              />
+
             <Dialog className="createEventPickImageWrapper"
                 autoScrollBodyContent={true}
                 modal={false}
@@ -270,7 +298,7 @@ createEvent(){
           overlayContentStyle={{padding:"2px"}}
           overlay={<CardTitle onClick={this.handleOpen} className="createEventEditPicture" subtitle={this.state.cardTitle} />}
         >
-          <img src={this.state.cardImage} alt="" />
+          <img   src={this.state.cardImage} alt="" />
         </CardMedia>
         <CardText>
 
@@ -280,7 +308,7 @@ createEvent(){
             <div style={{clear:"both"}}></div>
         </div>
 
-        <Maps myAddress={this.callbackAddress} >
+        <Maps callbackAdress={this.handleChangeAddressValue} myAddress={this.callbackAddress} >
         {renderFunc}
         </Maps>
 
@@ -303,6 +331,8 @@ createEvent(){
     );
   }
 }
+
+
 
 const renderFunc = ({ getInputProps, getSuggestionItemProps, suggestions }) => (
 <div className="autocomplete-root">

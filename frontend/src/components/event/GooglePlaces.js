@@ -12,7 +12,8 @@ export default class LocationSearchInput extends React.Component {
   }
 
   handleChange = (address) => {
-    this.setState({ address })
+    this.setState({ address });
+    this.props.handleChangeAddressValue;
   }
 
   parseAddress(results){
@@ -30,8 +31,9 @@ export default class LocationSearchInput extends React.Component {
   }
 
   handleSelect = (address) => {
+    this.props.myAddress(address);
     geocodeByAddress(address)
-      .then(results => this.parseAddress(results))
+      .then(results => console.log(results[0]))
       .then(latLng => console.log('Success', latLng))
       .catch(error => console.error('Error', error))
   }
@@ -50,7 +52,7 @@ export default class LocationSearchInput extends React.Component {
                 underlineFocusStyle={{borderColor:"rgb(30 161 133)"}}
                 floatingLabelFixed={true}
                 floatingLabelText="Address"
-                hintText="Mannheim Am Ried 123"
+                hintText="Search your location"
                 {...getInputProps({
                   className: 'location-search-input'
                 })}

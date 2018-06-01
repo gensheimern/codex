@@ -15,7 +15,7 @@ render(){
         <DatePicker
           onChange={this.props.date}
           autoOk={true}
-          hintText="Portrait Dialog"
+          hintText="Today"
         />
       </div>
 );
