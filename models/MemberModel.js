@@ -1,4 +1,6 @@
 const databaseConnection = require('./DatabaseConnection');
+const NotificationModel = require('./NotificationModel');
+const TeamModel = require('./TeamModel');
 
 const Member = {
 
@@ -49,6 +51,10 @@ const Member = {
 	 * @returns {Promise<OkPacket>} Result from the database.
 	 */
 	async acceptMember(teamId, userId) {
+		const team = await TeamModel.getTeamById(teamId);
+		NotificationModel.notifyTeam(teamId, 'notification', 'New team member', `A new member joined your team '${team.Teamname}'.`, teamId, userId)
+			.catch(() => {});
+
 		return databaseConnection.queryp('UPDATE member_of SET Accepted = 1 WHERE Team_Id = ? AND User_Id = ?', [teamId, userId]);
 	},
 

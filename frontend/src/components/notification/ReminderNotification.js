@@ -22,6 +22,9 @@ export default class ReminderNotification extends React.Component {
 						paddingTop: '10px',
 						paddingBottom: '10px',
 					}}
+					textStyle={{
+						paddingRight: 0,
+					}}
 				/>
 			</Card>
 		);

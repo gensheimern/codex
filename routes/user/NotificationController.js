@@ -1,5 +1,6 @@
 const NotificationModel = require('../../models/NotificationModel');
 const MemberModel = require('../../models/MemberModel');
+const ParticipatesModel = require('../../models/participatesModel');
 const transforms = require('../transforms');
 
 const NotificationController = {
@@ -88,7 +89,7 @@ const NotificationController = {
 				await MemberModel.declineMember(notification.targetId, userId);
 			}
 
-			await NotificationModel.addNotification(notification.user.id, 'notification', accepted ? 'Team invitation accepted.' : 'Team invitation declined', notification.message, notification.targetId);
+			await NotificationModel.addNotification(notification.user.id, 'notification', accepted ? 'Team invitation accepted.' : 'Team invitation declined.', notification.message, notification.targetId);
 
 			await NotificationModel.deleteNotification(notificationId);
 
@@ -97,13 +98,20 @@ const NotificationController = {
 				message: 'Decision saved.',
 			});
 		} else if (notification.type === 'joinEvent') {
-			res.status(501).json({
-				message: 'Not implemented.',
-			});
+			if (accepted) {
+				await ParticipatesModel.acceptParticipation(userId, notification.targetId);
+			} else {
+				await ParticipatesModel.declineParticipation(userId, notification.targetId);
+			}
 
-			// TODO: Save decision,
-			// TODO: Delete notification
-			// TODO: Save Placeholder with decision
+			await NotificationModel.addNotification(notification.user.id, 'notification', accepted ? 'Event invitation accepted.' : 'Event invitation declined.', notification.message, notification.targetId);
+
+			// await NotificationModel.deleteNotification(notificationId); // FIXME: Einkommentieren
+
+			res.json({
+				success: true,
+				message: 'Decision saved.',
+			});
 		} else {
 			res.status(409).json({
 				success: false,

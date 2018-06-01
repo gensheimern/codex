@@ -1,5 +1,6 @@
 const ParticipatesModel = require('../../models/participatesModel');
 const ActivityModel = require('../../models/ActivityModel');
+const NotificationModel = require('../../models/NotificationModel');
 const transforms = require('../transforms');
 
 const ParticipatesController = {
@@ -59,7 +60,20 @@ const ParticipatesController = {
 			return;
 		}
 
-		const result = await ParticipatesModel.addParticipant(activityId, participantId);
+		const result = await ParticipatesModel.addParticipant(
+			activityId,
+			participantId,
+			Number(userId) === Number(participantId),
+		);
+
+		const activity = await ActivityModel.getActivityById(activityId);
+
+		if (userId !== participantId) {
+			await NotificationModel.addNotification(participantId, 'joinEvent', 'Event invitation', `You are invited to join the event '${activity.Activityname}'.`, activityId);
+		}
+
+		NotificationModel.notifyEvent(activityId, 'notification', 'New participant', `A new participant joined your event '${activity.Activityname}'.`, activityId, participantId)
+			.catch(() => {});
 
 		if (result.affectedRows === 1) {
 			res.status(201).json({
@@ -87,6 +101,10 @@ const ParticipatesController = {
 		}
 
 		const result = await ParticipatesModel.deleteParticipant(activityId, participantId);
+
+		const activity = await ActivityModel.getActivityById(activityId);
+		NotificationModel.notifyEvent(activityId, 'notification', 'Participant left', `A participant left your event '${activity.Activityname}'.`, activityId, null)
+			.catch(() => {});
 
 		if (result.affectedRows === 1) {
 			res.json({

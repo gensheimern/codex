@@ -102,7 +102,10 @@ export default class Notifications extends React.Component {
 		}
 
 		return (
-			<div>
+			<div style={{
+				height: '100vh',
+				overflowY: 'scroll'
+			}}>
 				{this.state.notifications.map(notification => {
 					switch (notification.type) {
 						case 'notification':	return(<TextNotification notification={notification} key={notification.id}/>);

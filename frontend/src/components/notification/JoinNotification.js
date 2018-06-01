@@ -122,6 +122,9 @@ export default class JoinNotification extends React.Component {
 								paddingTop: '10px',
 								paddingBottom: 0,
 							}}
+							textStyle={{
+								paddingRight: 0,
+							}}
 						/>
 						{actions}
 				</Card>

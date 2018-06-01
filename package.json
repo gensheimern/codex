@@ -7,7 +7,7 @@
 		"start": "node server",
 		"server": "nodemon server.js --ignore frontend/",
 		"client": "npm start --prefix frontend",
-		"all": "concurrently \"npm start\" \"npm start --prefix frontend\" --kill-others",
+		"all": "concurrently \"npm run server\" \"npm run client\" --kill-others",
 		"preprod": "npm run build --prefix frontend",
 		"prod": "npm start",
 		"build": "npm run build --prefix frontend",
