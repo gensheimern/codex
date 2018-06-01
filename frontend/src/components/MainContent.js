@@ -10,7 +10,7 @@ import FlatButton from 'material-ui/FlatButton';
 import CreateEventtCard from './event/CreateEventCard';
 import CreateTeam from './groupmanager/CreateTeam';
 import Paper from 'material-ui/Paper';
-
+import FilterDropDown from './MenuComponents/FilterDropDown.js';
 
 export default class MainContent extends React.Component {
   constructor(props) {
@@ -64,6 +64,9 @@ export default class MainContent extends React.Component {
           height: "100%",
           overflowY: "scroll"
         }}>
+        <div className="FilterDiv">
+          <FilterDropDown searchFilterFeed={this.props.searchFilterFeed}/>
+        </div>
         <Events filterWord={this.props.filterWord} searchWord={this.props.searchWord} />
       </div>);
     } else if (this.props.mainContentNumber === 1) {

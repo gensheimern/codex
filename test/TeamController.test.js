@@ -71,6 +71,7 @@ describe('Team controller', () => {
 						name: 'Mustermann',
 						email: 'valid@email.com',
 						image: '/image.png',
+						me: false,
 					},
 				},
 				{
@@ -81,6 +82,7 @@ describe('Team controller', () => {
 						name: 'Mustermann',
 						email: 'valid2@email.com',
 						image: '/image2.png',
+						me: false,
 					},
 				},
 			]);
@@ -135,6 +137,7 @@ describe('Team controller', () => {
 					name: 'Mustermann',
 					email: 'valid@email.com',
 					image: '/image.png',
+					me: false,
 				},
 			});
 		});

@@ -1,13 +1,15 @@
 const UserModel = require('../../models/UserModel');
-const { transformUser } = require('../transforms');
+const transforms = require('../transforms');
 const { validUser } = require('./userValidation');
 
 const UserController = {
 
 	async getAllUsers(req, res) {
+		const { userId } = req.params;
+
 		const users = await UserModel.getAllUsers();
 
-		res.json(users.map(transformUser));
+		res.json(users.map(transforms(userId).transformUser));
 	},
 
 	async getUserById(req, res) {
@@ -16,7 +18,7 @@ const UserController = {
 		const user = await UserModel.getUserById(userId);
 
 		if (user) {
-			res.json(transformUser(user));
+			res.json(transforms(userId).transformUser(user));
 			return;
 		}
 
@@ -100,7 +102,7 @@ const UserController = {
 
 		const oldUser = await UserModel.getUserById(targetId);
 		const newUser = {
-			...transformUser(oldUser),
+			...transforms().transformUser(oldUser),
 			password: oldUser.Password,
 			...req.body,
 		};

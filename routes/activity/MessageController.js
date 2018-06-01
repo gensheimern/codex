@@ -23,7 +23,7 @@ const MessageController = {
 
 		const messages = await messagesPromise;
 
-		res.json(messages.map(transforms.transformMessage));
+		res.json(messages.map(transforms(userId).transformMessage));
 	},
 
 	async createMessage(req, res) {
