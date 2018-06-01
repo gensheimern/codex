@@ -1,8 +1,9 @@
 import React from 'react';
 import renderer from'react-test-renderer';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import EventCard from './EventCard';
+import Events from './Events';
 import config from '../../config';
+
 const fetchMock = require('fetch-mock');
 
 beforeEach(() => {
@@ -25,7 +26,25 @@ beforeEach(() => {
         name: "Mustermann",
         email: "max.mustermann@gmail.com",
         image: "",
-    
+    });
+    fetchMock.get(config.apiPath +'/activity',{
+        id:8,
+		description: "",
+		name: "",
+		place: "",
+		time: new Date('01.06.2018'),
+		event: true,
+		private: true,
+		banner: "",
+		maxParticipants: "",
+		host: {
+			id:7,
+            firstName: "Max",
+            name: "Mustermann",
+            email: "max.mustermann@gmail.com",
+            image: "",
+            me: true,
+		},
     });
   });
 
@@ -33,38 +52,11 @@ beforeEach(() => {
    fetchMock.restore();
   });
 
-describe('EventCard Snapshot', () => {
+describe('Events Snapshot', () => {
     test('renders', () =>{
         const component = renderer.create(
             <MuiThemeProvider>
-                <EventCard  event = {{
-                    id: 5, description: "",
-                    name: "", place: "", 
-                    time: new Date('12.12.2018'),
-                    event: true,
-                    private: true,
-                    banner:"",
-                    maxParticipants:5,
-                    host: {
-                        id:5,
-                        firstName: "",
-                        name: "",
-                        email: "",
-                        img: "",
-                    }
-                }} 
-                messages = {[
-                   { id: 6,
-                    time: new Date('12.12.2018'),
-                    content: "",
-                    author:{
-                        id:7,
-                        firstName: "",
-                        name: "",
-                        email: "",
-                        img: "",
-                    }
-                }]} />
+            <Events/>
             </MuiThemeProvider>
         );
         let tree= component.toJSON();

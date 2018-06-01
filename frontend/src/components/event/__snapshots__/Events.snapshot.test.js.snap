@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Events Snapshot renders 1`] = `
+<p>
+  Loading
+</p>
+`;

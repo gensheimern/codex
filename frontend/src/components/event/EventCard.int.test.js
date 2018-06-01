@@ -8,7 +8,8 @@ const fetchMock = require('fetch-mock');
 
 beforeEach(() => {
     window.localStorage = {getItem: () => ""};
-    fetchMock.get(config.apiPath +'/activity/5/message', [ { id: 6,
+    fetchMock.get(config.apiPath +'/activity/5/message', 
+    [ { id: 6,
         time: new Date('12.12.2018'),
         content: "",
         author:{
@@ -16,9 +17,17 @@ beforeEach(() => {
             firstName: "",
             name: "",
             email: "",
-            img: "",
+            image: "",
         }
     }]);
+    fetchMock.get( config.apiPath +'/user/me',{
+            id:7,
+            firstName: "Max",
+            name: "Mustermann",
+            email: "max.mustermann@gmail.com",
+            image: "",
+        
+    });
   });
 
   afterEach(() => {
@@ -26,10 +35,10 @@ beforeEach(() => {
   });
 
 describe("EventCard", () => {
-    let mountedCreateTeam;
-    const createTeam = () => {
-        if(!mountedCreateTeam){
-            mountedCreateTeam = mount(
+    let mountedEventCard;
+    const eventCard = () => {
+        if(!mountedEventCard){
+            mountedEventCard = mount(
                 <EventCard event = {{
                     id: 5, description: "",
                     name: "", place: "", 
@@ -60,18 +69,18 @@ describe("EventCard", () => {
                 }]}/>
             );
         }
-        return mountedCreateTeam;
+        return mountedEventCard;
     };
     
     it("always renders a div", () => {
-        const divs = createTeam().find("div");
+        const divs = eventCard().find("div");
         expect(divs.length).toBeGreaterThan(0);
     });
 
     it("contains everything else that gets rendered", () => {
-        const divs = createTeam().find("div");
+        const divs = eventCard().find("div");
         const wrappingDiv = divs.first();
-        expect(wrappingDiv.children).toEqual(createTeam().children);
+        expect(wrappingDiv.children).toEqual(eventCard().children);
     });
 });
 

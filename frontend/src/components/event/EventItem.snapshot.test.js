@@ -1,7 +1,7 @@
 import React from 'react';
 import renderer from'react-test-renderer';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import EventCard from './EventCard';
+import EventItem from './EventItem';
 import config from '../../config';
 const fetchMock = require('fetch-mock');
 
@@ -19,7 +19,8 @@ beforeEach(() => {
             img: "",
         }
     }]);
-    fetchMock.get( config.apiPath +'/user/me',{
+    fetchMock.get( config.apiPath +'/user/me',
+    {
         id:7,
         firstName: "Max",
         name: "Mustermann",
@@ -27,17 +28,21 @@ beforeEach(() => {
         image: "",
     
     });
+    fetchMock.get(config.apiPath + '/activity/5/participants',
+    [{
+        id:7,
+        firstName: "Max",
+        name: "Mustermann",
+        email: "max.mustermann@gmail.com",
+        image: "",
+    }]);
   });
 
-  afterEach(() => {
-   fetchMock.restore();
-  });
-
-describe('EventCard Snapshot', () => {
+describe('EventItem Snapshot', () => {
     test('renders', () =>{
         const component = renderer.create(
             <MuiThemeProvider>
-                <EventCard  event = {{
+                <EventItem event = {{
                     id: 5, description: "",
                     name: "", place: "", 
                     time: new Date('12.12.2018'),
@@ -64,7 +69,7 @@ describe('EventCard Snapshot', () => {
                         email: "",
                         img: "",
                     }
-                }]} />
+                }]}/>
             </MuiThemeProvider>
         );
         let tree= component.toJSON();

@@ -4,26 +4,26 @@ import Signup from './Signup';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 describe("Signup", () => {
-    let mountedCreateTeam;
-    const createTeam = () => {
-        if(!mountedCreateTeam){
-            mountedCreateTeam = mount(
+    let mountedSignup;
+    const signup = () => {
+        if(!mountedSignup){
+            mountedSignup = mount(
                 <MuiThemeProvider>
                     <Signup />
                 </MuiThemeProvider>
             );
         }
-        return mountedCreateTeam;
+        return mountedSignup;
     };
     
     it("always renders a div", () => {
-        const divs = createTeam().find("div");
+        const divs = signup().find("div");
         expect(divs.length).toBeGreaterThan(0);
     });
 
     it("contains everything else that gets rendered", () => {
-        const divs = createTeam().find("div");
+        const divs = signup().find("div");
         const wrappingDiv = divs.first();
-        expect(wrappingDiv.children).toEqual(createTeam().children);
+        expect(wrappingDiv.children).toEqual(signup().children);
     });
 });
