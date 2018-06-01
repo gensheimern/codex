@@ -33,9 +33,25 @@
   letter-spacing: normal;
   text-align: left;
   color: #ffffff;
-  width: 75%;
+  width: 100%;
   float:left;
-}
+}.selectedGroup{
+  margin-left: 25%;
+  display: block;
+  padding: 26px 0px;
+  text-decoration: none;
+  height: 22px;
+  font-size: 18px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: #ffffff;
+  width: 80%;
+  float:right;
+  color:black !important;}
 .highlightSidebarContent{
   height: 9.9%;
   width: 84.27%;

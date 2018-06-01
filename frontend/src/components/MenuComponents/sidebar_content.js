@@ -3,17 +3,20 @@ import "./sidebars.css";
 import config from '../../config';
 import CreateTeamButton from './CreateTeamButton.js';
 import FlatButton from 'material-ui/FlatButton';
+import GroupSidebarButton from './GroupSidebarButton.js'
 
 export default class SidebarContent extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      groups: []
+      groups: [],
+      activeIndex: null,
     };
     this.getMyGroups = this.getMyGroups.bind(this);
     this.componentDidMount = this.componentDidMount.bind(this);
     this.clickGroupName = this.clickGroupName.bind(this);
+    this.clickGroupButton = this.clickGroupButton.bind(this);
   }
 
   getMyGroups() {
@@ -43,20 +46,30 @@ export default class SidebarContent extends React.Component {
   }
 
   clickGroupName(groupId){
-    console.log(groupId);
 
+    console.log(groupId);
+    console.log(this.props.searchFilterFeed)
     this.props.searchFilterFeed(groupId,"FilterGroup");
 
   }
 
+  clickGroupButton(index){
+
+    console.log(index);
+    this.setState({activeIndex:index});
+  }
+
   render() {
     console.log(this.state.groups);
-    let myGroups = this.state.groups.map((group,index) => (<FlatButton
-       onClick={this.clickGroupName.bind(this, group.id)}
-       key={"group"+index}
-       className="groupName">
-          {group.name}
-        </FlatButton>));
+    let myGroups = this.state.groups.map((group,index) => (
+      <GroupSidebarButton
+         key={"group"+index}
+         index={index}
+         isActive={this.state.activeIndex===index}
+         clickGroupButton={this.clickGroupButton}
+         name={group.name}>
+       </GroupSidebarButton>));
+
     console.log(myGroups);
 
     return (<div className="leftContent">

@@ -33,11 +33,15 @@ class AppNavTop extends Component {
       this.setState({show:true})
   }
   render() {
+    console.log(this.props.searchFilterFeed)
+
 
     if(this.state.show === false){
 
     return (<div className="MobileNavTop">
-      <GroupsDrawer changeContent={this.props.changeContent}/>
+      <GroupsDrawer
+        searchFilterFeed={this.props.searchFilterFeed}
+        changeContent={this.props.changeContent}/>
       <div>
           <div className="AppNameDisplay">
               Lunch-Planner
