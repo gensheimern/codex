@@ -1,84 +1,84 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Calender from './Calender.js';
+import EventItem from '../event/EventItem';
 import "./sidebars.css";
 
+const labeledHr = (text) => (
+	<div style={{
+		width: '100%',
+		height: '16px',
+		borderBottom: '1px solid grey',
+		textAlign: 'center',
+	}}>
+		<span style={{
+			fontSize: '20px',
+			backgroundColor: '#f1f1f1',
+			padding: '0 30px',
+			color: 'grey',
+		}}>
+			{text}
+		  </span>
+	</div>
+);
 
-const styles = {
-  sidebar: {
-    width: 256,
-    height: '100%',
-  },
-  sidebarLink: {
-    display: 'block',
-    padding: '16px 0px',
-    color: '#757575',
-    textDecoration: 'none',
-  },
-  divider: {
-    margin: '8px 0',
-    height: 1,
-    backgroundColor: '#757575',
-  },
-  content: {
-    padding: '16px',
-    backgroundColor: 'white',
-    marginTop: '2%',
-    height: '100%',
-  },
-};
+export default class SidebarContent extends React.Component {
 
-const SidebarContent = (props) => {
-  const links = [];
+	render() {
+		return (
+			<div style={{
+				padding: '2%',
+			}}>
+				<p>Your calendar</p>
+				<div style={{
+					width: '100%',
+					marginRight: 'auto',
+					marginLeft: 'auto',
+				}}>
+					<Calender/>
+				</div>
 
-  for (let ind = 1; ind < 5; ind++) {
-    links.push(
-      <a key={ind} href="/groupmanager" style={styles.sidebarLink}> kommende Aktivität # {ind}</a>);
-  }
+				{labeledHr('Today')}
 
-  return (
-    <div className="rightContent">
-           <div className="calenderUnit">
-            <p>Deine Events:</p>
-            <Calender/>
+				<EventItem event={{
+					id: 0,
+					description: 'Mittagessen in der Mensa',
+					name: 'Essen in der Mensa',
+					place: 'Mensa',
+					time:  new Date(),
+					event: false,
+					private: false,
+					banner: 'pizza_card@3x.jpg',
+					maxParticipants: 5,
+					host: {
+						//
+					},
+				}} />
 
-            <hr />
-            <div style={{
-              position: "relative",
-              top: "-30px",
-              color: "white",
-              backgroundColor: "grey",
-              left: "80px",
-              width: "40px",
-            }}>Heute</div>
-            <div style={{
-              backgroundColor: "white",
-              padding: "4%",
-              borderRadius: "10px",
-            }}>
-              <p>Kommende Aktivität #1</p>
-            </div>
+				{labeledHr('Tomorrow')}
 
-            <hr />
-            <div style={{
-              backgroundColor: "white",
-              padding: "4%",
-              borderRadius: "10px",
-            }}>
-              <p>Kommende Aktivität #2</p>
-            </div>
+				<EventItem event={{
+					id: 0,
+					description: 'Grillen am Fluss',
+					name: 'Grillen am Fluss',
+					place: 'Fluss',
+					time:  new Date(),
+					event: true,
+					private: false,
+					banner: 'pasta_card@3x.jpg 	',
+					maxParticipants: 5,
+					host: {
+						//
+					},
+				}} />
 
-            <div style={styles.content}>
-              <div style={styles.divider} />
-              {links}
-            </div>
-          </div>;
-  </div>
-  );
-};
+
+			</div>
+				
+		);
+	}
+}
 
 SidebarContent.propTypes = {
-  style: PropTypes.object,
+	style: PropTypes.object,
 };
-
-export default SidebarContent;

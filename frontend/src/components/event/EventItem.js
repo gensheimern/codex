@@ -1,7 +1,6 @@
 import React from 'react';
 import config from '../../config';
 import EventCard from './EventCard';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
 export default class EventItem extends React.Component {
 
@@ -136,7 +135,7 @@ export default class EventItem extends React.Component {
                     } else {
                         throw new Error("Could not find Activity");
                     }
-                } else if (res.status !== 200) {
+                } else if (res.status !== 200 && res.status !== 201) {
                     throw new Error("Forbidden");
                 }
                 return res;
@@ -156,7 +155,6 @@ export default class EventItem extends React.Component {
 			return (<p>Loading...</p>);
 		}
 		return (
- <MuiThemeProvider>
 			<EventCard
 				loaded = {this.state.loaded}
 				joined={this.state.isJoined}
@@ -170,7 +168,6 @@ export default class EventItem extends React.Component {
 				messages={this.state.messages}
 				loadMessages={this.loadMessages}
 			/>
-	 </MuiThemeProvider>
 		);
 	}
 

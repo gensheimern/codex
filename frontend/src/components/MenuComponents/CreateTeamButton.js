@@ -10,9 +10,10 @@ export default class CreateTeamButton extends React.Component {
     this.state = {open: false};
   }
 
-  handleClick = () => {console.log("created group for nothing!");
+  handleClick = () => {
     this.props.changeContent(6);
-  this.props.closeDrawer();};
+    this.props.closeDrawer();
+  };
 
 
 
@@ -25,7 +26,6 @@ export default class CreateTeamButton extends React.Component {
           target="_blank"
           style={{color:"white",
             minWidth:"0px",
-            marginRight:"60%",
             margin:"0px"}}/>
       </div>
     );

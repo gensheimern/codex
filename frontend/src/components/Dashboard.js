@@ -1,5 +1,5 @@
 import React from 'react';
-import NavbarMenu from './MenuComponents/NavbarMenu';
+import FeedToolbar from './MenuComponents/FeedToolbar';
 import Groups from './Groups';
 import MainContent from './MainContent';
 import SidebarContentCalender from './MenuComponents/SidebarContentCalender';
@@ -7,32 +7,50 @@ import PropTypes from 'prop-types';
 
 export default class Dashboard extends React.Component {
 	render() {
+		const defaultStyle = {
+			float: 'left',
+			margin: 0,
+			overflowX: 'hidden',
+			overflowY: 'scroll',
+			height: 'calc(100% - 56px)',
+		};
+
 		return (
-			<div style={{
-				marginTop: '5%',
-			}}>
-				<NavbarMenu/>
-				<Groups
-					changeContent={this.props.changeContent}
-					searchFilterFeed={this.props.searchFilterFeed}
-					id="groups-wrapper" 
-					height="100%"
-				/>
+			<React.Fragment>
+				<FeedToolbar searchFilterFeed={this.props.searchFilterFeed} />
+
 				<div style={{
-					float: 'left',
-					margin: 0,
-					overflowX: 'hidden',
-					overflowY: 'scroll',
+					...defaultStyle,
+					width: '20%',
+					overflow: 'hidden',
+					boxShadow: '5px 5px 5px lightgrey',
 				}}>
-					<MainContent
-						mainContentNumber={5} 
-						filterWord={this.props.filterWord} 
-						searchWord={this.props.searchWord} 
-						width="55%"
+					<Groups
+						changeContent={this.props.changeContent}
+						searchFilterFeed={this.props.searchFilterFeed}
+						closeDrawer={() => {}}
+						id="groups-wrapper"
 					/>
 				</div>
-				<SidebarContentCalender/>
-			</div>
+				<div style={{
+					...defaultStyle,
+					width: '52%',
+					borderRight: '1px solid lightgrey',
+				}}>
+					<MainContent
+						mainContentNumber={0}
+						searchFilterFeed={this.props.searchFilterFeed}
+						filterWord={this.props.filterWord} 
+						searchWord={this.props.searchWord}
+					/>
+				</div>
+				<div style={{
+					...defaultStyle,
+					width: '28%',
+				}}>
+					<SidebarContentCalender/>
+				</div>
+			</React.Fragment>
 		);
 	}
 }
