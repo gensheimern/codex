@@ -2,7 +2,9 @@
 const app = require('./app');
 const http = require('http').Server(app);
 const config = require('./config');
+const { createLiveMessage } = require('./LiveMessages');
 
+createLiveMessage(http);
 
 // Start Server
 http.listen(5000, () => {

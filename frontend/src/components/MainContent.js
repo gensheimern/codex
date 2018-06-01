@@ -10,6 +10,7 @@ import FlatButton from 'material-ui/FlatButton';
 import CreateEventtCard from './event/CreateEventCard';
 import CreateTeam from './groupmanager/CreateTeam';
 import Paper from 'material-ui/Paper';
+import Notifications from './notification/Notifications';
 import FilterDropDown from './MenuComponents/FilterDropDown.js';
 
 export default class MainContent extends React.Component {
@@ -106,13 +107,13 @@ export default class MainContent extends React.Component {
       </div>);
     } else if (this.props.mainContentNumber === 3) {
       return (<div style={{
-          width: this.props.width,
+          width: '100%',
           marginTop: "0%",
           float: "left",
           height: "100%",
           overflowY: "scroll"
         }}>
-        <Events filterWord={this.props.filterWord} searchWord={this.props.searchWord} />
+        <Notifications />
       </div>);
     } else if (this.props.mainContentNumber === 4) {
       return (<div style={{
