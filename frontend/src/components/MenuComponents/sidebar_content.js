@@ -2,32 +2,20 @@ import React from 'react';
 import "./sidebars.css";
 import config from '../../config';
 import CreateTeamButton from './CreateTeamButton.js';
+import GroupSidebarButton from './GroupSidebarButton.js'
 
-const styles = {
-  sidebar: {
-    width: 256,
-    height: '100%'
-  },
-  sidebarLink: {
-    display: 'block',
-    padding: '16px 0px',
-    color: '#ffffff',
-    textDecoration: 'none'
-  },
-  content: {
-    padding: '1px',
-    height: '100%'
-  }
-};
 export default class SidebarContent extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      groups: []
+      groups: [],
+      activeIndex: null,
     };
     this.getMyGroups = this.getMyGroups.bind(this);
     this.componentDidMount = this.componentDidMount.bind(this);
+    this.clickGroupName = this.clickGroupName.bind(this);
+    this.clickGroupButton = this.clickGroupButton.bind(this);
   }
 
   getMyGroups() {
@@ -56,24 +44,79 @@ export default class SidebarContent extends React.Component {
     this.getMyGroups();
   }
 
+  clickGroupName(groupId){
+
+    console.log(groupId);
+    console.log(this.props.searchFilterFeed)
+    this.props.searchFilterFeed(groupId,"FilterGroup");
+
+  }
+
+  clickGroupButton(index){
+
+    console.log(index);
+    this.setState({activeIndex:index});
+    if(index === "PUBLIC"){
+    this.props.searchFilterFeed("PUBLIC","FilterFeed");}
+    if(index === "PERSONAL"){
+    this.props.searchFilterFeed("PERSONAL","FilterFeed");}
+
+  }
+
   render() {
     console.log(this.state.groups);
-    let myGroups = this.state.groups.map((group,index) => (<a key={"group"+index} className="groupName">
-      {group.name}
-    </a>));
+    let myGroups = this.state.groups.map((group,index) => (
+      <GroupSidebarButton
+         key={"group"+index}
+         index={index}
+         isActive={this.state.activeIndex===index}
+         clickGroupButton={this.clickGroupButton}
+         name={group.name}
+         main={false}>
+       </GroupSidebarButton>));
+
     console.log(myGroups);
 
     return (<div className="leftContent">
-      <div style={styles.content}>
+      <div>
+          <GroupSidebarButton
+             key={"group PUBLIC"}
+             index={"PUBLIC"}
+             isActive={this.state.activeIndex==="PUBLIC"}
+             clickGroupButton={this.clickGroupButton}
+             name={"PUBLIC"}
+             main={true}>
+           </GroupSidebarButton>
         <div className="divider"/>
-        <a className="highlightSidebarContent" href="activity">PUBLIC</a>
+          <GroupSidebarButton
+             key={"group PERSONAL"}
+             index={"PERSONAL"}
+             isActive={this.state.activeIndex==="PERSONAL"}
+             clickGroupButton={this.clickGroupButton}
+             name={"PERSONAL"}
+             main={true}>
+           </GroupSidebarButton>
         <div className="divider"/>
-        <a className="highlightSidebarContent" href="activity">PERSONAL</a>
-        <div className="divider"/>
-        <p className="groups">
-          Gruppen</p>
-        {myGroups}
-        <CreateTeamButton changeContent={this.props.changeContent} closeDrawer={this.props.closeDrawer}/>
+        <div style={{width:"100%"}}>
+          <p style={{
+          textAlign: "left",
+          color: "#ffffff",
+          margin:"5%",
+          float:"left",
+          marginLeft: "10%",
+          marginRight: "2%",
+          marginTop:"3%"
+          }}>
+          GROUPS</p>
+        <CreateTeamButton style={{float:"none",
+          marginRight:"30%",
+          minHeight:"38px",
+          minWidth:"0px",
+          width:"21%"}} changeContent={this.props.changeContent} closeDrawer={this.props.closeDrawer}/>
+          <div className="groups">
+                {myGroups}
+              </div>
+        </div>
       </div>
     </div>);
   }
