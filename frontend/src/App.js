@@ -20,38 +20,36 @@ class App extends Component {
 		super(props);
 		this.state = {
 			mainContentNumber: 0,
-			filterWord:"Newest",
-			searchWord:"",
+			filterWord: 'TimeDown',
+			searchWord: '',
 		};
 		this.changeContent = this.changeContent.bind(this);
 		this.searchFilterFeed = this.searchFilterFeed.bind(this);
-
 	}
 
 	changeContent(index) {
-		this.setState({mainContentNumber: index});
+		this.setState({ mainContentNumber: index });
 	}
-	searchFilterFeed(value,type){
+
+	searchFilterFeed(value, type){
 		switch(type) {
-				case 'Filter':
-									this.setState({filterWord: value});
-									console.log("!")
-	;break
-				case 'Search':
-									this.setState({searchWord: value});
-									console.log("?")
-
-	;break
-				default:
-						return null;
-	}
-
-
-
+			case 'Sort':
+				this.setState({ filterWord: value });
+				break;
+			case 'Search':
+				this.setState({ searchWord: value });
+				break;
+			case 'FilterGroup':
+				console.log('wow');
+				break;
+			default:
+				return null;
+		}
 	}
 
 	render() {
-		return (<BrowserRouter>
+		return (
+		<BrowserRouter>
 			<React.Fragment>
 				<Route exact path="/" component={Login}/>
 				<Route exact path="/login" component={Login}/>
@@ -66,46 +64,71 @@ class App extends Component {
 						<Notifications/>
 					</MuiThemeProvider>
 				)}/>
-				<Route path="/activity" render={() => (<React.Fragment>
+				<Route path="/activity" render={() => (
+					<React.Fragment>
 						<div id="contentarea">
 							<MuiThemeProvider>
 								{/* <Sidebar /> */}
 								<MediaQuery minWidth={768}>
-									{
-										(matches) => {
-											if (matches) {
-												return (<div style={{
-														marginTop: "5%"
-													}}>
-													<NavbarMenu/>
-													<Groups changeContent={this.changeContent} id="groups-wrapper" height="100%"/>
-													<MainContent mainContentNumber={5} filterWord={this.state.filterWord} searchWord={this.state.searchWord} width="55%"/>
-													<SidebarContentCalender/>
-												</div>)
-											} else {
-												return <div className="mobileContent-wrapper">
-													<MuiThemeProvider>
-														<div>
-															<AppNavTop changeContent={this.changeContent} searchFilterFeed={this.searchFilterFeed} width="100%"/>
-															<div className="mainContentMobile-wrapper">
-																<MainContent mainContentNumber={this.state.mainContentNumber} filterWord={this.state.filterWord} searchWord={this.state.searchWord}/>
-															</div>
-															<AppNavBottom changeContent={this.changeContent} width="100%"/>
+									{ (matches) => {
+										if (matches) {
+											return (
+											<div style={{
+												marginTop: '5%',
+											}}>
+												<NavbarMenu/>
+												<Groups
+													changeContent={this.changeContent}
+													searchFilterFeed={this.searchFilterFeed}
+													id="groups-wrapper" 
+													height="100%"
+												/>
+												<MainContent
+													mainContentNumber={5} 
+													filterWord={this.state.filterWord} 
+													searchWord={this.state.searchWord} 
+													width="55%"
+												/>
+												<SidebarContentCalender/>
+											</div>)
+										} else {
+											return (
+											<div
+												className="mobileContent-wrapper">
+												<MuiThemeProvider>
+													<div>
+														<AppNavTop
+															changeContent={this.changeContent} 
+															searchFilterFeed={this.searchFilterFeed} 
+															width="100%"
+														/>
+														<div 
+														className="mainContentMobile-wrapper">
+															<MainContent
+																changeContent={this.changeContent}
+																searchFilterFeed={this.searchFilterFeed}
+																mainContentNumber={this.state.mainContentNumber} 
+																filterWord={this.state.filterWord} 
+																searchWord={this.state.searchWord}
+															/>
 														</div>
-													</MuiThemeProvider>
-												</div>
-											}
+														<AppNavBottom
+															changeContent={this.changeContent} 
+															width="100%"
+														/>
+													</div>
+												</MuiThemeProvider>
+											</div>);
 										}
-									}
+									}}
 								</MediaQuery>
 							</MuiThemeProvider>
-
 						</div>
-					</React.Fragment>)}/>
+					</React.Fragment>)
+				}/>
 			</React.Fragment>
 		</BrowserRouter>);
 	}
-
 }
-
+				
 export default App;
