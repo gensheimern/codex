@@ -1,42 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import EventCard from './EventCard';
-import config from '../../config';
-
-const fetchMock = require('fetch-mock');
-
-beforeEach(() => {
-	window.localStorage = { getItem: () => '' };
-	fetchMock.get(
-		`${config.apiPath}/activity/5/message`,
-		[{
-			id: 6,
-			time: new Date('12.12.2018'),
-			content: '',
-			author: {
-				id: 7,
-				firstName: '',
-				name: '',
-				email: '',
-				img: '',
-			},
-		}],
-	);
-	fetchMock.get(
-		`${config.apiPath}/user/me`,
-		{
-			id:	7,
-			firstName: 'Max',
-			name: 'Mustermann',
-			email: 'max.mustermann@gmail.com',
-			image: '',
-		},
-	);
-});
-
-afterEach(() => {
-	fetchMock.restore();
-});
 
 describe('EventCard', () => {
 	let shallowEventCard;
