@@ -11,7 +11,6 @@ import InvitePeople from './CreateEventInvitePeople';
 import InviteChip from './CreateEventChip';
 import config from '../../config';
 import Snackbar from 'material-ui/Snackbar';
-import RaisedButton from 'material-ui/RaisedButton';
 
 const eventImages = [
 
@@ -205,7 +204,7 @@ createEvent(){
       event: false,
       private: this.state.private,
       banner: this.state.cardImage,
-      maxParticipants: parseInt(this.state.maxPeopleValue),
+      maxParticipants: parseInt(this.state.maxPeopleValue,10),
     }),
     headers: {
         'Content-Type': 'application/json',

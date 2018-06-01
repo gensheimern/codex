@@ -13,7 +13,6 @@ export default class LocationSearchInput extends React.Component {
 
   handleChange = (address) => {
     this.setState({ address });
-    this.props.handleChangeAddressValue;
   }
 
   parseAddress(results){
