@@ -114,7 +114,6 @@ export default class CreateEventCard extends React.Component {
   }
 
   handleOpen = () => {
-    console.log("lkjlkj")
 	this.setState({open: true});
 };
 
@@ -165,7 +164,6 @@ handleChangeMaxPeople(e){
 }
 handleChangeAddressValue(e){
   this.setState({ addressValue: e.target.value});
-      console.log(e.target.value+ "dddd");
 }
 handleChangeDescription(e){
   this.setState({ descriptionValue: e.target.value});
@@ -182,6 +180,7 @@ combineAddress(){
 
 
   renderSnackbar = () => {
+    console.log("snack");
    this.setState({
      snackbaropen: true,
    });
@@ -216,10 +215,8 @@ createEvent(){
         this.props.changeContent(0);
     }
     if(res.status !== 201) {
-      console.log(res.status);
     } else if(res.status !== 200) {
     } else if(res.status !== 201) {
-      console.log(res.status);
     }
       return res;
   }).then(res => res.json()).then((res) => {
@@ -233,7 +230,6 @@ createEvent(){
     //    return  <img key={image} src={image} />
         return (<InviteChip key={"chip"+index} name={image.textKey} peopleImage={image.ValueImage} />)
       });
-      console.log(images);
       return(
           <div className="collapsedContentWrapper">
             <div className="collapsedContendReminder">
