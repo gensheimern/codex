@@ -86,11 +86,7 @@ class App extends Component {
                             <div>
                               <AppNavTop changeContent={this.changeContent} searchFilterFeed={this.searchFilterFeed} width="100%"/>
                               <div className="mainContentMobile-wrapper">
-<<<<<<< HEAD
                                 <MainContent changeContent={this.changeContent} mainContentNumber={this.state.mainContentNumber} filterWord={this.state.filterWord} searchWord={this.state.searchWord}/>
-=======
-                                <MainContent mainContentNumber={this.state.mainContentNumber} searchFilterFeed={this.searchFilterFeed} filterWord={this.state.filterWord} searchWord={this.state.searchWord}/>
->>>>>>> development
                               </div>
                               <AppNavBottom changeContent={this.changeContent} width="100%"/>
                             </div>
