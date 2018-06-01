@@ -1,10 +1,10 @@
 import React from 'react';
-import { Card, CardHeader, CardActions } from 'material-ui/Card';
+import { CardActions } from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
 import CircularProgress from 'material-ui/CircularProgress';
 import Snackbar from 'material-ui/Snackbar';
 import config from '../../config';
-import dateUtils from './dateUtils';
+import TextNotification from './TextNotification';
 
 export default class JoinNotification extends React.Component {
 	constructor(props) {
@@ -80,8 +80,6 @@ export default class JoinNotification extends React.Component {
 	}
 
 	render() {
-		const { id, title, type, message, time, seen } = this.props.notification;
-		const created = dateUtils.formatDate(new Date(time));
 
 		let actions = (
 			<CardActions>
@@ -107,29 +105,12 @@ export default class JoinNotification extends React.Component {
 			}
 		}
 
-		const seenStyle = seen ? null : {backgroundColor: '#b5daff'};
-
 		return (
-			<React.Fragment>
-				<Card key={id} style={{
-					margin: '5px',
-					...seenStyle
-				}}>
-						<CardHeader
-							title={`${title} - ${type}`}
-							subtitle={`${message} - ${created}`}
-							style={{
-								paddingTop: '10px',
-								paddingBottom: 0,
-							}}
-							textStyle={{
-								paddingRight: 0,
-							}}
-						/>
-						{actions}
-				</Card>
+			<TextNotification notification={this.props.notification}>
+				{actions}
 				{snackbar}
-			</React.Fragment>
+			</TextNotification>
+			
 		);
 	}
 }

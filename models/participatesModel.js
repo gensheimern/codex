@@ -1,6 +1,4 @@
 const databaseConnection = require('./DatabaseConnection');
-const ActivityModel = require('./ActivityModel');
-const NotificationModel = require('./NotificationModel');
 
 const Participates = {
 
@@ -30,11 +28,6 @@ const Participates = {
 	},
 
 	async acceptParticipation(userId, activityId) {
-		const activity = await ActivityModel.getTeamById(activityId);
-		NotificationModel.notifyEvent(activityId, 'notification', 'New event participant', `A new member joined your event '${activity.Activityname}'.`, activityId, userId)
-			.catch(() => {});
-
-
 		return databaseConnection.queryp('UPDATE participates SET Accepted = 1 WHERE Activity_Id = ? AND User_Id = ?', [activityId, userId]);
 	},
 

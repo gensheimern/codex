@@ -101,6 +101,19 @@ export default class Notifications extends React.Component {
 			);
 		}
 
+		if (this.state.notifications.length === 0) {
+			return (
+				<div style={{
+					width: '100%',
+					textAlign: 'center',
+					marginTop: '50px',
+				}}>
+					<p>No notifications.</p>
+					<RaisedButton label="Reload" onClick={this.handleClick}/>
+				</div>
+			);
+		}
+
 		return (
 			<div style={{
 				height: '100vh',

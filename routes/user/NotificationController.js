@@ -1,6 +1,8 @@
 const NotificationModel = require('../../models/NotificationModel');
 const MemberModel = require('../../models/MemberModel');
 const ParticipatesModel = require('../../models/participatesModel');
+const ActivityModel = require('../../models/ActivityModel');
+const TeamModel = require('../../models/TeamModel');
 const transforms = require('../transforms');
 
 const NotificationController = {
@@ -85,6 +87,11 @@ const NotificationController = {
 		if (notification.type === 'joinTeam') {
 			if (accepted) {
 				await MemberModel.acceptMember(notification.targetId, userId);
+
+				const team = await TeamModel.getTeamById(notification.targetId);
+
+				NotificationModel.notifyTeam(notification.targetId, 'notification', 'New team member', `A new member joined your team '${team.Teamname}'.`, notification.targetId, userId)
+					.catch(() => {});
 			} else {
 				await MemberModel.declineMember(notification.targetId, userId);
 			}
@@ -100,6 +107,11 @@ const NotificationController = {
 		} else if (notification.type === 'joinEvent') {
 			if (accepted) {
 				await ParticipatesModel.acceptParticipation(userId, notification.targetId);
+
+				const activity = await ActivityModel.getActivityById(notification.targetId);
+
+				NotificationModel.notifyEvent(notification.targetId, 'notification', 'New event participant', `A new member joined your event '${activity.Activityname}'.`, notification.targetId, userId)
+					.catch(() => {});
 			} else {
 				await ParticipatesModel.declineParticipation(userId, notification.targetId);
 			}

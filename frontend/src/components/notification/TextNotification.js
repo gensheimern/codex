@@ -25,6 +25,7 @@ export default class TextNotification extends React.Component {
 						paddingRight: 0,
 					}}
 				/>
+				{this.props.children}
 			</Card>
 		);
 	}
