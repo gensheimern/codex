@@ -86,13 +86,14 @@ export default class MainContent extends React.Component {
           marginTop: "0%",
           marginBottom: "10%",
           float: "left",
-          height: "90%",
           overflowY: "scroll",
-          margin: "10%"
+          height:"100%",
         }}>
       <div>
         <Paper className="createEventWrapper">
-          <CreateEventtCard ref={instance => {
+          <CreateEventtCard
+            changeContent={this.props.changeContent}
+            ref={instance => {
               this.child = instance;
             }}/>
             <FlatButton
@@ -131,16 +132,22 @@ export default class MainContent extends React.Component {
           height: "100%",
           overflowY: "scroll"
         }}>
-        <Dialog className="createEventWrapper" actions={actions} modal={false} open={this.state.open} onRequestClose={this.handleClose} contentStyle={{
+        <Dialog className="createEventWrapper" actions={actions} modal={false} open={this.state.open} onRequestClose={this.handleClose}
+         style={{padding:"30px"}}
+         contentStyle={{
             width: "95%",
             maxWidth: "none",
             paddingTop: "0px"
-          }} bodyStyle={{
+          }}
+          bodyStyle={{
             padding: "0px",
             paddingTop: "0px"
-          }} titleStyle={{
+          }}
+          titleStyle={{
             paddingTop: "0px"
-          }} autoScrollBodyContent={true}>
+          }}
+          autoScrollBodyContent={true}>
+
           <CreateEventtCard ref={instance => {
               this.child = instance;
             }}/>
