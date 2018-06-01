@@ -2,23 +2,8 @@ import React from 'react';
 import "./sidebars.css";
 import config from '../../config';
 import CreateTeamButton from './CreateTeamButton.js';
+import FlatButton from 'material-ui/FlatButton';
 
-const styles = {
-  sidebar: {
-    width: 256,
-    height: '100%'
-  },
-  sidebarLink: {
-    display: 'block',
-    padding: '16px 0px',
-    color: '#ffffff',
-    textDecoration: 'none'
-  },
-  content: {
-    padding: '1px',
-    height: '100%'
-  }
-};
 export default class SidebarContent extends React.Component {
   constructor(props) {
     super(props);
@@ -28,6 +13,7 @@ export default class SidebarContent extends React.Component {
     };
     this.getMyGroups = this.getMyGroups.bind(this);
     this.componentDidMount = this.componentDidMount.bind(this);
+    this.clickGroupName = this.clickGroupName.bind(this);
   }
 
   getMyGroups() {
@@ -56,11 +42,21 @@ export default class SidebarContent extends React.Component {
     this.getMyGroups();
   }
 
+  clickGroupName(groupId){
+    console.log(groupId);
+
+    this.props.searchFilterFeed(groupId,"FilterGroup");
+
+  }
+
   render() {
     console.log(this.state.groups);
-    let myGroups = this.state.groups.map((group,index) => (<a key={"group"+index} className="groupName">
-      {group.name}
-    </a>));
+    let myGroups = this.state.groups.map((group,index) => (<FlatButton
+       onClick={this.clickGroupName.bind(this, group.id)}
+       key={"group"+index}
+       className="groupName">
+          {group.name}
+        </FlatButton>));
     console.log(myGroups);
 
     return (<div className="leftContent">
@@ -73,10 +69,13 @@ export default class SidebarContent extends React.Component {
           textAlign: "left",
           color: "#ffffff",
           margin:"5%",
-          float:"left"
+          float:"left",
+          marginRight: "2%",
+          marginTop:"7%"
+
           }}>
           GROUPS</p>
-        <CreateTeamButton style={{float:"left",minHeight:"38px", width:"15%"}} changeContent={this.props.changeContent} closeDrawer={this.props.closeDrawer}/>
+        <CreateTeamButton style={{float:"left",minHeight:"38px",minWidth:"0px", width:"15%"}} changeContent={this.props.changeContent} closeDrawer={this.props.closeDrawer}/>
         <div className="groups">
                 {myGroups}
         </div>

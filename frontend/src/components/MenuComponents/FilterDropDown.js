@@ -21,27 +21,27 @@ export default class FilterDropDown extends React.Component {
 
     switch(value.toString()) {
             case "1":
-         this.props.searchFilterFeed("TimeDown","Filter");
+         this.props.searchFilterFeed("TimeDown","Sort");
          this.setState({value:value});
       ;break
             case "2":
-         this.props.searchFilterFeed("TimeUp","Filter");
+         this.props.searchFilterFeed("TimeUp","Sort");
          this.setState({value:value});
       ;break
             case '3':
-         this.props.searchFilterFeed("NameDown","Filter");
+         this.props.searchFilterFeed("NameDown","Sort");
          this.setState({value:value});
       ;break
             case '4':
-         this.props.searchFilterFeed("NameUp","Filter");
+         this.props.searchFilterFeed("NameUp","Sort");
          this.setState({value:value});
       ;break
             case '5':
-         this.props.searchFilterFeed("Oldest","Filter");
+         this.props.searchFilterFeed("Oldest","Sort");
          this.setState({value:value});
       ;break
             case '6':
-         this.props.searchFilterFeed("Newest","Filter");
+         this.props.searchFilterFeed("Newest","Sort");
          this.setState({value:value});
       ;break
         default:

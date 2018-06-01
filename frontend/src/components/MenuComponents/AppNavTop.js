@@ -51,7 +51,9 @@ class AppNavTop extends Component {
   if(this.state.show === true){
 
   return(<div className="MobileNavTop">
-    <GroupsDrawer changeContent={this.props.changeContent}/>
+    <GroupsDrawer
+      searchFilterFeed={this.props.searchFilterFeed}
+      changeContent={this.props.changeContent}/>
 
      <SearchBar
         searchFilterFeed={this.props.searchFilterFeed}

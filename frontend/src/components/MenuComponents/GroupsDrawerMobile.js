@@ -2,6 +2,7 @@ import React from 'react';
 import Drawer from 'material-ui/Drawer';
 import FlatButton from 'material-ui/FlatButton';
 import Groups from '../Groups';
+import "./sidebars.css";
 
 import IconGroup from 'material-ui/svg-icons/social/group';
 
@@ -26,11 +27,13 @@ export default class GroupsDrawer extends React.Component {
         />
         <Drawer
           docked={false}
-          width={200}
+          width={"84%"}
           open={this.state.open}
           onRequestChange={(open) => this.setState({open})}
         >
-        <Groups changeContent={this.props.changeContent} closeDrawer={this.handleClose} id="groups-wrapper" height="100%" />
+        <Groups changeContent={this.props.changeContent}
+          searchFilterFeed={this.props.searchFilterFeed}
+          closeDrawer={this.handleClose} id="groups-wrapper" height="100%" />
         </Drawer>
       </div>
     );

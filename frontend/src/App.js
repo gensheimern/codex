@@ -32,13 +32,17 @@ class App extends Component {
   }
   searchFilterFeed(value,type){
     switch(type) {
-        case 'Filter':
+        case 'Sort':
                   this.setState({filterWord: value});
                   console.log("!")
   ;break
         case 'Search':
                   this.setState({searchWord: value});
                   console.log("?")
+
+  ;break
+        case 'FilterGroup':
+        console.log("wow")
 
   ;break
         default:
@@ -72,7 +76,7 @@ class App extends Component {
                             marginTop: "5%"
                           }}>
                           <NavbarMenu/>
-                          <Groups changeContent={this.changeContent} id="groups-wrapper" height="100%"/>
+                          <Groups changeContent={this.changeContent} searchFilterFeed={this.searchFilterFeed} id="groups-wrapper" height="100%"/>
                           <MainContent mainContentNumber={5} filterWord={this.state.filterWord} searchWord={this.state.searchWord} width="55%"/>
                           <SidebarContentCalender/>
                         </div>)
