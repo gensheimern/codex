@@ -8,6 +8,7 @@ const { expect } = chai;
 const teamController = require('../routes/team/TeamController');
 const teamModel = require('../models/TeamModel');
 const memberModel = require('../models/MemberModel');
+const NotificationModel = require('../models/NotificationModel');
 
 function correctResponseType(res, status) {
 	expect(res._isEndCalled(), 'End called').to.be.true;
@@ -243,6 +244,7 @@ describe('Team controller', () => {
 		it('should update a team if the user is the admin of the team.', async () => {
 			// Mock user model
 			mockModels.push(TestTools.mockModel(teamModel, 'updateTeam', null, TestTools.dbUpdateSuccess));
+			mockModels.push(TestTools.mockModel(NotificationModel, 'notifyTeam', null, null));
 
 			// Mock http request and response
 			const { req, res } = TestTools.mockRequest({
@@ -266,6 +268,7 @@ describe('Team controller', () => {
 		it('should not update a team if the user is not the admin of the team.', async () => {
 			// Mock user model
 			mockModels.push(TestTools.mockModel(teamModel, 'updateTeam', null, TestTools.dbUpdateFailed));
+			mockModels.push(TestTools.mockModel(NotificationModel, 'notifyTeam', null, null));
 
 			// Mock http request and response
 			const { req, res } = TestTools.mockRequest({
@@ -286,6 +289,7 @@ describe('Team controller', () => {
 		it('should send 400 if no name is passed.', async () => {
 			// Mock user model
 			mockModels.push(TestTools.mockNotCalled(teamModel, 'updateTeam'));
+			mockModels.push(TestTools.mockModel(NotificationModel, 'notifyTeam', null, null));
 
 			// Mock http request and response
 			const { req, res } = TestTools.mockRequest({
@@ -305,6 +309,7 @@ describe('Team controller', () => {
 		it('should send 500 if there is a database error.', async () => {
 			// Mock user model
 			mockModels.push(TestTools.mockModel(teamModel, 'updateTeam', new TestError('Test error'), null));
+			mockModels.push(TestTools.mockModel(NotificationModel, 'notifyTeam', new TestError('Test error'), null));
 
 			// Mock http request and response
 			const { req, res } = TestTools.mockRequest({

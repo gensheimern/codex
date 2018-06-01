@@ -240,6 +240,10 @@ describe('Member controller', () => {
 			mockModels.push(TestTools.mockModel(memberModel, 'isMember', null, true));
 			mockModels.push(TestTools.mockModel(TeamModel, 'isTeammanager', null, true));
 			mockModels.push(TestTools.mockModel(memberModel, 'deleteMember', null, TestTools.dbDeleteSuccess));
+			mockModels.push(TestTools.mockModel(TeamModel, 'getTeamById', null, {
+				Teamname: 'Test name',
+			}));
+			mockModels.push(TestTools.mockModel(NotificationModel, 'notifyTeam', null, null));
 
 			// Mock http request and response
 			const { req, res } = TestTools.mockRequest({
@@ -263,6 +267,10 @@ describe('Member controller', () => {
 			mockModels.push(TestTools.mockModel(memberModel, 'isMember', null, true));
 			mockModels.push(TestTools.mockModel(TeamModel, 'isTeammanager', null, false));
 			mockModels.push(TestTools.mockModel(memberModel, 'deleteMember', null, TestTools.dbDeleteSuccess));
+			mockModels.push(TestTools.mockModel(TeamModel, 'getTeamById', null, {
+				Teamname: 'Test name',
+			}));
+			mockModels.push(TestTools.mockModel(NotificationModel, 'notifyTeam', null, null));
 
 			// Mock http request and response
 			const { req, res } = TestTools.mockRequest({
@@ -286,6 +294,10 @@ describe('Member controller', () => {
 			mockModels.push(TestTools.mockNotCalled(memberModel, 'isMember'));
 			mockModels.push(TestTools.mockNotCalled(TeamModel, 'isTeammanager'));
 			mockModels.push(TestTools.mockNotCalled(memberModel, 'deleteMember'));
+			mockModels.push(TestTools.mockModel(TeamModel, 'getTeamById', null, {
+				Teamname: 'Test name',
+			}));
+			mockModels.push(TestTools.mockModel(NotificationModel, 'notifyTeam', null, null));
 
 			// Mock http request and response
 			const { req, res } = TestTools.mockRequest({
@@ -308,6 +320,8 @@ describe('Member controller', () => {
 			mockModels.push(TestTools.mockModel(memberModel, 'isMember', new TestError('Test error'), null));
 			mockModels.push(TestTools.mockModel(TeamModel, 'isTeammanager', new TestError('Test error'), null));
 			mockModels.push(TestTools.mockModel(memberModel, 'deleteMember', new TestError('Test error'), null));
+			mockModels.push(TestTools.mockModel(TeamModel, 'getTeamById', null, new TestError('Test error')));
+			mockModels.push(TestTools.mockModel(NotificationModel, 'notifyTeam', null, new TestError('Test error')));
 
 			// Mock http request and response
 			const { req, res } = TestTools.mockRequest({
@@ -352,6 +366,10 @@ describe('Member controller', () => {
 			mockModels.push(TestTools.mockModel(memberModel, 'isMember', null, true));
 			mockModels.push(TestTools.mockModel(TeamModel, 'isTeammanager', null, true));
 			mockModels.push(TestTools.mockModel(memberModel, 'deleteMember', null, TestTools.dbDeleteFailed));
+			mockModels.push(TestTools.mockModel(TeamModel, 'getTeamById', null, {
+				Teamname: 'Test name',
+			}));
+			mockModels.push(TestTools.mockModel(NotificationModel, 'notifyTeam', null, null));
 
 			// Mock http request and response
 			const { req, res } = TestTools.mockRequest({
