@@ -11,7 +11,7 @@ export default class CreateTeamButton extends React.Component {
   }
 
   handleClick = () => {console.log("created group for nothing!");
-  this.props.changeContent(6);
+    this.props.changeContent(6);
   this.props.closeDrawer();};
 
 
@@ -22,9 +22,11 @@ export default class CreateTeamButton extends React.Component {
         <FlatButton
           icon={<IconAdd color="#FFFFFF"/>}
           onClick={this.handleClick}
-          label="erstelle ein Team"
           target="_blank"
-          style={{color:"white"}}/>
+          style={{color:"white",
+            minWidth:"0px",
+            marginRight:"60%",
+            margin:"0px"}}/>
       </div>
     );
   }
