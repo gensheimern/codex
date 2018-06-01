@@ -2,7 +2,6 @@ import React from 'react';
 import "./sidebars.css";
 import config from '../../config';
 import CreateTeamButton from './CreateTeamButton.js';
-import FlatButton from 'material-ui/FlatButton';
 import GroupSidebarButton from './GroupSidebarButton.js'
 
 export default class SidebarContent extends React.Component {
@@ -57,6 +56,11 @@ export default class SidebarContent extends React.Component {
 
     console.log(index);
     this.setState({activeIndex:index});
+    if(index === "PUBLIC"){
+    this.props.searchFilterFeed("PUBLIC","FilterFeed");}
+    if(index === "PERSONAL"){
+    this.props.searchFilterFeed("PERSONAL","FilterFeed");}
+
   }
 
   render() {
@@ -67,30 +71,51 @@ export default class SidebarContent extends React.Component {
          index={index}
          isActive={this.state.activeIndex===index}
          clickGroupButton={this.clickGroupButton}
-         name={group.name}>
+         name={group.name}
+         main={false}>
        </GroupSidebarButton>));
 
     console.log(myGroups);
 
     return (<div className="leftContent">
       <div>
-        <p className="highlightSidebarContent" href="activity">PUBLIC</p>
+          <GroupSidebarButton
+             key={"group PUBLIC"}
+             index={"PUBLIC"}
+             isActive={this.state.activeIndex==="PUBLIC"}
+             clickGroupButton={this.clickGroupButton}
+             name={"PUBLIC"}
+             main={true}>
+           </GroupSidebarButton>
         <div className="divider"/>
-        <p className="highlightSidebarContent" href="activity">PERSONAL</p>
+          <GroupSidebarButton
+             key={"group PERSONAL"}
+             index={"PERSONAL"}
+             isActive={this.state.activeIndex==="PERSONAL"}
+             clickGroupButton={this.clickGroupButton}
+             name={"PERSONAL"}
+             main={true}>
+           </GroupSidebarButton>
         <div className="divider"/>
-        <p style={{
+        <div style={{width:"100%"}}>
+          <p style={{
           textAlign: "left",
           color: "#ffffff",
           margin:"5%",
           float:"left",
+          marginLeft: "10%",
           marginRight: "2%",
-          marginTop:"7%"
-
+          marginTop:"3%"
           }}>
           GROUPS</p>
-        <CreateTeamButton style={{float:"left",minHeight:"38px",minWidth:"0px", width:"15%"}} changeContent={this.props.changeContent} closeDrawer={this.props.closeDrawer}/>
-        <div className="groups">
+        <CreateTeamButton style={{float:"none",
+          marginRight:"30%",
+          minHeight:"38px",
+          minWidth:"0px",
+          width:"21%"}} changeContent={this.props.changeContent} closeDrawer={this.props.closeDrawer}/>
+          <div className="groups">
                 {myGroups}
+              </div>
         </div>
       </div>
     </div>);

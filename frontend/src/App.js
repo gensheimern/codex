@@ -19,7 +19,7 @@ class App extends Component {
     super(props);
     this.state = {
       mainContentNumber: 0,
-      filterWord:"Newest",
+      filterWord:"TimeDown",
       searchWord:"",
     };
     this.changeContent = this.changeContent.bind(this);

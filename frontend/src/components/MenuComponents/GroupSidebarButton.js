@@ -11,7 +11,7 @@ export default class CreateTeamButton extends React.Component {
     this.handleClick = this.handleClick.bind(this);
 
   }
-handleClick = () => {console.log("wow");
+handleClick = () => {console.log(this.props.main);
   this.setState({kappa:true});
   this.props.clickGroupButton(this.props.index)}
 
@@ -22,7 +22,7 @@ handleClick = () => {console.log("wow");
       <div className="GroupSidebarButton">
         <FlatButton
           className={
-            this.props.isActive ? 'selectedGroup' : 'groupName'
+          (this.props.main) ? ((this.props.isActive) ? 'highlightSidebarContent' : 'nonHighlightSidebarContent' ) : ((this.props.isActive) ? 'selectedGroup' : 'groupName')
           }
           onClick={this.handleClick}
           target="_blank"

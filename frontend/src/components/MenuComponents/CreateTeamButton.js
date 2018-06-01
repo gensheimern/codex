@@ -23,7 +23,10 @@ export default class CreateTeamButton extends React.Component {
           icon={<IconAdd color="#FFFFFF"/>}
           onClick={this.handleClick}
           target="_blank"
-          style={{color:"white", minWidth:"0px",margin:"0px"}}/>
+          style={{color:"white",
+            minWidth:"0px",
+            marginRight:"60%",
+            margin:"0px"}}/>
       </div>
     );
   }

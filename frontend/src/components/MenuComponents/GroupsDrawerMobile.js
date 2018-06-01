@@ -32,6 +32,8 @@ export default class GroupsDrawer extends React.Component {
           width={"84%"}
           open={this.state.open}
           onRequestChange={(open) => this.setState({open})}
+          containerStyle={{height:"95%",marginTop:"10%"}}
+          overlayStyle={{height:"95%",marginTop:"11%"}}
         >
         <Groups changeContent={this.props.changeContent}
           searchFilterFeed={this.props.searchFilterFeed}
