@@ -1,6 +1,5 @@
 const activityValidation = {
 	validActivity(activity) {
-		console.log(activity);
 		if (!activity) return false;
 
 		return activityValidation.validName(activity.name)
@@ -30,7 +29,7 @@ const activityValidation = {
 
 	validTime(time) {
 		// TODO: Check time format 2018-04-20 12:34:18
-	 	return typeof time === 'string'
+		return typeof time === 'string';
 		//	&& /\d\d\d\d-\d\d-\d\d \d\d:\d\d:\d\d/.test(time); // TODO: Schöner machen
 	},
 

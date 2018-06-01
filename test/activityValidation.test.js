@@ -70,7 +70,7 @@ describe('Activity validation', () => {
 			const result = activityValidation.validActivity(activity);
 			expect(result, 'Correct validation').to.be.false;
 		});
-/*
+		/*
 		it('should reject invalid time', () => {
 			const activity = {
 				name: 'Grosses Event',
@@ -85,7 +85,7 @@ describe('Activity validation', () => {
 			const result = activityValidation.validActivity(activity);
 			expect(result, 'Correct validation').to.be.false;
 		});
-*/
+		*/
 		it('should reject invalid description', () => {
 			const activity = {
 				name: 'Grosses Event',
@@ -227,7 +227,7 @@ describe('Activity validation', () => {
 			const result = activityValidation.validTime(123);
 			expect(result, 'Correct validation').to.be.false;
 		});
-/*
+		/*
 		it('should reject wrong format', () => {
 			const result = activityValidation.validTime('');
 			expect(result, 'Correct validation').to.be.false;
