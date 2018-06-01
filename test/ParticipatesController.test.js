@@ -72,6 +72,7 @@ describe('Participates controller', () => {
 					name: 'Mustermann',
 					email: 'valid@email.com',
 					image: '/image.png',
+					me: false,
 				},
 				{
 					id: 2,
@@ -79,6 +80,7 @@ describe('Participates controller', () => {
 					name: 'Mustermann2',
 					email: 'valid2@email.com',
 					image: '/image2.png',
+					me: false,
 				},
 			]);
 		});
