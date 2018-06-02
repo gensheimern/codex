@@ -2,9 +2,10 @@ import React from 'react';
 import config from '../../config';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-
-
+import {Card, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+import ImageBackground from 'react';
 import './signup.css';
+import Avatar from 'material-ui/Avatar';
 
 export default class Signup extends React.Component {
 	emailRegExp = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -67,9 +68,13 @@ export default class Signup extends React.Component {
 			};
 		}
 		return(
-			<form className="signup" onSubmit={this.signupUser}>
-				<h1>Sign Up</h1>
 
+			<form className="signup" onSubmit={this.signupUser}>
+			<div>
+ <Avatar alt="" src="#"  />
+ </div>
+<Card>
+<CardText>
 				<TextField
 					id="firstName"
 					label="first name"
@@ -125,8 +130,10 @@ export default class Signup extends React.Component {
 					primary={true}
 					disabled={!this.validateForm()}
 				/>
+				</CardText>
+				</Card>
             </form>
-			
+
 		);
 	}
 }

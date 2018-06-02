@@ -1,3 +1,12 @@
 .signup {
-	padding: 2%;
+		padding: 2%;
+
+    background-image: url("signup.png");
+		background-repeat: no-repeat;
+width: 100%;
+z-index: -1;
+}
+
+.TextField {
+		width:	100%;
 }
