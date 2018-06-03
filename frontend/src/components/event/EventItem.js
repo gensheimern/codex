@@ -146,9 +146,12 @@ export default class EventItem extends React.Component {
                     } else {
                         throw new Error("Could not find Activity");
                     }
-                } else if (res.status !== 200) {
+                } else if (res.status !== 201) {
+										if(res.status !== 200){
+										console.log(res.status);
                     throw new Error("Forbidden");
                 }
+							}
                 return res;
 		})
 		.then(res => res.json())
