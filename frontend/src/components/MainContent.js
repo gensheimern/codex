@@ -10,7 +10,8 @@ import FlatButton from 'material-ui/FlatButton';
 import CreateEventtCard from './event/CreateEventCard';
 import CreateTeam from './groupmanager/CreateTeam';
 import Paper from 'material-ui/Paper';
-
+import Notifications from './notification/Notifications';
+import FilterDropDown from './MenuComponents/FilterDropDown.js';
 
 export default class MainContent extends React.Component {
   constructor(props) {
@@ -64,6 +65,9 @@ export default class MainContent extends React.Component {
           height: "100%",
           overflowY: "scroll"
         }}>
+        <div className="FilterDiv">
+          <FilterDropDown searchFilterFeed={this.props.searchFilterFeed}/>
+        </div>
         <Events filterWord={this.props.filterWord} searchWord={this.props.searchWord} />
       </div>);
     } else if (this.props.mainContentNumber === 1) {
@@ -83,13 +87,14 @@ export default class MainContent extends React.Component {
           marginTop: "0%",
           marginBottom: "10%",
           float: "left",
-          height: "90%",
           overflowY: "scroll",
-          margin: "10%"
+          height:"100%",
         }}>
       <div>
         <Paper className="createEventWrapper">
-          <CreateEventtCard ref={instance => {
+          <CreateEventtCard
+            changeContent={this.props.changeContent}
+            ref={instance => {
               this.child = instance;
             }}/>
             <FlatButton
@@ -102,13 +107,13 @@ export default class MainContent extends React.Component {
       </div>);
     } else if (this.props.mainContentNumber === 3) {
       return (<div style={{
-          width: this.props.width,
+          width: '100%',
           marginTop: "0%",
           float: "left",
           height: "100%",
           overflowY: "scroll"
         }}>
-        <Events filterWord={this.props.filterWord} searchWord={this.props.searchWord} />
+        <Notifications />
       </div>);
     } else if (this.props.mainContentNumber === 4) {
       return (<div style={{
@@ -128,16 +133,22 @@ export default class MainContent extends React.Component {
           height: "100%",
           overflowY: "scroll"
         }}>
-        <Dialog className="createEventWrapper" actions={actions} modal={false} open={this.state.open} onRequestClose={this.handleClose} contentStyle={{
+        <Dialog className="createEventWrapper" actions={actions} modal={false} open={this.state.open} onRequestClose={this.handleClose}
+         style={{padding:"30px"}}
+         contentStyle={{
             width: "95%",
             maxWidth: "none",
             paddingTop: "0px"
-          }} bodyStyle={{
+          }}
+          bodyStyle={{
             padding: "0px",
             paddingTop: "0px"
-          }} titleStyle={{
+          }}
+          titleStyle={{
             paddingTop: "0px"
-          }} autoScrollBodyContent={true}>
+          }}
+          autoScrollBodyContent={true}>
+
           <CreateEventtCard ref={instance => {
               this.child = instance;
             }}/>
