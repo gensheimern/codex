@@ -1,14 +1,32 @@
 import React from 'react';
+//import Recaptcha from 'react-recaptcha';
+import ReCAPTCHA from 'react-google-recaptcha';
 import config from '../../config';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import {Card, CardMedia, CardTitle, CardText} from 'material-ui/Card';
-import ImageBackground from 'react';
+import {Card, /*CardMedia, CardTitle,*/ CardText} from 'material-ui/Card';
+//import ImageBackground from 'react';
 import './signup.css';
 import Avatar from 'material-ui/Avatar';
 
+//TEMP
+/*
+<Recaptcha
+				sitekey="6LfY-1wUAAAAAAjaNfCOZrbJKO8fmWdLSgC0u9xm"
+				render="explicit"
+				h1={"ja"}
+				onloadCallback={callbackRECAP}
+				  />
+
+*/
+
+
+
+
 export default class Signup extends React.Component {
 	emailRegExp = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+	//Recaptcha = require('react-recaptcha');
 
 	constructor(props) {
 		super(props);
@@ -67,14 +85,17 @@ export default class Signup extends React.Component {
 				errorText: 'Passwords do not match.',
 			};
 		}
+		let callbackRECAP = function(){
+			alert("loaded Recaptcha!");
+		};
 		return(
 
 			<form className="signup" onSubmit={this.signupUser}>
-			<div>
- <Avatar alt="" src="#"  />
- </div>
-<Card>
-<CardText>
+				<div>
+					<Avatar alt="" src="#"  />
+ 				</div>
+				<Card>
+				<CardText>
 				<TextField
 					id="firstName"
 					label="first name"
@@ -92,6 +113,8 @@ export default class Signup extends React.Component {
 					floatingLabelText="Last name"
 				/>
 				<br/>
+
+				<br />
 
 				<TextField
 					id="email"
@@ -122,8 +145,11 @@ export default class Signup extends React.Component {
 					{ ...retypeError }
 				/>
 				<br/>
+				<ReCAPTCHA 
+					ref="recaptcha"
+					sitekey="6LfY-1wUAAAAAAjaNfCOZrbJKO8fmWdLSgC0u9xm"
+				/>
 				<br/>
-
 				<RaisedButton
 					type="submit"
 					label="Sign Up"
@@ -132,7 +158,11 @@ export default class Signup extends React.Component {
 				/>
 				</CardText>
 				</Card>
-            </form>
+				
+			</form>
+				
+				
+
 
 		);
 	}
