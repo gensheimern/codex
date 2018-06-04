@@ -1,7 +1,8 @@
 import React from 'react';
-import LoadingAnimation from '../tools/LoadingAnimation';
 import config from '../../config';
 import { Redirect } from 'react-router-dom';
+import logo from '../../IMG/codex_logo1x.png';
+import LinearProgress from 'material-ui/LinearProgress';
 
 export default class Splashscreen extends React.Component {
 	constructor(props) {
@@ -15,7 +16,7 @@ export default class Splashscreen extends React.Component {
 
 		setTimeout(() => this.setState({
 			timeout: true,
-		}), 1000);
+		}), 2200);
 	}
 
 	componentDidMount() {
@@ -48,7 +49,17 @@ export default class Splashscreen extends React.Component {
 
 	render() {
 		if (!this.state.loaded || !this.state.timeout) {
-			return <LoadingAnimation/>;
+			return (
+				<div style={{
+					width: '100%',
+					height: '100%',
+					padding: '20%',
+					textAlign: 'center',
+				}}>
+					<img style={{marginBottom: '5%'}} src={logo} alt="Logo"/>
+					 <LinearProgress mode="indeterminate" />
+				</div>
+			);
 		}
 
 		return (

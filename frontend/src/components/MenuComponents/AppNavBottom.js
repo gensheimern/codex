@@ -6,7 +6,7 @@ import IconNotifications from 'material-ui/svg-icons/social/notifications';
 import IconProfile from 'material-ui/svg-icons/social/person';
 import IconCalendar from 'material-ui/svg-icons/action/event';
 import IconFeed from 'material-ui/svg-icons/action/assignment';
-import { Link, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
 
 const FeedIcon = <IconFeed/>;
