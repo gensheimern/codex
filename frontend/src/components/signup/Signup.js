@@ -7,7 +7,8 @@ import RaisedButton from 'material-ui/RaisedButton';
 import {Card, /*CardMedia, CardTitle,*/ CardText} from 'material-ui/Card';
 //import ImageBackground from 'react';
 import './signup.css';
-import Avatar from 'material-ui/Avatar';
+import Paper from 'material-ui/Paper';
+import Checkbox from 'material-ui/Checkbox';
 
 //TEMP
 /*
@@ -41,6 +42,7 @@ export default class Signup extends React.Component {
 			password: "",
 			retypePassword: "",
 			img: "",
+			checked: false,
 		}
 	}
 
@@ -56,7 +58,16 @@ export default class Signup extends React.Component {
 			&& this.state.name !== ""
 			&& this.state.password !== ""
 			&& this.state.retypePassword !== ""
-			&& this.state.password === this.state.retypePassword;
+			&& this.state.password === this.state.retypePassword
+			&& this.state.checked;
+	}
+
+	updateCheck() {
+		this.setState((oldState) => {
+		  return {
+			checked: !oldState.checked,
+		  };
+		});
 	}
 
 	signupUser = (e) => {
@@ -79,6 +90,68 @@ export default class Signup extends React.Component {
 	}
 
 	render() {
+		const styles = {
+			block: {
+			  maxWidth: 250,
+			},
+			checkbox: {				
+			paddingLeft: 100,
+			paddingRight: 197,
+			marginBottom: 16,
+			
+			},
+			
+			cardStyle:{
+				height: 800,
+				width: 439,
+				borderRadius: 5,
+				backgroundColor: "#FFFFFF",
+				boxShadow: "0 2 20 0 rgba(57,56,56,0.5)",
+				display: 'block',
+				marginLeft: 'auto',
+				marginRight: 'auto',
+			},
+
+			paperStyle:{
+				height: 62,
+				width: 62,
+				borderRadius: 7,
+				display: 'block',
+				marginLeft: 'auto',
+				marginRight: 'auto',	
+			},
+			textField:{
+				height: 72,
+				width: 305,
+				display: 'block',
+				marginLeft: 'auto',
+				marginRight: 'auto',
+			},
+			reCAPTCHA:{
+				heigth: 76,
+				width: 305,
+				boarder:"1 solid #D6D6D6",
+				borderRadius: 2.43,
+				backgroundColor: "#FAFAFA",
+				boxShadow: "0 1 2 0 rgba(0,0,0,0.1)",
+				display: 'block',
+				marginLeft: 'auto',
+				marginRight: 'auto',
+				
+			},
+			signupButton:{
+				heigt: 40.57,
+				width: 130,
+				borderRadius: 3,
+				boxShadow: "inset 0 1 3 0 rgba(0,0,0,0.5),0 1 2 0 rgba(0,0,0,0.5)",
+				backgroundColor: "#1EA185",
+				display: 'block',
+				marginLeft: 'auto',
+				marginRight: 'auto',
+			},
+
+
+		  };
 		let retypeError = {};
 		if (this.state.password !== this.state.retypePassword) {
 			retypeError = {
@@ -89,21 +162,25 @@ export default class Signup extends React.Component {
 			alert("loaded Recaptcha!");
 		};
 		return(
-
 			<form className="signup" onSubmit={this.signupUser}>
 				<div>
-					<Avatar alt="" src="#"  />
+					<Paper style={styles.paperStyle} zDepth={1} />
  				</div>
-				<Card>
+				<br/>
+				<center>
+					<h3>Lunchplanner</h3>
+				</center>
+				<Card style={styles.cardStyle}>
 				<CardText>
+				<h2>SIGN UP</h2>
 				<TextField
 					id="firstName"
 					label="first name"
 					value={this.state.firstName}
 					onChange={this.handleChange('firstName')}
 					floatingLabelText="First name"
+					style= {styles.textField}
 				/>
-				<br/>
 
 				<TextField
 					id="name"
@@ -111,10 +188,8 @@ export default class Signup extends React.Component {
 					value={this.state.name}
 					onChange={this.handleChange('name')}
 					floatingLabelText="Last name"
+					style= {styles.textField}				
 				/>
-				<br/>
-
-				<br />
 
 				<TextField
 					id="email"
@@ -122,8 +197,8 @@ export default class Signup extends React.Component {
 					value={this.state.email}
 					onChange={this.handleChange('email')}
 					floatingLabelText="E-Mail"
+					style= {styles.textField}
 				/>
-				<br/>
 
 				<TextField
 					id="password"
@@ -132,8 +207,8 @@ export default class Signup extends React.Component {
 					value={this.state.password}
 					onChange={this.handleChange('password')}
 					floatingLabelText="Password"
+					style= {styles.textField}
 				/>
-				<br/>
 
 				<TextField
 					id="retypePassword"
@@ -143,27 +218,46 @@ export default class Signup extends React.Component {
 					onChange={this.handleChange('retypePassword')}
 					floatingLabelText="Retype Password"
 					{ ...retypeError }
+					style= {styles.textField}
 				/>
 				<br/>
+				
 				<ReCAPTCHA 
 					ref="recaptcha"
 					sitekey="6LfY-1wUAAAAAAjaNfCOZrbJKO8fmWdLSgC0u9xm"
+					style = {styles.reCAPTCHA}
 				/>
 				<br/>
+				
+				<Checkbox
+          			label="Datenschutzerklärung "
+          			checked={this.state.checked}
+          			onCheck={this.updateCheck.bind(this)}
+          			style={styles.checkbox}
+        		/>
+				
 				<RaisedButton
+					backgroundColor="#b9b9b9"
 					type="submit"
 					label="Sign Up"
 					primary={true}
 					disabled={!this.validateForm()}
+					style = {styles.signupButton}
 				/>
+				<br/>
+				<center>
+					<p>Have an account already ?
+						<a href ="#">
+						 Log in here
+						</a>
+					</p>
+				</center>
+				
 				</CardText>
 				</Card>
 				
 			</form>
-				
-				
-
-
+		
 		);
 	}
 }

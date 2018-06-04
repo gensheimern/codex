@@ -1,12 +1,40 @@
 .signup {
-		padding: 2%;
-
-    background-image: url("signup.png");
-		background-repeat: no-repeat;
-width: 100%;
-z-index: -1;
+	padding: 2%;
+	background-image: url("Hintergrundbild.png");
+	background-size: cover;
+	background-repeat: no-repeat;
+	height: 1065px;
+	width: 1605px;
+	opacity: 0.87;
+	z-index: -1;
+}
+h3{
+	height: 38px;
+	width: 210px;
+	font-family: 'Trebuchet MS';
+	font-size: 30px;
+	font-weight: 'bold';
+	line-height: 35px;
+	color: #FFFFFF;
+	padding-bottom: 68px;
 }
 
-.TextField {
-		width:	100%;
+h2{
+	padding-top: 51px;
+	padding-left: 50px;
+	padding-right: 247px;
+	padding-bottom: 3px;
+	height: 23px;
+	color: #1EA185;
+	font-family: 'Trebuchet MS';
+	font-size: 20px;
+	font-weight: bold;
+	line-height: 23px;
+
+}
+
+a{
+	text-decoration: underline;
+	color: #1EA185;
+
 }
