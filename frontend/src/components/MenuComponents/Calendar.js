@@ -1,5 +1,7 @@
 import React from 'react';
 import Paper from 'material-ui/Paper';
+import { withRouter } from 'react-router-dom';
+
 
 const monthNames = [
 	'January',
@@ -16,7 +18,7 @@ const monthNames = [
 	'December',
 ];
 
-export default class Calendar extends React.Component {
+class Calendar extends React.Component {
 
 	constructor(props) {
 		super(props);
@@ -107,7 +109,7 @@ export default class Calendar extends React.Component {
 					color = '#f8c947';
 				}
 			});
-			
+
 			if (this.state.date.getDate() === i) {
 				color = '#1EA185';
 			}
@@ -214,6 +216,10 @@ export default class Calendar extends React.Component {
 								onClick={() => {
 									this.setState({date: day.date});
 									this.props.changeDate(day.date);
+									console.log("wow" + this.props.mainContentNumber);
+									this.props.searchFilterFeed(day.date,"Date");
+									if(this.props.mainContentNumber===1)
+										this.props.history.push('/feed')
 								}}
 							>{day.name}</div>
 						);
@@ -224,3 +230,4 @@ export default class Calendar extends React.Component {
 		);
 	}
 }
+export default withRouter(Calendar);

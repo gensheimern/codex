@@ -18,8 +18,12 @@ class App extends Component {
 
 		this.state = {
 			mainContentNumber: 0,
-			filterWord: 'TimeDown',
-			searchWord: '',
+			filter:{
+				filterWord: 'TimeDown',
+				searchWord: '',
+				filterDate: new Date(),
+				filterGroup: '',
+			}
 		};
 
 		this.changeContent = this.changeContent.bind(this);
@@ -33,14 +37,32 @@ class App extends Component {
 	searchFilterFeed(value, type){
 		switch(type) {
 			case 'Sort':
-				this.setState({ filterWord: value });
-				break;
-			case 'Search':
-				this.setState({ searchWord: value });
-				break;
-			case 'FilterGroup':
-				console.log('wow');
-				break;
+					this.setState((oldState) => ({
+						filter: {
+							...oldState.filter,
+							filterWord: value,
+						}
+					}))
+					break;
+				case 'Search':
+					this.setState((oldState) => ({
+						filter: {
+							...oldState.filter,
+							searchWord: value,
+						}
+					}))
+					break;
+				case 'Date':
+					this.setState((oldState) => ({
+						filter: {
+							...oldState.filter,
+							filterDate: value,
+						}
+					}))
+					break;
+				case 'FilterGroup':
+						console.log('wow');
+									break;
 			default:
 				return null;
 		}
@@ -53,7 +75,7 @@ class App extends Component {
 		<div id="contentarea">
 			{/* Landing page */}
 			<Route exact path="/" component={Splashscreen}/>
-			
+
 
 			{/* Public routes */}
 			<Route exact path="/login" component={Login} />
@@ -64,8 +86,7 @@ class App extends Component {
 				<Screen
 					changeContent={this.changeContent}
 					searchFilterFeed={this.searchFilterFeed}
-					filterWord={this.state.filterWord}
-					searchWord={this.state.searchWord}
+					filter={this.state.filter}
 					mainContentNumber={this.state.mainContentNumber}
 					match={props.match}
 				/>
@@ -89,5 +110,5 @@ function Screen(props) {
 		</MediaQuery>
 	);
 }
-				
+
 export default App;

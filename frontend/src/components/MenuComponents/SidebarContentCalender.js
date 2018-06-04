@@ -83,8 +83,7 @@ export default class SidebarContent extends React.Component {
 		this.setState({
 			date,
 		});
-		console.log(date);
-		// TODO: filter personal feed
+		console.log(this.props.mainContentNumber);
 	};
 
 	render() {
@@ -103,7 +102,7 @@ export default class SidebarContent extends React.Component {
 		if (this.state.loading && !this.state.valid) {
 			return <LoadingAnimation/>
 		}
-		
+
 		if (this.state.error) {
 			return (
 				<RetryPrompt
@@ -135,6 +134,9 @@ export default class SidebarContent extends React.Component {
 					marginLeft: 'auto',
 				}}>
 					<Calendar
+						mainContentNumber={this.props.mainContentNumber}
+						 searchFilterFeed={this.props.searchFilterFeed}
+						  changeContent={this.props.changeContent}
 						eventDates={eventDates}
 						changeDate={this.onDateChange}
 					/>
@@ -187,7 +189,7 @@ export default class SidebarContent extends React.Component {
 
 
 			</div>
-				
+
 		);
 	}
 }
