@@ -1,5 +1,6 @@
 import React from 'react';
 import Paper from 'material-ui/Paper';
+import './Calendar.css';
 
 const monthNames = [
 	'January',
@@ -35,8 +36,6 @@ export default class Calendar extends React.Component {
 		let day = this.state.date.getDate();
 
 		const daysInNewMonth = new Date(year, month + 1, 0).getDate();
-		console.log(daysInNewMonth);
-		console.log(`Y${year} M${month} D${day}`);
 
 		if (day > daysInNewMonth) {
 			day = daysInNewMonth;
@@ -56,28 +55,7 @@ export default class Calendar extends React.Component {
 			backgroundColor: 'white',
 		};
 
-		const fieldStyle = {
-			textAlign: 'center',
-			float: 'left',
-			width: '2.7vw',
-			height: '2.7vw',
-			borderRadius: '50%',
-			paddingTop: '0.4vw',
-			fontSize: '1.4vw',
-			margin: '0.4vw',
-		};
 
-		const weekdayStyle = {
-			textAlign: 'center',
-			float: 'left',
-			width: '2.7vw',
-			height: '2.7vw',
-			borderRadius: '50%',
-			paddingTop: '0.4vw',
-			fontSize: '1.4vw',
-			margin: '0.4vw',
-			color: 'grey'
-		};
 
 		let days = [];
 
@@ -87,8 +65,7 @@ export default class Calendar extends React.Component {
 		const daysInMonth = new Date(year, month, 0).getDate();
 		const daysInLastMonth = new Date(year, month - 1, 0).getDate();
 		const daysOfLastMonthShown = ((new Date(year, month - 1, 1).getDay() + 6) % 7);
-
-		const daysOfNextMonthShown = 7 -((daysOfLastMonthShown + daysInMonth) % 7);
+		const daysOfNextMonthShown = (7 -((daysOfLastMonthShown + daysInMonth) % 7)) % 7;
 
 		for (let i = daysOfLastMonthShown - 1; i >= 0; i--) {
 			days.push({
@@ -100,21 +77,24 @@ export default class Calendar extends React.Component {
 		}
 
 		for(let i = 1; i <= daysInMonth; i++) {
-			let color = '#ffffff';
+			let bgColor = '#ffffff';
+			let color = 'black';
 
 			this.props.eventDates.forEach((date) => {
 				if (date.getDate() === i && date.getMonth() === this.state.date.getMonth() && date.getFullYear() === this.state.date.getFullYear()) {
-					color = '#f8c947';
+					bgColor = '#f8c947';
 				}
 			});
 			
 			if (this.state.date.getDate() === i) {
-				color = '#1EA185';
+				bgColor = '#1EA185';
+				color = '#ffffff';
 			}
 
 			days.push({
 				name: i,
-				backgroundColor: color,
+				backgroundColor: bgColor,
+				color,
 				date: new Date(this.state.date.getFullYear(), this.state.date.getMonth(), i),
 			});
 		}
@@ -172,13 +152,15 @@ export default class Calendar extends React.Component {
 			}
 		];*/
 
+		const weekdays = ['MO', 'TU', 'WE', 'TH', 'FR', 'SA', 'SO'];
+
 		return (
 			<Paper style={{
 				padding: '1vw',
 			}}>
 				<div style={{
 					textAlign: 'center',
-					fontSize: '1.7vw'
+					fontSize: '120%'
 				}}>
 				<button style={buttonStyle} onClick={() => this.monthChange(false)}>&lt;</button>
 				{this.state.date.getDate()} {monthNames[this.state.date.getMonth()]} {this.state.date.getFullYear()}
@@ -187,27 +169,29 @@ export default class Calendar extends React.Component {
 
 				<div style={{
 					width: '100%',
-					overflow: 'auto',
 				}}>
-					<div style={weekdayStyle}>MO</div>
-					<div style={weekdayStyle}>TU</div>
-					<div style={weekdayStyle}>WE</div>
-					<div style={weekdayStyle}>TH</div>
-					<div style={weekdayStyle}>FR</div>
-					<div style={weekdayStyle}>SA</div>
-					<div style={weekdayStyle}>SO</div>
+					{
+						weekdays.map((weekday, index) => (
+							<div key={index} className="weekday">
+								<div className="contents">
+									{weekday}
+								</div>
+							</div>
+						))
+					}
 				</div>
 
 				<div style={{
 					width: '100%',
-					overflow: 'auto',
+					overflow: 'hidden',
 				}}>
 					{days.map((day, index) => {
 						return (
 							<div
 								key={index}
+								className="calendarDate"
 								style={{
-									...fieldStyle,
+									cursor: 'pointer',
 									backgroundColor: day.backgroundColor,
 									color: day.color,
 								}}
@@ -215,7 +199,11 @@ export default class Calendar extends React.Component {
 									this.setState({date: day.date});
 									this.props.changeDate(day.date);
 								}}
-							>{day.name}</div>
+							>
+								<div className="contents">
+									{day.name}
+								</div>
+							</div>
 						);
 					})}
 				</div>

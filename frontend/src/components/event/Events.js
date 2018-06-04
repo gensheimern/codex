@@ -2,8 +2,11 @@ import React from 'react';
 import EventItem from './EventItem';
 import config from '../../config';
 import MediaQuery from 'react-responsive';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import ContentAdd from 'material-ui/svg-icons/content/add';
+import { withRouter } from 'react-router-dom';
 
-export default class Events extends React.Component {
+class Events extends React.Component {
 
   constructor(props) {
     super(props);
@@ -107,7 +110,21 @@ export default class Events extends React.Component {
                   <div className="addButton">
                     <hr/>
 
+                    <FloatingActionButton
+                      backgroundColor="#f8c947"
+                      mini={true}
+                      style={{
+                        margin: '0 2%',
+                      }}
+                      onClick={() => {
+                        this.props.history.push('/addevent');
+                      }}
+                    >
+                      <ContentAdd/>
+                    </FloatingActionButton>
+                    ADD EVENT
                   </div>
+                  
                 </div>
               } else {
                 return null
@@ -123,3 +140,5 @@ export default class Events extends React.Component {
 
   }
 }
+
+export default withRouter(Events);
