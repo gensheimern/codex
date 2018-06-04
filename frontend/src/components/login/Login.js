@@ -60,7 +60,7 @@ export default class Login extends Component {
                 // TODO Code without local storage
             }
 
-            this.props.history.push("/activity");
+            this.props.history.push("/feed");
         }).catch((err) => {
             this.setState({
                 errorPrompt: (<Alert bsStyle = "warning"> <strong> Holy guacamole ! </strong>

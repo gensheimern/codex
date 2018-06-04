@@ -13,6 +13,13 @@ const ActivityController = {
 		res.json(activities.map(transforms(userId).transformActivity));
 	},
 
+	async getJoinedActivities(req, res) {
+		const { userId } = req.token;
+
+		const activities = await ActivityModel.getJoinedActivities(userId);
+		res.json(activities.map(transforms(userId).transformActivity));
+	},
+
 	async getActivityById(req, res) {
 		const { userId } = req.token;
 		const { activityId } = req.params;

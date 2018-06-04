@@ -2,6 +2,7 @@ import React from "react";
 import Toolbar, { ToolbarGroup } from 'material-ui/Toolbar';
 import Avatar from 'material-ui/Avatar';
 import Notification from 'material-ui/svg-icons/social/notifications';
+import { Link } from 'react-router-dom';
 
 export default class ProfileToolbar extends React.Component {
 	render(){
@@ -13,12 +14,13 @@ export default class ProfileToolbar extends React.Component {
 					<ToolbarGroup firstChild={true} style={{
 						marginLeft: 0,
 					}}>
-					<Notification
-						onClick={()=>{alert('Notifications clicked.')}}
-					/>
+					<Link to="/notifications"><Notification/></Link>
 					</ToolbarGroup>
+
 					<ToolbarGroup>
-						<Avatar onClick={() => {alert('Profile clicked.')}}>MM</Avatar>
+						<Link to="/profile">
+							<Avatar>MM</Avatar>
+						</Link>
 					</ToolbarGroup>
 				</Toolbar>
 			</React.Fragment>

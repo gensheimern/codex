@@ -15,6 +15,18 @@ export default class Dashboard extends React.Component {
 			height: 'calc(100% - 56px)',
 		};
 
+		let content = 0;
+
+		switch (this.props.match.params[0]) {
+			case 'feed': content = 0; break;
+			case 'notifications': content = 3; break;
+			case 'profile': content = 4; break;
+			case 'addteam': content = 6; break;
+			case 'addevent': content = 2; break;
+			case 'personal': content = 0; break;
+			default: content = 0; break;
+		}
+
 		return (
 			<React.Fragment>
 				<FeedToolbar searchFilterFeed={this.props.searchFilterFeed} />
@@ -38,7 +50,7 @@ export default class Dashboard extends React.Component {
 					borderRight: '1px solid lightgrey',
 				}}>
 					<MainContent
-						mainContentNumber={0}
+						mainContentNumber={content}
 						searchFilterFeed={this.props.searchFilterFeed}
 						filterWord={this.props.filterWord} 
 						searchWord={this.props.searchWord}

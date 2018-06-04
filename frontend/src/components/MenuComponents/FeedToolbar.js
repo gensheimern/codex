@@ -1,6 +1,7 @@
 import React from 'react';
 import FilterToolbar from './FilterToolbar';
 import ProfileToolbar from './ProfileToolbar';
+import { Link } from 'react-router-dom';
 
 export default class FeedToolbar extends React.Component {
 	render() {
@@ -17,19 +18,21 @@ export default class FeedToolbar extends React.Component {
 				<div style={{
 					...fixedStyle,
 				}}>
-					<div style={{
-						...fixedStyle,
-						width: '20%',
-						backgroundColor: '#1EA185',
-						height: '56px',
-						fontSize: '2.5vw',
-						padding: '5px',
-						textAlign: 'center',
-						boxShadow: 'lightgrey 5px 5px 5px',
-					   
-					}}>
-						Lunch Planner
-					</div>
+					<Link to="/feed">
+						<div style={{
+							...fixedStyle,
+							width: '20%',
+							backgroundColor: '#1EA185',
+							height: '56px',
+							fontSize: '2.5vw',
+							padding: '5px',
+							textAlign: 'center',
+							boxShadow: 'lightgrey 5px 5px 5px',
+						
+						}}>
+							Lunch Planner
+						</div>
+					</Link>
 
 					<div style={{
 						...fixedStyle,

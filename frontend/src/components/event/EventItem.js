@@ -103,7 +103,7 @@ export default class EventItem extends React.Component {
 	}
 
 	isJoined(){
-		const isJoined = this.state.participants.reduce(false, (total, user) => (total || user.me));
+		const isJoined = this.state.participants.reduce((total, user) => (total || user.me), false);
 		this.setState({
 			isJoined
 		});

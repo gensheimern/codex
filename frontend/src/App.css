@@ -34,6 +34,10 @@
   background-color: #F1F1F1;
 }
 
+body {
+  background-color: #F1F1F1;
+}
+
 .mainContentMobile-wrapper{
   overflow:hidden;
   width: 100vw;

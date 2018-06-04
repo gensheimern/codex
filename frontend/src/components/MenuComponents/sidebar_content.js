@@ -3,6 +3,7 @@ import "./sidebars.css";
 import config from '../../config';
 import CreateTeamButton from './CreateTeamButton.js';
 import GroupSidebarButton from './GroupSidebarButton.js'
+import { Link } from 'react-router-dom';
 
 export default class SidebarContent extends React.Component {
   constructor(props) {
@@ -35,6 +36,9 @@ export default class SidebarContent extends React.Component {
       }
     }).then(res => res.json()).then(res => {
       this.setState({groups: res});
+    })
+    .catch((err) => {
+      console.log('Request failed.');
     });
 
   }
@@ -103,11 +107,19 @@ export default class SidebarContent extends React.Component {
           marginTop:"3%"
           }}>
           GROUPS</p>
-        <CreateTeamButton style={{float:"none",
-          marginRight:"30%",
-          minHeight:"38px",
-          minWidth:"0px",
-          width:"21%"}} changeContent={this.props.changeContent} closeDrawer={this.props.closeDrawer}/>
+          <Link to={{pathname: '/addteam'}}>
+            <CreateTeamButton
+              style={{
+                float:"none",
+                marginRight:"30%",
+                minHeight:"38px",
+                minWidth:"0px",
+                width:"21%"
+              }}
+              changeContent={this.props.changeContent}
+              closeDrawer={this.props.closeDrawer}
+            />
+          </Link>
           <div className="groups">
                 {myGroups}
               </div>

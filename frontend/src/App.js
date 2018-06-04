@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Route, Redirect } from 'react-router-dom';
+import { BrowserRouter, Route } from 'react-router-dom';
 import MediaQuery from 'react-responsive';
 
 // Components
@@ -9,6 +9,8 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Signup from './components/signup/Signup';
 import Dashboard from './components/Dashboard';
 import MobileContent from './components/MobileContent';
+import Splashscreen from './components/routing/Splashscreen';
+// import NotFound from './components/routing/NotFound';
 
 class App extends Component {
 	constructor(props) {
@@ -50,42 +52,42 @@ class App extends Component {
 		<MuiThemeProvider>
 		<div id="contentarea">
 			{/* Landing page */}
-			<Route exact path="/" render={() => (
-				<Redirect to={{
-					pathname: localStorage.getItem('apiToken')
-						? '/feed' : '/login'
-				}} />
-			)}/>
+			<Route exact path="/" component={Splashscreen}/>
+			
 
 			{/* Public routes */}
 			<Route exact path="/login" component={Login} />
 			<Route exact path="/signup" component={Signup} />
 
 			{/* Protected routes (login required) */}
-			<Route exact path="/feed" render={() =>
-				(<MediaQuery minWidth={768}>
-					{(matches) =>
-						matches
-						?	(<Dashboard
-								changeContent={this.changeContent}
-								searchFilterFeed={this.searchFilterFeed}
-								filterWord={this.state.filterWord}
-								searchWord={this.state.searchWord}
-							/>)
-						:	(<MobileContent
-								changeContent={this.changeContent}
-								searchFilterFeed={this.searchFilterFeed}
-								filterWord={this.state.filterWord}
-								searchWord={this.state.searchWord}
-								mainContentNumber={this.state.mainContentNumber}
-							/>)
-					}
-				</MediaQuery>)
-			} />
+			<Route exact path="/(feed|notifications|profile|addteam|addevent|personal)" render={(props) => (
+				<Screen
+					changeContent={this.changeContent}
+					searchFilterFeed={this.searchFilterFeed}
+					filterWord={this.state.filterWord}
+					searchWord={this.state.searchWord}
+					mainContentNumber={this.state.mainContentNumber}
+					match={props.match}
+				/>
+			)} />
+
+			{/* <Route path="/" component={NotFound}/> */}
 		</div>
 		</MuiThemeProvider>
 		</BrowserRouter>);
 	}
+}
+
+function Screen(props) {
+	return (
+		<MediaQuery minWidth={768}>
+			{(matches) =>
+				matches
+				?	(<Dashboard {...props} />)
+				:	(<MobileContent {...props} />)
+			}
+		</MediaQuery>
+	);
 }
 				
 export default App;
