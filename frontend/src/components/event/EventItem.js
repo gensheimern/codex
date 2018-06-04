@@ -1,7 +1,6 @@
 import React from 'react';
 import config from '../../config';
 import EventCard from './EventCard';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
 export default class EventItem extends React.Component {
 
@@ -23,16 +22,6 @@ export default class EventItem extends React.Component {
 
 	}
 
-/*
-	shouldComponentUpdate(nextProps, nextState){
-		if(this.state.collapsed !== nextState.collapsed) {
-			return true
-			console.log("true");
-		}
-
-		return false
-	}
-*/
 	componentDidMount() {
 		this.loadParticipants();
 		this.loadMessages();
@@ -114,7 +103,7 @@ export default class EventItem extends React.Component {
 	}
 
 	isJoined(){
-		const isJoined = this.state.participants.reduce(false, (total, user) => (total || user.me));
+		const isJoined = this.state.participants.reduce((total, user) => (total || user.me), false);
 		this.setState({
 			isJoined
 		});
@@ -146,12 +135,9 @@ export default class EventItem extends React.Component {
                     } else {
                         throw new Error("Could not find Activity");
                     }
-                } else if (res.status !== 201) {
-										if(res.status !== 200){
-										console.log(res.status);
+                } else if (res.status !== 200 && res.status !== 201) {
                     throw new Error("Forbidden");
                 }
-							}
                 return res;
 		})
 		.then(res => res.json())
@@ -169,7 +155,6 @@ export default class EventItem extends React.Component {
 			return (<p>Loading...</p>);
 		}
 		return (
- <MuiThemeProvider>
 			<EventCard
 				loaded = {this.state.loaded}
 				joined={this.state.isJoined}
@@ -183,7 +168,6 @@ export default class EventItem extends React.Component {
 				messages={this.state.messages}
 				loadMessages={this.loadMessages}
 			/>
-	 </MuiThemeProvider>
 		);
 	}
 

@@ -53,7 +53,6 @@ export default class Login extends Component {
             }
             return res;
         }).then(res => res.json()).then((res) => {
-            //console.log("Token: " + res.token)
 
             if(typeof (Storage) !== "undefined") {
                 localStorage.setItem("apiToken", res.token);
@@ -61,7 +60,7 @@ export default class Login extends Component {
                 // TODO Code without local storage
             }
 
-            this.props.history.push("/activity");
+            this.props.history.push("/feed");
         }).catch((err) => {
             this.setState({
                 errorPrompt: (<Alert bsStyle = "warning"> <strong> Holy guacamole ! </strong>
