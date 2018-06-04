@@ -1,5 +1,6 @@
 const ActivityModel = require('../../models/ActivityModel');
 const ParticipatesModel = require('../../models/participatesModel');
+const NotificationModel = require('../../models/NotificationModel');
 const transforms = require('../transforms');
 const { validActivity } = require('./activityValidation');
 
@@ -9,7 +10,7 @@ const ActivityController = {
 		const { userId } = req.token;
 
 		const activities = await ActivityModel.getAllActivities(userId);
-		res.json(activities.map(transforms.transformActivity));
+		res.json(activities.map(transforms(userId).transformActivity));
 	},
 
 	async getActivityById(req, res) {
@@ -35,7 +36,7 @@ const ActivityController = {
 				message: 'Activity not found',
 			});
 		} else {
-			res.json(transforms.transformActivity(activity));
+			res.json(transforms(userId).transformActivity(activity));
 		}
 	},
 
@@ -51,7 +52,7 @@ const ActivityController = {
 		}
 
 		const result = await ActivityModel.createActivity(activity, userId);
-		await ParticipatesModel.addParticipant(result.insertId, userId);
+		await ParticipatesModel.addParticipant(result.insertId, userId, true);
 
 		res.status(201).json({
 			activityId: result.insertId,
@@ -112,6 +113,8 @@ const ActivityController = {
 		}
 
 		const result = await ActivityModel.updateActivity(activityId, newActivity);
+
+		NotificationModel.notifyEvent(activityId, 'notification', 'Event updated', `The event ${newActivity.name} changed.`, activityId, null);
 
 		if (result.affectedRows === 1) {
 			res.json({

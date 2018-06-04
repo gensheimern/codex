@@ -9,6 +9,9 @@ import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import CreateEventtCard from './event/CreateEventCard';
 import CreateTeam from './groupmanager/CreateTeam';
+import Paper from 'material-ui/Paper';
+import Notifications from './notification/Notifications';
+import FilterDropDown from './MenuComponents/FilterDropDown.js';
 
 export default class MainContent extends React.Component {
   constructor(props) {
@@ -52,6 +55,7 @@ export default class MainContent extends React.Component {
       <FlatButton label="Cancel" primary={true} onClick={this.handleClose}/>,
       <FlatButton label="Submit" primary={true} keyboardFocused={true} onClick={this.handleSubmit}/>
     ];
+    console.log(this.props.filterWord);
 
     if (this.props.mainContentNumber === 0) {
       return (<div style={{
@@ -61,7 +65,10 @@ export default class MainContent extends React.Component {
           height: "100%",
           overflowY: "scroll"
         }}>
-        <Events/>
+        <div className="FilterDiv">
+          <FilterDropDown searchFilterFeed={this.props.searchFilterFeed}/>
+        </div>
+        <Events filterWord={this.props.filterWord} searchWord={this.props.searchWord} />
       </div>);
     } else if (this.props.mainContentNumber === 1) {
       return (<div style={{
@@ -78,24 +85,35 @@ export default class MainContent extends React.Component {
       return (<div style={{
           width: this.props.width,
           marginTop: "0%",
+          marginBottom: "10%",
           float: "left",
-          height: "100%",
           overflowY: "scroll",
-          margin: "10%"
+          height:"100%",
         }}>
-        <CreateEventtCard ref={instance => {
-            this.child = instance;
-          }}/>
+      <div>
+        <Paper className="createEventWrapper">
+          <CreateEventtCard
+            changeContent={this.props.changeContent}
+            ref={instance => {
+              this.child = instance;
+            }}/>
+            <FlatButton
+              onClick={this.handleSubmit}
+              label="erstelle dein Event" fullWidth={true}
+            />
+
+        </Paper>
+      </div>
       </div>);
     } else if (this.props.mainContentNumber === 3) {
       return (<div style={{
-          width: this.props.width,
+          width: '100%',
           marginTop: "0%",
           float: "left",
           height: "100%",
           overflowY: "scroll"
         }}>
-        <Events/>
+        <Notifications />
       </div>);
     } else if (this.props.mainContentNumber === 4) {
       return (<div style={{
@@ -115,16 +133,22 @@ export default class MainContent extends React.Component {
           height: "100%",
           overflowY: "scroll"
         }}>
-        <Dialog className="createEventWrapper" actions={actions} modal={false} open={this.state.open} onRequestClose={this.handleClose} contentStyle={{
+        <Dialog className="createEventWrapper" actions={actions} modal={false} open={this.state.open} onRequestClose={this.handleClose}
+         style={{padding:"30px"}}
+         contentStyle={{
             width: "95%",
             maxWidth: "none",
             paddingTop: "0px"
-          }} bodyStyle={{
+          }}
+          bodyStyle={{
             padding: "0px",
             paddingTop: "0px"
-          }} titleStyle={{
+          }}
+          titleStyle={{
             paddingTop: "0px"
-          }} autoScrollBodyContent={true}>
+          }}
+          autoScrollBodyContent={true}>
+
           <CreateEventtCard ref={instance => {
               this.child = instance;
             }}/>
@@ -132,7 +156,7 @@ export default class MainContent extends React.Component {
         <FloatingActionButton onClick={this.handleOpen} style={style}>
           <ContentAdd/>
         </FloatingActionButton>
-        <Events/>
+        <Events filterWord={this.props.filterWord} searchWord={this.props.searchWord} />
       </div>);
     } else if (this.props.mainContentNumber === 6) {
       return (<div style={{
