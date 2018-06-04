@@ -6,6 +6,7 @@ import IconNotifications from 'material-ui/svg-icons/social/notifications';
 import IconProfile from 'material-ui/svg-icons/social/person';
 import IconCalendar from 'material-ui/svg-icons/action/event';
 import IconFeed from 'material-ui/svg-icons/action/assignment';
+import { withRouter } from 'react-router-dom';
 
 
 const FeedIcon = <IconFeed/>;
@@ -32,26 +33,26 @@ class AppNavBottom extends Component {
   render() {
     return (
       <Paper zDepth={1}>
-        <BottomNavigation selectedIndex={this.state.selectedIndex}>
+        <BottomNavigation selectedIndex={this.props.index}>
           <BottomNavigationItem
             icon={FeedIcon}
-            onClick={() => this.select(0)}
+            onClick={() => this.props.history.push('/feed')}
           />
           <BottomNavigationItem
             icon={CalendarIcon}
-            onClick={() => this.select(1)}
+            onClick={() => this.props.history.push('/personal')}
           />
           <BottomNavigationItem
             icon={AddIcon}
-            onClick={() => this.select(2)}
+            onClick={() => this.props.history.push('/addevent')}
           />
           <BottomNavigationItem
             icon={NotifIcon}
-            onClick={() => this.select(3)}
+            onClick={() => this.props.history.push('/notifications')}
           />
           <BottomNavigationItem
             icon={ProfileIcon}
-            onClick={() => this.select(4)}
+            onClick={() => this.props.history.push('/profile')}
           />
         </BottomNavigation>
       </Paper>
@@ -59,4 +60,4 @@ class AppNavBottom extends Component {
   }
 }
 
-export default AppNavBottom;
+export default withRouter(AppNavBottom);

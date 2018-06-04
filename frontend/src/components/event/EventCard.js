@@ -22,7 +22,6 @@ export default class EventCard extends React.Component {
 			updateComments() {
 
 				this.setState({comments: this.state.comments + 1});
-				console.log("log");
 				this.props.loadMessages();
 
 			}

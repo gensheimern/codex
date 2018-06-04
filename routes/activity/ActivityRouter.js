@@ -5,6 +5,8 @@ const asyncMiddleware = require('../asyncMiddleware');
 
 router.get('/', asyncMiddleware(ActivityController.getAllActivities));
 
+router.get('/joined', asyncMiddleware(ActivityController.getJoinedActivities));
+
 router.get('/:activityId', asyncMiddleware(ActivityController.getActivityById));
 
 router.post('/', asyncMiddleware(ActivityController.createActivity));

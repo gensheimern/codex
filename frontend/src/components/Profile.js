@@ -47,7 +47,6 @@ export default class ProfileContent extends React.Component {
 				'X-Access-Token': localStorage.getItem('apiToken')
 			}
 		}).then((res) => {
-			console.log(res.status);
 			if (!res.ok) {
 				throw new Error("Request failed.");
 			} else if (res.status !== 200) {
@@ -130,6 +129,8 @@ export default class ProfileContent extends React.Component {
 						{this.state.firstName[0]}{this.state.lastName[0]}
 					</Avatar>
 
+					<br/>
+
 					<TextField
 						id="firstName"
 						label="First name"
@@ -155,8 +156,6 @@ export default class ProfileContent extends React.Component {
 						onChange={this.handleChange('email')}
 						floatingLabelText="E-Mail"
 					/>
-
-					<br />
 
 					<TextField
 						id="position"
