@@ -55,32 +55,7 @@ export default class Calendar extends React.Component {
 			backgroundColor: 'white',
 		};
 
-		const fieldStyle = {
-			textAlign: 'center',
-			float: 'left',
-			width: '14%',
-			height: '14%',
-			borderRadius: '50%',
-			paddingTop: '0.4vw',
-			fontSize: '100%',
-			margin: '3px',
-		};
 
-		/* const fieldStyle = {
-			textAlign: 'center',
-			float: 'left',
-			width: '2.7vw',
-			height: '2.7vw',
-			borderRadius: '50%',
-			paddingTop: '0.4vw',
-			fontSize: '1.4vw',
-			margin: '0.4vw',
-		}; */
-
-		const weekdayStyle = {
-			...fieldStyle,
-			color: 'grey',
-		};
 
 		let days = [];
 
@@ -196,8 +171,8 @@ export default class Calendar extends React.Component {
 					width: '100%',
 				}}>
 					{
-						weekdays.map(weekday => (
-							<div className="weekday">
+						weekdays.map((weekday, index) => (
+							<div key={index} className="weekday">
 								<div className="contents">
 									{weekday}
 								</div>
@@ -229,21 +204,6 @@ export default class Calendar extends React.Component {
 									{day.name}
 								</div>
 							</div>
-						);
-
-						return (
-							<div
-								key={index}
-								style={{
-									...fieldStyle,
-									backgroundColor: day.backgroundColor,
-									color: day.color,
-								}}
-								onClick={() => {
-									this.setState({date: day.date});
-									this.props.changeDate(day.date);
-								}}
-							>{day.name}</div>
 						);
 					})}
 				</div>
