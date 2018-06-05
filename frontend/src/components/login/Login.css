@@ -15,7 +15,7 @@
 	background-position: center top;
 }
 
-h3header {
+.h3header {
 	font-family: 'Trebuchet MS';
 	font-size: 30px;
 	font-weight: 'bold';
@@ -51,7 +51,7 @@ a {
 }
 
 @media only screen and (max-width: 500px) {
-    .signupCard {
+    .loginCard {
 		width: 100%;
     }
 }

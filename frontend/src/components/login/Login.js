@@ -119,7 +119,7 @@ export default class Login extends Component {
 				marginRight: '10%',
             },
             
-            signupButton:{
+            loginButton:{
 				heigt: 40.57,
 				width: '30%',
 				borderRadius: 3,
@@ -172,7 +172,7 @@ export default class Login extends Component {
 					label="Login"
 					primary={true}
 					disabled={!this.validateForm()}
-					style = {styles.signupButton}
+					style = {styles.loginButton}
 				/>
                 <br/>
                 <p>Don't have an account yet? ?
