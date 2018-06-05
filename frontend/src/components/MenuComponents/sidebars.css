@@ -141,3 +141,7 @@ height: 6vh;	width: 100%;	background-color: #1EA185;	box-shadow: 0 2px 4px 0 rgb
 .GroupsDrawer{
 
 }
+.BadgeNotif{
+  padding : 0px !important;
+  margin-top: 15%;
+}

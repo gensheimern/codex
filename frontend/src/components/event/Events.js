@@ -65,7 +65,7 @@ class Events extends React.Component {
     console.log("datefilt " + filterDataBeginn );
     filterData = this.state.events.filter(function (a,b)
                     {
-                      return (new Date(a.time)) > filterDataBeginn;
+                      return (new Date(a.time)) >= filterDataBeginn;
                     });
 
     if(!(this.props.filterWord === null)){
@@ -136,7 +136,7 @@ class Events extends React.Component {
                     </FloatingActionButton>
                     ADD EVENT
                   </div>
-                  
+
                 </div>
               } else {
                 return null
