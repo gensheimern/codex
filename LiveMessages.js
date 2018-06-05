@@ -4,17 +4,45 @@ const Auth = require('./routes/auth/Auth');
 class LiveMessages {
 	constructor(http) {
 		this.io = socketIO(http);
+		this.sockets = [];
 		this.subscribers = [];
 
-		this.io.on('connection', (socket) => {
-			let user = null;
+		this.subscribe = this.subscribe.bind(this);
+		this.unsubscribe = this.unsubscribe.bind(this);
+		this.publish = this.publish.bind(this);
+		this.initialize = this.initialize.bind(this);
+	}
 
-			socket.on('disconnect', () => {
-				this.unsubscribe(user);
+	initialize() {
+		this.io.on('connection', (socket) => {
+			socket.on('disconnect', (msg) => {
+				if (!msg || !msg.token) {
+					socket.emit('err', 'Invalid token provided.');
+				}
+
+				const { token } = msg;
+				Auth.validateJWT(token)
+					.then((decoded) => {
+						this.unsubscribe(decoded.userId);
+					})
+					.catch(() => {
+						socket.emit('err', 'Invalid token provided.');
+					});
 			});
 
-			socket.on('unsubscribe', (topic) => {
-				this.unsubscribe(user, topic);
+			socket.on('unsubscribe', (msg) => {
+				if (!msg || !msg.token || !msg.topic) {
+					socket.emit('err', 'Invalid token provided.');
+				}
+
+				const { topic, token } = msg;
+				Auth.validateJWT(token)
+					.then((decoded) => {
+						this.unsubscribe(decoded.userId, topic);
+					})
+					.catch(() => {
+						socket.emit('err', 'Invalid token provided.');
+					});
 			});
 
 			socket.on('subscribe', (msg) => {
@@ -22,13 +50,11 @@ class LiveMessages {
 					socket.emit('err', 'Invalid token provided.');
 				}
 
-				const { token } = msg;
+				const { topic, token } = msg;
 
 				Auth.validateJWT(token)
 					.then((decoded) => {
-						this.subscribe(socket, decoded.userId, msg.topic);
-
-						user = decoded.userId;
+						this.subscribe(socket, decoded.userId, topic);
 					})
 					.catch(() => {
 						socket.emit('err', 'Invalid token provided.');
@@ -69,6 +95,7 @@ module.exports = (() => {
 	return {
 		createLiveMessage(server) {
 			liveMessage = new LiveMessages(server);
+			return liveMessage;
 		},
 
 		getLiveMessage() {
