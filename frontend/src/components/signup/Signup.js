@@ -1,13 +1,17 @@
 import React from 'react';
+import ReCAPTCHA from 'react-google-recaptcha';
 import config from '../../config';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-
-
+import {Card, /*CardMedia, CardTitle,*/ CardText} from 'material-ui/Card';
 import './signup.css';
+import Paper from 'material-ui/Paper';
+import Checkbox from 'material-ui/Checkbox';
 
 export default class Signup extends React.Component {
 	emailRegExp = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+	//Recaptcha = require('react-recaptcha');
 
 	constructor(props) {
 		super(props);
@@ -17,11 +21,13 @@ export default class Signup extends React.Component {
 
 		this.state = {
 			email: "",
-			name: "",
 			firstName: "",
+			lastName: '',
 			password: "",
 			retypePassword: "",
 			img: "",
+			checked: false,
+			captcha: '',
 		}
 	}
 
@@ -34,10 +40,20 @@ export default class Signup extends React.Component {
 	validateForm() {
 		return this.emailRegExp.test(this.state.email)
 			&& this.state.firstName !== ""
-			&& this.state.name !== ""
+			&& this.state.lastName !== ""
 			&& this.state.password !== ""
 			&& this.state.retypePassword !== ""
-			&& this.state.password === this.state.retypePassword;
+			&& this.state.password === this.state.retypePassword
+			&& this.state.checked
+			&& this.state.captcha;
+	}
+
+	updateCheck() {
+		this.setState((oldState) => {
+		  return {
+			checked: !oldState.checked,
+		  };
+		});
 	}
 
 	signupUser = (e) => {
@@ -47,7 +63,7 @@ export default class Signup extends React.Component {
 			method: 'POST',
 			body: JSON.stringify({
 				firstName: this.state.firstName,
-				name: this.state.name,
+				lastName: this.state.lastName,
 				email: this.state.email,
 				password: this.state.password,
 				image: this.state.img,
@@ -60,15 +76,88 @@ export default class Signup extends React.Component {
 	}
 
 	render() {
+		const styles = {
+			block: {
+			  maxWidth: 250,
+			},
+			checkbox: {				
+				paddingLeft: 100,
+				paddingRight: 197,
+				marginBottom: 16,
+				fontWeight: 0,
+			},
+			
+			cardStyle:{
+				width: 440,
+				borderRadius: 5,
+				backgroundColor: "#FFFFFF",
+				boxShadow: "0 2 20 0 rgba(57,56,56,0.5)",
+				display: 'block',
+				marginLeft: 'auto',
+				marginRight: 'auto',
+			},
+
+			paperStyle:{
+				height: 62,
+				width: 62,
+				borderRadius: 7,
+				display: 'block',
+				marginLeft: 'auto',
+				marginRight: 'auto',	
+			},
+			textField:{
+				width: '80%',
+				marginLeft: '10%',
+				marginRight: '10%',
+			},
+			reCAPTCHA:{
+				heigth: 76,
+				width: 305,
+				boarder:"1 solid #D6D6D6",
+				borderRadius: 2.43,
+				backgroundColor: "#FAFAFA",
+				boxShadow: "0 1 2 0 rgba(0,0,0,0.1)",
+				display: 'block',
+				marginLeft: 'auto',
+				marginRight: 'auto',
+				
+			},
+			signupButton:{
+				heigt: 40.57,
+				width: '30%',
+				borderRadius: 3,
+				boxShadow: "inset 0 1 3 0 rgba(0,0,0,0.5),0 1 2 0 rgba(0,0,0,0.5)",
+				backgroundColor: "#1EA185",
+				display: 'block',
+				marginLeft: 'auto',
+				marginRight: 'auto',
+			},
+
+
+		};
+		
 		let retypeError = {};
 		if (this.state.password !== this.state.retypePassword) {
 			retypeError = {
 				errorText: 'Passwords do not match.',
 			};
 		}
+
 		return(
+			<div className="signupBg">
 			<form className="signup" onSubmit={this.signupUser}>
-				<h1>Sign Up</h1>
+				<div>
+					<Paper style={styles.paperStyle} zDepth={1} />
+ 				</div>
+
+				<br/>
+				<center>
+					<h3 className="h3header">Lunchplanner</h3>
+				</center>
+
+				<Card className="signupCard">
+				<CardText>
+				<h2 className="h2header">SIGN UP</h2>
 
 				<TextField
 					id="firstName"
@@ -76,17 +165,17 @@ export default class Signup extends React.Component {
 					value={this.state.firstName}
 					onChange={this.handleChange('firstName')}
 					floatingLabelText="First name"
+					style= {styles.textField}
 				/>
-				<br/>
 
 				<TextField
-					id="name"
+					id="lastName"
 					label="Last name"
-					value={this.state.name}
-					onChange={this.handleChange('name')}
+					value={this.state.lastName}
+					onChange={this.handleChange('lastName')}
 					floatingLabelText="Last name"
+					style= {styles.textField}				
 				/>
-				<br/>
 
 				<TextField
 					id="email"
@@ -94,8 +183,8 @@ export default class Signup extends React.Component {
 					value={this.state.email}
 					onChange={this.handleChange('email')}
 					floatingLabelText="E-Mail"
+					style= {styles.textField}
 				/>
-				<br/>
 
 				<TextField
 					id="password"
@@ -104,8 +193,8 @@ export default class Signup extends React.Component {
 					value={this.state.password}
 					onChange={this.handleChange('password')}
 					floatingLabelText="Password"
+					style= {styles.textField}
 				/>
-				<br/>
 
 				<TextField
 					id="retypePassword"
@@ -115,18 +204,49 @@ export default class Signup extends React.Component {
 					onChange={this.handleChange('retypePassword')}
 					floatingLabelText="Retype Password"
 					{ ...retypeError }
+					style= {styles.textField}
 				/>
 				<br/>
 				<br/>
-
+				
+				<ReCAPTCHA 
+					ref="recaptcha"
+					sitekey="6LfY-1wUAAAAAAjaNfCOZrbJKO8fmWdLSgC0u9xm"
+					style = {styles.reCAPTCHA}
+					onChange={(captcha) => this.setState({ captcha })}
+				/>
+				<br/>
+				
+				<Checkbox
+          			label="Datenschutzerklärung "
+          			checked={this.state.checked}
+          			onCheck={this.updateCheck.bind(this)}
+          			style={styles.checkbox}
+        		/>
+				
 				<RaisedButton
+					backgroundColor="#b9b9b9"
 					type="submit"
 					label="Sign Up"
 					primary={true}
 					disabled={!this.validateForm()}
+					style = {styles.signupButton}
 				/>
-            </form>
-			
+				<br/>
+				<center>
+					<p>Have an account already?&nbsp;
+						<a href="">
+						Log in here
+						</a>
+					</p>
+				</center>
+				
+				</CardText>
+				</Card>
+				
+			</form>
+			</div>
+		
 		);
 	}
 }
