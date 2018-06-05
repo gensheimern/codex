@@ -1,8 +1,4 @@
-.centered {
-  text-align: center;
-}
-
-.Login {
+.login {
   width: 45%;
   font-size: 12pt;
   margin: auto;
@@ -10,3 +6,53 @@
   padding: 1% 5%;
   /* border: 7px solid blue; */
 }
+
+.loginBg {
+	background-image: url("Hintergrundbild.png");
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-color: #1EA185;
+	background-position: center top;
+}
+
+h3header {
+	font-family: 'Trebuchet MS';
+	font-size: 30px;
+	font-weight: 'bold';
+	line-height: 35px;
+	color: #FFFFFF;
+	padding-bottom: 30px;
+}
+
+.h2header {
+	margin: 10% 10% 0 10%;
+	color: #1EA185;
+	font-family: 'Trebuchet MS';
+	font-size: 20px;
+	font-weight: bold;
+	line-height: 23px;
+	text-align: left;
+}
+
+a {
+	text-decoration: underline;
+	color: #1EA185;
+
+}
+
+.loginCard {
+	width: 440px;
+	border-radius: 5px;
+	background-color: #FFFFFF;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+}
+
+@media only screen and (max-width: 500px) {
+    .signupCard {
+		width: 100%;
+    }
+}
+
