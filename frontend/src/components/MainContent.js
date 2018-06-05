@@ -30,13 +30,12 @@ export default class MainContent extends React.Component {
 						<FilterDropDown searchFilterFeed={this.props.searchFilterFeed}/>
 					</div>
 					<Events
-						filterWord={this.props.filterWord}
-						searchWord={this.props.searchWord}
+						filter={this.props.filter}
 					/>
 				</React.Fragment>
 			);
 		} else if (this.props.mainContentNumber === this.PERSONAL) {
-			return (<Personal />);
+			return (<Personal mainContentNumber={this.props.mainContentNumber} searchFilterFeed={this.props.searchFilterFeed} changeContent={this.props.changeContent}/>);
 		} else if (this.props.mainContentNumber === this.ADD_EVENT) {
 			return (<CreateEventCard changeContent={this.props.changeContent} />);
 		} else if (this.props.mainContentNumber === this.NOTIFICATIONS) {
@@ -70,7 +69,7 @@ export default class MainContent extends React.Component {
 						}}
 						autoScrollBodyContent={true}
 					>
-	  
+
 					<CreateEventCard ref={instance => {
 						this.child = instance;
 				  	}}/>
@@ -78,7 +77,7 @@ export default class MainContent extends React.Component {
 				<FloatingActionButton onClick={this.handleOpen} style={{marginRight: 20}}>
 					<ContentAdd/>
 				</FloatingActionButton>
-				<Events filterWord={this.props.filterWord} searchWord={this.props.searchWord} />
+				<Events 	filter={this.props.filter} />
 	  		</div>);
 		} else if (this.props.mainContentNumber === this.PROFILE) {
 			return (<ProfileContent/>);

@@ -11,7 +11,7 @@ export default class SidebarContent extends React.Component {
 
     this.state = {
       groups: [],
-      activeIndex: null,
+      activeIndex: "PUBLIC",
     };
     this.getMyGroups = this.getMyGroups.bind(this);
     this.componentDidMount = this.componentDidMount.bind(this);

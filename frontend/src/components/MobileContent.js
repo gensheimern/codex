@@ -30,8 +30,7 @@ export default class MobileContent extends React.Component {
 							changeContent={this.props.changeContent}
 							searchFilterFeed={this.props.searchFilterFeed}
 							mainContentNumber={content}
-							filterWord={this.props.filterWord}
-							searchWord={this.props.searchWord}
+							filter={this.props.filter}
 						/>
 					</div>
 					<AppNavBottom
