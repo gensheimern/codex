@@ -3,6 +3,7 @@ import "./sidebars.css";
 import config from '../../config';
 import CreateTeamButton from './CreateTeamButton.js';
 import GroupSidebarButton from './GroupSidebarButton.js'
+import { Link } from 'react-router-dom';
 
 export default class SidebarContent extends React.Component {
   constructor(props) {
@@ -10,7 +11,7 @@ export default class SidebarContent extends React.Component {
 
     this.state = {
       groups: [],
-      activeIndex: null,
+      activeIndex: "PUBLIC",
     };
     this.getMyGroups = this.getMyGroups.bind(this);
     this.componentDidMount = this.componentDidMount.bind(this);
@@ -26,7 +27,6 @@ export default class SidebarContent extends React.Component {
         'X-Access-Token': localStorage.getItem('apiToken')
       }
     }).then((res) => {
-      console.log(res.status);
       if (!res.ok) {
         throw new Error("Request failed.");
       } else if (res.status !== 200) {
@@ -35,8 +35,10 @@ export default class SidebarContent extends React.Component {
         return res;
       }
     }).then(res => res.json()).then(res => {
-      console.log(res);
       this.setState({groups: res});
+    })
+    .catch((err) => {
+      console.log('Request failed.');
     });
 
   }
@@ -64,7 +66,6 @@ export default class SidebarContent extends React.Component {
   }
 
   render() {
-    console.log(this.state.groups);
     let myGroups = this.state.groups.map((group,index) => (
       <GroupSidebarButton
          key={"group"+index}
@@ -74,8 +75,6 @@ export default class SidebarContent extends React.Component {
          name={group.name}
          main={false}>
        </GroupSidebarButton>));
-
-    console.log(myGroups);
 
     return (<div className="leftContent">
       <div>
@@ -108,11 +107,19 @@ export default class SidebarContent extends React.Component {
           marginTop:"3%"
           }}>
           GROUPS</p>
-        <CreateTeamButton style={{float:"none",
-          marginRight:"30%",
-          minHeight:"38px",
-          minWidth:"0px",
-          width:"21%"}} changeContent={this.props.changeContent} closeDrawer={this.props.closeDrawer}/>
+          <Link to={{pathname: '/addteam'}}>
+            <CreateTeamButton
+              style={{
+                float:"none",
+                marginRight:"30%",
+                minHeight:"38px",
+                minWidth:"0px",
+                width:"21%"
+              }}
+              changeContent={this.props.changeContent}
+              closeDrawer={this.props.closeDrawer}
+            />
+          </Link>
           <div className="groups">
                 {myGroups}
               </div>

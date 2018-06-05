@@ -18,7 +18,6 @@ export default class GroupsDrawer extends React.Component {
   handleClose = () => this.setState({open: false});
 
   render() {
-    console.log(this.props.searchFilterFeed)
 
     return (
       <div className="GroupsDrawer">
