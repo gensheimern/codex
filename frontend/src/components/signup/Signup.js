@@ -235,7 +235,7 @@ export default class Signup extends React.Component {
 				<br/>
 				<center>
 					<p>Have an account already?&nbsp;
-						<a href ="#">
+						<a href="">
 						Log in here
 						</a>
 					</p>
