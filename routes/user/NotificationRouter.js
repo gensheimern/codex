@@ -4,6 +4,8 @@ const asyncMiddleware = require('../asyncMiddleware');
 const myMiddleware = require('../../middleware/myMiddleware');
 
 
+router.get('/:userId/notifications/unseen', myMiddleware, asyncMiddleware(NotificationController.getUnseenNotifications));
+
 router.get('/:userId/notifications', myMiddleware, asyncMiddleware(NotificationController.getNotifications));
 
 router.delete('/:userId/notifications/:notificationId', myMiddleware, asyncMiddleware(NotificationController.deleteNotifications));
