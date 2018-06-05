@@ -18,7 +18,10 @@ class Socket {
 	}
 
 	unsubscribe(topic) {
-		this.connection.emit('unsubscribe', topic);
+		this.connection.emit('unsubscribe', {
+			topic,
+			token: localStorage.getItem('apiToken'),
+		});
 	}
 }
 
