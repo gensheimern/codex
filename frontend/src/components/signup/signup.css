@@ -1,40 +1,58 @@
 .signup {
 	padding: 2%;
+	/*height: 1065px;*/
+	height: 100vh;
+	width: 100vw;
+	/*opacity: 0.87;*/
+	/*z-index: -1;*/
+	overflow-y: scroll;
+}
+
+.signupBg {
 	background-image: url("Hintergrundbild.png");
 	background-size: cover;
 	background-repeat: no-repeat;
-	height: 1065px;
-	width: 1605px;
-	opacity: 0.87;
-	z-index: -1;
+	background-color: #1EA185;
+	background-position: center top;
 }
-h3{
-	height: 38px;
-	width: 210px;
+
+.h3header {
 	font-family: 'Trebuchet MS';
 	font-size: 30px;
 	font-weight: 'bold';
 	line-height: 35px;
 	color: #FFFFFF;
-	padding-bottom: 68px;
+	padding-bottom: 30px;
 }
 
-h2{
-	padding-top: 51px;
-	padding-left: 50px;
-	padding-right: 247px;
-	padding-bottom: 3px;
-	height: 23px;
+.h2header {
+	margin: 10% 10% 0 10%;
 	color: #1EA185;
 	font-family: 'Trebuchet MS';
 	font-size: 20px;
 	font-weight: bold;
 	line-height: 23px;
-
+	text-align: left;
 }
 
-a{
+a {
 	text-decoration: underline;
 	color: #1EA185;
 
+}
+
+.signupCard {
+	width: 440px;
+	border-radius: 5px;
+	background-color: #FFFFFF;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+}
+
+@media only screen and (max-width: 500px) {
+    .signupCard {
+		width: 100%;
+    }
 }

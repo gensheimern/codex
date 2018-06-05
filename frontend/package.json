@@ -25,10 +25,10 @@
     "react-bootstrap-table-next": "^0.1.7",
     "react-calendar": "^2.14.0",
     "react-dom": "^16.3.1",
+    "react-google-recaptcha": "^0.11.1",
     "react-icons": "^2.2.7",
     "react-material-ui-form-validator": "^1.1.4",
     "react-places-autocomplete": "^7.1.1",
-    "react-recaptcha": "^2.3.8",
     "react-responsive": "^4.1.0",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.1.2",
@@ -46,7 +46,6 @@
     "enzyme-adapter-react-16": "^1.1.1",
     "fetch-mock": "^6.4.2",
     "jest-enzyme": "^6.0.0",
-    "react-async-script": "^0.9.1",
-    "react-google-recaptcha": "^0.11.1"
+    "react-async-script": "^0.9.1"
   }
 }
