@@ -13,6 +13,7 @@ import config from '../../config';
 import Snackbar from 'material-ui/Snackbar';
 import FlatButton from 'material-ui/FlatButton';
 import Paper from 'material-ui/Paper';
+import { withRouter } from 'react-router-dom';
 
 const eventImages = [
 	{
@@ -60,7 +61,7 @@ const eventImages = [
 	},
 ]
 
-export default class CreateEventCard extends React.Component {
+class CreateEventCard extends React.Component {
 	constructor(props){
 		super(props);
 
@@ -120,7 +121,7 @@ export default class CreateEventCard extends React.Component {
 
 	callbackTime(event, time){
 		this.setState({
-			hours: time.getUTCHours(),
+			hours: time.getUTCHours()+2,
 			minutes: time.getUTCMinutes(),
 		});
 	}
@@ -128,9 +129,10 @@ export default class CreateEventCard extends React.Component {
 	callbackDate(event, mydate){
 		this.setState({
 			year:mydate.getUTCFullYear(),
-			day:mydate.getUTCDate(),
-			month:mydate.getUTCMonth(),
+			day:mydate.getUTCDate()+1,
+			month:mydate.getUTCMonth()+1,
 		});
+
 	}
 
 	callbackToggleReminder(event, isInputChecked){
@@ -176,6 +178,14 @@ export default class CreateEventCard extends React.Component {
 		}
 	}
 
+	getMaxPeopleValue() {
+		if(this.state.maxPeopleValue === ''){
+			return '0'
+		} else {
+			return this.state.maxPeopleValue
+		}
+	}
+
 	renderSnackbar = () => {
 		this.setState({
 			snackbaropen: true,
@@ -203,7 +213,7 @@ export default class CreateEventCard extends React.Component {
 				event: false,
 				private: this.state.private,
 				banner: this.state.cardImage,
-				maxParticipants: parseInt(this.state.maxPeopleValue, 10),
+				maxParticipants: parseInt(this.getMaxPeopleValue(), 10),
 			}),
 			headers: {
 				'Content-Type': 'application/json',
@@ -215,7 +225,7 @@ export default class CreateEventCard extends React.Component {
 				// handle error
 			} else {
 				this.renderSnackbar();
-				this.props.changeContent(0);
+				this.props.history.push('/feed');
 			}
 		});
 	}
@@ -307,7 +317,7 @@ export default class CreateEventCard extends React.Component {
 				>
 					<img   src={this.state.cardImage} alt="" />
 				</CardMedia>
-				
+
 				<CardText>
 					<div className="timeDatePicker">
 						<div className="timepicker">
@@ -372,3 +382,5 @@ const renderFunc = ({ getInputProps, getSuggestionItemProps, suggestions }) => (
 		</div>
 	</div>
 );
+
+export default withRouter(CreateEventCard);

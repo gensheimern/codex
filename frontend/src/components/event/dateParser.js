@@ -4,6 +4,7 @@ export default class dateParser extends React.Component {
 
  static  DateparserDate(myDate) {
     var d = new Date(myDate);
+    console.log(d);
     var month = [];
     month[0] = "January";
     month[1] = "February";
@@ -17,7 +18,7 @@ export default class dateParser extends React.Component {
     month[9] = "October";
     month[10] = "November";
     month[11] = "December";
-  return d.getDay() + " " + month[d.getMonth()];
+  return d.getUTCDate() + " " + month[d.getUTCMonth()];
   }
 
   static  DateparserTime(myDate){
@@ -25,7 +26,6 @@ export default class dateParser extends React.Component {
       var d = new Date(myDate);
       var h = this.addZero(d.getHours());
       var m = this.addZero(d.getMinutes());
-
       return h + ":" + m;
   }
 

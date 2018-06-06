@@ -70,8 +70,9 @@ export default class MainContent extends React.Component {
 						}}
 						autoScrollBodyContent={true}
 					>
-	  
+
 					<CreateEventCard ref={instance => {
+						this.
 						this.child = instance;
 				  	}}/>
 				</Dialog>

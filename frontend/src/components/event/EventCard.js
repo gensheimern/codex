@@ -90,8 +90,9 @@ export default class EventCard extends React.Component {
 										<h4> <ClockFA/> {dateParser.DateparserTime(this.props.event.time) } </h4>
 								</div>
 								<div className="participates-image">
-									<h4> <GroupFA/> Already joining </h4>
+									<h4 className="alreadyJoningText"> <GroupFA/> Already joining </h4>
 									{ participantsImages }
+									  <span id="participant-counter"> <h6><GroupFA />{" "} {this.props.participants.length}/{this.props.event.maxParticipants} </h6></span>
 								</div>
 							</div>
 							<div >

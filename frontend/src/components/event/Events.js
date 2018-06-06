@@ -48,6 +48,9 @@ class Events extends React.Component {
   }
 
   render() {
+
+
+
     if (this.state.error) {
       return (<p>{this.state.error}</p>);
     }
@@ -124,7 +127,7 @@ class Events extends React.Component {
                     </FloatingActionButton>
                     ADD EVENT
                   </div>
-                  
+
                 </div>
               } else {
                 return null

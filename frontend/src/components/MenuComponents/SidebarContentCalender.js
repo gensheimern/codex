@@ -103,7 +103,7 @@ export default class SidebarContent extends React.Component {
 		if (this.state.loading && !this.state.valid) {
 			return <LoadingAnimation/>
 		}
-		
+
 		if (this.state.error) {
 			return (
 				<RetryPrompt
@@ -125,9 +125,7 @@ export default class SidebarContent extends React.Component {
 		}
 
 		return (
-			<div style={{
-				padding: '2%',
-			}}>
+			<div className="CalendarWrapper">
 				<p>Your calendar</p>
 				<div style={{
 					width: '100%',
@@ -187,7 +185,7 @@ export default class SidebarContent extends React.Component {
 
 
 			</div>
-				
+
 		);
 	}
 }
