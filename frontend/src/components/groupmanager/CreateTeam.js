@@ -5,10 +5,16 @@ import {
     FormControl,
     ControlLabel
 } from "react-bootstrap";
-import FlatButton from 'material-ui/FlatButton';
 import "./groupmanager.css";
 import config from '../../config';
 import "./ListGroups.js";
+import TextField from 'material-ui/TextField';
+import FlatButton from 'material-ui/FlatButton';
+import InviteChip from '../event/CreateEventChip';
+import InvitePeople from '../event/CreateEventInvitePeople';
+
+import IconGroup from 'material-ui/svg-icons/social/group';
+
 
 export default class CreateTeam extends React.Component {
 
@@ -18,11 +24,17 @@ export default class CreateTeam extends React.Component {
             this.inputName = this.inputName.bind(this);
             this.handleClick = this.handleClick.bind(this);
             this.validateForm = this.validateForm.bind(this);
+            this.callBackInvitePeople = this.callBackInvitePeople.bind(this);
+
 
             this.state = {
                 name: "",
+                description:"",
                 showError: false,
                 errorPrompt: "",
+                invitePeople: [],
+                selectedIcon : {},
+                icons : [],
             }
         }
         componentDidUpdate(prevProps, prevState) {
@@ -46,9 +58,14 @@ export default class CreateTeam extends React.Component {
                 showError: e.target.value === ""
             });
         }
-        handleChange = event => {
+        handleChangeN = event => {
             this.setState({
-                [event.target.id]: event.target.value
+                name: event.target.value
+            });
+        }
+        handleChangeD = event => {
+            this.setState({
+                description: event.target.value
             });
         }
         handleClick(e) {
@@ -80,23 +97,71 @@ export default class CreateTeam extends React.Component {
             }
         }
 
+        callBackInvitePeople(invitePeople){
+          this.setState({ invitePeople })
+        }
+
         render() {
 
+          let iconSelect = <IconGroup/>
+
+          let images = this.state.invitePeople.map((image,index) => {
+            return(<InviteChip key={"chip" + index} name={image.textKey} peopleImage={image.ValueImage} />)
+          });
+
                 return(<div className = "CreateTeam">
-                 <form onSubmit = {
-                    this.handleClick
-                } >
-                <FormGroup controlId="errorprompt" bsSize="large">
-                    {this.errorPrompt}
-                </FormGroup>
-                <FormGroup controlId="name" bsSize="large">
-                    <ControlLabel></ControlLabel>
-                    <FormControl placeholder="Gruppenname" type="text" value={this.state.name} onChange={this.handleChange}/>
-                </FormGroup>
-                <Button id="erstelleGruppeBtn" bsStyle="primary" block={true} bsSize="large" disabled={!this.validateForm()} type="submit">
-                    erstelle Gruppe
-                </Button>
-            </form>
+                        <div>
+                          <div style={{backgroundColor: "#4CAF50",
+                                border: "none",
+                                color: "white",
+                                padding: "20px",
+                                textAlign: "center",
+                                textDecoration: "none",
+                                display: "inline-block",
+                                fontSize: "16px",
+                                margin: "4px 2px",
+                              borderRadius: "50%"}}>
+                            {iconSelect}
+                          </div>
+                            <div>
+
+                            </div>  //smallIcons
+                        </div>
+                					<TextField
+                						floatingLabelFixed={true}
+                						floatingLabelFocusStyle={{ color: 'rgb(30 161 133)' }}
+                						underlineFocusStyle={{ borderColor: 'rgb(30 161 133)' }}
+                						floatingLabelText="Name"
+                						hintText="Nice Group Of PPL"
+                            value={this.state.name}
+                						onChange={this.handleChangeN}
+                					/>
+                					<br/>
+
+                					<TextField
+                            floatingLabelFixed={true}
+                            floatingLabelFocusStyle={{ color: 'rgb(30 161 133)' }}
+                            underlineFocusStyle={{ borderColor: 'rgb(30 161 133)' }}
+                            floatingLabelText="Description"
+                            hintText="a bunch of ppl that doesnt suck."
+                            value={this.state.description}
+                            onChange={this.handleChangeD}
+                          />
+                          <br/>
+
+                          <InvitePeople people={this.callBackInvitePeople}/>
+                            {images}
+
+                          <br/>
+
+                            <FlatButton
+                              onClick={this.handleClick}
+                              target="_blank"
+                              style={{color:"white",
+                                minWidth:"0px",
+                                margin:"0px"}}
+                            />
+
         </div>);
     }
 }
