@@ -89,6 +89,7 @@ class CreateEventCard extends React.Component {
 			hours: '12',
 			minutes: '0',
 			snackbaropen: false,
+			errorCreate: '',
 		}
 
 		this.toggleCollapse = this.toggleCollapse.bind(this);
@@ -209,6 +210,8 @@ class CreateEventCard extends React.Component {
 					return userid.ValueKey
 		 });
 
+		if(parseInt(this.getMaxPeopleValue(), 10) > userArray.length +1 || parseInt(this.getMaxPeopleValue(), 10) === 0 ){
+			
 		fetch(config.apiPath + "/activity", {
 			method: 'POST',
 			body: JSON.stringify({
@@ -235,7 +238,10 @@ class CreateEventCard extends React.Component {
 				this.props.history.push('/feed');
 			}
 		});
+	} else {
+		this.setState({errorCreate: 'Maximum of ' + parseInt(this.getMaxPeopleValue(), 10) + ' participants' });
 
+	}
 		}
 
 
@@ -369,6 +375,7 @@ class CreateEventCard extends React.Component {
 					}} />
 					{ this.collapsedContent() }
 				</CardText>
+				<div style={{color:'red', textAlign:"center"}}>{this.state.errorCreate} </div>
 			</Card>
 			<FlatButton
 				onClick={this.handleSubmit}

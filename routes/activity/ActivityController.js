@@ -68,7 +68,7 @@ const ActivityController = {
 		if (participants instanceof Array) {
 			const { maxParticipants } = activity;
 
-			if (participants.length >= maxParticipants) {
+			if (participants.length >= maxParticipants && maxParticipants != 0) {
 				res.status(400).json({
 					message: 'Too many participants.',
 				});
