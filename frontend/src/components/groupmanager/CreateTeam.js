@@ -5,6 +5,7 @@ import {
     FormControl,
     ControlLabel
 } from "react-bootstrap";
+import FlatButton from 'material-ui/FlatButton';
 import "./groupmanager.css";
 import config from '../../config';
 import "./ListGroups.js";
@@ -21,7 +22,7 @@ export default class CreateTeam extends React.Component {
             this.state = {
                 name: "",
                 showError: false,
-                errorPrompt: ""
+                errorPrompt: "",
             }
         }
         componentDidUpdate(prevProps, prevState) {
@@ -80,6 +81,7 @@ export default class CreateTeam extends React.Component {
         }
 
         render() {
+
                 return(<div className = "CreateTeam">
                  <form onSubmit = {
                     this.handleClick

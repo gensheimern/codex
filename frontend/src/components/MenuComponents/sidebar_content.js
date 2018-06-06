@@ -107,7 +107,6 @@ export default class SidebarContent extends React.Component {
           marginTop:"3%"
           }}>
           GROUPS</p>
-          <Link to={{pathname: '/addteam'}}>
             <CreateTeamButton
               style={{
                 float:"none",
@@ -119,7 +118,6 @@ export default class SidebarContent extends React.Component {
               changeContent={this.props.changeContent}
               closeDrawer={this.props.closeDrawer}
             />
-          </Link>
           <div className="groups">
                 {myGroups}
               </div>
