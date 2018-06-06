@@ -84,13 +84,13 @@ const UserController = {
 		const { userId } = req.token;
 		const targetId = req.params.userId;
 
-		if (!validUser(req.body)) {
+		/* if (!validUser(req.body)) {
 			res.status(400).json({
 				success: false,
 				message: 'Invalid user information.',
 			});
 			return;
-		}
+		} */
 
 		if (Number(targetId) !== userId) {
 			res.status(403).json({

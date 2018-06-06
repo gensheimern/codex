@@ -148,6 +148,7 @@ export default class UserSettings extends React.Component {
 						right: 30,
 						padding: '3%',
 					}}
+					onClick={() => {console.log('Change image');}}
 				>
 				{this.state.image
 					? (<Avatar
