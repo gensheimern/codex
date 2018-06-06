@@ -4,7 +4,6 @@ export default class dateParser extends React.Component {
 
  static  DateparserDate(myDate) {
     var d = new Date(myDate);
-    console.log(d);
     var month = [];
     month[0] = "January";
     month[1] = "February";

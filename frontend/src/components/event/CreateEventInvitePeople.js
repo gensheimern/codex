@@ -71,7 +71,6 @@ return(
         this.setState({ inviteImageList: [...this.state.inviteImageList,{textKey: chosenRequest.textKey, ValueImage: chosenRequest.ValueImage, ValueKey: chosenRequest.ValueKey} ] })
         this.props.people(this.state.inviteImageList);
         this.refs["autocomplete"].setState({searchText:''});
-          console.log(this.state.inviteImageList);
       }}
     />
   </div>

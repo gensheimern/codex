@@ -75,6 +75,7 @@ class CreateEventCard extends React.Component {
 			cardImage: 'pasta_card@3x.jpg',
 			collapse: false,
 			invitePeople: [],
+			invitePeopleID: [],
 			time: '',
 			date: new Date(),
 			reminder: false,
@@ -113,6 +114,7 @@ class CreateEventCard extends React.Component {
 
 	callBackInvitePeople(invitePeople){
 		this.setState({ invitePeople })
+
 	}
 
 	callbackAddress(myAddress){
@@ -203,6 +205,10 @@ class CreateEventCard extends React.Component {
 	};
 
 	createEvent() {
+		let userArray = this.state.invitePeople.map((userid) => {
+					return userid.ValueKey
+		 });
+
 		fetch(config.apiPath + "/activity", {
 			method: 'POST',
 			body: JSON.stringify({
@@ -214,6 +220,7 @@ class CreateEventCard extends React.Component {
 				private: this.state.private,
 				banner: this.state.cardImage,
 				maxParticipants: parseInt(this.getMaxPeopleValue(), 10),
+				participants: userArray,
 			}),
 			headers: {
 				'Content-Type': 'application/json',
@@ -228,7 +235,9 @@ class CreateEventCard extends React.Component {
 				this.props.history.push('/feed');
 			}
 		});
-	}
+
+		}
+
 
 	collapsedContent() {
 		if(this.state.collapse){
@@ -274,6 +283,7 @@ class CreateEventCard extends React.Component {
 	}
 
 	render() {
+
 		return (
 		<Paper className="createEventWrapper">
 			<Card >
