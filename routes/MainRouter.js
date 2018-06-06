@@ -10,6 +10,7 @@ const participatesRouter = 	require('./activity/participatesRouter');
 const messageRouter = 		require('./activity/MessageRouter');
 const activityRouter = 		require('./activity/ActivityRouter');
 
+
 router.use('/team', memberRouter);
 router.use('/team', teamRouter);
 
@@ -21,6 +22,7 @@ router.use('/user', userRouter);
 router.use('/activity', participatesRouter);
 router.use('/activity', messageRouter);
 router.use('/activity', activityRouter);
+
 
 
 router.use('*', (req, res) => {

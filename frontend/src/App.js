@@ -10,6 +10,7 @@ import Signup from './components/signup/Signup';
 import Dashboard from './components/Dashboard';
 import MobileContent from './components/MobileContent';
 import Splashscreen from './components/routing/Splashscreen';
+import Lunch from './components/Lunch/Lunch';
 // import NotFound from './components/routing/NotFound';
 
 class App extends Component {
@@ -53,14 +54,15 @@ class App extends Component {
 		<div id="contentarea">
 			{/* Landing page */}
 			<Route exact path="/" component={Splashscreen}/>
-			
+
 
 			{/* Public routes */}
 			<Route exact path="/login" component={Login} />
 			<Route exact path="/signup" component={Signup} />
+			<Route exact path="/lunch" component={Lunch} />
 
 			{/* Protected routes (login required) */}
-			<Route exact path="/(feed|notifications|profile|addteam|addevent|personal)" render={(props) => (
+			<Route exact path="/(feed|notifications|profile|addteam|addevent|personal|)" render={(props) => (
 				<Screen
 					changeContent={this.changeContent}
 					searchFilterFeed={this.searchFilterFeed}
@@ -89,5 +91,5 @@ function Screen(props) {
 		</MediaQuery>
 	);
 }
-				
+
 export default App;
