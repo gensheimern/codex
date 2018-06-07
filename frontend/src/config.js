@@ -1,8 +1,8 @@
 const config = {
-	debug: true,
-	apiPath: 'http://localhost:3000/api',
-	wsPath: 'http://localhost:5000/',
-	basePath: 'http://localhost:3000/',
+	debug: process.env.REACT_APP_DEBUG === 'TRUE',
+	apiPath: process.env.REACT_APP_API_PATH,
+	wsPath: process.env.REACT_APP_WS_PATH,
+	basePath: process.env.REACT_APP_BASE_PATH,
 }
 
 export default config;

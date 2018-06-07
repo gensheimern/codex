@@ -80,6 +80,7 @@ class App extends Component {
 			{/* Public routes */}
 			<Route exact path="/login" component={Login} />
 			<Route exact path="/signup" component={Signup} />
+			<Route exact path="/logout" component={Login} />
 
 			{/* Protected routes (login required) */}
 			<Route exact path="/(feed|notifications|profile|addteam|addevent|personal)" render={(props) => (
