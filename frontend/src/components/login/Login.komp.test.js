@@ -9,14 +9,7 @@ describe('Login Component', () =>{
         expect(shallow(<Login />).exists(<form className = 'Login'></form>)).toBe(true)
     });
 
-    it('renders a email input', () => {
-        expect(shallow(<Login/>).find('#email').length).toEqual(1)
-    });
-
-    it('renders a password input', () => {
-        expect(shallow(<Login />).find('#password').length).toEqual(1)
-    });
-
+   
 
     /* describe('Email input', () => {
         it('should respond to change event and change the state of the Login Component', () =>{
