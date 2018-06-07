@@ -11,7 +11,7 @@ import "./sidebars.css";
  * provided. The selected `BottomNavigationItem` is determined by application
  * state (for instance, by the URL).
  */
-class AppNavBottom extends Component {
+class AppNavTop extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -33,17 +33,39 @@ class AppNavBottom extends Component {
       this.setState({show:true})
   }
   render() {
-    return (
-      <div className="MobileNavTop">
-      <GroupsDrawer changeContent={this.props.changeContent}/>
-      <div className="AppNameDisplay">
-        Lunch-Planner
-      </div>
-      <SearchFeed searchFilterFeed={this.props.searchFilterFeed} changeShow={this.changeShow}/>
-      <SearchBar searchFilterFeed={this.props.searchFilterFeed} show={this.state.show} changeShow={this.changeShow}/>
-      </div>
-    );
-  }
-}
+    if(this.state.show === false){
 
-export default AppNavBottom;
+    return (<div className="MobileNavTop">
+      <GroupsDrawer
+        searchFilterFeed={this.props.searchFilterFeed}
+        changeContent={this.props.changeContent}/>
+      <div>
+          <div className="AppNameDisplay">
+              Lunch-Planner
+          </div>
+          <SearchFeed searchFilterFeed={this.props.searchFilterFeed} changeShow={this.changeShow}/>
+      </div>
+    </div>
+    )
+  }
+
+  if(this.state.show === true){
+
+  return(<div className="MobileNavTop">
+    <GroupsDrawer
+      searchFilterFeed={this.props.searchFilterFeed}
+      changeContent={this.props.changeContent}/>
+
+     <SearchBar
+        searchFilterFeed={this.props.searchFilterFeed}
+        show={this.state.show}
+        changeShow={this.changeShow}
+        style={{float:"left"}}
+     />
+    </div>
+  );
+  }
+
+}}
+
+export default AppNavTop;

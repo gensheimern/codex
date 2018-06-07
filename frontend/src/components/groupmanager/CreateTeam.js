@@ -72,7 +72,6 @@ export default class CreateTeam extends React.Component {
                           Best check yo self, youre not looking too good. </Alert>)
                     });
                 });
-                console.log("Group '" + this.state.name + "' created.");
             } else {
                 this.setState({
                     showError: true

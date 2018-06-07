@@ -27,6 +27,21 @@ const Activity = {
 		);
 	},
 
+	async getJoinedActivities(userId) {
+		return databaseConnection.queryp(
+			`SELECT Activity.*, User.*
+			FROM Activity
+				INNER JOIN User
+				ON Activity.Host = User.User_Id
+					INNER JOIN participates
+					ON Activity.Activity_Id = participates.Activity_Id
+			WHERE participates.User_Id = ?
+				AND Activity.Time > CURRENT_TIMESTAMP()
+			ORDER BY Activity.Time`,
+			[userId],
+		);
+	},
+
 	/**
 	 * Fetches specific information of an activity.
 	 * @param {number} activityId The activity to get the information of.

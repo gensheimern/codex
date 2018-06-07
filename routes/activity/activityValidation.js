@@ -29,8 +29,8 @@ const activityValidation = {
 
 	validTime(time) {
 		// TODO: Check time format 2018-04-20 12:34:18
-		return typeof time === 'string'
-			&& /\d\d\d\d-\d\d-\d\d \d\d:\d\d:\d\d/.test(time); // TODO: Schöner machen
+		return typeof time === 'string';
+		//	&& /\d\d\d\d-\d\d-\d\d \d\d:\d\d:\d\d/.test(time); // TODO: Schöner machen
 	},
 
 	validEventTag(eventTag) {

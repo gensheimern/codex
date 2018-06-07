@@ -45,9 +45,7 @@ export default class CollapsedContent extends React.Component {
     })
     .then(res => res.json())
     .then(res => {
-            this.props.loadMessages();
-      console.log("jupfetched");
-
+      this.props.loadMessages();
     })
 
     .catch((err) => {

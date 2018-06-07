@@ -6,12 +6,12 @@
         float: left;
 }
 .leftContent{
-  width: 230px;
-  height: 100vh;
-  background-image: linear-gradient(197deg, #1ea185, #b0e8d2);
-  box-shadow: 3px 0 4px 1px rgba(0, 0, 0, 0.19);
+  height: 100%;
+  	background-color: #1EA185;
+  	box-shadow: 0 2px 4px 0 rgba(0,0,0,0.5);
   overflow: hidden;
   float: left;
+  width: 100%;
 
 }
 .rightContent{
@@ -20,13 +20,13 @@
   float: left;
 }
 .groupName{
+  opacity: 0.7 !important;
+  color: white !important;
   margin-left: 25%;
   display: block;
   padding: 26px 0px;
-  color: #757575;
   text-decoration: none;
   height: 22px;
-  font-family: TrebuchetMS;
   font-size: 18px;
   font-weight: normal;
   font-style: normal;
@@ -35,14 +35,15 @@
   letter-spacing: normal;
   text-align: left;
   color: #ffffff;
+  width: 100%;
+  float:left;
 }
-.highlightSidebarContent{
-  width: 213px;
-  padding: 16px 0px;
-  text-decoration: none;
+.selectedGroup{
+  background-color: #B0E8D2 !important;
   display: block;
-  background-image: linear-gradient(to left, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0));
-  font-family: TrebuchetMS;
+  padding: 26px 0px;
+  text-decoration: none;
+  height: 18px;
   font-size: 18px;
   font-weight: normal;
   font-style: normal;
@@ -51,7 +52,43 @@
   letter-spacing: normal;
   text-align: left;
   color: #ffffff;
+  width: 100%;
+  float:right;
+  color: white !important;
 }
+  .highlightSidebarContent{
+    height: 9.9%;
+    width: 100%;
+    background-color: #B0E8D2 !important;
+     margin:5%;
+    text-decoration: none;
+    display: block;
+    font-size: 18px !important;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: left;
+    color: white !important;
+  }
+.nonHighlightSidebarContent{
+    height: 9.9%;
+    width: 100%;
+    background-color:
+     #B0E8D2;
+     margin:5%;
+    text-decoration: none;
+    display: block;
+    font-size: 18px !important;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: left;
+    color: white !important;
+  }
 .groups{
   margin-top: 10px;
   height:0px;
@@ -66,9 +103,10 @@
   color: #ffffff;
 }
 .divider{
-  width: 294px;
+  width: 100%;
   height: 1px;
   border: solid 1px rgba(255, 255, 255, 0.53);
+  float:left;
 
 }
 .MobileNavTop{
@@ -99,4 +137,11 @@ height: 6vh;	width: 100%;	background-color: #1EA185;	box-shadow: 0 2px 4px 0 rgb
   width: '100%';
   border: 0;
   float:left;
+}
+.GroupsDrawer{
+
+}
+.BadgeNotif{
+  padding : 0px !important;
+  margin-top: 15%;
 }

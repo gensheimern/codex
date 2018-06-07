@@ -1,5 +1,6 @@
 const TeamModel = require('../../models/TeamModel');
 const MemberModel = require('../../models/MemberModel');
+const NotificationModel = require('../../models/NotificationModel');
 const transforms = require('../transforms');
 const { validTeam } = require('./teamValidation');
 
@@ -46,7 +47,7 @@ const TeamController = {
 		}
 
 		const dbRes = await TeamModel.addTeam(name, userId);
-		await MemberModel.addMember(userId, dbRes.insertId);
+		await MemberModel.addMember(userId, dbRes.insertId, false);
 
 		res.status(201).json({
 			teamId: dbRes.insertId,
@@ -87,6 +88,9 @@ const TeamController = {
 		}
 
 		const dbRes = await TeamModel.updateTeam(teamId, newName, userId);
+
+		// Notify other team members
+		NotificationModel.notifyTeam(teamId, 'notification', 'Team updated', `The team ${newName} changed.`, teamId);
 
 		if (dbRes.affectedRows === 0) {
 			res.status(404).json({

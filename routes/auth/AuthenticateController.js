@@ -7,13 +7,20 @@ const AuthenticateController = {
 
 		const user = await User.getUserByEmail(email);
 
+		if (!user || !user.Password) {
+			res.status(403).json({
+				success: false,
+				message: 'Invalid user credentials.',
+			});
+			return;
+		}
+
+		const validPassord = await Auth.validateHash(password, user.Password);
+
+
 		// If the user doesnt exits, it will send status code 403 and the
 		// json to the client
-		if (!user
-		|| !user.Password
-		// If the password doesn't match, it sends status code 403
-		// || !await Auth.validateHash(Password, user.Password)) {// richtig
-		|| (!await Auth.validateHash(password, user.Password) && !(password === user.Password))) {
+		if (!validPassord && !(password === user.Password)) {
 			// FIXME: Use only hashed password authentification!
 			res.status(403).json({
 				success: false,

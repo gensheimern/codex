@@ -29,10 +29,6 @@ function handleClick() {
  */
 export default class ChipExampleSimple extends React.Component {
 
-  handleDelete(){
-    console.log("worked");
-  }
-
   render() {
     return (
       <div style={styles.wrapper}>

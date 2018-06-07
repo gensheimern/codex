@@ -1,6 +1,6 @@
 import React from 'react';
 import FlatButton from 'material-ui/FlatButton';
-import IconSearch from 'material-ui/svg-icons/hardware/keyboard-arrow-down';
+import IconSearch from 'material-ui/svg-icons/action/search';
 
 
 import "./sidebars.css"
@@ -52,7 +52,7 @@ export default class SearchFeed extends React.Component {
       <div className="SearchFeed">
         <FlatButton
           backgroundColor="#1EA185"
-          icon={<IconSearch color="#FFFFFF"/>}
+          icon={<IconSearch color="white"/>}
           onClick={this.props.changeShow}
         />
       </div>

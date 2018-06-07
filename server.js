@@ -2,6 +2,10 @@
 const app = require('./app');
 const http = require('http').Server(app);
 const config = require('./config');
+const { createLiveMessage } = require('./LiveMessages');
+
+const liveMessages = createLiveMessage(http);
+liveMessages.initialize();
 
 
 // Start Server

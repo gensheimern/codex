@@ -40,11 +40,25 @@ const transforms = (userId) => {
 		},
 	});
 
+	const transformNotification = dbNotification => ({
+		id: dbNotification.Notification_Id,
+		type: dbNotification.Type,
+		title: dbNotification.Title,
+		message: dbNotification.Message,
+		time: dbNotification.Time,
+		seen: Boolean(dbNotification.Seen),
+		targetId: dbNotification.Target_Id,
+		user: {
+			...transformUser(dbNotification),
+		},
+	});
+
 	return {
 		transformUser,
 		transformTeam,
 		transformActivity,
 		transformMessage,
+		transformNotification,
 	};
 };
 
