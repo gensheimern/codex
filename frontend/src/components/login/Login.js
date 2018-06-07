@@ -10,6 +10,7 @@ import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import {Card,CardText} from 'material-ui/Card';
 import Paper from 'material-ui/Paper';
+import { Link } from 'react-router-dom';
 
 export default class Login extends Component {
 
@@ -175,10 +176,8 @@ export default class Login extends Component {
 					style = {styles.loginButton}
 				/>
                 <br/>
-                <p>Don't have an account yet? ?
-						<a href ="#">
-						 Create an account 
-						</a>
+                <p>Don't have an account yet?&nbsp;
+						<Link to = "/signup">Create an account</Link>       
 				</p>
                 </CardText>
                 </Card>

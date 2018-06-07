@@ -1,10 +1,11 @@
 .login {
-  width: 45%;
-  font-size: 12pt;
-  margin: auto;
-  /* margin-top: 3%; */
-  padding: 1% 5%;
-  /* border: 7px solid blue; */
+	padding: 2%;
+	/*height: 1065px*/
+	height: 100vh;
+	width: 100vw;
+	overflow-y: scroll;
+	  
+
 }
 
 .loginBg {
