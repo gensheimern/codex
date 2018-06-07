@@ -72,7 +72,6 @@ export default class MainContent extends React.Component {
 					>
 
 					<CreateEventCard ref={instance => {
-						this.
 						this.child = instance;
 				  	}}/>
 				</Dialog>
