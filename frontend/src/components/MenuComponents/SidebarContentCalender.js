@@ -154,9 +154,7 @@ export default class SidebarContent extends React.Component {
 		let lastDate = null;
 
 		return (
-			<div style={{
-				padding: '2%',
-			}}>
+			<div className="CalendarWrapper">
 				<p>Your calendar</p>
 				<div style={{
 					width: '100%',

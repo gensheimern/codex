@@ -15,7 +15,6 @@ import FlatButton from 'material-ui/FlatButton';
 import Paper from 'material-ui/Paper';
 import { withRouter } from 'react-router-dom';
 
-
 const eventImages = [
 	{
 		img: "asia_card@3x.jpg",
@@ -76,6 +75,7 @@ class CreateEventCard extends React.Component {
 			cardImage: 'pasta_card@3x.jpg',
 			collapse: false,
 			invitePeople: [],
+			invitePeopleID: [],
 			time: '',
 			date: new Date(),
 			reminder: false,
@@ -88,13 +88,17 @@ class CreateEventCard extends React.Component {
 			day: (new Date()).getUTCDate(),
 			hours: '12',
 			minutes: '0',
+			meetingHours:'11',
+			meetingMinutes:'45',
 			snackbaropen: false,
+			errorCreate: '',
 		}
 
 		this.toggleCollapse = this.toggleCollapse.bind(this);
 		this.callbackAddress = this.callbackAddress.bind(this);
 		this.callBackInvitePeople = this.callBackInvitePeople.bind(this);
 		this.callbackTime = this.callbackTime.bind(this);
+		this.callbackTimeMeetingPoint = this.callbackTimeMeetingPoint.bind(this);
 		this.callbackDate = this.callbackDate.bind(this);
 		this.callbackToggleReminder = this.callbackToggleReminder.bind(this);
 		this.callbackTogglePrivate = this.callbackTogglePrivate.bind(this);
@@ -114,6 +118,7 @@ class CreateEventCard extends React.Component {
 
 	callBackInvitePeople(invitePeople){
 		this.setState({ invitePeople })
+
 	}
 
 	callbackAddress(myAddress){
@@ -122,17 +127,24 @@ class CreateEventCard extends React.Component {
 
 	callbackTime(event, time){
 		this.setState({
-			hours: time.getUTCHours(),
+			hours: time.getUTCHours()+2,
 			minutes: time.getUTCMinutes(),
+		});
+	}
+	callbackTimeMeetingPoint(event, time) {
+		this.setState({
+			meetingHours: time.getUTCHours()+2,
+			meetingMinutes: time.getUTCMinutes(),
 		});
 	}
 
 	callbackDate(event, mydate){
 		this.setState({
 			year:mydate.getUTCFullYear(),
-			day:mydate.getUTCDate(),
-			month:mydate.getUTCMonth(),
+			day:mydate.getUTCDate()+1,
+			month:mydate.getUTCMonth()+1,
 		});
+
 	}
 
 	callbackToggleReminder(event, isInputChecked){
@@ -178,6 +190,14 @@ class CreateEventCard extends React.Component {
 		}
 	}
 
+	getMaxPeopleValue() {
+		if(this.state.maxPeopleValue === ''){
+			return '0'
+		} else {
+			return this.state.maxPeopleValue
+		}
+	}
+
 	renderSnackbar = () => {
 		this.setState({
 			snackbaropen: true,
@@ -195,6 +215,12 @@ class CreateEventCard extends React.Component {
 	};
 
 	createEvent() {
+		let userArray = this.state.invitePeople.map((userid) => {
+					return userid.ValueKey
+		 });
+
+		if(parseInt(this.getMaxPeopleValue(), 10) > userArray.length +1 || parseInt(this.getMaxPeopleValue(), 10) === 0 ){
+
 		fetch(config.apiPath + "/activity", {
 			method: 'POST',
 			body: JSON.stringify({
@@ -205,7 +231,10 @@ class CreateEventCard extends React.Component {
 				event: false,
 				private: this.state.private,
 				banner: this.state.cardImage,
-				maxParticipants: parseInt(this.state.maxPeopleValue, 10),
+				meetingPoint: this.state.meetingPoint,
+				timeMeetingPoint: this.state.year + "-" + this.state.month + "-" + this.state.day + " " + this.state.meetingHours + ":" + this.state.meetingMinutes,
+				maxParticipants: parseInt(this.getMaxPeopleValue(), 10),
+				participants: userArray,
 			}),
 			headers: {
 				'Content-Type': 'application/json',
@@ -220,7 +249,12 @@ class CreateEventCard extends React.Component {
 				this.props.history.push('/feed');
 			}
 		});
+	} else {
+		this.setState({errorCreate: 'Maximum of ' + parseInt(this.getMaxPeopleValue(), 10) + ' participants' });
+
 	}
+		}
+
 
 	collapsedContent() {
 		if(this.state.collapse){
@@ -231,7 +265,23 @@ class CreateEventCard extends React.Component {
 
 			return(
 				<div className="collapsedContentWrapper">
-					<div className="collapsedContendReminder">
+					<div className="meetingPoint">
+							<TextField
+							floatingLabelFixed={true}
+							floatingLabelFocusStyle={{ color: 'rgb(30 161 133)' }}
+							underlineFocusStyle={{ borderColor: 'rgb(30 161 133)' }}
+							floatingLabelText="Meeting Point"
+							hintText="at the address point"
+							value={this.state.meetingPoint}
+							onChange={this.handleChangeMeetingPoint}
+							style={{width:'100%'}}
+							/>
+					</div>
+					<br/>
+						<div className="timepickerMeeting">
+								<CreateEventTimePicker time={this.callbackTimeMeetingPoint} />
+						</div>
+						<div className="collapsedContendReminder">
 						< ReminderToggle
 							label={'Reminder'}
 							toggle={this.callbackToggleReminder}
@@ -240,24 +290,23 @@ class CreateEventCard extends React.Component {
 							label={'Private'}
 							toggle={this.callbackTogglePrivate}
 						/>
-
+						</div>
 						<TextField
-							style={{widht:"200px"}}
+							fullWidth={true}
 							floatingLabelFixed={true}
 							underlineFocusStyle={{borderColor:"rgb(30 161 133)"}}
 							hintText="Max. People"
 							value={this.state.maxPeopleValue}
 							onChange={this.handleChangeMaxPeople}
 						/>
-					</div>
 					<TextField
+						fullWidth={true}
 						underlineFocusStyle={{borderColor:"rgb(30 161 133)"}}
 						floatingLabelFixed={true}
 						hintText="Description"
 						value={this.state.descriptionValue}
 						onChange={this.handleChangeDescription}
 					/>
-
 					<InvitePeople people={this.callBackInvitePeople}/>
 					{images}
 				</div>
@@ -266,6 +315,8 @@ class CreateEventCard extends React.Component {
 	}
 
 	render() {
+		console.log(this.state.meetingHours);
+		console.log(this.state.hours);
 		return (
 		<Paper className="createEventWrapper">
 			<Card >
@@ -297,7 +348,6 @@ class CreateEventCard extends React.Component {
 						/>
 					))}
 				</Dialog>
-
 				<CardMedia
 					overlayContentStyle={{padding:"2px"}}
 					overlay={
@@ -311,34 +361,21 @@ class CreateEventCard extends React.Component {
 				</CardMedia>
 
 				<CardText>
+					<Maps
+						callbackAdress={this.handleChangeAddressValue}
+						myAddress={this.callbackAddress}
+						>
+						{renderFunc}
+					</Maps>
+					<div className="datepicker">
+							<CreateEventDatePicker date={this.callbackDate} />
+					</div>
 					<div className="timeDatePicker">
 						<div className="timepicker">
 							<CreateEventTimePicker time={this.callbackTime} />
 						</div>
-						<div className="datepicker">
-							<CreateEventDatePicker date={this.callbackDate} />
-						</div>
 						<div style={{clear: 'both'}}/>
-					</div>
-
-					<Maps
-						callbackAdress={this.handleChangeAddressValue}
-						myAddress={this.callbackAddress}
-					>
-						{renderFunc}
-					</Maps>
-
-					<TextField
-						floatingLabelFixed={true}
-						floatingLabelFocusStyle={{ color: 'rgb(30 161 133)' }}
-						underlineFocusStyle={{ borderColor: 'rgb(30 161 133)' }}
-						floatingLabelText="Meeting Point"
-						hintText="at the address point"
-						value={this.state.meetingPoint}
-						onChange={this.handleChangeMeetingPoint}
-					/>
-					<br/>
-
+						</div>
 					<div
 						className="MoreOptionsCreateEvent"
 						onClick={this.toggleCollapse}
@@ -351,6 +388,7 @@ class CreateEventCard extends React.Component {
 					}} />
 					{ this.collapsedContent() }
 				</CardText>
+				<div style={{color:'red', textAlign:"center"}}>{this.state.errorCreate} </div>
 			</Card>
 			<FlatButton
 				onClick={this.handleSubmit}
@@ -374,4 +412,5 @@ const renderFunc = ({ getInputProps, getSuggestionItemProps, suggestions }) => (
 		</div>
 	</div>
 );
+
 export default withRouter(CreateEventCard);
