@@ -7,6 +7,7 @@ import {Card, /*CardMedia, CardTitle,*/ CardText} from 'material-ui/Card';
 import './signup.css';
 import Paper from 'material-ui/Paper';
 import Checkbox from 'material-ui/Checkbox';
+import {Link} from 'react-router-dom';
 
 export default class Signup extends React.Component {
 	emailRegExp = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -235,9 +236,7 @@ export default class Signup extends React.Component {
 				<br/>
 				<center>
 					<p>Have an account already?&nbsp;
-						<a href="">
-						Log in here
-						</a>
+						<Link to = "/login">Log in here </Link>
 					</p>
 				</center>
 				
