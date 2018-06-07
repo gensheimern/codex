@@ -181,6 +181,10 @@ export default class CreateTeam extends React.Component {
         clickOnSelectedIcon(index,icon){
           console.log(this.state.activeIndex);
           this.setState({activeIndex:index});
+          let x = this.state.icons[index];
+          console.log(x);
+          this.setState({selectedIcon:x.icon});
+
 
         }
 

@@ -62,8 +62,11 @@ export default class CreateTeamButton extends React.Component {
          modal={false}
          open={this.state.open}
          onRequestClose={this.handleClose}
+         autoScrollBodyContent = "true"
        >
-        <CreateGroupContent/>
+       <div>
+         <CreateGroupContent/>
+       </div>
        </Dialog>
     </div>
     );

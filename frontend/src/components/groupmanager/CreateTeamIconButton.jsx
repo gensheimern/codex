@@ -11,7 +11,7 @@ export default class CreateTeamIconButton extends React.Component {
     this.handleClick = this.handleClick.bind(this);
 
   }
-handleClick = () => {console.log(this.props.index);
+handleClick = () => {console.log(this.props.icon);
   this.setState({kappa:true});
   this.props.handleClick(this.props.index, this.props.icon)}
 
