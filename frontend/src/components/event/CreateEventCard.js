@@ -13,6 +13,8 @@ import config from '../../config';
 import Snackbar from 'material-ui/Snackbar';
 import FlatButton from 'material-ui/FlatButton';
 import Paper from 'material-ui/Paper';
+import { withRouter } from 'react-router-dom';
+
 
 const eventImages = [
 	{
@@ -60,7 +62,7 @@ const eventImages = [
 	},
 ]
 
-export default class CreateEventCard extends React.Component {
+class CreateEventCard extends React.Component {
 	constructor(props){
 		super(props);
 
@@ -215,7 +217,7 @@ export default class CreateEventCard extends React.Component {
 				// handle error
 			} else {
 				this.renderSnackbar();
-				this.props.changeContent(0);
+				this.props.history.push('/feed');
 			}
 		});
 	}
@@ -307,7 +309,7 @@ export default class CreateEventCard extends React.Component {
 				>
 					<img   src={this.state.cardImage} alt="" />
 				</CardMedia>
-				
+
 				<CardText>
 					<div className="timeDatePicker">
 						<div className="timepicker">
@@ -372,3 +374,4 @@ const renderFunc = ({ getInputProps, getSuggestionItemProps, suggestions }) => (
 		</div>
 	</div>
 );
+export default withRouter(CreateEventCard);

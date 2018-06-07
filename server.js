@@ -9,7 +9,7 @@ liveMessages.initialize();
 
 
 // Start Server
-http.listen(5000, () => {
+http.listen(config.PORT, () => {
 	console.log('Server started: http://localhost:5000\n');
 
 	if (config.JWT_SECRET === 'secret') {

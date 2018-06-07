@@ -55,9 +55,21 @@ class Events extends React.Component {
     if (!this.state.loaded) {
       return (<p>Loading</p>);
     }
+    let filterData;
+    let filterDataBeginn = this.props.filter.filterDate;
+    let searchWordName = this.props.filter.searchWord;
+
+    console.log(this.props.filter);
+    console.log(this.state.events);
+    console.log("searchword " + searchWordName);
+    console.log("datefilt " + filterDataBeginn );
+    filterData = this.state.events.filter(function (a,b)
+                    {
+                      return (new Date(a.time)) >= filterDataBeginn;
+                    });
 
     if(!(this.props.filterWord === null)){
-      switch(this.props.filterWord) {
+      switch(this.props.filter.filterWord) {
           case 'TimeDown':
           this.state.events.sort(function(obj1, obj2){
           return new Date(obj1.time) - new Date(obj2.time)})
@@ -87,12 +99,12 @@ class Events extends React.Component {
           return (obj1.time) - (obj2.time)})
     }
       }
-      let filterData;
-    if(!(this.props.searchWord === null)){
-      filterData = this.state.events.filter(event => event.name.toUpperCase().includes(this.props.searchWord.toUpperCase()));
+    if(!(searchWordName === null)){
+      filterData = filterData.filter(event => event.name.toUpperCase().includes(searchWordName.toUpperCase()));
     } else {
       filterData = this.state.events;
     }
+    console.log(filterData);
 
     return (<React.Fragment>
       <div>
@@ -124,7 +136,7 @@ class Events extends React.Component {
                     </FloatingActionButton>
                     ADD EVENT
                   </div>
-                  
+
                 </div>
               } else {
                 return null
