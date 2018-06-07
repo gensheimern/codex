@@ -2,7 +2,7 @@ import React, {
     Component
 } from "react";
 import "./Login.css";
-import logo from '../../IMG/codex_logo1x.png';
+
 import config from '../../config';
 import TextField from 'material-ui/TextField';
 import Dialog from 'material-ui/Dialog';
@@ -162,9 +162,7 @@ export default class Login extends Component {
 					floatingLabelText="Password"
 					style= {styles.textField}
 				/>
-                <a href ="#">
-					Forgot password ?
-				</a>
+                <Link to = "">Forgot password?</Link>
                 <br/>
                 <br/>
                 <RaisedButton
