@@ -1,10 +1,5 @@
 import React from "react";
-import {
-    Alert,Button,
-    FormGroup,
-    FormControl,
-    ControlLabel
-} from "react-bootstrap";
+
 import "./groupmanager.css";
 import config from '../../config';
 import "./ListGroups.js";
@@ -19,12 +14,6 @@ import IconAdd from 'material-ui/svg-icons/content/add-circle';
 import IconProfile from 'material-ui/svg-icons/social/person';
 import IconCalendar from 'material-ui/svg-icons/action/event';
 import IconFeed from 'material-ui/svg-icons/action/assignment';
-
-const FeedIcon = <IconFeed/>;
-const CalendarIcon = <IconCalendar/>;
-const AddIcon = <IconAdd/>;
-const ProfileIcon = <IconProfile />;
-
 
 const iconsToSelect = [{
                         icon : <IconGroup/>
@@ -180,10 +169,7 @@ export default class CreateTeam extends React.Component {
                     this.props.update();
                 }).catch((err) => {
                     console.log("display eror");
-                    this.setState({
-                        errorPrompt: (<Alert bsStyle = "warning"> <strong> Holy guacamole ! </strong>
-                          Best check yo self, youre not looking too good. </Alert>)
-                    });
+
                 });
             } else {
                 this.setState({

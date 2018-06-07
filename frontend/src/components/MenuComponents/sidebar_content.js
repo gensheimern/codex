@@ -3,7 +3,6 @@ import "./sidebars.css";
 import config from '../../config';
 import CreateTeamButton from './CreateTeamButton.js';
 import GroupSidebarButton from './GroupSidebarButton.js'
-import { Link } from 'react-router-dom';
 
 export default class SidebarContent extends React.Component {
   constructor(props) {
