@@ -11,10 +11,104 @@ import "./ListGroups.js";
 import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
 import InviteChip from '../event/CreateEventChip';
+import CreateTeamIconButton from './CreateTeamIconButton'
 import InvitePeople from '../event/CreateEventInvitePeople';
 
 import IconGroup from 'material-ui/svg-icons/social/group';
+import IconAdd from 'material-ui/svg-icons/content/add-circle';
+import IconProfile from 'material-ui/svg-icons/social/person';
+import IconCalendar from 'material-ui/svg-icons/action/event';
+import IconFeed from 'material-ui/svg-icons/action/assignment';
 
+const FeedIcon = <IconFeed/>;
+const CalendarIcon = <IconCalendar/>;
+const AddIcon = <IconAdd/>;
+const ProfileIcon = <IconProfile />;
+
+
+const iconsToSelect = [{
+                        icon : <IconGroup/>
+                      },
+                      {
+                        icon : <IconAdd/>
+                      },
+                      {
+                        icon : <IconProfile/>
+                      },
+                      {
+                        icon : <IconCalendar/>
+                      },
+                      {
+                        icon : <IconFeed/>
+                    },
+                      {
+                        icon : <IconGroup/>
+                      },
+                      {
+                        icon : <IconAdd/>
+                      },
+                      {
+                        icon : <IconProfile/>
+                      },
+                      {
+                        icon : <IconCalendar/>
+                      },
+                      {
+                        icon : <IconGroup/>
+                      },
+                      {
+                        icon : <IconAdd/>
+                      },
+                      {
+                        icon : <IconProfile/>
+                      },
+                      {
+                        icon : <IconCalendar/>
+                      },
+                      {
+                        icon : <IconGroup/>
+                      },
+                      {
+                        icon : <IconAdd/>
+                      },
+                      {
+                        icon : <IconProfile/>
+                      },
+                      {
+                        icon : <IconCalendar/>
+                      },
+                      {
+                        icon : <IconGroup/>
+                      },
+                      {
+                        icon : <IconAdd/>
+                      },
+                      {
+                        icon : <IconProfile/>
+                      },
+                      {
+                        icon : <IconCalendar/>
+                      },
+                      {
+                        icon : <IconGroup/>
+                      },
+                      {
+                        icon : <IconAdd/>
+                      },
+                      {
+                        icon : <IconProfile/>
+                      },
+                      {
+                        icon : <IconCalendar/>
+                      },
+                      {
+                        icon : <IconAdd style={{color:"white important",
+                                                backgroundColor:"#F8C947"}}/>
+                      },
+
+
+
+]
 
 export default class CreateTeam extends React.Component {
 
@@ -34,7 +128,8 @@ export default class CreateTeam extends React.Component {
                 errorPrompt: "",
                 invitePeople: [],
                 selectedIcon : {},
-                icons : [],
+                icons : iconsToSelect,
+                activeIndex : "0",
             }
         }
         componentDidUpdate(prevProps, prevState) {
@@ -97,13 +192,32 @@ export default class CreateTeam extends React.Component {
             }
         }
 
+        clickOnSelectedIcon(index,icon){
+          console.log(this.state.activeIndex);
+          this.setState({activeIndex:index});
+
+        }
+
         callBackInvitePeople(invitePeople){
           this.setState({ invitePeople })
         }
 
         render() {
 
-          let iconSelect = <IconGroup/>
+          let iconSelect = <IconGroup style={{height:"100%",
+                                              width:"100% !important",}}/>
+
+          let iconsSelectDisplay = this.state.icons.map((icon,index) => {
+            return (<CreateTeamIconButton
+                                icon ={icon.icon}
+                                index={index}
+                                key={"icon" + index}
+                                isActive={this.state.activeIndex===index}
+                                handleClick=  {
+                                  this.clickOnSelectedIcon.bind(this,index)
+                                }
+                    />
+                )})
 
           let images = this.state.invitePeople.map((image,index) => {
             return(<InviteChip key={"chip" + index} name={image.textKey} peopleImage={image.ValueImage} />)
@@ -111,21 +225,25 @@ export default class CreateTeam extends React.Component {
 
                 return(<div className = "CreateTeam">
                         <div>
-                          <div style={{backgroundColor: "#4CAF50",
+                          <div style={{
                                 border: "none",
                                 color: "white",
-                                padding: "20px",
+                                padding: "5px",
                                 textAlign: "center",
                                 textDecoration: "none",
                                 display: "inline-block",
                                 fontSize: "16px",
-                                margin: "4px 2px",
-                              borderRadius: "50%"}}>
+                                margin: "5px 10px",
+                                borderRadius: "50%",
+                                float: "left",
+	                              height: "76px  ",
+  	                            width: "76px",
+  	                            backgroundColor: "#1EA185"}}>
                             {iconSelect}
                           </div>
                             <div>
-
-                            </div>  //smallIcons
+                              { iconsSelectDisplay }
+                            </div>
                         </div>
                 					<TextField
                 						floatingLabelFixed={true}
