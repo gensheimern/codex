@@ -56,9 +56,11 @@ export default class CreateEventInvitePeople extends React.Component {
 
 
 render(){
+  console.log(this.state.userList);
 return(
   <div>
     <AutoComplete
+      fullWidth={true}
       ref = {"autocomplete"}
       floatingLabelText="Invite People"
       filter={AutoComplete.fuzzyFilter}

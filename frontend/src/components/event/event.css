@@ -264,15 +264,29 @@ padding-left: 10px;
 .createEventEditPicture {
   padding:0 !important;
 }
+
+.meetingPoint {
+  float:left;
+  width:50%;
+}
+
+.timepickerMeeting {
+  width:50%;
+  padding-left:2%;
+  padding-top:1.2%;
+  float:left;
+}
+
 .timepicker {
-  width: 37%;
   overflow: hidden;
   float: left;
+  width:50%;
+  padding-left:2%;
 }
 .datepicker {
-  width: 37%;
   overflow: hidden;
-  padding-left: 5%;
+  width:50%;
+  float:left;
 }
 
 .MoreOptionsCreateEvent {
@@ -281,9 +295,14 @@ padding-left: 10px;
   padding-top:20px;
 }
 
+.maxPeopleWrapper {
+  width:100%;
+}
+
 .collapsedContendReminder {
   width:82%;
   float:left;
+  padding-top:3%;
 }
 
 .createEventPickImageWrapper {

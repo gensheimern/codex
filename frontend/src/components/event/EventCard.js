@@ -27,13 +27,28 @@ export default class EventCard extends React.Component {
 			}
 
 
-		toggle(){
-			console.log("jojojo");
+		checkDate(){
+			const month = new Date().getUTCMonth();
+			if((new Date(this.props.event.time).getUTCMonth() +1) === month){
+				if(new Date(this.props.event.time).getUTCDate() === (new Date().getUTCDate())){
+					if(new Date(this.props.event.time).getUTCFullYear()=== (new Date().getUTCFullYear())){
+						return  <h4 > <CalendarFA/> today </h4>
+				}else {
+						return <h4 > <CalendarFA/> {dateParser.DateparserDate(this.props.event.time) } </h4>
+				}
+			} else {
+					return <h4 > <CalendarFA/> {dateParser.DateparserDate(this.props.event.time) } </h4>
+			}
+
+		}else {
+				return <h4 > <CalendarFA/> {dateParser.DateparserDate(this.props.event.time) } </h4>
+
 		}
+	}
 
 
 	render() {
-
+		this.checkDate();
 		let participantsImages
 		if (this.props.loaded && this.props.participants != null) {
 			participantsImages = this.props.participants.map(user => {
@@ -84,10 +99,10 @@ export default class EventCard extends React.Component {
 						<div className = "eventGroup">
 							<div className="eventInfo">
 								<div className="dateInfo">
-										<h4 > <CalendarFA/> {dateParser.DateparserDate(this.props.event.time) } </h4>
+								 {this.checkDate()}
 								</div>
 								<div className="timeInfo">
-										<h4> <ClockFA/> {dateParser.DateparserTime(this.props.event.time) } </h4>
+										<h4> <ClockFA/>{dateParser.DateparserTime(this.props.event.time) } </h4>
 								</div>
 								<div className="participates-image">
 									<h4 className="alreadyJoningText"> <GroupFA/> Already joining </h4>

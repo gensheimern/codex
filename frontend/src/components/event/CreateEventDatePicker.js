@@ -10,12 +10,16 @@ import DatePicker from 'material-ui/DatePicker';
 export default class CreateEventDatePicker extends React.Component{
 
 render(){
+  const today = new Date();
+  console.log(today);
     return(
       <div>
         <DatePicker
+          textFieldStyle={{width:'100%'}}
           onChange={this.props.date}
           autoOk={true}
           hintText="Today"
+          minDate={today}
         />
       </div>
 );

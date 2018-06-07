@@ -88,6 +88,8 @@ class CreateEventCard extends React.Component {
 			day: (new Date()).getUTCDate(),
 			hours: '12',
 			minutes: '0',
+			meetingHours:'11',
+			meetingMinutes:'45',
 			snackbaropen: false,
 			errorCreate: '',
 		}
@@ -96,6 +98,7 @@ class CreateEventCard extends React.Component {
 		this.callbackAddress = this.callbackAddress.bind(this);
 		this.callBackInvitePeople = this.callBackInvitePeople.bind(this);
 		this.callbackTime = this.callbackTime.bind(this);
+		this.callbackTimeMeetingPoint = this.callbackTimeMeetingPoint.bind(this);
 		this.callbackDate = this.callbackDate.bind(this);
 		this.callbackToggleReminder = this.callbackToggleReminder.bind(this);
 		this.callbackTogglePrivate = this.callbackTogglePrivate.bind(this);
@@ -126,6 +129,12 @@ class CreateEventCard extends React.Component {
 		this.setState({
 			hours: time.getUTCHours()+2,
 			minutes: time.getUTCMinutes(),
+		});
+	}
+	callbackTimeMeetingPoint(event, time) {
+		this.setState({
+			meetingHours: time.getUTCHours()+2,
+			meetingMinutes: time.getUTCMinutes(),
 		});
 	}
 
@@ -211,7 +220,7 @@ class CreateEventCard extends React.Component {
 		 });
 
 		if(parseInt(this.getMaxPeopleValue(), 10) > userArray.length +1 || parseInt(this.getMaxPeopleValue(), 10) === 0 ){
-			
+
 		fetch(config.apiPath + "/activity", {
 			method: 'POST',
 			body: JSON.stringify({
@@ -222,6 +231,8 @@ class CreateEventCard extends React.Component {
 				event: false,
 				private: this.state.private,
 				banner: this.state.cardImage,
+				meetingPoint: this.state.meetingPoint,
+				timeMeetingPoint: this.state.year + "-" + this.state.month + "-" + this.state.day + " " + this.state.meetingHours + ":" + this.state.meetingMinutes,
 				maxParticipants: parseInt(this.getMaxPeopleValue(), 10),
 				participants: userArray,
 			}),
@@ -254,7 +265,23 @@ class CreateEventCard extends React.Component {
 
 			return(
 				<div className="collapsedContentWrapper">
-					<div className="collapsedContendReminder">
+					<div className="meetingPoint">
+							<TextField
+							floatingLabelFixed={true}
+							floatingLabelFocusStyle={{ color: 'rgb(30 161 133)' }}
+							underlineFocusStyle={{ borderColor: 'rgb(30 161 133)' }}
+							floatingLabelText="Meeting Point"
+							hintText="at the address point"
+							value={this.state.meetingPoint}
+							onChange={this.handleChangeMeetingPoint}
+							style={{width:'100%'}}
+							/>
+					</div>
+					<br/>
+						<div className="timepickerMeeting">
+								<CreateEventTimePicker time={this.callbackTimeMeetingPoint} />
+						</div>
+						<div className="collapsedContendReminder">
 						< ReminderToggle
 							label={'Reminder'}
 							toggle={this.callbackToggleReminder}
@@ -263,24 +290,23 @@ class CreateEventCard extends React.Component {
 							label={'Private'}
 							toggle={this.callbackTogglePrivate}
 						/>
-
+						</div>
 						<TextField
-							style={{widht:"200px"}}
+							fullWidth={true}
 							floatingLabelFixed={true}
 							underlineFocusStyle={{borderColor:"rgb(30 161 133)"}}
 							hintText="Max. People"
 							value={this.state.maxPeopleValue}
 							onChange={this.handleChangeMaxPeople}
 						/>
-					</div>
 					<TextField
+						fullWidth={true}
 						underlineFocusStyle={{borderColor:"rgb(30 161 133)"}}
 						floatingLabelFixed={true}
 						hintText="Description"
 						value={this.state.descriptionValue}
 						onChange={this.handleChangeDescription}
 					/>
-
 					<InvitePeople people={this.callBackInvitePeople}/>
 					{images}
 				</div>
@@ -289,7 +315,8 @@ class CreateEventCard extends React.Component {
 	}
 
 	render() {
-
+		console.log(this.state.meetingHours);
+		console.log(this.state.hours);
 		return (
 		<Paper className="createEventWrapper">
 			<Card >
@@ -321,7 +348,6 @@ class CreateEventCard extends React.Component {
 						/>
 					))}
 				</Dialog>
-
 				<CardMedia
 					overlayContentStyle={{padding:"2px"}}
 					overlay={
@@ -335,34 +361,21 @@ class CreateEventCard extends React.Component {
 				</CardMedia>
 
 				<CardText>
+					<Maps
+						callbackAdress={this.handleChangeAddressValue}
+						myAddress={this.callbackAddress}
+						>
+						{renderFunc}
+					</Maps>
+					<div className="datepicker">
+							<CreateEventDatePicker date={this.callbackDate} />
+					</div>
 					<div className="timeDatePicker">
 						<div className="timepicker">
 							<CreateEventTimePicker time={this.callbackTime} />
 						</div>
-						<div className="datepicker">
-							<CreateEventDatePicker date={this.callbackDate} />
-						</div>
 						<div style={{clear: 'both'}}/>
-					</div>
-
-					<Maps
-						callbackAdress={this.handleChangeAddressValue}
-						myAddress={this.callbackAddress}
-					>
-						{renderFunc}
-					</Maps>
-
-					<TextField
-						floatingLabelFixed={true}
-						floatingLabelFocusStyle={{ color: 'rgb(30 161 133)' }}
-						underlineFocusStyle={{ borderColor: 'rgb(30 161 133)' }}
-						floatingLabelText="Meeting Point"
-						hintText="at the address point"
-						value={this.state.meetingPoint}
-						onChange={this.handleChangeMeetingPoint}
-					/>
-					<br/>
-
+						</div>
 					<div
 						className="MoreOptionsCreateEvent"
 						onClick={this.toggleCollapse}
