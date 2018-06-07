@@ -10,7 +10,7 @@ liveMessages.initialize();
 
 // Start Server
 http.listen(config.PORT, () => {
-	console.log('Server started: http://localhost:5000\n');
+	console.log(`Server started: http://localhost:${config.PORT}\n`);
 
 	if (config.JWT_SECRET === 'secret') {
 		console.warn('\x1b[33m%s\x1b[0m%s', 'WARNING:', ' Use default jwt secret only in development!');
