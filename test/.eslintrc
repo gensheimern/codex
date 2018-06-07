@@ -1,0 +1,12 @@
+{
+	"rules": {
+		"no-unused-vars": [
+			"error",
+			{
+				"varsIgnorePattern": "expect"
+			}
+		],
+		"no-unused-expressions": "off",
+		"no-underscore-dangle": "off"
+	}
+}

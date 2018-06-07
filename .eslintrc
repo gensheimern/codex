@@ -1,0 +1,27 @@
+{
+	"root": true,
+	"extends": "airbnb",
+	"parserOptions": {
+		"ecmaVersion": 2017,
+		"sourceType": "module",
+		"ecmaFeatures": {
+			"jsx": true
+		}
+	},
+	"env": {
+		"browser": true,
+		"node": true,
+		"es6": true,
+		"mocha": true
+	},
+	"plugins": [
+		"eslint-plugin-import",
+		"eslint-plugin-react",
+		"eslint-plugin-jsx-a11y"
+	],
+	"rules": {
+		"indent": ["error", "tab"],
+		"no-tabs": "off",
+		"linebreak-style": "off"
+	}
+}
