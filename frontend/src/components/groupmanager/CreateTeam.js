@@ -2,7 +2,7 @@ import React from "react";
 
 import "./groupmanager.css";
 import config from '../../config';
-import "./ListGroups.js";
+// import "./ListGroups.js";
 import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
 import InviteChip from '../event/CreateEventChip';
