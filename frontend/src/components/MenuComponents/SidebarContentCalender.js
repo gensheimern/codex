@@ -14,6 +14,7 @@ const labeledHr = (text) => (
 		height: '16px',
 		borderBottom: '1px solid grey',
 		textAlign: 'center',
+		marginTop: '5px',
 	}}>
 		<span style={{
 			fontSize: '20px',
@@ -26,6 +27,29 @@ const labeledHr = (text) => (
 	</div>
 );
 
+const compareDate = (date1, date2) => {
+	if (!date1 || !date2) {
+		return false;
+	}
+
+	return date1.getFullYear() === date2.getFullYear()
+		&& date1.getMonth() === date2.getMonth()
+		&& date1.getDate() === date2.getDate();
+}
+
+const isToday = (date) => {
+	return compareDate(date, new Date());
+}
+
+const isTomorrow = (date) => {
+	const today = new Date();
+	return compareDate(date, new Date(today.getFullYear(), today.getMonth(), today.getDate() + 1));
+}
+
+const monthName = [
+	'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December',
+]
+
 export default class SidebarContent extends React.Component {
 	constructor(props) {
 		super(props);
@@ -37,6 +61,8 @@ export default class SidebarContent extends React.Component {
 			loading: false,
 			error: null,
 		};
+
+		this.loadEvents = this.loadEvents.bind(this);
 	}
 
 	componentDidMount() {
@@ -113,8 +139,10 @@ export default class SidebarContent extends React.Component {
 			);
 		}
 
+		let events = null;
+
 		if (this.state.events.length === 0) {
-			return (
+			events = (
 				<RetryPrompt
 					onRetry={() => { this.loadEvents() }}
 					message="You currently have no scheduled events."
@@ -122,6 +150,8 @@ export default class SidebarContent extends React.Component {
 				/>
 			);
 		}
+
+		let lastDate = null;
 
 		return (
 			<div style={{
@@ -135,59 +165,44 @@ export default class SidebarContent extends React.Component {
 				}}>
 					<Calendar
 						mainContentNumber={this.props.mainContentNumber}
-						 searchFilterFeed={this.props.searchFilterFeed}
-						  changeContent={this.props.changeContent}
+						searchFilterFeed={this.props.searchFilterFeed}
 						eventDates={eventDates}
 						changeDate={this.onDateChange}
 					/>
 					<br/>
 				</div>
 
-				{labeledHr('Today')}
+				{/* labeledHr('Today') */}
 
 				{this.state.events.map((event) => {
+					const eventDate = new Date(event.time);
+
+					let hr = null;
+					let  label = `${eventDate.getDate()} ${monthName[eventDate.getMonth()]} ${eventDate.getFullYear()}`;
+					if (isToday(eventDate)) {
+						label = 'Today';
+					} else if (isTomorrow(eventDate)) {
+						label = 'Tomorrow';
+					}
+
+					if (!compareDate(eventDate, lastDate)) {
+						hr = labeledHr(label);
+					}
+
+					lastDate = eventDate;
+
 					return (
-						<EventItem
-							event={event}
-							key={event.id}
-						/>
+						<React.Fragment>
+							{hr}
+							<EventItem
+								event={event}
+								key={event.id}
+							/>
+						</React.Fragment>
 					);
 				})
 				}
-
-				{/*<EventItem event={{
-					id: 0,
-					description: 'Mittagessen in der Mensa',
-					name: 'Essen in der Mensa',
-					place: 'Mensa',
-					time:  new Date(),
-					event: false,
-					private: false,
-					banner: 'pizza_card@3x.jpg',
-					maxParticipants: 5,
-					host: {
-						//
-					},
-				}} />
-
-				{labeledHr('Tomorrow')}
-
-				<EventItem event={{
-					id: 0,
-					description: 'Grillen am Fluss',
-					name: 'Grillen am Fluss',
-					place: 'Fluss',
-					time:  new Date(),
-					event: true,
-					private: false,
-					banner: 'pasta_card@3x.jpg 	',
-					maxParticipants: 5,
-					host: {
-						//
-					},
-				}} />*/}
-
-
+				{events}
 			</div>
 
 		);
