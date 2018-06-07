@@ -36,6 +36,7 @@ const Activity = {
 					INNER JOIN participates
 					ON Activity.Activity_Id = participates.Activity_Id
 			WHERE participates.User_Id = ?
+				AND Activity.Time > CURRENT_TIMESTAMP()
 			ORDER BY Activity.Time`,
 			[userId],
 		);

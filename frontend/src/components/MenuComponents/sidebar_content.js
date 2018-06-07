@@ -3,7 +3,6 @@ import "./sidebars.css";
 import config from '../../config';
 import CreateTeamButton from './CreateTeamButton.js';
 import GroupSidebarButton from './GroupSidebarButton.js'
-import { Link } from 'react-router-dom';
 
 export default class SidebarContent extends React.Component {
   constructor(props) {
@@ -11,7 +10,7 @@ export default class SidebarContent extends React.Component {
 
     this.state = {
       groups: [],
-      activeIndex: null,
+      activeIndex: "PUBLIC",
     };
     this.getMyGroups = this.getMyGroups.bind(this);
     this.componentDidMount = this.componentDidMount.bind(this);
@@ -107,7 +106,6 @@ export default class SidebarContent extends React.Component {
           marginTop:"3%"
           }}>
           GROUPS</p>
-          <Link to={{pathname: '/addteam'}}>
             <CreateTeamButton
               style={{
                 float:"none",
@@ -119,7 +117,6 @@ export default class SidebarContent extends React.Component {
               changeContent={this.props.changeContent}
               closeDrawer={this.props.closeDrawer}
             />
-          </Link>
           <div className="groups">
                 {myGroups}
               </div>

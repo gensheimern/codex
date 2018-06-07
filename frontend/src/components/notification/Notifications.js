@@ -23,7 +23,7 @@ export default class Notifications extends React.Component {
 	}
 
 	componentDidMount() {
-		this.state.socket.subscribe('notification', this.handleNotification);
+		// this.state.socket.subscribe('notification', this.handleNotification);
 
 		this.loadNotifications();
 	}
