@@ -22,13 +22,14 @@ export default class Login extends Component {
             password: "",
             errorPrompt: "",
             open: false,
+            errorText: "",
         };
     }
 
     handleOpen = () => {
         this.setState({open: true});
     };
-    
+
     handleClose = () => {
         this.setState({open: false});
     };
@@ -58,6 +59,7 @@ export default class Login extends Component {
             }
         }).then((res) => {
             if(!res.ok) {
+                this.setState({errorText:'Invalid Password or Email'})
                 throw new Error("Invalid Password");
             } else if(res.status !== 200) {
                 throw new Error("Forbidden");
@@ -86,7 +88,7 @@ export default class Login extends Component {
                 />,
               ];
             this.setState({
-                errorPrompt: ( 
+                errorPrompt: (
                 <div>
                     <RaisedButton label="Alert" onClick={this.handleOpen} />
                     <Dialog
@@ -104,22 +106,22 @@ export default class Login extends Component {
 
 	render() {
         const styles ={
-            
+
             paperStyle:{
 				height: 62,
 				width: 62,
 				borderRadius: 7,
 				display: 'block',
 				marginLeft: 'auto',
-				marginRight: 'auto',	
+				marginRight: 'auto',
             },
-            
+
             textField:{
 				width: '80%',
 				marginLeft: '10%',
 				marginRight: '10%',
             },
-            
+
             loginButton:{
 				heigt: 40.57,
 				width: '30%',
@@ -162,6 +164,9 @@ export default class Login extends Component {
 					floatingLabelText="Password"
 					style= {styles.textField}
 				/>
+
+          <div className="errorText"> {this.state.errorText} </div>
+
                 <Link to = "">Forgot password?</Link>
                 <br/>
                 <br/>
@@ -172,10 +177,11 @@ export default class Login extends Component {
 					primary={true}
 					disabled={!this.validateForm()}
 					style = {styles.loginButton}
+          onClick={this.handleSubmit}
 				/>
                 <br/>
                 <p>Don't have an account yet?&nbsp;
-						<Link to = "/signup">Create an account</Link>       
+						<Link to = "/signup">Create an account</Link>
 				</p>
                 </CardText>
                 </Card>
