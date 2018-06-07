@@ -2,7 +2,13 @@ require('dotenv').config();
 const dotenv = require('dotenv');
 const fs = require('fs');
 
-const envLocal = dotenv.parse(fs.readFileSync('.env.local'));
+let envLocal;
+try {
+	envLocal = dotenv.parse(fs.readFileSync('.env.local'));
+} catch (error) {
+	envLocal = {};
+}
+
 
 const config = {
 	PORT: envLocal.PORT || process.env.PORT,
