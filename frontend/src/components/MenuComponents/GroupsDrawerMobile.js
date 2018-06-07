@@ -24,8 +24,14 @@ export default class GroupsDrawer extends React.Component {
 
 	render() {
 		return (
-			<div className="GroupsDrawer">
+			<React.Fragment>
 				<FlatButton
+					style={{
+						padding: 0,
+						width: '24%',
+						height: '100%',
+						float: 'left',
+					}}
 					backgroundColor="#1EA185"
 					icon={ <IconGroup color="#FFFFFF" /> }
 					onClick={this.handleToggle}
@@ -50,7 +56,7 @@ export default class GroupsDrawer extends React.Component {
 						closeDrawer={this.handleClose}
 					/>
 				</Drawer>
-			</div>
+			</React.Fragment>
 		);
 	}
 }

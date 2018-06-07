@@ -23,12 +23,20 @@ class AppNavTop extends Component {
 	render() {
 		const searchFeed = (
 			<React.Fragment>
-				<div className="AppNameDisplay">
+				<div style={{
+					width: '50%',
+					height: '100%',
+					textAlign: 'center',
+					float: 'left',
+					fontSize: '20px',
+					paddingTop: '15px',
+					color: 'white',
+				}}>
 					{this.props.name}
 				</div>
 				<SearchFeed
 					searchFilterFeed={this.props.searchFilterFeed}
-					changeShow={this.changeShow}
+					onClick={this.changeShow}
 				/>
 			</React.Fragment>
 		);
@@ -36,14 +44,22 @@ class AppNavTop extends Component {
 		const searchBar = (
 			<SearchBar
 				searchFilterFeed={this.props.searchFilterFeed}
-				show={this.state.show}
 				changeShow={this.changeShow}
-				style={{ float: 'left' }}
 			/>
 		);
 
 		return (
 			<div className="MobileNavTop">
+				{/*<FlatButton
+					style={{
+						padding: 0,
+						width: '25%',
+						height: '100%',
+						float: 'left',
+					}}
+					icon={<IconGroup color="white" />}
+				/>*/}
+
 				<GroupsDrawer
 					searchFilterFeed={this.props.searchFilterFeed}
 					changeContent={this.props.changeContent}

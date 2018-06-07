@@ -123,12 +123,7 @@
 	box-shadow: 0 2px 4px 0 rgba(0,0,0,0.23);
 }
 
-.SearchFeed {
-	width: 15%;
-	float: left
-}
-
-.GroupsDrawer {
+.GroupsDrawer, .SearchFeed {
 	width: 15%;
 	float: left
 }

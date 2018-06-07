@@ -127,29 +127,40 @@ class AppNavBottom extends Component {
 					this.props.history.push('/notifications');
 				}}/>);
 
+		const itemStyle = {
+			minWidth: '56px',
+		};
+
 		return (
 			<Paper zDepth={1}>
 				<BottomNavigation selectedIndex={this.props.index}>
 					<BottomNavigationItem
 						icon={FeedIcon}
 						onClick={() => this.props.history.push('/feed')}
+						style={itemStyle}
 					/>
 					<BottomNavigationItem
 						icon={CalendarIcon}
 						onClick={() => this.props.history.push('/personal')}
+						style={itemStyle}
 					/>
 					<BottomNavigationItem
 						icon={AddIcon}
 						onClick={() => this.props.history.push('/addevent')}
-						style={{padding : "0px !important",}}
+						style={{
+							...itemStyle,
+							padding: '0px !important',
+						}}
 					/>
 					<BottomNavigationItem
 						icon={notificationIcon}
 						onClick={() => this.props.history.push('/notifications')}
+						style={itemStyle}
 					/>
 					<BottomNavigationItem
 						icon={ProfileIcon}
 						onClick={() => this.props.history.push('/profile')}
+						style={itemStyle}
 					/>
 				</BottomNavigation>
 			</Paper>
