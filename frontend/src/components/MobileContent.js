@@ -24,9 +24,6 @@ export default class MobileContent extends React.Component {
 						searchFilterFeed={this.props.searchFilterFeed}
 						name="Lunch-Planner"
 					/>
-					<AppNavBottom
-						index={content}
-					/>
 					<div className="mainContentMobile-wrapper" style={{
 						height: 'calc(100vh - 112px)',
 					}}>
@@ -36,6 +33,9 @@ export default class MobileContent extends React.Component {
 							filter={this.props.filter}
 						/>
 					</div>
+					<AppNavBottom
+						index={content}
+					/>
 					
 				</div>
 		);

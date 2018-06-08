@@ -119,12 +119,6 @@ export default class SidebarContent extends React.Component {
 			eventDates.push(new Date(event.time));
 		});
 
-		/*return (
-			<div style={{margin: '1%'}}><Calendar
-			eventDates={[new Date()]}
-			changeDate={this.onDateChange}
-		/></div>);*/
-
 		if (this.state.loading && !this.state.valid) {
 			return <LoadingAnimation/>
 		}
@@ -155,11 +149,11 @@ export default class SidebarContent extends React.Component {
 
 		return (
 			<div className="CalendarWrapper">
-				<p>Your calendar</p>
 				<div style={{
 					width: '100%',
 					marginRight: 'auto',
 					marginLeft: 'auto',
+					marginTop: '5px',
 				}}>
 					<Calendar
 						mainContentNumber={this.props.mainContentNumber}
