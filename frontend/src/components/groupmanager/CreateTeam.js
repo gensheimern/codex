@@ -1,10 +1,8 @@
 import React from "react";
 
 import "./groupmanager.css";
-import config from '../../config';
-import "./ListGroups.js";
+  import "./ListGroups.js";
 import TextField from 'material-ui/TextField';
-import FlatButton from 'material-ui/FlatButton';
 import InviteChip from '../event/CreateEventChip';
 import CreateTeamIconButton from './CreateTeamIconButton'
 import InvitePeople from '../event/CreateEventInvitePeople';
@@ -16,107 +14,121 @@ import IconCalendar from 'material-ui/svg-icons/action/event';
 import IconFeed from 'material-ui/svg-icons/action/assignment';
 
 const iconsToSelect = [{
-                        icon : <IconGroup/>
+                        icon : <IconGroup style={{height:"100%",
+                                                  width:"100% !important",}}/>
                       },
                       {
-                        icon : <IconAdd/>
+                        icon : <IconAdd style={{height:"100%",
+                                                  width:"100% !important",}}/>
                       },
                       {
-                        icon : <IconProfile/>
+                        icon : <IconProfile style={{height:"100%",
+                                                  width:"100% !important",}}/>
                       },
                       {
-                        icon : <IconCalendar/>
+                        icon : <IconCalendar style={{height:"100%",
+                                                  width:"100% !important",}}/>
                       },
                       {
-                        icon : <IconFeed/>
+                        icon : <IconFeed style={{height:"100%",
+                                                  width:"100% !important",}}/>
                     },
                       {
-                        icon : <IconGroup/>
+                        icon : <IconGroup style={{height:"100%",
+                                                  width:"100% !important",}}/>
                       },
                       {
-                        icon : <IconAdd/>
+                        icon : <IconAdd style={{height:"100%",
+                                                  width:"100% !important",}}/>
                       },
                       {
-                        icon : <IconProfile/>
+                        icon : <IconAdd style={{height:"100%",
+                                                  width:"100% !important",}}/>
                       },
                       {
-                        icon : <IconCalendar/>
+                        icon : <IconProfile style={{height:"100%",
+                                                  width:"100% !important",}}/>
                       },
                       {
-                        icon : <IconGroup/>
+                        icon : <IconCalendar style={{height:"100%",
+                                                  width:"100% !important",}}/>
                       },
                       {
-                        icon : <IconAdd/>
+                        icon : <IconFeed style={{height:"100%",
+                                                  width:"100% !important",}}/>
+                    },
+                      {
+                        icon : <IconGroup style={{height:"100%",
+                                                  width:"100% !important",}}/>
                       },
                       {
-                        icon : <IconProfile/>
+                        icon : <IconAdd style={{height:"100%",
+                                                  width:"100% !important",}}/>
                       },
                       {
-                        icon : <IconCalendar/>
+                        icon : <IconAdd style={{height:"100%",
+                                                  width:"100% !important",}}/>
                       },
                       {
-                        icon : <IconGroup/>
+                        icon : <IconProfile style={{height:"100%",
+                                                  width:"100% !important",}}/>
                       },
                       {
-                        icon : <IconAdd/>
+                        icon : <IconCalendar style={{height:"100%",
+                                                  width:"100% !important",}}/>
                       },
                       {
-                        icon : <IconProfile/>
+                        icon : <IconFeed style={{height:"100%",
+                                                  width:"100% !important",}}/>
+                    },
+                      {
+                        icon : <IconGroup style={{height:"100%",
+                                                  width:"100% !important",}}/>
                       },
                       {
-                        icon : <IconCalendar/>
+                        icon : <IconAdd style={{height:"100%",
+                                                  width:"100% !important",}}/>
                       },
                       {
-                        icon : <IconGroup/>
+                        icon : <IconAdd style={{height:"100%",
+                                                  width:"100% !important",}}/>
                       },
                       {
-                        icon : <IconAdd/>
+                        icon : <IconProfile style={{height:"100%",
+                                                  width:"100% !important",}}/>
                       },
                       {
-                        icon : <IconProfile/>
+                        icon : <IconCalendar style={{height:"100%",
+                                                  width:"100% !important",}}/>
                       },
                       {
-                        icon : <IconCalendar/>
+                        icon : <IconFeed style={{height:"100%",
+                                                  width:"100% !important",}}/>
+                    },
+                      {
+                        icon : <IconGroup style={{height:"100%",
+                                                  width:"100% !important",}}/>
                       },
                       {
-                        icon : <IconGroup/>
-                      },
-                      {
-                        icon : <IconAdd/>
-                      },
-                      {
-                        icon : <IconProfile/>
-                      },
-                      {
-                        icon : <IconCalendar/>
+                        icon : <IconAdd style={{height:"100%",
+                                                  width:"100% !important",}}/>
                       },
                       {
                         icon : <IconAdd style={{color:"white important",
                                                 backgroundColor:"#F8C947"}}/>
                       },
-
-
-
-]
+                    ]
 
 export default class CreateTeam extends React.Component {
 
         constructor(props) {
             super(props);
 
-            this.inputName = this.inputName.bind(this);
-            this.handleClick = this.handleClick.bind(this);
-            this.validateForm = this.validateForm.bind(this);
-            this.callBackInvitePeople = this.callBackInvitePeople.bind(this);
+            this.clickOnSelectedIcon = this.clickOnSelectedIcon.bind(this);
+
 
 
             this.state = {
-                name: "",
-                description:"",
-                showError: false,
-                errorPrompt: "",
-                invitePeople: [],
-                selectedIcon : {},
                 icons : iconsToSelect,
                 activeIndex : "0",
             }
@@ -130,78 +142,21 @@ export default class CreateTeam extends React.Component {
                 });
             }
         }
-        validateForm() {
-            return this.state.name.length > 0;
-        }
-        inputName(e) {
-            this.setState({
-                name: e.target.value
-            });
 
-            this.setState({
-                showError: e.target.value === ""
-            });
-        }
-        handleChangeN = event => {
-            this.setState({
-                name: event.target.value
-            });
-        }
-        handleChangeD = event => {
-            this.setState({
-                description: event.target.value
-            });
-        }
-        handleClick(e) {
-            e.preventDefault();
-
-            if(this.state.name !== "") {
-                fetch(config.apiPath + "/team ", {
-                    method: 'POST',
-                    body: JSON.stringify({
-                        name: this.state.name
-                    }),
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-Access-Token': localStorage.getItem('apiToken')
-                    }
-                }).then(() => {
-                    this.props.update();
-                }).catch((err) => {
-                    console.log("display eror");
-
-                });
-            } else {
-                this.setState({
-                    showError: true
-                });
-            }
-        }
 
         clickOnSelectedIcon(index,icon){
-          console.log(this.state.activeIndex);
           this.setState({activeIndex:index});
           let x = this.state.icons[index];
-          console.log(x);
-          this.setState({selectedIcon:x.icon});
-
-
-        }
-
-        callBackInvitePeople(invitePeople){
-          this.setState({ invitePeople })
+          console.log(this.props.handleChangeI);
+          this.props.handleChangeI(x);
         }
 
         render() {
-
-          let iconSelect = <IconGroup style={{height:"100%",
-                                              width:"100% !important",}}/>
 
           let iconsSelectDisplay = this.state.icons.map((icon,index) => {
             return (<CreateTeamIconButton
                                 icon ={icon.icon}
                                 index={index}
-                                key={"icon" + index}
                                 isActive={this.state.activeIndex===index}
                                 handleClick=  {
                                   this.clickOnSelectedIcon.bind(this,index)
@@ -209,7 +164,7 @@ export default class CreateTeam extends React.Component {
                     />
                 )})
 
-          let images = this.state.invitePeople.map((image,index) => {
+          let images = this.props.invitePeople.map((image,index) => {
             return(<InviteChip key={"chip" + index} name={image.textKey} peopleImage={image.ValueImage} />)
           });
 
@@ -229,7 +184,7 @@ export default class CreateTeam extends React.Component {
 	                              height: "76px  ",
   	                            width: "76px",
   	                            backgroundColor: "#1EA185"}}>
-                            {iconSelect}
+                            {this.props.selectedIcon.icon}
                           </div>
                             <div>
                               { iconsSelectDisplay }
@@ -241,8 +196,10 @@ export default class CreateTeam extends React.Component {
                 						underlineFocusStyle={{ borderColor: 'rgb(30 161 133)' }}
                 						floatingLabelText="Name"
                 						hintText="Nice Group Of PPL"
-                            value={this.state.name}
-                						onChange={this.handleChangeN}
+                            value={this.props.name}
+                						onChange={this.props.handleChangeN}
+                            style={{marginTop :"5%",
+                                    width:"100%",}}
                 					/>
                 					<br/>
 
@@ -252,23 +209,16 @@ export default class CreateTeam extends React.Component {
                             underlineFocusStyle={{ borderColor: 'rgb(30 161 133)' }}
                             floatingLabelText="Description"
                             hintText="a bunch of ppl that doesnt suck."
-                            value={this.state.description}
-                            onChange={this.handleChangeD}
+                            value={this.props.description}
+                            onChange={this.props.handleChangeD}
+                            style={{marginBottom :"3%",
+                                    width:"100%",}}
                           />
                           <br/>
 
-                          <InvitePeople people={this.callBackInvitePeople}/>
+                          <InvitePeople people={this.props.callBackInvitePeople}/>
                             {images}
-
                           <br/>
-
-                            <FlatButton
-                              onClick={this.handleClick}
-                              target="_blank"
-                              style={{color:"white",
-                                minWidth:"0px",
-                                margin:"0px"}}
-                            />
 
         </div>);
     }
