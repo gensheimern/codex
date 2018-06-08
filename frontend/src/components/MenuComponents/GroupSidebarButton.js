@@ -11,7 +11,7 @@ export default class CreateTeamButton extends React.Component {
     this.handleClick = this.handleClick.bind(this);
 
   }
-handleClick = () => {console.log(this.props.main);
+handleClick = () => {
   this.setState({kappa:true});
   this.props.clickGroupButton(this.props.index)}
 
