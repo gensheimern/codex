@@ -1,143 +1,168 @@
-.calenderUnit{
-        margin: 2%;
-        margin-top:0%;
-        width: 90%;
-        height: 100%;
-        float: left;
+.calenderUnit {
+	margin: 2%;
+	margin-top:0%;
+	width: 90%;
+	height: 100%;
+	float: left;
 }
-.leftContent{
-  height: 100%;
-  	background-color: #1EA185;
-  	box-shadow: 0 2px 4px 0 rgba(0,0,0,0.5);
-  overflow: hidden;
-  float: left;
-  width: 100%;
 
+.leftContent {
+	height: 100%;
+	background-color: #1EA185;
+	box-shadow: 0 2px 4px 0 rgba(0,0,0,0.5);
+	overflow: hidden;
+	float: left;
+	width: 100%;
 }
-.rightContent{
-  height: 100%;
-  background-color: #f2f2f2;
-  float: left;
-}
-.groupName{
-  opacity: 0.7 !important;
-  color: white !important;
-  margin-left: 25%;
-  display: block;
-  padding: 26px 0px;
-  text-decoration: none;
-  height: 22px;
-  font-size: 18px;
-  font-weight: normal;
-  font-style: normal;
-  font-stretch: normal;
-  line-height: normal;
-  letter-spacing: normal;
-  text-align: left;
-  color: #ffffff;
-  width: 100%;
-  float:left;
-}
-.selectedGroup{
-  background-color: #B0E8D2 !important;
-  display: block;
-  padding: 26px 0px;
-  text-decoration: none;
-  height: 18px;
-  font-size: 18px;
-  font-weight: normal;
-  font-style: normal;
-  font-stretch: normal;
-  line-height: normal;
-  letter-spacing: normal;
-  text-align: left;
-  color: #ffffff;
-  width: 100%;
-  float:right;
-  color: white !important;
-}
-  .highlightSidebarContent{
-    height: 9.9%;
-    width: 100%;
-    background-color: #B0E8D2 !important;
-     margin:5%;
-    text-decoration: none;
-    display: block;
-    font-size: 18px !important;
-    font-weight: normal;
-    font-style: normal;
-    font-stretch: normal;
-    line-height: normal;
-    letter-spacing: normal;
-    text-align: left;
-    color: white !important;
-  }
-.nonHighlightSidebarContent{
-    height: 9.9%;
-    width: 100%;
-    background-color:
-     #B0E8D2;
-     margin:5%;
-    text-decoration: none;
-    display: block;
-    font-size: 18px !important;
-    font-weight: normal;
-    font-style: normal;
-    font-stretch: normal;
-    line-height: normal;
-    letter-spacing: normal;
-    text-align: left;
-    color: white !important;
-  }
-.groups{
-  margin-top: 10px;
-  height:0px;
-  font-family: TrebuchetMS;
-  font-size: 14px;
-  font-weight: bold;
-  font-style: normal;
-  font-stretch: normal;
-  line-height: normal;
-  letter-spacing: normal;
-  text-align: left;
-  color: #ffffff;
-}
-.divider{
-  width: 100%;
-  height: 1px;
-  border: solid 1px rgba(255, 255, 255, 0.53);
-  float:left;
 
+.rightContent {
+	height: 100%;
+	background-color: #f2f2f2;
+	float: left;
 }
-.MobileNavTop{
-height: 6vh;	width: 100%;	background-color: #1EA185;	box-shadow: 0 2px 4px 0 rgba(0,0,0,0.23);
-}
-.SearchFeed{
-  width: 15%;
-  float: left
-}
-.GroupsDrawer{
-  width: 15%;
-  float: left
-}
-.AppNameDisplay{
-  text-align: center;
-  color: white;
-  font-size: 20px;
-  margin-left: 19%;
-  margin-right: 11%;
-  float: left;
-  margin-top: 1%;
-}
-.CreateTeamButton{
-  margin-top: 10px;
-  color: white;
-}
-.imputSearch{
-  width: '100%';
-  border: 0;
-  float:left;
-}
-.GroupsDrawer{
 
+.groupName {
+	opacity: 0.7 !important;
+	color: white !important;
+	margin-left: 25%;
+	display: block;
+	padding: 26px 0px;
+	text-decoration: none;
+	height: 22px;
+	font-size: 18px;
+	font-weight: normal;
+	font-style: normal;
+	font-stretch: normal;
+	line-height: normal;
+	letter-spacing: normal;
+	text-align: left;
+	color: #ffffff;
+	width: 100%;
+	float:left;
+}
+
+.selectedGroup {
+	background-color: #B0E8D2 !important;
+	display: block;
+	padding: 26px 0px;
+	text-decoration: none;
+	height: 18px;
+	font-size: 18px;
+	font-weight: normal;
+	font-style: normal;
+	font-stretch: normal;
+	line-height: normal;
+	letter-spacing: normal;
+	text-align: left;
+	color: #ffffff;
+	width: 100%;
+	float:right;
+	color: white !important;
+}
+
+.highlightSidebarContent {
+	height: 9.9%;
+	width: 100%;
+	background-color: #B0E8D2 !important;
+	margin:5%;
+	text-decoration: none;
+	display: block;
+	font-size: 18px !important;
+	font-weight: normal;
+	font-style: normal;
+	font-stretch: normal;
+	line-height: normal;
+	letter-spacing: normal;
+	text-align: left;
+	color: white !important;
+}
+
+.nonHighlightSidebarContent {
+	height: 9.9%;
+	width: 100%;
+	background-color:
+	#B0E8D2;
+	margin:5%;
+	text-decoration: none;
+	display: block;
+	font-size: 18px !important;
+	font-weight: normal;
+	font-style: normal;
+	font-stretch: normal;
+	line-height: normal;
+	letter-spacing: normal;
+	text-align: left;
+	color: white !important;
+}
+
+.groups {
+	margin-top: 10px;
+	height:0px;
+	font-family: TrebuchetMS;
+	font-size: 14px;
+	font-weight: bold;
+	font-style: normal;
+	font-stretch: normal;
+	line-height: normal;
+	letter-spacing: normal;
+	text-align: left;
+	color: #ffffff;
+}
+
+.divider {
+	width: 100%;
+	height: 1px;
+	border: solid 1px rgba(255, 255, 255, 0.53);
+	float:left;
+}
+
+.MobileNavTop {
+	height: 56px;
+	width: 100%;
+	background-color: #1EA185;
+	box-shadow: 0 2px 4px 0 rgba(0,0,0,0.23);
+}
+
+.GroupsDrawer, .SearchFeed {
+	width: 15%;
+	float: left
+}
+
+.AppNameDisplay {
+	text-align: center;
+	color: white;
+	font-size: 20px;
+	margin-left: 19%;
+	margin-right: 11%;
+	float: left;
+	margin-top: 1%;
+}
+
+.CreateTeamButton {
+	margin-top: 10px;
+	color: white;
+}
+
+.imputSearch {
+	width: '100%';
+	border: 0;
+	float:left;
+}
+
+.BadgeNotif {
+	padding : 0px !important;
+	margin-top: 15%;
+}
+
+@media only screen and (max-width: 768px) {
+	.CalendarWrapper {
+		padding: 2%;
+	}
+}
+
+@media only screen and (min-width: 769px) {
+	.CalendarWrapper {
+		padding: 2%;
+		font-size: 11px;
+	}
 }

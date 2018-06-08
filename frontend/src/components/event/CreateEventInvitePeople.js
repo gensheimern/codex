@@ -23,11 +23,6 @@ export default class CreateEventInvitePeople extends React.Component {
     this.loadUsers();
   }
 
-  handleNewRequest(){
-    console.log("jup");
-  }
-
-
   loadUsers(){
     fetch(config.apiPath + "/user/", {
       method: 'GET',
@@ -61,9 +56,11 @@ export default class CreateEventInvitePeople extends React.Component {
 
 
 render(){
+  console.log(this.state.userList);
 return(
   <div>
     <AutoComplete
+      fullWidth={true}
       ref = {"autocomplete"}
       floatingLabelText="Invite People"
       filter={AutoComplete.fuzzyFilter}
@@ -76,7 +73,6 @@ return(
         this.setState({ inviteImageList: [...this.state.inviteImageList,{textKey: chosenRequest.textKey, ValueImage: chosenRequest.ValueImage, ValueKey: chosenRequest.ValueKey} ] })
         this.props.people(this.state.inviteImageList);
         this.refs["autocomplete"].setState({searchText:''});
-          console.log(this.state.inviteImageList);
       }}
     />
   </div>

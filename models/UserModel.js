@@ -54,7 +54,7 @@ const User = {
 	 * @returns {Promise<DBResult>} The result of the database update.
 	 */
 	async updateUser(userId, newUser) {
-		return databaseConnection.queryp('UPDATE User SET Firstname=?, Name=?, Email=?, Password=?, Image=? where User_Id=?', [newUser.firstName, newUser.name, newUser.email, await hashPassword(newUser.password), newUser.image, userId]);
+		return databaseConnection.queryp('UPDATE User SET Firstname=?, Name=?, Email=?, Password=?, Image=? where User_Id=?', [newUser.firstName, newUser.name, newUser.email, newUser.password, newUser.image, userId]);
 	},
 
 };
