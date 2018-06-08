@@ -4,7 +4,6 @@ import TextField from 'material-ui/TextField';
 import CreateEventTimePicker from './CreateEventTimePicker';
 import CreateEventDatePicker from './CreateEventDatePicker';
 import Maps from './GooglePlaces';
-import Dialog from 'material-ui/Dialog';
 import CollapseFA from 'react-icons/lib/fa/angle-down';
 import ReminderToggle from './ReminderToggle';
 import InvitePeople from './CreateEventInvitePeople';
