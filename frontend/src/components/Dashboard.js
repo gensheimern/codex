@@ -2,7 +2,7 @@ import React from 'react';
 import FeedToolbar from './MenuComponents/FeedToolbar';
 import SidebarContent from './MenuComponents/SidebarContent';
 import MainContent from './MainContent';
-import SidebarContentCalender from './MenuComponents/SidebarContentCalender';
+import SidebarContentCalendar from './MenuComponents/SidebarContentCalendar';
 import PropTypes from 'prop-types';
 
 export default class Dashboard extends React.Component {
@@ -58,7 +58,7 @@ export default class Dashboard extends React.Component {
 					...defaultStyle,
 					width: '28%',
 				}}>
-					<SidebarContentCalender mainContentNumber={this.props.mainContentNumber} searchFilterFeed={this.props.searchFilterFeed} changeContent={this.props.changeContent}/>
+					<SidebarContentCalendar mainContentNumber={this.props.mainContentNumber} searchFilterFeed={this.props.searchFilterFeed} changeContent={this.props.changeContent}/>
 				</div>
 			</React.Fragment>
 		);
