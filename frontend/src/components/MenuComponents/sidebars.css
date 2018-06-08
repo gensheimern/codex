@@ -156,13 +156,11 @@
 
 @media only screen and (max-width: 768px) {
 	.CalendarWrapper {
-		padding: 2%;
 	}
 }
 
 @media only screen and (min-width: 769px) {
 	.CalendarWrapper {
-		padding: 2%;
 		font-size: 11px;
 	}
 }

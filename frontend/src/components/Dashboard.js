@@ -2,7 +2,7 @@ import React from 'react';
 import FeedToolbar from './MenuComponents/FeedToolbar';
 import SidebarContent from './MenuComponents/SidebarContent';
 import MainContent from './MainContent';
-import SidebarContentCalendar from './MenuComponents/SidebarContentCalendar';
+import SidebarContentCalendar from './personal/SidebarContentCalendar';
 import PropTypes from 'prop-types';
 
 export default class Dashboard extends React.Component {

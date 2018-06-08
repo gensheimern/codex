@@ -1,7 +1,7 @@
 import React from 'react';
 import Events from './event/Events';
 
-import Personal from './MenuComponents/SidebarContentCalendar';
+import Personal from './personal/SidebarContentCalendar';
 import ProfileContent from './profile/Profile.js';
 import CreateEventCard from './event/CreateEventCard';
 import CreateTeam from './groupmanager/CreateTeam';

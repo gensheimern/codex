@@ -1,6 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Paper from 'material-ui/Paper';
-import { withRouter } from 'react-router-dom';
 import muiThemable from 'material-ui/styles/muiThemeable';
 import './Calendar.css';
 
@@ -15,7 +15,6 @@ class Calendar extends React.Component {
 
 		this.state = {
 			date: new Date(),
-			activeDates: [],
 		};
 	}
 
@@ -64,31 +63,41 @@ class Calendar extends React.Component {
 				name: daysInLastMonth - i,
 				backgroundColor: 'transparent',
 				color: 'lightgrey',
-				border: '',
+				border: 'transparent',
 				date: new Date(this.state.date.getFullYear(), this.state.date.getMonth() - 1, daysInLastMonth - i),
 			});
 		}
 
 		// Add days of the current month
 		for(let i = 1; i <= daysInMonth; i++) {
-			let bgColor = 'transparent';
+			let backgroundColor = 'transparent';
 			let color = 'black';
+			let border = 'white';
 
+			// Mark all days with events
+			this.props.possibleDates.forEach((date) => {
+				if (date.getDate() === i && date.getMonth() === this.state.date.getMonth() && date.getFullYear() === this.state.date.getFullYear()) {
+					border = '#cacaca';
+				}
+			});
+
+			// Mark all days with joined events
 			this.props.eventDates.forEach((date) => {
 				if (date.getDate() === i && date.getMonth() === this.state.date.getMonth() && date.getFullYear() === this.state.date.getFullYear()) {
-					bgColor = '#f8c947';
+					border = this.props.muiTheme.palette.primary1Color;
 				}
 			});
 
 			if (this.state.date.getDate() === i) {
-				bgColor = this.props.muiTheme.palette.primary2Color;
+				backgroundColor = this.props.muiTheme.palette.primary1Color;
 				color = '#ffffff';
 			}
 
 			days.push({
 				name: i,
-				backgroundColor: bgColor,
+				backgroundColor,
 				color,
+				border,
 				date: new Date(this.state.date.getFullYear(), this.state.date.getMonth(), i),
 			});
 		}
@@ -99,6 +108,7 @@ class Calendar extends React.Component {
 				name: i,
 				backgroundColor: 'transparent',
 				color: 'lightgrey',
+				border: 'transparent',
 				date: new Date(this.state.date.getFullYear(), this.state.date.getMonth() + 1, i),
 			});
 		}
@@ -141,13 +151,11 @@ class Calendar extends React.Component {
 									cursor: 'pointer',
 									backgroundColor: day.backgroundColor,
 									color: day.color,
+									border: `2px solid ${day.border}`,
 								}}
 								onClick={() => {
 									this.setState({date: day.date});
 									this.props.changeDate(day.date);
-									this.props.searchFilterFeed(day.date, 'Date');
-									if(this.props.mainContentNumber === 1)
-										this.props.history.push('/feed')
 								}}
 							>
 								<div className="contents">
@@ -162,4 +170,13 @@ class Calendar extends React.Component {
 		);
 	}
 }
-export default muiThemable()(withRouter(Calendar));
+
+Calendar.propTypes  = {
+	changeDate: PropTypes.func.isRequired,
+	eventDates: PropTypes.arrayOf(PropTypes.object).isRequired,
+	possibleDates: PropTypes.arrayOf(PropTypes.object).isRequired,
+	searchFilterFeed: PropTypes.func.isRequired,
+	mainContentNumber: PropTypes.number.isRequired,
+};
+
+export default muiThemable()(Calendar);

@@ -13,8 +13,6 @@ import Splashscreen from './components/routing/Splashscreen';
 // import NotFound from './components/routing/NotFound';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import customMuiTheme from './customMuiTheme';
-import darkBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
-console.log(darkBaseTheme);
 
 class App extends Component {
 	constructor(props) {
