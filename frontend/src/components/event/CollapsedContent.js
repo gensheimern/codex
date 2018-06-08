@@ -13,8 +13,9 @@ export default class CollapsedContent extends React.Component {
 
     this.state = {
       imgPath: '',
+      value:'',
     };
-
+    this.handleChange = this.handleChange.bind(this);
     this._onKeyPress = this._onKeyPress.bind(this);
   }
 
@@ -45,9 +46,8 @@ export default class CollapsedContent extends React.Component {
     })
     .then(res => res.json())
     .then(res => {
-            this.props.loadMessages();
-      console.log("jupfetched");
-
+      this.props.loadMessages();
+      this.setState({value:''});
     })
 
     .catch((err) => {
@@ -92,6 +92,9 @@ export default class CollapsedContent extends React.Component {
     });
   }
 
+  handleChange(e){
+    this.setState({ value: e.target.value });
+  }
 
   ToggleCollapse(){
 
@@ -171,10 +174,12 @@ export default class CollapsedContent extends React.Component {
                 </div>
                 <div  className="myTextfield">
                 <TextField
+                      value={this.state.value}
                       hintText= "Add a new comment"
                       fullWidth={true}
                       className="addComment"
                       onKeyPress={this._onKeyPress}
+                      onChange={this.handleChange}
                       ref="myTextfield"
                 />
                 </div>

@@ -22,6 +22,7 @@ router.use('/activity', participatesRouter);
 router.use('/activity', messageRouter);
 router.use('/activity', activityRouter);
 
+
 router.use('*', (req, res) => {
 	res.status(404).json({
 		message: 'Invalid api route.',

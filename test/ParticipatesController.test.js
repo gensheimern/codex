@@ -9,6 +9,7 @@ const ParticipatesController = require('../routes/activity/participatesControlle
 const ParticipatesModel = require('../models/participatesModel');
 const ActivityModel = require('../models/ActivityModel');
 const NotificationModel = require('../models/NotificationModel');
+const UserModel = require('../models/UserModel');
 
 function correctResponseType(res, status) {
 	expect(res._isEndCalled(), 'End called').to.be.true;
@@ -157,6 +158,7 @@ describe('Participates controller', () => {
 			}));
 			mockModels.push(TestTools.mockModel(NotificationModel, 'addNotification', null, null));
 			mockModels.push(TestTools.mockModel(NotificationModel, 'notifyEvent', null, null));
+			mockModels.push(TestTools.mockModel(UserModel, 'getUserById', null, { Firstname: '', Name: '' }));
 
 			// Mock http request and response
 			const { req, res } = TestTools.mockRequest({
@@ -186,6 +188,7 @@ describe('Participates controller', () => {
 			}));
 			mockModels.push(TestTools.mockModel(NotificationModel, 'addNotification', null, null));
 			mockModels.push(TestTools.mockModel(NotificationModel, 'notifyEvent', null, null));
+			mockModels.push(TestTools.mockModel(UserModel, 'getUserById', null, { Firstname: '', Name: '' }));
 
 			// Mock http request and response
 			const { req, res } = TestTools.mockRequest({
@@ -215,6 +218,7 @@ describe('Participates controller', () => {
 			}));
 			mockModels.push(TestTools.mockModel(NotificationModel, 'addNotification', null, null));
 			mockModels.push(TestTools.mockModel(NotificationModel, 'notifyEvent', null, null));
+			mockModels.push(TestTools.mockModel(UserModel, 'getUserById', null, { Firstname: '', Name: '' }));
 
 			// Mock http request and response
 			const { req, res } = TestTools.mockRequest({
@@ -243,6 +247,7 @@ describe('Participates controller', () => {
 			}));
 			mockModels.push(TestTools.mockModel(NotificationModel, 'addNotification', null, null));
 			mockModels.push(TestTools.mockModel(NotificationModel, 'notifyEvent', null, null));
+			mockModels.push(TestTools.mockModel(UserModel, 'getUserById', null, { Firstname: '', Name: '' }));
 
 			// Mock http request and response
 			const { req, res } = TestTools.mockRequest({
@@ -272,6 +277,7 @@ describe('Participates controller', () => {
 			}));
 			mockModels.push(TestTools.mockModel(NotificationModel, 'addNotification', null, null));
 			mockModels.push(TestTools.mockModel(NotificationModel, 'notifyEvent', null, null));
+			mockModels.push(TestTools.mockModel(UserModel, 'getUserById', null, { Firstname: '', Name: '' }));
 
 			// Mock http request and response
 			const { req, res } = TestTools.mockRequest({
@@ -301,6 +307,7 @@ describe('Participates controller', () => {
 			}));
 			mockModels.push(TestTools.mockModel(NotificationModel, 'addNotification', null, null));
 			mockModels.push(TestTools.mockModel(NotificationModel, 'notifyEvent', null, null));
+			mockModels.push(TestTools.mockModel(UserModel, 'getUserById', null, { Firstname: '', Name: '' }));
 
 			// Mock http request and response
 			const { req, res } = TestTools.mockRequest({
@@ -330,6 +337,7 @@ describe('Participates controller', () => {
 			}));
 			mockModels.push(TestTools.mockModel(NotificationModel, 'addNotification', null, null));
 			mockModels.push(TestTools.mockModel(NotificationModel, 'notifyEvent', null, null));
+			mockModels.push(TestTools.mockModel(UserModel, 'getUserById', null, { Firstname: '', Name: '' }));
 
 			// Mock http request and response
 			const { req, res } = TestTools.mockRequest({
@@ -359,6 +367,7 @@ describe('Participates controller', () => {
 			}));
 			mockModels.push(TestTools.mockModel(NotificationModel, 'addNotification', null, null));
 			mockModels.push(TestTools.mockModel(NotificationModel, 'notifyEvent', null, null));
+			mockModels.push(TestTools.mockModel(UserModel, 'getUserById', null, { Firstname: '', Name: '' }));
 
 			// Mock http request and response
 			const { req, res } = TestTools.mockRequest({
@@ -386,6 +395,7 @@ describe('Participates controller', () => {
 			mockModels.push(TestTools.mockModel(ActivityModel, 'getActivityById', new TestError('Test error'), null));
 			mockModels.push(TestTools.mockModel(NotificationModel, 'addNotification', new TestError('Test error'), null));
 			mockModels.push(TestTools.mockModel(NotificationModel, 'notifyEvent', new TestError('Test error'), null));
+			mockModels.push(TestTools.mockModel(UserModel, 'getUserById', new TestError('Test error'), null));
 
 			// Mock http request and response
 			const { req, res } = TestTools.mockRequest({
@@ -412,6 +422,7 @@ describe('Participates controller', () => {
 				Activityname: 'Test name',
 			}));
 			mockModels.push(TestTools.mockModel(NotificationModel, 'notifyEvent', null, null));
+			mockModels.push(TestTools.mockModel(UserModel, 'getUserById', null, { Firstname: '', Name: '' }));
 
 			// Mock http request and response
 			const { req, res } = TestTools.mockRequest({
@@ -436,6 +447,7 @@ describe('Participates controller', () => {
 				Activityname: 'Test name',
 			}));
 			mockModels.push(TestTools.mockModel(NotificationModel, 'notifyEvent', null, null));
+			mockModels.push(TestTools.mockModel(UserModel, 'getUserById', null, { Firstname: '', Name: '' }));
 
 			// Mock http request and response
 			const { req, res } = TestTools.mockRequest({
@@ -461,6 +473,7 @@ describe('Participates controller', () => {
 				Activityname: 'Test name',
 			}));
 			mockModels.push(TestTools.mockModel(NotificationModel, 'notifyEvent', null, null));
+			mockModels.push(TestTools.mockModel(UserModel, 'getUserById', null, { Firstname: '', Name: '' }));
 
 			// Mock http request and response
 			const { req, res } = TestTools.mockRequest({
@@ -486,6 +499,7 @@ describe('Participates controller', () => {
 				Activityname: 'Test name',
 			}));
 			mockModels.push(TestTools.mockModel(NotificationModel, 'notifyEvent', null, null));
+			mockModels.push(TestTools.mockModel(UserModel, 'getUserById', null, { Firstname: '', Name: '' }));
 
 			// Mock http request and response
 			const { req, res } = TestTools.mockRequest({

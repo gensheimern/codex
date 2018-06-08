@@ -1,6 +1,7 @@
 const ParticipatesModel = require('../../models/participatesModel');
 const ActivityModel = require('../../models/ActivityModel');
 const NotificationModel = require('../../models/NotificationModel');
+const UserModel = require('../../models/UserModel');
 const transforms = require('../transforms');
 
 const ParticipatesController = {
@@ -72,7 +73,8 @@ const ParticipatesController = {
 			await NotificationModel.addNotification(participantId, 'joinEvent', 'Event invitation', `You are invited to join the event '${activity.Activityname}'.`, activityId);
 		}
 
-		NotificationModel.notifyEvent(activityId, 'notification', 'New participant', `A new participant joined your event '${activity.Activityname}'.`, activityId, participantId)
+		const user = await UserModel.getUserById(userId);
+		NotificationModel.notifyEvent(activityId, 'notification', `New participant '${user.Firstname} ${user.Name}'`, `'${user.Firstname} ${user.Name}' joined your event '${activity.Activityname}'.`, activityId, participantId)
 			.catch(() => {});
 
 		if (result.affectedRows === 1) {
@@ -103,7 +105,8 @@ const ParticipatesController = {
 		const result = await ParticipatesModel.deleteParticipant(activityId, participantId);
 
 		const activity = await ActivityModel.getActivityById(activityId);
-		NotificationModel.notifyEvent(activityId, 'notification', 'Participant left', `A participant left your event '${activity.Activityname}'.`, activityId, null)
+		const user = await UserModel.getUserById(userId);
+		NotificationModel.notifyEvent(activityId, 'notification', `'${user.Firstname} ${user.Name}' left`, `'${user.Firstname} ${user.Name}' left your event '${activity.Activityname}'.`, activityId, null)
 			.catch(() => {});
 
 		if (result.affectedRows === 1) {

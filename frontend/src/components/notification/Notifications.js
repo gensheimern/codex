@@ -4,9 +4,9 @@ import config from '../../config';
 import TextNotification from './TextNotification';
 import JoinNotification from './JoinNotification';
 import ReminderNotification from './ReminderNotification';
-import CircularProgress from 'material-ui/CircularProgress';
-import RaisedButton from 'material-ui/RaisedButton';
 import Push from '../Push';
+import LoadingAnimation from '../tools/LoadingAnimation';
+import RetryPrompt from '../tools/RetryPrompt';
 
 export default class Notifications extends React.Component {
 	constructor(props) {
@@ -23,7 +23,7 @@ export default class Notifications extends React.Component {
 	}
 
 	componentDidMount() {
-		this.state.socket.subscribe('notification', this.handleNotification);
+		// this.state.socket.subscribe('notification', this.handleNotification);
 
 		this.loadNotifications();
 	}
@@ -71,53 +71,36 @@ export default class Notifications extends React.Component {
         });
 	}
 
-	handleClick = () => {
-		this.loadNotifications();
-	}
-
 	render() {
 		if (!this.state.loaded) {
 			return (
-				<div style={{
-					width: '100%',
-					textAlign: 'center',
-					marginTop: '16px',
-				}}>
-					<CircularProgress/>
-				</div>
-				);
+				<LoadingAnimation />
+			);
 		}
 
 		if (this.state.error) {
 			return (
-				<div style={{
-					width: '100%',
-					textAlign: 'center',
-					marginTop: '50px',
-				}}>
-					<p>Could not load notifications.</p>
-					<RaisedButton label="Retry" onClick={this.handleClick}/>
-				</div>
+				<RetryPrompt
+					onRetry={() => { this.loadNotifications()}}
+					message="Could not load notifications."
+					btnMessage="Retry"
+				/>
 			);
 		}
 
 		if (this.state.notifications.length === 0) {
 			return (
-				<div style={{
-					width: '100%',
-					textAlign: 'center',
-					marginTop: '50px',
-				}}>
-					<p>No notifications.</p>
-					<RaisedButton label="Reload" onClick={this.handleClick}/>
-				</div>
+				<RetryPrompt
+					onRetry={() => { this.loadNotifications() }}
+					message="No notifications."
+					btnMessage="Reload"
+				/>
 			);
 		}
 
 		return (
 			<div style={{
 				height: '100vh',
-				overflowY: 'scroll'
 			}}>
 				{this.state.notifications.map(notification => {
 					switch (notification.type) {

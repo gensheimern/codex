@@ -224,7 +224,7 @@ describe('User controller', () => {
 				Firstname: 'Maxneu',
 				Name: 'Mustermannneu',
 				Email: 'neue@email.com',
-				Password: 'very_new_password',
+				Password: '$2b$10$3OljjeQ2N4Pjy2WFvWxi4e6fTDSHI7997fxrypZKCpoPOVkejByDW',
 				Image: '/image.png',
 			}));
 
@@ -238,6 +238,7 @@ describe('User controller', () => {
 					name: 'Mustermannneu',
 					email: 'neue@email.com',
 					password: 'very_new_password',
+					oldPassword: 'very_secure_password',
 					image: '/new_image.png',
 				},
 			});
@@ -258,7 +259,7 @@ describe('User controller', () => {
 				Firstname: 'Maxneu',
 				Name: 'Mustermannneu',
 				Email: 'neue@email.com',
-				Password: 'very_new_password',
+				Password: '$2b$10$3OljjeQ2N4Pjy2WFvWxi4e6fTDSHI7997fxrypZKCpoPOVkejByDW',
 				Image: '/image.png',
 			}));
 
@@ -273,7 +274,7 @@ describe('User controller', () => {
 			await userController.updateUser(req, res);
 
 			// Validate result
-			correctResponseType(res, 400);
+			correctResponseType(res, 401);
 			expect(res.body().success, 'Update successful').to.be.false;
 			expect(res.body().message, 'Message set').to.be.a('string');
 		});
@@ -285,7 +286,7 @@ describe('User controller', () => {
 				Firstname: 'Maxneu',
 				Name: 'Mustermannneu',
 				Email: 'neue@email.com',
-				Password: 'very_new_password',
+				Password: '$2b$10$3OljjeQ2N4Pjy2WFvWxi4e6fTDSHI7997fxrypZKCpoPOVkejByDW',
 				Image: '/image.png',
 			}));
 
@@ -299,6 +300,7 @@ describe('User controller', () => {
 					name: 'Mustermannneu',
 					email: 'neue@email.com',
 					password: 'very_new_password',
+					oldPassword: 'very_secure_password',
 					image: '/new_image.png',
 				},
 			});

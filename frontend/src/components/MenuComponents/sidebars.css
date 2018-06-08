@@ -141,3 +141,18 @@ height: 6vh;	width: 100%;	background-color: #1EA185;	box-shadow: 0 2px 4px 0 rgb
 .GroupsDrawer{
 
 }
+@media only screen and (max-width: 768px) {
+.CalendarWrapper {
+ padding: 2%;
+}
+}
+@media only screen and (min-width: 769px) {
+.CalendarWrapper {
+ padding: 2%;
+  font-size:11px;
+}
+}
+.BadgeNotif{
+  padding : 0px !important;
+  margin-top: 15%;
+}
