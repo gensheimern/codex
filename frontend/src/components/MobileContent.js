@@ -31,12 +31,13 @@ export default class MobileContent extends React.Component {
 						height: 'calc(100vh - 112px)',
 					}}>
 						<MainContent
+							filterPersonalFeed = {this.props.filterPersonalFeed}
 							searchFilterFeed={this.props.searchFilterFeed}
 							mainContentNumber={content}
 							filter={this.props.filter}
 						/>
 					</div>
-					
+
 				</div>
 		);
 	}

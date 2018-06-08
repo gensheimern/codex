@@ -301,10 +301,22 @@ padding-left: 10px;
   padding-top:3%;
 }
 
+@media only screen and (max-width: 768px) {
 .createEventPickImageWrapper {
   padding:0px !important;
 }
 
 .createEventPickImageWrapper img {
   width:100%;
+}
+
+.createEventCardWrapper {
+  height:900px;
+}
+.createEventButton {
+  background-color:#F8C947 !important;
+  position:fixed !important;
+  height:70px !important;
+  bottom:0px;
+}
 }

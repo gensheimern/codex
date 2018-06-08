@@ -199,10 +199,9 @@ class Calendar extends React.Component {
 								onClick={() => {
 									this.setState({date: day.date});
 									this.props.changeDate(day.date);
-									console.log("wow" + this.props.mainContentNumber);
-									this.props.searchFilterFeed(day.date,"Date");
-									if(this.props.mainContentNumber===1)
-										this.props.history.push('/feed')
+									console.log(this.props.filterPersonalFeed);
+									this.props.filterPersonalFeed(day.date);
+
 								}}
 							>
 								<div className="contents">
