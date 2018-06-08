@@ -56,7 +56,7 @@ export default class Splashscreen extends React.Component {
 					padding: '20%',
 					textAlign: 'center',
 				}}>
-					<img style={{marginBottom: '5%'}} src={logo} alt="Logo"/>
+					<img style={{marginBottom: '5%', width: '100%'}} src={logo} alt="Logo"/>
 					 <LinearProgress mode="indeterminate" />
 				</div>
 			);

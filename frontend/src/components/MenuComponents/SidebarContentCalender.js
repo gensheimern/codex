@@ -190,7 +190,7 @@ export default class SidebarContent extends React.Component {
 					lastDate = eventDate;
 
 					return (
-						<React.Fragment>
+						<React.Fragment key={event.id}>
 							{hr}
 							<EventItem
 								event={event}
