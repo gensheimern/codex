@@ -12,7 +12,6 @@ import config from '../../config';
 import Snackbar from 'material-ui/Snackbar';
 import FlatButton from 'material-ui/FlatButton';
 import Paper from 'material-ui/Paper';
-import scrollIntoView from 'smooth-scroll-into-view-if-needed';
 import { withRouter } from 'react-router-dom';
 
 const eventImages = [
