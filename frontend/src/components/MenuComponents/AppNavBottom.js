@@ -10,7 +10,7 @@ import { withRouter } from 'react-router-dom';
 import notificationChecker from '../notification/notificationChecker';
 import Badge from 'material-ui/Badge';
 import config from '../../config';
-import './sidebars.css';
+import './navbar.css';
 
 const FeedIcon = <IconFeed/>;
 const CalendarIcon = <IconCalendar/>;

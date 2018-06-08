@@ -196,21 +196,15 @@ class SidebarContent extends React.Component {
 
 		return (
 			<div className="CalendarWrapper">
-				<div style={{
-					width: '100%',
-					marginRight: 'auto',
-					marginLeft: 'auto',
-				}}>
-					<Calendar
-						filterPersonalFeed = {this.props.filterPersonalFeed}
-						mainContentNumber={this.props.mainContentNumber}
-						searchFilterFeed={this.props.searchFilterFeed}
-						eventDates={eventDates}
-						possibleDates={allEventDates}
-						changeDate={this.onDateChange}
-					/>
-					<br/>
-				</div>
+				<Calendar
+					filterPersonalFeed = {this.props.filterPersonalFeed}
+					mainContentNumber={this.props.mainContentNumber}
+					searchFilterFeed={this.props.searchFilterFeed}
+					eventDates={eventDates}
+					possibleDates={allEventDates}
+					changeDate={this.onDateChange}
+				/>
+				<br/>
 
 				{/* labeledHr('Today') */}
 
