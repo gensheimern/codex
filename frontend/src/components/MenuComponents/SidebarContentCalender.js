@@ -150,6 +150,14 @@ export default class SidebarContent extends React.Component {
 				/>
 			);
 		}
+		console.log(this.state.events);
+		console.log(this.props.filter.personalFilter);
+		let filterData;
+		let filterMinDate = this.props.filter.personalFilter
+		 filterData = this.state.events.filter(function (a,b)
+										{
+											return (new Date(a.time)) >= filterMinDate;
+										});
 
 		let lastDate = null;
 
@@ -162,6 +170,7 @@ export default class SidebarContent extends React.Component {
 					marginLeft: 'auto',
 				}}>
 					<Calendar
+						filterPersonalFeed = {this.props.filterPersonalFeed}
 						mainContentNumber={this.props.mainContentNumber}
 						searchFilterFeed={this.props.searchFilterFeed}
 						eventDates={eventDates}
@@ -172,7 +181,7 @@ export default class SidebarContent extends React.Component {
 
 				{/* labeledHr('Today') */}
 
-				{this.state.events.map((event) => {
+				{filterData.map((event) => {
 					const eventDate = new Date(event.time);
 
 					let hr = null;
