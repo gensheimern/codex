@@ -67,7 +67,7 @@ class CreateEventCard extends React.Component {
 			addressValue: '',
 			meetingPoint: '',
 			open: false,
-			cardTitle: 'Edit group picture',
+			cardTitle: 'Edit event picture',
 			cardImage: 'weblogin',
 			collapse: false,
 			invitePeople: [],

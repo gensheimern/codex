@@ -165,3 +165,8 @@
 		font-size: 11px;
 	}
 }
+
+.navbarbottom {
+  position: fixed;
+  bottom:0;
+}

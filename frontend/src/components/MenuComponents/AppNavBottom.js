@@ -132,7 +132,7 @@ class AppNavBottom extends Component {
 		};
 
 		return (
-			<Paper zDepth={1}>
+			<Paper className="navbarbottom" zDepth={1}>
 				<BottomNavigation selectedIndex={this.props.index}>
 					<BottomNavigationItem
 						icon={FeedIcon}
