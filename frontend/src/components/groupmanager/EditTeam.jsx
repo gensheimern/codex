@@ -2,10 +2,10 @@ import React from 'react';
 import config from '../../config';
 
 import FlatButton from 'material-ui/FlatButton';
-import IconAdd from 'material-ui/svg-icons/content/add-circle';
-import "./sidebars.css";
+import IconEdit from 'material-ui/svg-icons/image/edit';
+import "./groupmanager.css";
 import Dialog from 'material-ui/Dialog';
-import CreateGroupContent from '../groupmanager/CreateTeam.js';
+import EditTeamContent from './EditTeamContent';
 
 import IconGroup from 'material-ui/svg-icons/social/group';
 
@@ -14,7 +14,7 @@ const defaultSelectedIcon = {
                                                   width:"100% !important",}}/>
                             }
 
-export default class CreateTeamButton extends React.Component {
+export default class EditTeam extends React.Component {
 
   constructor(props) {
     super(props);
@@ -108,12 +108,18 @@ export default class CreateTeamButton extends React.Component {
     return (<div>
       <div className="CreateTeamButton">
         <FlatButton
-          icon={<IconAdd color="#FFFFFF"/>}
+          icon={<IconEdit color="#FFFFFF"/>}
           onClick={this.handleClick}
           target="_blank"
           style={{color:"white",
             minWidth:"0px",
-            margin:"0px"}}/>
+            margin:"0px",
+            float:"right",
+            marginRight:"2%",
+            marginLeft:"2%",
+                                      }}
+          />
+
       </div>
 
       <Dialog
@@ -125,7 +131,7 @@ export default class CreateTeamButton extends React.Component {
          autoScrollBodyContent = {true}
        >
        <div>
-         <CreateGroupContent
+         <EditTeamContent
            name={this.state.name}
            description={this.state.description}
            invitePeople={this.state.invitePeople}
@@ -140,3 +146,7 @@ export default class CreateTeamButton extends React.Component {
     );
   }
 }
+
+
+        // {(this.props.isActive) ? this.props.main || <EditTeam /> :<div></div>
+        // }

@@ -29,10 +29,10 @@ export default class EventCard extends React.Component {
 
 		checkDate(){
 			const month = new Date().getUTCMonth();
-			if((new Date(this.props.event.time).getUTCMonth() +1) === month){
+			if((new Date(this.props.event.time).getUTCMonth()) === month){
 				if(new Date(this.props.event.time).getUTCDate() === (new Date().getUTCDate())){
 					if(new Date(this.props.event.time).getUTCFullYear()=== (new Date().getUTCFullYear())){
-						return  <h4 > <CalendarFA/> today </h4>
+						return  <h4 > <CalendarFA/> Today </h4>
 				}else {
 						return <h4 > <CalendarFA/> {dateParser.DateparserDate(this.props.event.time) } </h4>
 				}
@@ -65,18 +65,17 @@ export default class EventCard extends React.Component {
 		let buttonColor;
 		if (this.props.joined && this.props.loaded) {
             isJoinedBorder = {
-                border: '4px solid rgb(0 186 177)',
+                border: '4px solid #00BAB1',
             };
-						buttonColor = {
-							backgroundColor:"rgb(237 101 89)",
-						};
-
+			buttonColor = {
+				backgroundColor:"#ED6550",
+			};
         } else {
             isJoinedBorder = {
-                border: '0px solid white',
+                border: '0px solid #FFFFFF',
             };
 						buttonColor = {
-								backgroundColor:"rgb(248 201 71)",
+								backgroundColor:"#F8C947",
 						};
 		}
 

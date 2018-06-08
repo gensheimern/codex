@@ -21,23 +21,23 @@ export default class MobileContent extends React.Component {
 		return (
 			<div className="mobileContent-wrapper">
 					<AppNavTop
-						changeContent={this.props.changeContent}
 						searchFilterFeed={this.props.searchFilterFeed}
-						width="100%"
+						name="Lunch-Planner"
 					/>
-					<div className="mainContentMobile-wrapper">
+					<AppNavBottom
+						index={content}
+					/>
+					<div className="mainContentMobile-wrapper" style={{
+						height: 'calc(100vh - 112px)',
+					}}>
 						<MainContent
-							changeContent={this.props.changeContent}
+							filterPersonalFeed = {this.props.filterPersonalFeed}
 							searchFilterFeed={this.props.searchFilterFeed}
 							mainContentNumber={content}
 							filter={this.props.filter}
 						/>
 					</div>
-					<AppNavBottom
-						changeContent={this.props.changeContent}
-						width="100%"
-						index={content}
-					/>
+
 				</div>
 		);
 	}

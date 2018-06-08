@@ -105,7 +105,7 @@ export default class SidebarContent extends React.Component {
           marginRight: "2%",
           marginTop:"3%"
           }}>
-          TEAMS</p>
+          GROUPS</p>
             <CreateTeamButton
               style={{
                 float:"none",

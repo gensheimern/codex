@@ -1,55 +1,55 @@
 .App {
-  text-align: center;
+	text-align: center;
 }
 
 .App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+	animation: App-logo-spin infinite 20s linear;
+	height: 80px;
 }
 
 .App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
+	background-color: #222;
+	height: 150px;
+	padding: 20px;
+	color: white;
 }
 
 .App-title {
-  font-size: 1.5em;
+	font-size: 1.5em;
 }
 
 .App-intro {
-  font-size: large;
+	font-size: large;
 }
 
 @keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+	from { transform: rotate(0deg); }
+	to { transform: rotate(360deg); }
 }
 
 #contentarea {
-  height: 100vh;
-  width: 100%;
-  margin-top: 0px;
-  background-color: #F1F1F1;
+	height: 100vh;
+	width: 100%;
+	margin-top: 0px;
+	background-color: #F1F1F1;
 }
 
 body {
-  background-color: #F1F1F1;
+	background-color: #F1F1F1;
 }
 
 .mainContentMobile-wrapper{
-  overflow:hidden;
-  width: 100vw;
-  height: 86vh;
+	overflow:hidden;
+	width: 100vw;
+	/* height: 86vh; */
 	overflow-x: hidden;
 	overflow-y: scroll;
 }
 
 .mobileContent-wrapper{
-  overflow: hidden;
-  width: 100%;
-  height: 100vh;
+	overflow: hidden;
+	width: 100%;
+	height: 100vh;
 }
 
 body { overflow: hidden; }
@@ -57,15 +57,15 @@ body { overflow: hidden; }
 /* Custom scrollbars*/
 /* width */
 ::-webkit-scrollbar {
-  width: 5px;
+	width: 5px;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #888; 
+	background: #888; 
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #555; 
+	background: #555; 
 }

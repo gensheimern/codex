@@ -35,7 +35,8 @@ export default class MainContent extends React.Component {
 				</React.Fragment>
 			);
 		} else if (this.props.mainContentNumber === this.PERSONAL) {
-			return (<Personal mainContentNumber={this.props.mainContentNumber} searchFilterFeed={this.props.searchFilterFeed} changeContent={this.props.changeContent}/>);
+			return (<Personal filterPersonalFeed = {this.props.filterPersonalFeed} mainContentNumber={this.props.mainContentNumber}
+				searchFilterFeed={this.props.searchFilterFeed} changeContent={this.props.changeContent}	filter={this.props.filter}/>);
 		} else if (this.props.mainContentNumber === this.ADD_EVENT) {
 			return (<CreateEventCard changeContent={this.props.changeContent} />);
 		} else if (this.props.mainContentNumber === this.NOTIFICATIONS) {

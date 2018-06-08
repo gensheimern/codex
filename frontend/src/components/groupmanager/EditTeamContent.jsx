@@ -119,7 +119,7 @@ const iconsToSelect = [{
                       },
                     ]
 
-export default class CreateTeam extends React.Component {
+export default class EditTeamContent extends React.Component {
 
         constructor(props) {
             super(props);

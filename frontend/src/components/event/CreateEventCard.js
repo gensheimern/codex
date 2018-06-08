@@ -4,7 +4,6 @@ import TextField from 'material-ui/TextField';
 import CreateEventTimePicker from './CreateEventTimePicker';
 import CreateEventDatePicker from './CreateEventDatePicker';
 import Maps from './GooglePlaces';
-import Dialog from 'material-ui/Dialog';
 import CollapseFA from 'react-icons/lib/fa/angle-down';
 import ReminderToggle from './ReminderToggle';
 import InvitePeople from './CreateEventInvitePeople';
@@ -18,46 +17,43 @@ import { withRouter } from 'react-router-dom';
 
 const eventImages = [
 	{
-		img: "asia_card@3x.jpg",
+		img: "asianfood",
 		title:"ASIAN FODD",
 	}, {
-		img: "baker_cardx3.jpg",
+		img: "baker",
 		title:"BAKER",
 	}, {
-		img: "burger_card@3x.jpg",
+		img: "burger",
 		title:"BURGER",
 	}, {
-		img: "coffee_cardx3.jpg",
+		img: "coffee",
 		title:"COFFEE",
 	}, {
-		img: "fisch_card@3x.jpg",
+		img: "fisch",
 		title:"FISH",
 	}, {
-		img: "grillen_card@3x.jpg",
+		img: "grillen",
 		title:"GRILL",
 	}, {
-		img: "bratwurst_card@3x.jpg",
-		title:"SNACK",
-	}, {
-		img: "kebab_card@3x.jpg",
+		img: "kebab_card",
 		title:"KEBAB",
 	}, {
-		img: "fastfood_card@3x.jpg",
+		img: "fastfood",
 		title:"FAST FOOD",
 	}, {
-		img: "pasta_card@3x.jpg",
+		img: "pasta",
 		title:"PASTA",
 	}, {
-		img: "pizza_card@3x.jpg",
+		img: "pizza",
 		title:"PIZZA",
 	}, {
-		img: "steak_card@3x.jpg",
+		img: "steak",
 		title:"STEAK",
 	}, {
-		img: "sushi_card@3x.jpg",
+		img: "sushi",
 		title:"SUSHI",
 	}, {
-		img: "wraps_card@3x.jpg",
+		img: "wraps",
 		title:"WRAP",
 	},
 ]
@@ -73,7 +69,7 @@ class CreateEventCard extends React.Component {
 			meetingPoint: '',
 			open: false,
 			cardTitle: 'Edit group picture',
-			cardImage: 'standard.jpg',
+			cardImage: 'standard',
 			collapse: false,
 			invitePeople: [],
 			invitePeopleID: [],
@@ -229,7 +225,7 @@ class CreateEventCard extends React.Component {
 					return userid.ValueKey
 		 });
 
-		if(parseInt(this.getMaxPeopleValue(), 10) > userArray.length +1 || parseInt(this.getMaxPeopleValue(), 10) === 0 ){
+		if(parseInt(this.getMaxPeopleValue(), 10) >= userArray.length +1 || parseInt(this.getMaxPeopleValue(), 10) === 0 ){
 
 		fetch(config.apiPath + "/activity", {
 			method: 'POST',
@@ -240,7 +236,7 @@ class CreateEventCard extends React.Component {
 				time: this.state.year + "-" + this.state.month + "-" + this.state.day + " " + this.state.hours + ":" + this.state.minutes,
 				event: false,
 				private: this.state.private,
-				banner: this.state.cardImage,
+				banner: this.state.cardImage + "_card.jpg",
 				meetingPoint: this.state.meetingPoint,
 				timeMeetingPoint: this.state.year + "-" + this.state.month + "-" + this.state.day + " " + this.state.meetingHours + ":" + this.state.meetingMinutes,
 				maxParticipants: parseInt(this.getMaxPeopleValue(), 10),
@@ -293,8 +289,27 @@ class CreateEventCard extends React.Component {
 
 		}
 
+		collapseImagePicker(){
+			if(this.state.open){
+		 return(
+			 	eventImages.map((data,index) => (
+					<img
+					key={"profilePicture" + index}
+					src={data.img + ".jpg"}
+					onClick={() => this.cardImage(data.title,data.img)}
+					width="100px"
+					height="100px"
+					alt=""
+					id="pickimage"
+				/>
+				))
+			)
+		}
+	}
 
-	collapsedContent() {
+
+
+		collapsedContent() {
 		if(this.state.collapse){
 			let images = this.state.invitePeople.map((image,index) => {
 				// return  <img key={image} src={image} />
@@ -353,8 +368,6 @@ class CreateEventCard extends React.Component {
 	}
 
 	render() {
-		console.log(this.state.invitePeople);
-		console.log(this.state.invitePeopleID);
 		return (<div>
 		<Paper className="createEventWrapper">
 			<Card className="createEventCardWrapper">
@@ -364,28 +377,6 @@ class CreateEventCard extends React.Component {
 					autoHideDuration={4000}
 					onRequestClose={this.renderSnackbarClose}
 				/>
-
-				<Dialog
-					className="createEventPickImageWrapper"
-					autoScrollBodyContent={true}
-					modal={false}
-					open={this.state.open}
-					onRequestClose={this.handleClose}
-					contentStyle={{width:"100%",maxWidth:"none",padding:"0px",}}
-					bodyStyle={{padding:"0px",}}
-					autoDetectWindowHeight={true}
-				>
-					{eventImages.map((data,index) => (
-						<img
-							key={"profilePicture" + index}
-							src={data.img}
-							onClick={() => this.cardImage(data.title,data.img)}
-							height="100px"
-							widht="100px"
-							alt=""
-						/>
-					))}
-				</Dialog>
 				<CardMedia
 					overlayContentStyle={{padding:"2px"}}
 					overlay={
@@ -395,10 +386,11 @@ class CreateEventCard extends React.Component {
 							subtitle={this.state.cardTitle}
 						/>}
 				>
-					<img   src={this.state.cardImage} alt="" />
+					<img   src={this.state.cardImage + ".jpg"} alt="" />
 				</CardMedia>
 
 				<CardText>
+					<div> {this.collapseImagePicker()} </div>
 					<Maps
 						callbackAdress={this.handleChangeAddressValue}
 						myAddress={this.callbackAddress}
@@ -438,9 +430,9 @@ class CreateEventCard extends React.Component {
 			<div id="createbutton"> </div>
 		</div>
 		);
-	}
-}
 
+}
+}
 const renderFunc = ({ getInputProps, getSuggestionItemProps, suggestions }) => (
 	<div className="autocomplete-root">
 		<input {...getInputProps()} />
