@@ -13,6 +13,7 @@ import config from '../../config';
 import Snackbar from 'material-ui/Snackbar';
 import FlatButton from 'material-ui/FlatButton';
 import Paper from 'material-ui/Paper';
+import scrollIntoView from 'smooth-scroll-into-view-if-needed';
 import { withRouter } from 'react-router-dom';
 
 const eventImages = [
@@ -72,7 +73,7 @@ class CreateEventCard extends React.Component {
 			meetingPoint: '',
 			open: false,
 			cardTitle: 'Edit group picture',
-			cardImage: 'pasta_card@3x.jpg',
+			cardImage: 'standard.jpg',
 			collapse: false,
 			invitePeople: [],
 			invitePeopleID: [],
@@ -92,6 +93,7 @@ class CreateEventCard extends React.Component {
 			meetingMinutes:'45',
 			snackbaropen: false,
 			errorCreate: '',
+			cardspace: '',
 		}
 
 		this.toggleCollapse = this.toggleCollapse.bind(this);
@@ -106,6 +108,7 @@ class CreateEventCard extends React.Component {
 		this.handleChangeDescription = this.handleChangeDescription.bind(this);
 		this.handleChangeMaxPeople = this.handleChangeMaxPeople.bind(this);
 		this.handleChangeAddressValue = this.handleChangeAddressValue.bind(this);
+		this.scrolltoBottom = this.scrolltoBottom.bind(this);
 	}
 
 	handleOpen = () => {
@@ -117,8 +120,7 @@ class CreateEventCard extends React.Component {
 	};
 
 	callBackInvitePeople(invitePeople){
-		this.setState({ invitePeople })
-
+		this.setState({ invitePeople });
 	}
 
 	callbackAddress(myAddress){
@@ -165,8 +167,11 @@ class CreateEventCard extends React.Component {
 			this.setState({ collapse: false });
 		} else {
 			this.setState({ collapse: true });
+			this.scrolltoBottom();
 		}
+
 	}
+
 
 	handleChangeMeetingPoint(e){
 		this.setState({ meetingPoint: e.target.value });
@@ -214,6 +219,11 @@ class CreateEventCard extends React.Component {
 		this.createEvent();
 	};
 
+	scrolltoBottom(){
+		let node = document.getElementById('createbutton')
+		node.scrollIntoView({behavior:'smooth'})
+	}
+
 	createEvent() {
 		let userArray = this.state.invitePeople.map((userid) => {
 					return userid.ValueKey
@@ -253,6 +263,34 @@ class CreateEventCard extends React.Component {
 		this.setState({errorCreate: 'Maximum of ' + parseInt(this.getMaxPeopleValue(), 10) + ' participants' });
 
 	}
+
+	let emails = this.state.invitePeople.map((e) => {
+		return(e.ValueEmail + ",")
+	});
+
+	fetch(config.apiPath + "/sendmail/joinevent", {
+		method: 'POST',
+		body: JSON.stringify({
+			email: emails,
+			event: this.state.address[0],
+			time: this.state.year + "-" + this.state.month + "-" + this.state.day + " " + this.state.hours + ":" + this.state.minutes,
+
+		}),
+		headers: {
+			'Content-Type': 'application/json',
+			'X-Access-Token': localStorage.getItem('apiToken'),
+		}
+	})
+	.then((res) => {
+		if (!res.ok || res.status !== 201) {
+			// handle error
+		} else {
+			this.renderSnackbar();
+			this.props.history.push('/feed');
+		}
+	});
+
+
 		}
 
 
@@ -268,8 +306,8 @@ class CreateEventCard extends React.Component {
 					<div className="meetingPoint">
 							<TextField
 							floatingLabelFixed={true}
-							floatingLabelFocusStyle={{ color: 'rgb(30 161 133)' }}
-							underlineFocusStyle={{ borderColor: 'rgb(30 161 133)' }}
+							floatingLabelFocusStyle={{ color: 'rgb(30, 161, 133)' }}
+							underlineFocusStyle={{ borderColor: 'rgb(30, 161, 133)' }}
 							floatingLabelText="Meeting Point"
 							hintText="at the address point"
 							value={this.state.meetingPoint}
@@ -294,14 +332,14 @@ class CreateEventCard extends React.Component {
 						<TextField
 							fullWidth={true}
 							floatingLabelFixed={true}
-							underlineFocusStyle={{borderColor:"rgb(30 161 133)"}}
+							underlineFocusStyle={{borderColor:"rgb(30, 161, 133)"}}
 							hintText="Max. People"
 							value={this.state.maxPeopleValue}
 							onChange={this.handleChangeMaxPeople}
 						/>
 					<TextField
 						fullWidth={true}
-						underlineFocusStyle={{borderColor:"rgb(30 161 133)"}}
+						underlineFocusStyle={{borderColor:"rgb(30, 161, 133)"}}
 						floatingLabelFixed={true}
 						hintText="Description"
 						value={this.state.descriptionValue}
@@ -315,11 +353,11 @@ class CreateEventCard extends React.Component {
 	}
 
 	render() {
-		console.log(this.state.meetingHours);
-		console.log(this.state.hours);
-		return (
+		console.log(this.state.invitePeople);
+		console.log(this.state.invitePeopleID);
+		return (<div>
 		<Paper className="createEventWrapper">
-			<Card >
+			<Card className="createEventCardWrapper">
 				<Snackbar
 					open={this.state.snackbaropen}
 					message="Event added to your calendar"
@@ -388,14 +426,17 @@ class CreateEventCard extends React.Component {
 					}} />
 					{ this.collapsedContent() }
 				</CardText>
-				<div style={{color:'red', textAlign:"center"}}>{this.state.errorCreate} </div>
+				<div id="ok" style={{color:'red', textAlign:"center"}}>{this.state.errorCreate} </div>
 			</Card>
 			<FlatButton
+				className="createEventButton"
 				onClick={this.handleSubmit}
 				label="Create your event"
 				fullWidth={true}
 			/>
 		</Paper>
+			<div id="createbutton"> </div>
+		</div>
 		);
 	}
 }

@@ -9,6 +9,9 @@ const userRouter = 			require('./user/UserRouter');
 const participatesRouter = 	require('./activity/participatesRouter');
 const messageRouter = 		require('./activity/MessageRouter');
 const activityRouter = 		require('./activity/ActivityRouter');
+const email = require('./mailservice/mailservice');
+
+router.use('/sendmail', email);
 
 router.use('/team', memberRouter);
 router.use('/team', teamRouter);
