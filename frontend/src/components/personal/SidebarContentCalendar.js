@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// import Calendar from 'react-calendar';
 import Calendar from './Calendar';
 import EventItem from '../event/EventItem';
-import "./sidebars.css";
 import config from '../../config';
 import LoadingAnimation from '../tools/LoadingAnimation';
 import RetryPrompt from '../tools/RetryPrompt';
+import { withRouter } from 'react-router-dom';
+
+import '../MenuComponents/sidebars.css';
 
 const labeledHr = (text) => (
 	<div style={{
@@ -50,23 +51,54 @@ const monthName = [
 	'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December',
 ]
 
-export default class SidebarContent extends React.Component {
+class SidebarContent extends React.Component {
 	constructor(props) {
 		super(props);
 
 		this.state = {
 			date: new Date(),
 			events: [],
+			allEvents: [],
 			valid: false,
 			loading: false,
 			error: null,
 		};
 
 		this.loadEvents = this.loadEvents.bind(this);
+		this.loadAllEvents = this.loadAllEvents.bind(this);
 	}
 
 	componentDidMount() {
 		this.loadEvents();
+		this.loadAllEvents();
+	}
+
+	loadAllEvents() {
+		fetch(config.apiPath + "/activity/", {
+            method: 'GET',
+            headers: {
+				'Content-Type': 'application/json',
+				'X-Access-Token': localStorage.getItem('apiToken'),
+            },
+		})
+		.then((res) => {
+            if(!res.ok) {
+                throw new Error("Response not ok.");
+            } else if(res.status !== 200) {
+                throw new Error("An error occured.");
+            }
+            return res.json();
+		})
+		.then((res) => {
+            this.setState({
+				allEvents: res,
+			});
+		})
+		.catch((error) => {
+			this.setState({
+				allEvents: [],
+			});
+		});
 	}
 
 	loadEvents() {
@@ -96,7 +128,8 @@ export default class SidebarContent extends React.Component {
 				loading: false,
 				valid: true,
 			});
-        }).catch((error) => {
+		})
+		.catch((error) => {
 			this.setState({
 				valid: false,
 				loading: false,
@@ -109,20 +142,23 @@ export default class SidebarContent extends React.Component {
 		this.setState({
 			date,
 		});
+
+		/* this.props.searchFilterFeed(date, 'Date');
+		if (this.props.mainContentNumber === 1) {
+			this.props.history.push('/feed');
+		} */
 	};
 
 	render() {
 		const eventDates = [];
-
 		this.state.events.forEach((event) => {
 			eventDates.push(new Date(event.time));
 		});
 
-		/*return (
-			<div style={{margin: '1%'}}><Calendar
-			eventDates={[new Date()]}
-			changeDate={this.onDateChange}
-		/></div>);*/
+		const allEventDates = [];
+		this.state.allEvents.forEach((event) => {
+			allEventDates.push(new Date(event.time));
+		});
 
 		if (this.state.loading && !this.state.valid) {
 			return <LoadingAnimation/>
@@ -160,7 +196,6 @@ export default class SidebarContent extends React.Component {
 
 		return (
 			<div className="CalendarWrapper">
-				<p>Your calendar</p>
 				<div style={{
 					width: '100%',
 					marginRight: 'auto',
@@ -171,6 +206,7 @@ export default class SidebarContent extends React.Component {
 						mainContentNumber={this.props.mainContentNumber}
 						searchFilterFeed={this.props.searchFilterFeed}
 						eventDates={eventDates}
+						possibleDates={allEventDates}
 						changeDate={this.onDateChange}
 					/>
 					<br/>
@@ -204,8 +240,7 @@ export default class SidebarContent extends React.Component {
 							/>
 						</React.Fragment>
 					);
-				})
-				}
+				})}
 				{events}
 			</div>
 
@@ -216,3 +251,5 @@ export default class SidebarContent extends React.Component {
 SidebarContent.propTypes = {
 	style: PropTypes.object,
 };
+
+export default withRouter(SidebarContent);
