@@ -5,7 +5,7 @@ const AuthenticateController = {
 	async authenticate(req, res) {
 		const { email, password } = req.body;
 
-		const user = await User.getUserByEmail(email);
+		const user = await User.getUserByEmail(email.toLowerCase());
 
 		if (!user || !user.Password) {
 			res.status(403).json({
