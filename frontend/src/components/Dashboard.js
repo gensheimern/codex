@@ -1,6 +1,6 @@
 import React from 'react';
 import FeedToolbar from './MenuComponents/FeedToolbar';
-import Groups from './Groups';
+import SidebarContent from './MenuComponents/SidebarContent';
 import MainContent from './MainContent';
 import SidebarContentCalender from './MenuComponents/SidebarContentCalender';
 import PropTypes from 'prop-types';
@@ -37,11 +37,10 @@ export default class Dashboard extends React.Component {
 					overflow: 'hidden',
 					boxShadow: '5px 5px 5px lightgrey',
 				}}>
-					<Groups
+					<SidebarContent
 						changeContent={this.props.changeContent}
 						searchFilterFeed={this.props.searchFilterFeed}
 						closeDrawer={() => {}}
-						id="groups-wrapper"
 					/>
 				</div>
 				<div style={{
