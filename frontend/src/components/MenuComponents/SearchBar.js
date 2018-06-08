@@ -72,6 +72,7 @@ export default class SearchBar extends React.Component {
 						width: '25%',
 						height: '100%',
 						float: 'left',
+						minWidth: '56px',
 					}}
 				/>
 			</React.Fragment>

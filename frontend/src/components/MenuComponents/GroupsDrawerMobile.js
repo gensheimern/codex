@@ -28,9 +28,10 @@ export default class GroupsDrawer extends React.Component {
 				<FlatButton
 					style={{
 						padding: 0,
-						width: '24%',
+						width: '25%',
 						height: '100%',
 						float: 'left',
+						minWidth: '56px',
 					}}
 					backgroundColor="#1EA185"
 					icon={ <IconGroup color="#FFFFFF" /> }

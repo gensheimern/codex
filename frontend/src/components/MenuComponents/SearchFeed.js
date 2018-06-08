@@ -14,6 +14,7 @@ export default class SearchFeed extends React.Component {
 					width: '25%',
 					height: '100%',
 					float: 'left',
+					minWidth: '56px',
 				}}
 				backgroundColor="#1EA185"
 				icon={ <IconSearch color="white"/> }
