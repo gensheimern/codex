@@ -49,7 +49,7 @@ class AppNavTop extends Component {
 		);
 
 		return (
-			<div className="MobileNavTop">
+			<div className="MobileNavTop navbartop">
 				{/*<FlatButton
 					style={{
 						padding: 0,
