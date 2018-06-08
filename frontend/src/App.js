@@ -25,15 +25,26 @@ class App extends Component {
 				searchWord: '',
 				filterDate: new Date(),
 				filterGroup: '',
+				personalFilter: new Date(),
 			}
 		};
 
 		this.changeContent = this.changeContent.bind(this);
 		this.searchFilterFeed = this.searchFilterFeed.bind(this);
+		this.filterPersonalFeed = this.filterPersonalFeed.bind(this);
 	}
 
 	changeContent(index) {
 		this.setState({ mainContentNumber: index });
+	}
+
+	filterPersonalFeed(value){
+		this.setState((oldState) => ({
+			filter: {
+				...oldState.filter,
+				personalFilter: value,
+			}
+		}))
 	}
 
 	searchFilterFeed(value, type){
@@ -87,6 +98,7 @@ class App extends Component {
 			{/* Protected routes (login required) */}
 			<Route exact path="/(feed|notifications|profile|addteam|addevent|personal)" render={(props) => (
 				<Screen
+					filterPersonalFeed = {this.filterPersonalFeed}
 					changeContent={this.changeContent}
 					searchFilterFeed={this.searchFilterFeed}
 					filter={this.state.filter}

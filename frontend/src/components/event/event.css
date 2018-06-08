@@ -258,7 +258,8 @@ padding-left: 10px;
 }
 
 .createEventEditPicture {
-  padding:0 !important;
+  padding-top: 20px !important;
+
 }
 
 .meetingPoint {
@@ -301,10 +302,22 @@ padding-left: 10px;
   padding-top:3%;
 }
 
+@media only screen and (max-width: 768px) {
 .createEventPickImageWrapper {
   padding:0px !important;
 }
 
 .createEventPickImageWrapper img {
   width:100%;
+}
+
+.createEventCardWrapper {
+  height:900px;
+}
+.createEventButton {
+  background-color:#F8C947 !important;
+  position:fixed !important;
+  height:50px !important;
+  bottom:53px;
+}
 }

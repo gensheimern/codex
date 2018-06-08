@@ -58,7 +58,12 @@ export default class Dashboard extends React.Component {
 					...defaultStyle,
 					width: '28%',
 				}}>
-					<SidebarContentCalendar mainContentNumber={this.props.mainContentNumber} searchFilterFeed={this.props.searchFilterFeed} changeContent={this.props.changeContent}/>
+					<SidebarContentCalender
+							filter={this.props.filter}
+							filterPersonalFeed = {this.props.filterPersonalFeed}
+ 							mainContentNumber={this.props.mainContentNumber}
+							searchFilterFeed={this.props.searchFilterFeed}
+							changeContent={this.props.changeContent}/>
 				</div>
 			</React.Fragment>
 		);

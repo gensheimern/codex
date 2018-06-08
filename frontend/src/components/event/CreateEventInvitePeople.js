@@ -44,7 +44,7 @@ export default class CreateEventInvitePeople extends React.Component {
     .then(res => {
       this.setState({usersListLong: res});
       res.map(users => {
-     this.setState({ usersList: [...this.state.usersList,{textKey: users.firstName + " " + users.name, ValueImage:users.image , ValueKey: users.id} ] })
+     this.setState({ usersList: [...this.state.usersList,{textKey: users.firstName + " " + users.name, ValueImage:users.image , ValueKey: users.id, ValueEmail:users.email} ] })
         return true;})
     })
     .catch((err) => {
@@ -56,7 +56,6 @@ export default class CreateEventInvitePeople extends React.Component {
 
 
 render(){
-  console.log(this.state.userList);
 return(
   <div>
     <AutoComplete
@@ -68,9 +67,8 @@ return(
       dataSourceConfig={this.state.usersListConfig}
       maxSearchResults={5}
       onNewRequest= {(chosenRequest, index) =>{
-
         this.setState({ inviteList: [...this.state.inviteList, chosenRequest.ValueKey ] });
-        this.setState({ inviteImageList: [...this.state.inviteImageList,{textKey: chosenRequest.textKey, ValueImage: chosenRequest.ValueImage, ValueKey: chosenRequest.ValueKey} ] })
+        this.setState({ inviteImageList: [...this.state.inviteImageList,{textKey: chosenRequest.textKey, ValueImage: chosenRequest.ValueImage, ValueKey: chosenRequest.ValueKey, ValueEmail:chosenRequest.ValueEmail} ] })
         this.props.people(this.state.inviteImageList);
         this.refs["autocomplete"].setState({searchText:''});
       }}

@@ -156,6 +156,8 @@ class Calendar extends React.Component {
 								onClick={() => {
 									this.setState({date: day.date});
 									this.props.changeDate(day.date);
+									this.props.filterPersonalFeed(day.date);
+
 								}}
 							>
 								<div className="contents">
