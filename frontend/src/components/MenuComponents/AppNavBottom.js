@@ -100,14 +100,15 @@ class AppNavBottom extends Component {
 						color: 'white',
 						top: 1,
 						right: 12,
-						fontSize: "10px",
-						width: "16px",
-						height: "16px",
-						padding : "0px !important",
-						margin : "0px !important",
+						fontSize: '10px',
+						width: '16px',
+						height: '16px',
+						padding : '0px !important',
+						margin : '0px !important',
 					}}
-					style={{            padding : "0px !important",
-}}
+					style={{
+						padding : "0px !important",
+					}}
 				>
 					<Notification onClick={() => {
 						this.readNotifications();
@@ -116,7 +117,7 @@ class AppNavBottom extends Component {
 					className="BadgeNotif"
 					style={{
 						cursor: 'pointer',
-						padding : "0px !important",
+						padding : '0px !important',
 						top: 1,
 						right: 12,
 					}}

@@ -4,10 +4,6 @@
     box-shadow: '0 0 0px white';
 }
 
-.isNotJoinedBorder {
-	/* TODO */
-}
-
 .eventCard {
 	margin: 4%;
 	background-color: white;
@@ -151,8 +147,8 @@ display: none;
 }
 
 .timeInfo{
-	display:inline-block;
-	float:right;
+	display: inline-block;
+	float: right;
 
 }
 
@@ -312,7 +308,8 @@ padding-left: 10px;
 }
 
 .createEventCardWrapper {
-  height:900px;
+	/*height:900px;*/
+	padding-bottom: 200px;
 }
 .createEventButton {
   background-color:#F8C947 !important;

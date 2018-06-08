@@ -1,6 +1,6 @@
 const customMuiTheme = {
 	borderRadius: 2,
-	fontFamily: 'Trebuchet MS, sans-serif',
+	fontFamily: 'Trebuchet MS, Verdana, sans-serif',
 	palette: {
 		accent1Color: '#ff4081',
 		accent2Color :'#f5f5f5',
