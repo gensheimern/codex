@@ -109,7 +109,6 @@ export default class SidebarContent extends React.Component {
 		this.setState({
 			date,
 		});
-		console.log(this.props.mainContentNumber);
 	};
 
 	render() {
@@ -150,8 +149,6 @@ export default class SidebarContent extends React.Component {
 				/>
 			);
 		}
-		console.log(this.state.events);
-		console.log(this.props.filter.personalFilter);
 		let filterData;
 		let filterMinDate = this.props.filter.personalFilter
 		 filterData = this.state.events.filter(function (a,b)
