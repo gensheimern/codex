@@ -13,6 +13,7 @@ import Splashscreen from './components/routing/Splashscreen';
 import NotFound from './components/routing/NotFound';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import customMuiTheme from './customMuiTheme';
+import CheckToken from './components/routing/CheckToken';
 
 class App extends Component {
 	constructor(props) {
@@ -118,13 +119,16 @@ class App extends Component {
 
 function Screen(props) {
 	return (
-		<MediaQuery minWidth={768}>
-			{(matches) =>
-				matches
-				?	(<Dashboard {...props} />)
-				:	(<MobileContent {...props} />)
-			}
-		</MediaQuery>
+		<React.Fragment>
+			<MediaQuery minWidth={768}>
+				{(matches) =>
+					matches
+					?	(<Dashboard {...props} />)
+					:	(<MobileContent {...props} />)
+				}
+			</MediaQuery>
+			<CheckToken route={props.match.url} />
+		</React.Fragment>
 	);
 }
 

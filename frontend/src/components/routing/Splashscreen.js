@@ -48,7 +48,7 @@ export default class Splashscreen extends React.Component {
 	}
 
 	render() {
-		if (!this.state.loaded || !this.state.timeout || true) {
+		if (!this.state.loaded || !this.state.timeout) {
 			return (
 				<div style={{
 					width: '80vw',
