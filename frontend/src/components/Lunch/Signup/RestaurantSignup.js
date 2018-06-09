@@ -23,14 +23,13 @@ export default class Signup extends React.Component {
 		this.state = {
 			email: "",
 			restaurantName: "",
-			googlePlacesID: '',
+			googlePlacesId: '',
 			place: '',
 			zipcode: '',
 			street: '',
 			streetNumber: '',
 			password: "",
 			retypePassword: "",
-			img: "",
 			checked: false,
 			captcha: '',
 		}
@@ -44,13 +43,12 @@ export default class Signup extends React.Component {
 
 	validateForm() {
 		return this.emailRegExp.test(this.state.email)
-			&& this.state.firstName !== ""
-			&& this.state.lastName !== ""
+			&& this.state.restaurantName !== ""
+			&& this.state.googlePlacesId !== ""
 			&& this.state.password !== ""
 			&& this.state.retypePassword !== ""
 			&& this.state.password === this.state.retypePassword
 			&& this.state.checked
-			&& this.state.captcha;
 	}
 
 	updateCheck() {
@@ -64,18 +62,28 @@ export default class Signup extends React.Component {
 	signupUser = (e) => {
 		e.preventDefault();
 
-		fetch(config.apiPath + "/user", {
+		fetch(config.apiPath + "/restaurant", {
 			method: 'POST',
 			body: JSON.stringify({
-				firstName: this.state.firstName,
-				lastName: this.state.lastName,
-				email: this.state.email,
-				password: this.state.password,
-				image: this.state.img,
+					googlePlacesId: this.state.googlePlacesId,
+	        name: this.state.restaurantName,
+	        email: this.state.email,
+	        password: this.state.password,
+	        place: this.state.place,
+	        zipcode: this.state.zipcode,
+	        street: this.state.street,
+	        streetNumber: this.state.streetNumber
 			}),
 			headers: {
 				'Content-Type': 'application/json',
-				'X-Access-Token': localStorage.getItem('apiToken')
+			}
+		})
+		.then((res) => {
+			if (!res.ok || res.status !== 201) {
+				// handle error
+			} else {
+				
+				this.props.history.push('/feed');
 			}
 		});
 	}
@@ -174,10 +182,10 @@ export default class Signup extends React.Component {
 				/>
 
 				<TextField
-					id="googlePlacesID"
-					label="googlePlacesID"
-					value={this.state.googlePlacesID}
-					onChange={this.handleChange('googlePlacesID')}
+					id="googlePlacesId"
+					label="googlePlacesId"
+					value={this.state.googlePlacesId}
+					onChange={this.handleChange('googlePlacesId')}
 					floatingLabelText="Find your Restaurant"
 					style= {styles.textField}
 				/>
@@ -244,14 +252,6 @@ export default class Signup extends React.Component {
 					style= {styles.textField}
 				/>
 				<br/>
-				<br/>
-
-				<ReCAPTCHA
-					ref="recaptcha"
-					sitekey="6LfY-1wUAAAAAAjaNfCOZrbJKO8fmWdLSgC0u9xm"
-					style = {styles.reCAPTCHA}
-					onChange={(captcha) => this.setState({ captcha })}
-				/>
 				<br/>
 
 				<Checkbox

@@ -4,6 +4,7 @@ const serveStatic = require('serve-static');
 const path = require('path');
 // const mail = require('./mailservice/mailservice');
 const authenticateRouter = require('./routes/auth/AuthenticateRouter');
+const restaurantRouter = require('./routes/restaurant/RestaurantRouter');
 const { verifyMiddleware } = require('./routes/auth/Auth');
 const apiRouter = require('./routes/MainRouter');
 const errorHandler = require('./middleware/errorHandler');
@@ -21,6 +22,7 @@ app.use(bodyParser.json());
 
 // API routes
 const apiPath = '/api';
+app.use(`${apiPath}/restaurant`, restaurantRouter);
 app.use(`${apiPath}/authenticate`, authenticateRouter);
 app.use(apiPath, verifyMiddleware, apiRouter);
 

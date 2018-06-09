@@ -37,7 +37,7 @@ const Restaurant = {
 	 * @returns {Promise<DBResult>} The result of the database insertion.
 	 */
 	async addRestaurant(Restaurant) {
-		return databaseConnection.queryp('INSERT INTO Restaurant (Firstname, Name, Email, Password, Image) VALUES (?,?,?,?,?)', [Restaurant.firstName, Restaurant.name, Restaurant.email.toLowerCase(), await hashPassword(Restaurant.password), Restaurant.image]);
+		return databaseConnection.queryp('INSERT INTO Restaurant (GooglePlaces_Id, Name, Email, Password, Place, Zipcode, Street, StreetNumber) VALUES (?,?,?,?,?,?,?,?)', [Restaurant.googlePlacesId, Restaurant.name, Restaurant.email.toLowerCase(), await hashPassword(Restaurant.password), Restaurant.place,Restaurant.zipcode,Restaurant.street,Restaurant.streetNumber]);
 	},
 
 	/**

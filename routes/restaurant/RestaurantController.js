@@ -8,8 +8,7 @@ const RestaurantController = {
 		const { RestaurantId } = req.params;
 
 		const Restaurants = await RestaurantModel.getAllRestaurants();
-		console.log(Restaurants);
-		res.json(Restaurants.map(transforms(RestaurantId).transformRestaurant));
+		res.json(Restaurants);
 	},
 
 	async getRestaurantById(req, res) {
@@ -18,7 +17,7 @@ const RestaurantController = {
 		const Restaurant = await RestaurantModel.getRestaurantById(RestaurantId);
 
 		if (Restaurant) {
-			res.json(transforms(RestaurantId).transformRestaurant(Restaurant));
+				res.json(Restaurants);
 			return;
 		}
 

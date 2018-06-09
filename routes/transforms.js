@@ -8,6 +8,17 @@ const transforms = (userId) => {
 		me: dbUser.User_Id === userId,
 	});
 
+	const transformRestaurant = dbRestaurant => ({
+		id: dbRestaurant.Restaurant_Id,
+		name: dbRestaurant.Name,
+		place: dbRestaurant.Place,
+		email: dbRestaurant.Email,
+		zipcode: dbRestaurant.Zipcde,
+		street: dbRestaurant.Street,
+		streetNumber: dbRestaurant.StreetNumber,
+		me: dbRestaurant.Restaurant_Id === userId,
+	});
+
 	const transformTeam = dbTeam => ({
 		id: dbTeam.Team_Id,
 		name: dbTeam.Teamname,
