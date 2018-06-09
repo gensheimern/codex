@@ -25,8 +25,9 @@ class Socket {
 	}
 }
 
-function getSocket()  {
-	return socket || new Socket();
+function getSocket() {
+	socket = new Socket();
+	return socket;
 }
 
 export default getSocket;

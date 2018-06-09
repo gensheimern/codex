@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { CardActions } from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
 import CircularProgress from 'material-ui/CircularProgress';
@@ -18,15 +19,18 @@ export default class JoinNotification extends React.Component {
 		};
 
 		this.saveAction = this.saveAction.bind(this);
+		this.handleAccept = this.handleAccept.bind(this);
+		this.handleDecline = this.handleDecline.bind(this);
+		this.handleRequestClose = this.handleRequestClose.bind(this);
 	}
 
-	handleAccept = (event) => {
+	handleAccept() {
 		this.saveAction(true);
-	};
+	}
 
-	handleDecline = (event) => {
+	handleDecline() {
 		this.saveAction(false);
-	};
+	}
 
 	saveAction(accepted) {
 		if (this.state.loaded) {
@@ -36,43 +40,45 @@ export default class JoinNotification extends React.Component {
 		this.setState({
 			decided: true,
 		});
-		
-		fetch(config.apiPath + "/user/me/decide/" + this.props.notification.id, {
-            method: 'POST',
-            headers: {
-				'Content-Type': 'application/json',
-				'X-Access-Token': localStorage.getItem('apiToken'),
+
+		fetch(
+			`${config.apiPath}/user/me/decide/${this.props.notification.id}`,
+			{
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+					'X-Access-Token': localStorage.getItem('apiToken'),
+				},
+				body: JSON.stringify({
+					accepted,
+				}),
 			},
-			body: JSON.stringify({
-				accepted,
-			}),
-		})
-		.then((res) => {
-            if(!res.ok) {
-                throw new Error("Response not ok.");
-            } else if(res.status !== 200) {
-                throw new Error("Decision not saved.");
-            }
-            return res;
-		})
-		.then(res => res.json())
-		.then((res) => {
-            this.setState({
-				loaded: true,
-				message: accepted ? 'You accepted successfully.' : 'You do not accepted.',
-				showMessage: true,
+		)
+			.then((res) => {
+				if (!res.ok) {
+					throw new Error('Response not ok.');
+				} else if (res.status !== 200) {
+					throw new Error('Decision not saved.');
+				}
+				return res.json();
+			})
+			.then(() => {
+				this.setState({
+					loaded: true,
+					message: accepted ? 'You accepted successfully.' : 'You do not accepted.',
+					showMessage: true,
+				});
+			}).catch(() => {
+				this.setState({
+					decided: false,
+					loaded: false,
+					message: 'An Error occured. Try again later.',
+					showMessage: true,
+				});
 			});
-        }).catch((err) => {
-			this.setState({
-				decided: false,
-				loaded: false,
-				message: 'An Error occured. Try again later.',
-				showMessage: true,
-			});
-        });
 	}
 
-	handleRequestClose = () => {
+	handleRequestClose() {
 		this.setState({
 			message: '',
 			showMessage: false,
@@ -80,7 +86,6 @@ export default class JoinNotification extends React.Component {
 	}
 
 	render() {
-
 		let actions = (
 			<CardActions>
 				<FlatButton label="Accept" onClick={this.handleAccept} />
@@ -99,7 +104,7 @@ export default class JoinNotification extends React.Component {
 
 		if (this.state.decided) {
 			if (!this.state.loaded) {
-				actions = (<CircularProgress style={{margin: '5px 16px'}}/>);
+				actions = (<CircularProgress style={{ margin: '5px 16px' }} />);
 			} else {
 				return snackbar;
 			}
@@ -110,7 +115,17 @@ export default class JoinNotification extends React.Component {
 				{actions}
 				{snackbar}
 			</TextNotification>
-			
 		);
 	}
 }
+
+JoinNotification.propTypes = {
+	notification: PropTypes.shape({
+		id: PropTypes.number,
+		title: PropTypes.string,
+		type: PropTypes.string,
+		message: PropTypes.string,
+		time: PropTypes.string,
+		seen: PropTypes.bool,
+	}).isRequired,
+};
