@@ -8,6 +8,7 @@
     "clean": "rimraf build",
     "prebuild": "npm run clean",
     "build": "react-scripts build",
+    "analyze": "source-map-explorer build/static/js/main.*",
     "test": "react-scripts test --env=jsdom",
     "test:coverage": "npm test -- --coverage",
     "eject": "react-scripts eject"
@@ -40,7 +41,8 @@
     "rimraf": "^2.6.2",
     "scroll-into-view-if-needed": "^2.2.4",
     "smooth-scroll-into-view-if-needed": "^1.1.5",
-    "socket.io-client": "^2.1.1"
+    "socket.io-client": "^2.1.1",
+    "source-map-explorer": "^1.5.0"
   },
   "proxy": "http://localhost:5000",
   "devDependencies": {
