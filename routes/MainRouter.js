@@ -6,6 +6,8 @@ const subscribedRouter = 	require('./user/subscribedRouter');
 const subscriberRouter = 	require('./user/SubscriberRouter');
 const notificationRouter =	require('./user/NotificationRouter');
 const userRouter = 			require('./user/UserRouter');
+const restaurantRouter = 			require('./restaurant/RestaurantRouter');
+
 const participatesRouter = 	require('./activity/participatesRouter');
 const messageRouter = 		require('./activity/MessageRouter');
 const activityRouter = 		require('./activity/ActivityRouter');
@@ -20,6 +22,9 @@ router.use('/user', subscribedRouter);
 router.use('/user', subscriberRouter);
 router.use('/user', notificationRouter);
 router.use('/user', userRouter);
+
+router.use('/restaurant', restaurantRouter);
+
 
 router.use('/activity', participatesRouter);
 router.use('/activity', messageRouter);
