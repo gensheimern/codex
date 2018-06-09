@@ -48,15 +48,25 @@ export default class Splashscreen extends React.Component {
 	}
 
 	render() {
-		if (!this.state.loaded || !this.state.timeout) {
+		if (!this.state.loaded || !this.state.timeout || true) {
 			return (
 				<div style={{
-					width: '100%',
-					height: '100%',
-					padding: '20%',
+					width: '80vw',
+					height: '80vw',
+					maxHeight: '60vh',
+					marginTop: '20vh',
+					marginLeft: 'auto',
+					marginRight: 'auto',
 					textAlign: 'center',
 				}}>
-					<img style={{marginBottom: '5%', width: '100%'}} src={logo} alt="Logo"/>
+					<img
+						style={{
+							marginBottom: '5%',
+							height: '100%',
+						}}
+						src={logo}
+						alt="Logo"
+					/>
 					 <LinearProgress mode="indeterminate" />
 				</div>
 			);
@@ -64,7 +74,7 @@ export default class Splashscreen extends React.Component {
 
 		return (
 			<Redirect to={{
-				pathname: this.state.loggedIn ? '/feed' : '/login'
+				pathname: this.state.loggedIn ? '/feed' : '/login',
 			}} />
 		);
 	}
