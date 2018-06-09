@@ -7,7 +7,9 @@ import {Card, /*CardMedia, CardTitle,*/ CardText} from 'material-ui/Card';
 import './signup.css';
 import Paper from 'material-ui/Paper';
 import Checkbox from 'material-ui/Checkbox';
+import Maps from './GooglePlaces';
 import {Link} from 'react-router-dom';
+import Toggle from './SignupToggle';
 
 export default class Signup extends React.Component {
 	emailRegExp = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -19,6 +21,8 @@ export default class Signup extends React.Component {
 
 		this.handleChange.bind(this);
 		this.signupUser.bind(this);
+		this.callbackAddress = this.callbackAddress.bind(this);
+		this.callbackToggle = this.callbackToggle.bind(this);
 
 		this.state = {
 			email: "",
@@ -32,6 +36,9 @@ export default class Signup extends React.Component {
 			retypePassword: "",
 			checked: false,
 			captcha: '',
+			addressValue: '',
+			toggle: true,
+			signupGoogleSearch: true,
 		}
 	}
 
@@ -39,6 +46,10 @@ export default class Signup extends React.Component {
 		this.setState({
 			[name]: e.target.value
 		});
+	}
+
+	callbackToggle(event, isInputChecked){
+		this.setState({ signupGoogleSearch: isInputChecked });
 	}
 
 	validateForm() {
@@ -57,6 +68,18 @@ export default class Signup extends React.Component {
 			checked: !oldState.checked,
 		  };
 		});
+	}
+
+	callbackAddress(myAddress){
+		this.setState({ googlePlacesId: myAddress.split(',') });
+	}
+
+	handleChangeAddressValue(e){
+		this.setState({ addressValue: e.target.value });
+	}
+
+	toggle(){
+
 	}
 
 	signupUser = (e) => {
@@ -82,7 +105,7 @@ export default class Signup extends React.Component {
 			if (!res.ok || res.status !== 201) {
 				// handle error
 			} else {
-				
+
 				this.props.history.push('/feed');
 			}
 		});
@@ -156,6 +179,107 @@ export default class Signup extends React.Component {
 			};
 		}
 
+
+		if(this.state.signupGoogleSearch){
+			var content =
+			<Maps
+				styles={styles.textField}
+				callbackAdress={this.handleChangeAddressValue}
+				myAddress={this.callbackAddress}
+				>
+				{renderFunc}
+			</Maps>
+
+		}
+		else {
+			var content =
+			<div>
+			<TextField
+				id="restaurantName"
+				label="restaurantName"
+				value={this.state.restaurantName}
+				onChange={this.handleChange('restaurantName')}
+				floatingLabelText="Restaurant Name"
+				style= {styles.textField}
+			/>
+
+
+
+			<TextField
+				id="googlePlacesId"
+				label="googlePlacesId"
+				value={this.state.googlePlacesId}
+				onChange={this.handleChange('googlePlacesId')}
+				floatingLabelText="Find your Restaurant"
+				style= {styles.textField}
+			/>
+
+			<TextField
+				id="place"
+				label="Place"
+				value={this.state.place}
+				onChange={this.handleChange('place')}
+				floatingLabelText="Place"
+				style= {styles.textField}
+			/>
+			<TextField
+				id="zipcode"
+				label="Zipcode"
+				value={this.state.zipcode}
+				onChange={this.handleChange('zipcode')}
+				floatingLabelText="Zipcode"
+				style= {styles.textField}
+			/>
+			<TextField
+				id="street"
+				label="Street"
+				value={this.state.street}
+				onChange={this.handleChange('street')}
+				floatingLabelText="Street"
+				style= {styles.textField}
+			/>
+			<TextField
+				id="streetNumber"
+				label="Street number"
+				value={this.state.streetNumber}
+				onChange={this.handleChange('streetNumber')}
+				floatingLabelText="Street number"
+				style= {styles.textField}
+			/>
+			<TextField
+				id="email"
+				label="E-Mail"
+				value={this.state.email}
+				onChange={this.handleChange('email')}
+				floatingLabelText="E-Mail"
+				style= {styles.textField}
+			/>
+
+			<TextField
+				id="password"
+				label="Password"
+				type="password"
+				value={this.state.password}
+				onChange={this.handleChange('password')}
+				floatingLabelText="Password"
+				style= {styles.textField}
+			/>
+
+			<TextField
+				id="retypePassword"
+				label="Retype password"
+				type="password"
+				value={this.state.retypePassword}
+				onChange={this.handleChange('retypePassword')}
+				floatingLabelText="Retype Password"
+				{ ...retypeError }
+				style= {styles.textField}
+			/>
+		</div>
+		}
+
+
+
 		return(
 			<div className="signupBg">
 			<form className="signup" onSubmit={this.signupUser}>
@@ -172,85 +296,11 @@ export default class Signup extends React.Component {
 				<CardText>
 				<h2 className="h2header">SIGN UP FOR YOUR RESTAURANT</h2>
 
-				<TextField
-					id="restaurantName"
-					label="restaurantName"
-					value={this.state.restaurantName}
-					onChange={this.handleChange('restaurantName')}
-					floatingLabelText="Restaurant Name"
-					style= {styles.textField}
-				/>
-
-				<TextField
-					id="googlePlacesId"
-					label="googlePlacesId"
-					value={this.state.googlePlacesId}
-					onChange={this.handleChange('googlePlacesId')}
-					floatingLabelText="Find your Restaurant"
-					style= {styles.textField}
-				/>
-
-				<TextField
-					id="place"
-					label="Place"
-					value={this.state.place}
-					onChange={this.handleChange('place')}
-					floatingLabelText="Place"
-					style= {styles.textField}
-				/>
-				<TextField
-					id="zipcode"
-					label="Zipcode"
-					value={this.state.zipcode}
-					onChange={this.handleChange('zipcode')}
-					floatingLabelText="Zipcode"
-					style= {styles.textField}
-				/>
-				<TextField
-					id="street"
-					label="Street"
-					value={this.state.street}
-					onChange={this.handleChange('street')}
-					floatingLabelText="Street"
-					style= {styles.textField}
-				/>
-				<TextField
-					id="streetNumber"
-					label="Street number"
-					value={this.state.streetNumber}
-					onChange={this.handleChange('streetNumber')}
-					floatingLabelText="Street number"
-					style= {styles.textField}
-				/>
-				<TextField
-					id="email"
-					label="E-Mail"
-					value={this.state.email}
-					onChange={this.handleChange('email')}
-					floatingLabelText="E-Mail"
-					style= {styles.textField}
-				/>
-
-				<TextField
-					id="password"
-					label="Password"
-					type="password"
-					value={this.state.password}
-					onChange={this.handleChange('password')}
-					floatingLabelText="Password"
-					style= {styles.textField}
-				/>
-
-				<TextField
-					id="retypePassword"
-					label="Retype password"
-					type="password"
-					value={this.state.retypePassword}
-					onChange={this.handleChange('retypePassword')}
-					floatingLabelText="Retype Password"
-					{ ...retypeError }
-					style= {styles.textField}
-				/>
+				<div className="toggleWrapper">
+						<label style={{float:"left", width:"50%",paddingLeft:"10%"}}> Google Search </label>
+						<Toggle toggle={this.callbackToggle}  />
+				</div>
+				{content}
 				<br/>
 				<br/>
 
@@ -285,3 +335,15 @@ export default class Signup extends React.Component {
 		);
 	}
 }
+const renderFunc = ({ getInputProps, getSuggestionItemProps, suggestions }) => (
+	<div className="autocomplete-root">
+		<input {...getInputProps()} />
+		<div className="autocomplete-dropdown-container">
+			{suggestions.map(suggestion => (
+				<div {...getSuggestionItemProps(suggestion)}>
+					<span>{suggestion.description}</span>
+				</div>
+			))}
+		</div>
+	</div>
+);
