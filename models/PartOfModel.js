@@ -32,7 +32,7 @@ const PartOfModel = {
 	},
 
 	async addMemberOfOrganization(userId, organizationId) {
-		return databaseConnection.queryp('INSERT INTO part_of (User_Id, Organization_Id, Active) VALUES (?, ?, 1)', [userId, organizationId]);
+		return databaseConnection.queryp('INSERT INTO part_of (User_Id, Organization_Id, Active) VALUES (?, ?, 0)', [userId, organizationId]);
 	},
 
 	async deleteMemberOfOrganization(userId, organizationId) {

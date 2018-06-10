@@ -81,6 +81,7 @@ const OrganizationController = {
 				success: false,
 				message: 'Invalid organization data.',
 			});
+			return;
 		}
 
 		const organization = await OrganizationModel.getOrganizationById(organizationId);
@@ -96,6 +97,7 @@ const OrganizationController = {
 				success: false,
 				message: 'Permission denied.',
 			});
+			return;
 		}
 
 		await OrganizationModel.updateOrganization(organizationId, newOrganization);
@@ -103,6 +105,36 @@ const OrganizationController = {
 			success: true,
 			message: 'Organization edited.',
 		});
+	},
+
+	async changeAdmin(req, res) {
+		const { userId } = req.token;
+		const { organizationId } = req.params;
+		const targetId = req.params.userId;
+
+		const isAdmin = await OrganizationModel.isAdmin(userId, organizationId);
+
+		if (!isAdmin) {
+			res.status(403).json({
+				success: false,
+				message: 'Only the admin can change the admin.',
+			});
+			return;
+		}
+
+		const result = await OrganizationModel.changeAdmin(targetId, organizationId);
+
+		if (result.affectedRows !== 1) {
+			res.status(404).json({
+				success: false,
+				message: 'Organization not found.',
+			});
+		} else {
+			res.json({
+				success: true,
+				message: 'Admin of organization changed successfully.',
+			});
+		}
 	},
 
 };

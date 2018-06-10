@@ -14,6 +14,7 @@ const PartOfController = {
 			res.status(403).json({
 				message: 'Only member of the organization can see the members.',
 			});
+			return;
 		}
 
 		const members = await PartOfModel.getAllMembers();
@@ -35,6 +36,62 @@ const PartOfController = {
 		const organizations = await PartOfModel.getActiveOrganizationsOfUser(userId);
 
 		res.json(organizations.map(transforms(userId).transformOrganization));
+	},
+
+	async addMember(req, res) {
+		const { userId } = req.token;
+		const { organizationId } = req.params;
+		const targetId = req.params.userId;
+
+		if (!await OrganizationModel.isAdmin(userId, organizationId)) {
+			res.status(403).json({
+				success: false,
+				message: 'Only the admin can add other members.',
+			});
+			return;
+		}
+
+		const result = await PartOfModel.addMemberOfOrganization(targetId, organizationId);
+
+		if (result.affectedRows !== 1) {
+			res.status(404).json({
+				success: false,
+				message: 'Organization not found.',
+			});
+		} else {
+			res.json({
+				success: true,
+				message: 'Successfully added member to organization.',
+			});
+		}
+	},
+
+	async deleteMember(req, res) {
+		const { userId } = req.token;
+		const { organizationId } = req.params;
+		const targetId = req.params.userId;
+
+		if (!await OrganizationModel.isAdmin(userId)) {
+			res.status(403).json({
+				success: false,
+				message: 'Only the admin can add other members.',
+			});
+			return;
+		}
+
+		const result = await PartOfModel.deleteMemberOfOrganization(targetId, organizationId);
+
+		if (result.affectedRows !== 1) {
+			res.status(404).json({
+				success: false,
+				message: 'Organization not found.',
+			});
+		} else {
+			res.json({
+				success: true,
+				message: 'Successfully removed member from organization.',
+			});
+		}
 	},
 
 	async joinOrganization(req, res) {

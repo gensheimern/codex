@@ -32,6 +32,10 @@ const OrganizationModel = {
 		return databaseConnection.querypBool('SELECT Organization_Id FROM Organization WHERE Organization_Id = ? AND User_Id = ?', [organizationId, userId]);
 	},
 
+	async changeAdmin(userId, organizationId) {
+		return databaseConnection.queryp('UPDATE Organization SET Admin = ? WHERE Organization_Id = ?', [userId, organizationId]);
+	},
+
 };
 
 

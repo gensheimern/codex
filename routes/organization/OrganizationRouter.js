@@ -13,5 +13,7 @@ router.delete('/:organizationId', asyncMiddleware(OrganizationController.deleteO
 
 router.put('/:organizationId', asyncMiddleware(OrganizationController.updateOrganization));
 
+router.put('/:organizationId/admin/:userId', asyncMiddleware(OrganizationController.changeAdmin));
+
 
 module.exports = router;
