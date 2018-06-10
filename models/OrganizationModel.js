@@ -28,6 +28,10 @@ const OrganizationModel = {
 		return databaseConnection.queryp('DELETE FROM Organization WHERE Organization_Id = ?', [organizationId]);
 	},
 
+	async isAdmin(userId, organizationId) {
+		return databaseConnection.querypBool('SELECT Organization_Id FROM Organization WHERE Organization_Id = ? AND User_Id = ?', [organizationId, userId]);
+	},
+
 };
 
 

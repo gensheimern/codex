@@ -1,13 +1,13 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const serveStatic = require('serve-static');
+const cors = require('cors');
 const path = require('path');
 // const mail = require('./mailservice/mailservice');
 const authenticateRouter = require('./routes/auth/AuthenticateRouter');
 const { verifyMiddleware } = require('./routes/auth/Auth');
 const apiRouter = require('./routes/MainRouter');
 const errorHandler = require('./middleware/errorHandler');
-const cors = require('cors');
 
 const app = express();
 
