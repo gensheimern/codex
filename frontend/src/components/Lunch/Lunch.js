@@ -6,6 +6,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import {Card,CardText} from 'material-ui/Card';
 import Paper from 'material-ui/Paper';
 import { Link } from 'react-router-dom';
+import ImageUpload from './ImageUpload';
 
 
 class Lunch extends React.Component {
@@ -97,6 +98,8 @@ class Lunch extends React.Component {
                 />
 
           <div className="errorText"> {this.state.errorText} </div>
+
+          <ImageUpload />
 
 
                 <br/>

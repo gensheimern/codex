@@ -30,9 +30,9 @@ export default class LocationSearchInput extends React.Component {
   }
 
   handleSelect = (address) => {
-    this.props.myAddress(address);
+    this.props.callbackAdress(address);
     geocodeByAddress(address)
-      .then(results => console.log(results[0]))
+      .then(results => this.props.myAddress(results[0]))
       .then(latLng => console.log('Success', latLng))
       .catch(error => console.error('Error', error))
   }
@@ -43,6 +43,7 @@ export default class LocationSearchInput extends React.Component {
         value={this.state.address}
         onChange={this.handleChange}
         onSelect={this.handleSelect}
+        maxSearchResults={20}
       >
         {({ getInputProps, suggestions, getSuggestionItemProps }) => (
           <div>
@@ -63,8 +64,8 @@ export default class LocationSearchInput extends React.Component {
                 const className = suggestion.active ? 'suggestion-item--active' : 'suggestion-item';
                 // inline style for demonstration purpose
                 const style = suggestion.active
-                            ? { backgroundColor: '#fafafa', cursor: 'pointer' }
-                            : { backgroundColor: '#ffffff', cursor: 'pointer' };
+                            ? { backgroundColor: '#fafafa', cursor: 'pointer', marginTop:"10px" }
+                            : { backgroundColor: '#ffffff', cursor: 'pointer', marginTop:"10px" };
                 return (
                   <div {...getSuggestionItemProps(suggestion, { className, style })}>
                     <span>{suggestion.description}</span>

@@ -9,10 +9,10 @@ const styles = {
     marginBottom: 16,
   },
 
-  thumbSwitched: {
+  thumbOff: {
     backgroundColor: 'rgb(30 161 133)',
   },
-  trackSwitched: {
+  trackOff: {
     backgroundColor: '#B0E8D2',
   },
   labelStyle: {
@@ -26,6 +26,7 @@ export default class ReminderToggle extends React.Component{
   render(){
     return(
       <Toggle
+
         label="By hand"
         labelPosition="right"
         thumbStyle={styles.thumbOff}
@@ -34,7 +35,7 @@ export default class ReminderToggle extends React.Component{
         trackSwitchedStyle={styles.trackSwitched}
         labelStyle={styles.labelStyle}
         onToggle={this.props.toggle}
-        style={{width:"50%",paddingLeft:"3%",paddingRight:"10%"}}
+        style={{width:"48%",paddingLeft:"3%",paddingRight:"10%"}}
       />
     )
   }

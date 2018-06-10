@@ -23,6 +23,7 @@ export default class Signup extends React.Component {
 		this.signupUser.bind(this);
 		this.callbackAddress = this.callbackAddress.bind(this);
 		this.callbackToggle = this.callbackToggle.bind(this);
+		this.handleChangeAddressValue = this.handleChangeAddressValue.bind(this);
 
 		this.state = {
 			email: "",
@@ -38,7 +39,7 @@ export default class Signup extends React.Component {
 			captcha: '',
 			addressValue: '',
 			toggle: true,
-			signupGoogleSearch: true,
+			signupGoogleSearch: false,
 		}
 	}
 
@@ -52,10 +53,49 @@ export default class Signup extends React.Component {
 		this.setState({ signupGoogleSearch: isInputChecked });
 	}
 
+	handleCheck = () => {
+		this.setState({signupGoogleSearch: true})
+	}
+
+	handleSignup = (e) => {
+		this.signupUser(e)
+		}
+
+	toggleSubmitCheck(){
+		if(!this.state.signupGoogleSearch){
+			return(
+				<RaisedButton
+					backgroundColor="#b9b9b9"
+					label="Check"
+					primary={true}
+					disabled={!this.validateForm()}
+					style = {styles.signupButton}
+					onClick= {this.handleCheck}
+				/>
+			)
+		}
+		else {
+			return(
+			<RaisedButton
+				backgroundColor="#b9b9b9"
+				label="Sign up"
+				primary={true}
+				disabled={!this.validateForm()}
+				style = {styles.signupButton}
+				onClick= {this.handleSignup}
+			/>
+		)
+		}
+
+	}
+
 	validateForm() {
 		return this.emailRegExp.test(this.state.email)
 			&& this.state.restaurantName !== ""
-			&& this.state.googlePlacesId !== ""
+			&& this.state.place !== ""
+			&& this.state.zipcode !== ""
+			&& this.state.street !== ""
+			&& this.state.streetNumber !== ""
 			&& this.state.password !== ""
 			&& this.state.retypePassword !== ""
 			&& this.state.password === this.state.retypePassword
@@ -71,16 +111,22 @@ export default class Signup extends React.Component {
 	}
 
 	callbackAddress(myAddress){
-		this.setState({ googlePlacesId: myAddress.split(',') });
+		console.log(myAddress);
+		console.log( myAddress.address_components[0].long_name);
+		this.setState({
+			googlePlacesId: myAddress.place_id,
+			streetNumber: myAddress.address_components[0].long_name,
+			street : myAddress.address_components[1].long_name,
+			place: myAddress.address_components[3].long_name,
+			zipcode: myAddress.address_components[6].long_name,
+		  });
 	}
 
 	handleChangeAddressValue(e){
-		this.setState({ addressValue: e.target.value });
+		var name = e.split(",")
+		this.setState({ restaurantName: name[0] });
 	}
 
-	toggle(){
-
-	}
 
 	signupUser = (e) => {
 		e.preventDefault();
@@ -106,71 +152,14 @@ export default class Signup extends React.Component {
 				// handle error
 			} else {
 
-				this.props.history.push('/feed');
+				this.props.history.push('/lunch');
 			}
 		});
 	}
 
+
 	render() {
-		const styles = {
-			block: {
-			  maxWidth: 250,
-			},
-			checkbox: {
-				paddingLeft: 100,
-				paddingRight: 197,
-				marginBottom: 16,
-				fontWeight: 0,
-			},
-
-			cardStyle:{
-				width: 440,
-				borderRadius: 5,
-				backgroundColor: "#FFFFFF",
-				boxShadow: "0 2 20 0 rgba(57,56,56,0.5)",
-				display: 'block',
-				marginLeft: 'auto',
-				marginRight: 'auto',
-			},
-
-			paperStyle:{
-				height: 62,
-				width: 62,
-				borderRadius: 7,
-				display: 'block',
-				marginLeft: 'auto',
-				marginRight: 'auto',
-			},
-			textField:{
-				width: '80%',
-				marginLeft: '10%',
-				marginRight: '10%',
-			},
-			reCAPTCHA:{
-				heigth: 76,
-				width: 305,
-				boarder:"1 solid #D6D6D6",
-				borderRadius: 2.43,
-				backgroundColor: "#FAFAFA",
-				boxShadow: "0 1 2 0 rgba(0,0,0,0.1)",
-				display: 'block',
-				marginLeft: 'auto',
-				marginRight: 'auto',
-
-			},
-			signupButton:{
-				heigt: 40.57,
-				width: '30%',
-				borderRadius: 3,
-				boxShadow: "inset 0 1 3 0 rgba(0,0,0,0.5),0 1 2 0 rgba(0,0,0,0.5)",
-				backgroundColor: "#1EA185",
-				display: 'block',
-				marginLeft: 'auto',
-				marginRight: 'auto',
-			},
-
-
-		};
+		console.log(this.state.name);
 
 		let retypeError = {};
 		if (this.state.password !== this.state.retypePassword) {
@@ -180,8 +169,9 @@ export default class Signup extends React.Component {
 		}
 
 
-		if(this.state.signupGoogleSearch){
+		if(!this.state.signupGoogleSearch){
 			var content =
+			<div>
 			<Maps
 				styles={styles.textField}
 				callbackAdress={this.handleChangeAddressValue}
@@ -189,6 +179,36 @@ export default class Signup extends React.Component {
 				>
 				{renderFunc}
 			</Maps>
+			<TextField
+				id="email"
+				label="E-Mail"
+				value={this.state.email}
+				onChange={this.handleChange('email')}
+				floatingLabelText="E-Mail"
+				style= {styles.textField}
+			/>
+
+			<TextField
+				id="password"
+				label="Password"
+				type="password"
+				value={this.state.password}
+				onChange={this.handleChange('password')}
+				floatingLabelText="Password"
+				style= {styles.textField}
+			/>
+
+			<TextField
+				id="retypePassword"
+				label="Retype password"
+				type="password"
+				value={this.state.retypePassword}
+				onChange={this.handleChange('retypePassword')}
+				floatingLabelText="Retype Password"
+				{ ...retypeError }
+				style= {styles.textField}
+			/>
+			</div>
 
 		}
 		else {
@@ -200,17 +220,6 @@ export default class Signup extends React.Component {
 				value={this.state.restaurantName}
 				onChange={this.handleChange('restaurantName')}
 				floatingLabelText="Restaurant Name"
-				style= {styles.textField}
-			/>
-
-
-
-			<TextField
-				id="googlePlacesId"
-				label="googlePlacesId"
-				value={this.state.googlePlacesId}
-				onChange={this.handleChange('googlePlacesId')}
-				floatingLabelText="Find your Restaurant"
 				style= {styles.textField}
 			/>
 
@@ -282,10 +291,10 @@ export default class Signup extends React.Component {
 
 		return(
 			<div className="signupBg">
-			<form className="signup" onSubmit={this.signupUser}>
+			<form className="signup" >
 				<div>
 					<Paper style={styles.paperStyle} zDepth={1} />
- 				</div>
+				</div>
 
 				<br/>
 				<center>
@@ -297,7 +306,14 @@ export default class Signup extends React.Component {
 				<h2 className="h2header">SIGN UP FOR YOUR RESTAURANT</h2>
 
 				<div className="toggleWrapper">
-						<label style={{float:"left", width:"50%",paddingLeft:"10%"}}> Google Search </label>
+						<label className="toggleLabel"style={{
+							float:"left",
+							 width:"50%",
+							 paddingLeft:"10%",
+							 lineHeight: "24px",
+							 color: "grey",
+							 fontFamily: "Trebuchet MS, Verdana, sans-serif",
+						 }}> Google Search </label>
 						<Toggle toggle={this.callbackToggle}  />
 				</div>
 				{content}
@@ -305,20 +321,13 @@ export default class Signup extends React.Component {
 				<br/>
 
 				<Checkbox
-          			label="Datenschutzerklärung "
-          			checked={this.state.checked}
-          			onCheck={this.updateCheck.bind(this)}
-          			style={styles.checkbox}
-        		/>
+								label="Datenschutzerklärung "
+								checked={this.state.checked}
+								onCheck={this.updateCheck.bind(this)}
+								style={styles.checkbox}
+						/>
 
-				<RaisedButton
-					backgroundColor="#b9b9b9"
-					type="submit"
-					label="Sign Up"
-					primary={true}
-					disabled={!this.validateForm()}
-					style = {styles.signupButton}
-				/>
+				{this.toggleSubmitCheck()}
 				<br/>
 				<center>
 					<p>Have an account already?&nbsp;
@@ -335,6 +344,66 @@ export default class Signup extends React.Component {
 		);
 	}
 }
+const styles = {
+	block: {
+		maxWidth: 250,
+	},
+	checkbox: {
+		paddingLeft: 100,
+		paddingRight: 197,
+		marginBottom: 16,
+		fontWeight: 0,
+	},
+
+	cardStyle:{
+		width: 440,
+		borderRadius: 5,
+		backgroundColor: "#FFFFFF",
+		boxShadow: "0 2 20 0 rgba(57,56,56,0.5)",
+		display: 'block',
+		marginLeft: 'auto',
+		marginRight: 'auto',
+	},
+
+	paperStyle:{
+		height: 62,
+		width: 62,
+		borderRadius: 7,
+		display: 'block',
+		marginLeft: 'auto',
+		marginRight: 'auto',
+	},
+	textField:{
+		width: '80%',
+		marginLeft: '10%',
+		marginRight: '10%',
+	},
+	reCAPTCHA:{
+		heigth: 76,
+		width: 305,
+		boarder:"1 solid #D6D6D6",
+		borderRadius: 2.43,
+		backgroundColor: "#FAFAFA",
+		boxShadow: "0 1 2 0 rgba(0,0,0,0.1)",
+		display: 'block',
+		marginLeft: 'auto',
+		marginRight: 'auto',
+
+	},
+	signupButton:{
+		heigt: 40.57,
+		width: '30%',
+		borderRadius: 3,
+		boxShadow: "inset 0 1 3 0 rgba(0,0,0,0.5),0 1 2 0 rgba(0,0,0,0.5)",
+		backgroundColor: "#1EA185",
+		display: 'block',
+		marginLeft: 'auto',
+		marginRight: 'auto',
+	},
+
+
+};
+
 const renderFunc = ({ getInputProps, getSuggestionItemProps, suggestions }) => (
 	<div className="autocomplete-root">
 		<input {...getInputProps()} />
