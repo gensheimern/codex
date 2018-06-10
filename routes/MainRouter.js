@@ -9,6 +9,7 @@ const userRouter = 			require('./user/UserRouter');
 const participatesRouter = 	require('./activity/participatesRouter');
 const messageRouter = 		require('./activity/MessageRouter');
 const activityRouter = 		require('./activity/ActivityRouter');
+const organizationRouter =	require('./organization/OrganizationRouter');
 const email = require('./mailservice/mailservice');
 
 router.use('/sendmail', email);
@@ -24,6 +25,8 @@ router.use('/user', userRouter);
 router.use('/activity', participatesRouter);
 router.use('/activity', messageRouter);
 router.use('/activity', activityRouter);
+
+router.use('/organization', organizationRouter);
 
 
 router.use('*', (req, res) => {
