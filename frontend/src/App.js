@@ -6,7 +6,7 @@ import MediaQuery from 'react-responsive';
 import './App.css';
 import Login from './components/login/Login';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import Organisation from './components/signup/Organisation';
+import Organization from './components/signup/Organisation';
 import Signup from './components/signup/Signup';
 import Dashboard from './components/Dashboard';
 import MobileContent from './components/MobileContent';
@@ -97,7 +97,7 @@ class App extends Component {
 				<Route exact path="/login" component={Login} />
 				<Route exact path="/signup" component={Signup} />
 				<Route exact path="/logout" render={() => (<Login logout={true} />)} />
-				<Route exact path="/organisation" component={Organisation}/>
+				<Route exact path="/organisation" component={Organization}/>
 
 				{/* Protected routes (login required) */}
 				<Route exact path="/(feed|notifications|profile|addteam|addevent|personal)" render={(props) => (
