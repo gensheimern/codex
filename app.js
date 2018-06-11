@@ -21,6 +21,7 @@ app.use(compression());
 app.use(serveStatic(path.join(`${__dirname}/image/user`)));
 app.use(serveStatic(path.join(`${__dirname}/image/activity`)));
 app.use(serveStatic(path.join(`${__dirname}/image/activity/card`)));
+app.use(serveStatic(path.join(`${__dirname}/image/activity/eventImagePick`)));
 app.use(serveStatic(path.join(`${__dirname}/frontend/build`)));
 app.use(bodyParser.json());
 
