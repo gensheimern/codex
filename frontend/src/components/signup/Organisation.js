@@ -1,13 +1,11 @@
-import React, {
-    Component
-} from "react";
+import React from "react";
 import "./Organisation.css";
 import RaisedButton from 'material-ui/RaisedButton';
-import config from '../../config';
+//import config from '../../config';
 import Paper from 'material-ui/Paper';
 import TextField from 'material-ui/TextField';
 import {Card, CardText} from 'material-ui/Card';
-import AutoComplete from 'material-ui/AutoComplete';
+//import AutoComplete from 'material-ui/AutoComplete';
 
 export default class Organisation extends React.Component{
 

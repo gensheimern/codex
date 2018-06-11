@@ -7,15 +7,7 @@
 import React from 'react';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
-import RaisedButton from 'material-ui/RaisedButton';
-import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 import CreateDsgvoText from '../signup/DsgvoText';
-
-const styles = {
-    radioButton: {
-      marginTop: 16,
-    },
-  };
 
 /**
  * Dialog content can be scrollable.

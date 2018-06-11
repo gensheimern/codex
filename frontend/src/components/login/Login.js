@@ -2,11 +2,8 @@ import React, {
     Component
 } from "react";
 import "./Login.css";
-
 import config from '../../config';
 import TextField from 'material-ui/TextField';
-import Dialog from 'material-ui/Dialog';
-import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import {Card,CardText} from 'material-ui/Card';
 import Paper from 'material-ui/Paper';
