@@ -168,9 +168,10 @@ export default class Signup extends React.Component {
 			};
 		}
 
-
+		var content;
 		if(!this.state.signupGoogleSearch){
-			var content =
+
+			content =
 			<div>
 			<Maps
 				styles={styles.textField}
@@ -212,7 +213,7 @@ export default class Signup extends React.Component {
 
 		}
 		else {
-			var content =
+		 	content =
 			<div>
 			<TextField
 				id="restaurantName"

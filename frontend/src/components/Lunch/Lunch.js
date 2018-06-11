@@ -7,7 +7,6 @@ import {Card,CardText} from 'material-ui/Card';
 import Paper from 'material-ui/Paper';
 import { Link } from 'react-router-dom';
 import ImageUpload from './ImageUpload';
-import config from '../../config';
 
 
 
