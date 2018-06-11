@@ -1,4 +1,4 @@
-.organisation {
+.organization {
 	padding: 2%;
 	/*height: 1065px*/
 	height: 100vh;
@@ -7,7 +7,7 @@
 
 }
 
-.organisationBg {
+.organizationBg {
 	background-image: url("Hintergrundbild.png");
 	background-size: cover;
 	background-repeat: no-repeat;
