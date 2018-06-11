@@ -113,19 +113,21 @@ class AccountSettings extends React.Component {
 	}
 
 	render() {
-		const hiddenPassword = (<TextField
-			value={''}
-			floatingLabelText="Change Password"
-			style={{
-				width: '100%',
-				marginBottom: '10px',
-			}}
-			onClick={() => {
-				this.setState({
-					showChangePassword: true,
-				});
-			}}
-		/>);
+		const hiddenPassword = (
+			<TextField
+				value={''}
+				floatingLabelText="Change Password"
+				style={{
+					width: '100%',
+					marginBottom: '10px',
+				}}
+				onClick={() => {
+					this.setState({
+						showChangePassword: true,
+					});
+				}}
+			/>
+		);
 		
 		const changePassword = (
 			<React.Fragment>
@@ -168,7 +170,7 @@ class AccountSettings extends React.Component {
 				<RaisedButton
 					label="Cancel"
 					backgroundColor="#ED6559"
-					color="white"
+					labelColor="white"
 					onClick={this.resetInputs}
 					style={{color: 'white'}}
 				/>
