@@ -7,6 +7,7 @@ const subscriberRouter = 	require('./user/SubscriberRouter');
 const notificationRouter =	require('./user/NotificationRouter');
 const orgaMngtRouter =		require('./user/OrganizationRouter');
 const userRouter = 			require('./user/UserRouter');
+
 const participatesRouter = 	require('./activity/participatesRouter');
 const messageRouter = 		require('./activity/MessageRouter');
 const activityRouter = 		require('./activity/ActivityRouter');
