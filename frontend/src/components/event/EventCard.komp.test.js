@@ -67,10 +67,5 @@ describe('EventCard Component', () =>{
     it('should render without throwing an error', () =>{
         expect(eventCard().exists(<form className = 'EventCard'></form>)).toBe(true)
     });
-
-    it ('should render one <button/> component', () =>{
-        const wrapper = eventCard();
-        expect(wrapper.find("button.joinBtn").length).toBe(1);     
-     });
  });
 });

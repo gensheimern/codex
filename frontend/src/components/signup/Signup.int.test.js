@@ -1,16 +1,16 @@
 import React from 'react';
 import {shallow, mount} from 'enzyme';
 import Signup from './Signup';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import {MemoryRouter} from 'react-router-dom';
 
 describe("Signup", () => {
     let mountedCreateTeam;
     const createTeam = () => {
         if(!mountedCreateTeam){
             mountedCreateTeam = mount(
-                <MuiThemeProvider>
+                <MemoryRouter>
                     <Signup />
-                </MuiThemeProvider>
+                </MemoryRouter>
             );
         }
         return mountedCreateTeam;

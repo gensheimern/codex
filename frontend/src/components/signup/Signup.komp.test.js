@@ -10,11 +10,11 @@ describe('Signup Component', () =>{
         expect(shallow(<Signup />).exists(<form className = 'Signup'></form>)).toBe(true)
     });
 
-    it('renders a email input', () => {
+    it('renders a firstname input', () => {
         expect(shallow(<Signup/>).find('#firstName').length).toEqual(1)
     });
 
-    it('renders a email input', () => {
+    it('renders a name input', () => {
         expect(shallow(<Signup/>).find('#name').length).toEqual(1)
     });
 
@@ -26,7 +26,7 @@ describe('Signup Component', () =>{
         expect(shallow(<Signup />).find('#password').length).toEqual(1)
     });
     
-    it('renders a password input', () => {
+    it('renders a retypepassword input', () => {
         expect(shallow(<Signup />).find('#retypePassword').length).toEqual(1)
     });
 
