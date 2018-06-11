@@ -96,7 +96,7 @@ class App extends Component {
 			<Route exact path="/login" component={Login} />
 			<Route exact path="/signup" component={Signup} />
 			<Route exact path="/logout" component={Login} />
-			<Route exact path="/organisation" component={Organisation}/>
+			<Route exact path="/organization" component={Organization}/>
 
 				{/* Protected routes (login required) */}
 				<Route exact path="/(feed|notifications|profile|addteam|addevent|personal)" render={(props) => (
