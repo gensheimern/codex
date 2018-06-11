@@ -20,23 +20,23 @@ export default class MobileContent extends React.Component {
 
 		return (
 			<div className="mobileContent-wrapper">
-					<AppNavTop
-						searchFilterFeed={this.props.searchFilterFeed}
-						name="Lunch-Planner"
-					/>
-					<AppNavBottom
-						index={content}
-					/>
-					<div className="mainContentMobile-wrapper" style={{
-						height: 'calc(100vh - 112px)',
-					}}>
+					
+					<div style={{width: '100%'}}>
 						<MainContent
+							filterPersonalFeed = {this.props.filterPersonalFeed}
 							searchFilterFeed={this.props.searchFilterFeed}
 							mainContentNumber={content}
 							filter={this.props.filter}
 						/>
 					</div>
-					
+					{/* This is the inteded order of components, because it stacks them in the right order. */}
+					<AppNavBottom
+						index={content}
+					/>
+					<AppNavTop
+						searchFilterFeed={this.props.searchFilterFeed}
+						name="Lunch-Planner"
+					/>
 				</div>
 		);
 	}

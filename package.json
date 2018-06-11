@@ -38,6 +38,7 @@
 		"dotenv": "^6.0.0",
 		"express": "~4.16.0",
 		"express-mailer": "^0.3.1",
+		"jade": "^1.11.0",
 		"jsonwebtoken": "^8.2.1",
 		"mysql": "^2.15.0",
 		"mysql2": "^1.5.3",
