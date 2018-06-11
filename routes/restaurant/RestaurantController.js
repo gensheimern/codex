@@ -5,8 +5,6 @@ const { hashPassword, validateHash } = require('../auth/Auth');
 const RestaurantController = {
 
 	async getAllRestaurants(req, res) {
-		const { RestaurantId } = req.params;
-
 		const Restaurants = await RestaurantModel.getAllRestaurants();
 		res.json(Restaurants);
 	},
@@ -17,7 +15,7 @@ const RestaurantController = {
 		const Restaurant = await RestaurantModel.getRestaurantById(RestaurantId);
 
 		if (Restaurant) {
-				res.json(Restaurants);
+			res.json(Restaurant);
 			return;
 		}
 

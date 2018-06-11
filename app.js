@@ -11,8 +11,6 @@ const errorHandler = require('./middleware/errorHandler');
 const cors = require('cors');
 const fileUpload = require('express-fileupload');
 
-
-
 const app = express();
 
 // Middlewares
@@ -30,29 +28,21 @@ app.use(bodyParser.json());
 const apiPath = '/api';
 app.use(`${apiPath}/restaurant`, restaurantRouter);
 app.use(fileUpload());
-app.post(`${apiPath}/upload`, function(req, res) {
-	console.log(`${apiPath}/upload`);
-  if (!req.files)
-    return res.status(400).send('No files were uploaded.');
-
-  // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
-  let sampleFile = req.files.sampleFile;
-
-  // Use the mv() method to place the file somewhere on your server
-  sampleFile.mv(`${__dirname}/image/user/test.jpg`, function(err) {
-    if (err)
-      return res.status(500).send(err);
-
-    res.send('File uploaded!');
-  });
+app.post(`${apiPath}/upload`, (req, res) => {
+	if (!req.files) {
+		return res.status(400).send('No files were uploaded.');
+	}
+	const { sampleFile } = req.files;
+	sampleFile.mv(`${__dirname}/image/user/test.jpg`, (err) => {
+		if (err) {
+			return res.status(500).send(err);
+		}
+		return res.send('File uploaded!');
+	});
+	return true;
 });
 app.use(`${apiPath}/authenticate`, authenticateRouter);
 app.use(apiPath, verifyMiddleware, apiRouter);
-
-
-
-
-
 
 app.use(errorHandler);
 

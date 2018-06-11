@@ -8,8 +8,6 @@ const Restaurant = {
 	 * @returns {Promise<Array<Restaurant>>} Returns an array of all Restaurants.
 	 */
 	async getAllRestaurants() {
-		console.log("hier bin ich");
-
 		return databaseConnection.queryp('SELECT * FROM Restaurant');
 	},
 
@@ -32,12 +30,12 @@ const Restaurant = {
 	},
 
 	/**
-	 * Adds a new Restaurant to the database.
-	 * @param {object} Restaurant The data of the new Restaurant to create.
-	 * @returns {Promise<DBResult>} The result of the database insertion.
+		* Adds a new Restaurant to the database.
+	 	* @param {object} restaurant The data of the new Restaurant to create.
+	 	* @returns {Promise<DBResult>} The result of the database insertion.
 	 */
-	async addRestaurant(Restaurant) {
-		return databaseConnection.queryp('INSERT INTO Restaurant (GooglePlaces_Id, Name, Email, Password, Place, Zipcode, Street, StreetNumber) VALUES (?,?,?,?,?,?,?,?)', [Restaurant.googlePlacesId, Restaurant.name, Restaurant.email.toLowerCase(), await hashPassword(Restaurant.password), Restaurant.place,Restaurant.zipcode,Restaurant.street,Restaurant.streetNumber]);
+	async addRestaurant(restaurant) {
+		return databaseConnection.queryp('INSERT INTO Restaurant (GooglePlaces_Id, Name, Email, Password, Place, Zipcode, Street, StreetNumber) VALUES (?,?,?,?,?,?,?,?)', [restaurant.googlePlacesId, restaurant.name, restaurant.email.toLowerCase(), await hashPassword(restaurant.password), restaurant.place, restaurant.zipcode, restaurant.street, restaurant.streetNumber]);
 	},
 
 	/**
