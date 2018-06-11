@@ -6,6 +6,7 @@ import AlertError from 'material-ui/svg-icons/alert/error';
 import Done from 'material-ui/svg-icons/action/done';
 import config from '../../config';
 import { withRouter } from 'react-router-dom';
+import DeleteAccount from './DeleteAccount';
 
 import './profile.css';
 import CircularProgress from 'material-ui/CircularProgress/CircularProgress';
@@ -24,7 +25,6 @@ class AccountSettings extends React.Component {
 			changePasswordLoading: false,
 			inputDisabled: false,
 			passwordChanged: false,
-			showDeleteAccountError: false,
 		};
 	}
 
@@ -36,33 +36,7 @@ class AccountSettings extends React.Component {
 		}
 	}
 
-	deleteAccount = () => {
-		fetch(config.apiPath + "/user/me", {
-			method: 'DELETE',
-			headers: {
-				'Content-Type': 'application/json',
-				'X-Access-Token': localStorage.getItem('apiToken'),
-			},
-		}).then((res) => {
-			if (!res.ok) {
-				throw new Error("Request failed.");
-			} else if (res.status !== 200) {
-				throw new Error("An error occured.");
-			}
-			
-			return res.json();
-		})
-		.then(res => {
-			localStorage.removeItem('apiToken');
-			this.props.history.push('/');
-		})
-		.catch((err) => {
-			this.setState({
-				showDeleteAccountError: new Error('Could not delete account.'),
-			});
-		});
-	}
-
+	
 	changePassword = () => {
 		if (!this.validPasswords()) {
 			return;
@@ -139,19 +113,21 @@ class AccountSettings extends React.Component {
 	}
 
 	render() {
-		const hiddenPassword = (<TextField
-			value={''}
-			floatingLabelText="Change Password"
-			style={{
-				width: '100%',
-				marginBottom: '10px',
-			}}
-			onClick={() => {
-				this.setState({
-					showChangePassword: true,
-				});
-			}}
-		/>);
+		const hiddenPassword = (
+			<TextField
+				value={''}
+				floatingLabelText="Change Password"
+				style={{
+					width: '100%',
+					marginBottom: '10px',
+				}}
+				onClick={() => {
+					this.setState({
+						showChangePassword: true,
+					});
+				}}
+			/>
+		);
 		
 		const changePassword = (
 			<React.Fragment>
@@ -194,7 +170,7 @@ class AccountSettings extends React.Component {
 				<RaisedButton
 					label="Cancel"
 					backgroundColor="#ED6559"
-					color="white"
+					labelColor="white"
 					onClick={this.resetInputs}
 					style={{color: 'white'}}
 				/>
@@ -222,29 +198,12 @@ class AccountSettings extends React.Component {
 			</p>
 		);
 
-		const deleteAccountError = (
-			<p>
-				<AlertError style={{width: 30}} color="red" />
-				Could not delete account.
-			</p>
-		);
+		
 
 
 		return (
 			<Paper className="profilePaper left" zDepth={2}>
 				<h4 style={{textAlign: 'left'}}>Account settings</h4>
-
-				{/* <TextField
-					id="password"
-					label="Password"
-					value={this.props.password}
-					onChange={this.props.handleChange('password')}
-					floatingLabelText="Change Password"
-					style={{
-						width: '100%',
-						marginBottom: '10px',
-					}}
-				/>*/}
 
 				{this.state.showChangePassword ? changePassword : hiddenPassword}
 
@@ -252,15 +211,7 @@ class AccountSettings extends React.Component {
 
 				<br/>
 
-				<RaisedButton
-					label="Delete Account"
-					backgroundColor="#ED6559"
-					color="white"
-					onClick={this.deleteAccount}
-					style={{color: 'white'}}
-				/>
-
-				{this.state.showDeleteAccountError ? deleteAccountError : null}
+				<DeleteAccount />
 			</Paper>
 		);
 	}

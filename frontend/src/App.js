@@ -14,6 +14,7 @@ import Splashscreen from './components/routing/Splashscreen';
 import NotFound from './components/routing/NotFound';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import customMuiTheme from './customMuiTheme';
+import CheckToken from './components/routing/CheckToken';
 
 class App extends Component {
 	constructor(props) {
@@ -92,11 +93,11 @@ class App extends Component {
 				<Route exact path="/" component={Splashscreen}/>
 
 
-			{/* Public routes */}
-			<Route exact path="/login" component={Login} />
-			<Route exact path="/signup" component={Signup} />
-			<Route exact path="/logout" component={Login} />
-			<Route exact path="/organization" component={Organization}/>
+				{/* Public routes */}
+				<Route exact path="/login" component={Login} />
+				<Route exact path="/signup" component={Signup} />
+				<Route exact path="/logout" render={() => (<Login logout={true} />)} />
+				<Route exact path="/organisation" component={Organization}/>
 
 				{/* Protected routes (login required) */}
 				<Route exact path="/(feed|notifications|profile|addteam|addevent|personal)" render={(props) => (
@@ -120,13 +121,16 @@ class App extends Component {
 
 function Screen(props) {
 	return (
-		<MediaQuery minWidth={768}>
-			{(matches) =>
-				matches
-				?	(<Dashboard {...props} />)
-				:	(<MobileContent {...props} />)
-			}
-		</MediaQuery>
+		<React.Fragment>
+			<MediaQuery minWidth={768}>
+				{(matches) =>
+					matches
+					?	(<Dashboard {...props} />)
+					:	(<MobileContent {...props} />)
+				}
+			</MediaQuery>
+			<CheckToken route={props.match.url} />
+		</React.Fragment>
 	);
 }
 

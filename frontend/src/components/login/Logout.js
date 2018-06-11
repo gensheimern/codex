@@ -1,34 +1,37 @@
-import React from "react";
-import {Modal, Button} from 'react-bootstrap';
-import {Link} from 'react-router-dom';
+import React from 'react';
+import Snackbar from 'material-ui/Snackbar';
 
-export default class Login extends React.Component {
+export default class Logout extends React.Component {
+	constructor(props) {
+		super(props);
 
-    componentDidMount() {
-		if(typeof (Storage) !== "undefined") {
-			localStorage.removeItem("apiToken");
-		} else {
-			// TODO Code without local storage
-		}
+		this.state = {
+			open: false,
+		};
 	}
+
+	componentDidMount() {
+		window.localStorage.removeItem('apiToken');
+
+		this.setState({
+			open: true,
+		});
+	}
+
+	handleRequestClose = () => {
+		this.setState({
+			open: false,
+		});
+	};	
 
 	render() {
 		return (
-			<div className="static-modal">
-				<Modal.Dialog>
-					<Modal.Header>
-					<strong>Logout</strong>
-					</Modal.Header>
-					<Modal.Body>
-						Logout successful!
-					</Modal.Body>
-					<Modal.Footer>
-						<Link to="/">
-							<Button bsStyle="primary">Login</Button>
-						</Link>
-					</Modal.Footer>
-				</Modal.Dialog>
-			</div>
+			<Snackbar
+				open={this.state.open}
+				message="Successfully logged out."
+				autoHideDuration={4000}
+				onRequestClose={this.handleRequestClose}
+			/>
 		);
 	}
 }
