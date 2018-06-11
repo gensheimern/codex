@@ -55,8 +55,7 @@ describe('Authenticate controller', () => {
 		expect(res.body().token, 'Token received').to.be.a('string');
 	});
 
-	// FIXME: Test wieder benutzen
-	/* it('should not authenticate user with plain text password', async () => {
+	it('should not authenticate user with plain text password', async () => {
 		// Mock user model
 		mockModels.push(TestTools.mockModel(
 			userModel, 'getUserByEmail', null,
@@ -81,7 +80,7 @@ describe('Authenticate controller', () => {
 		expect(res.body().success, 'Correct success status').to.be.false;
 		expect(res.body().message, 'Message set').to.be.a('string');
 		expect(res.body().token, 'Token received').to.be.undefined;
-	}); */
+	});
 
 	it('should not authenticate invalid user', async () => {
 		// Mock user model

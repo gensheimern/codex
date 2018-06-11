@@ -19,7 +19,6 @@ export default class SearchBar extends React.Component {
 	}
 
 		handleChange = (event) => {
-			console.log(event.target.value);
 			this.setState({
 				searchWord: event.target.value,
 			});
@@ -53,9 +52,9 @@ export default class SearchBar extends React.Component {
 							width: '100%',
 							marginBottom: '15px',
 						}}
+						underlineFocusStyle={{borderBottom: 'none'}}
 						inputStyle={{color:"white"}}
 						onKeyPress={(ev) => {
-							console.log(`Pressed keyCode ${ev.key}`);
 							if (ev.key === 'Enter') {
 								this.props.changeShow();
 								ev.preventDefault();

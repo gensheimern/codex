@@ -9,3 +9,12 @@
 .left {
 	text-align: left;
 }
+
+.userSettingTextfield {
+	
+}
+
+/* 768px */
+@media only screen and (max-width: 768px) {
+	/**/
+}

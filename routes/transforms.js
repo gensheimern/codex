@@ -53,12 +53,22 @@ const transforms = (userId) => {
 		},
 	});
 
+	const transformOrganization = dbOrganization => ({
+		id: dbOrganization.Organization_Id,
+		name: dbOrganization.Organizationname,
+		description: dbOrganization.Description,
+		admin: {
+			...transformUser(dbOrganization),
+		},
+	});
+
 	return {
 		transformUser,
 		transformTeam,
 		transformActivity,
 		transformMessage,
 		transformNotification,
+		transformOrganization,
 	};
 };
 

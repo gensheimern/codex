@@ -1,7 +1,6 @@
 import React from "react";
 
 import "./groupmanager.css";
-import "./ListGroups.js"; // WHY?
 import TextField from 'material-ui/TextField';
 import InviteChip from '../event/CreateEventChip';
 import CreateTeamIconButton from './CreateTeamIconButton'

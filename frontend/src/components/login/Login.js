@@ -1,6 +1,7 @@
 import React, {
     Component
 } from "react";
+import PropTypes from 'prop-types';
 import "./Login.css";
 import config from '../../config';
 import TextField from 'material-ui/TextField';
@@ -8,6 +9,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import {Card,CardText} from 'material-ui/Card';
 import Paper from 'material-ui/Paper';
 import { Link } from 'react-router-dom';
+import Logout from './Logout';
 
 export default class Login extends Component {
 
@@ -61,8 +63,9 @@ export default class Login extends Component {
             } else if(res.status !== 200) {
                 throw new Error("Forbidden");
             }
-            return res;
-        }).then(res => res.json()).then((res) => {
+            return res.json();
+        })
+        .then((res) => {
 
             if(typeof (Storage) !== "undefined") {
                 localStorage.setItem("apiToken", res.token);
@@ -151,14 +154,24 @@ export default class Login extends Component {
                     onClick={this.handleSubmit}
 				/>
                 <br/>
-                <p>Don't have an account yet?&nbsp;
-						<Link to = "/signup">Create an account</Link>
+                <p>
+                    Don't have an account yet?&nbsp;
+					<Link to = "/signup">Create an account</Link>
 				</p>
                 </CardText>
                 </Card>
             </form>
+            {this.props.logout ? <Logout /> : null}
             </div>
             );
 
 	}
 }
+
+Login.propTypes = {
+    logout: PropTypes.bool,
+};
+
+Login.defaultProps = {
+    logout: false,
+};

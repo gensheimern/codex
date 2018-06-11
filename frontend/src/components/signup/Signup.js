@@ -216,7 +216,7 @@ export default class Signup extends React.Component {
 				
 				<ReCAPTCHA 
 					ref="recaptcha"
-					sitekey="6LfY-1wUAAAAAAjaNfCOZrbJKO8fmWdLSgC0u9xm"
+					sitekey={config.recaptchaKey}
 					style = {styles.reCAPTCHA}
 					onChange={(captcha) => this.setState({ captcha })}
 				/>
