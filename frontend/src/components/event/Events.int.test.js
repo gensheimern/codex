@@ -3,7 +3,7 @@ import {shallow, mount, render } from 'enzyme';
 import Events from './Events';
 import renderer from 'react-test-renderer';
 import config from '../../config';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import {MemoryRouter} from 'react-router-dom';
 
 const fetchMock = require('fetch-mock');
 
@@ -58,9 +58,9 @@ beforeEach(() => {
     const events = () => {
         if(!mountedEvents){
             mountedEvents = mount(
-                <MuiThemeProvider>
+                <MemoryRouter>
                 <Events />
-                </MuiThemeProvider>         
+                </MemoryRouter>        
             );
         }
         return mountedEvents;
