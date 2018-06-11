@@ -25,6 +25,7 @@ class App extends Component {
 				searchWord: '',
 				filterDate: new Date(),
 				filterGroup: '',
+				filterFeed: 'PUBLIC',
 				personalFilter: new Date(),
 			}
 		};
@@ -73,6 +74,14 @@ class App extends Component {
 						}
 					}))
 					break;
+					case 'FilterFeed':
+						this.setState((oldState) => ({
+							filter: {
+								...oldState.filter,
+								filterFeed: value,
+							}
+						}))
+						break;
 				case 'FilterGroup':
 						console.log('wow');
 									break;

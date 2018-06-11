@@ -2,9 +2,10 @@ import React from 'react';
 import "./sidebars.css";
 import config from '../../config';
 import CreateTeamButton from './CreateTeamButton.js';
+import { withRouter } from 'react-router-dom';
 import GroupSidebarButton from './GroupSidebarButton.js'
 
-export default class SidebarContent extends React.Component {
+class SidebarContent extends React.Component {
   constructor(props) {
     super(props);
 
@@ -46,21 +47,18 @@ export default class SidebarContent extends React.Component {
   }
 
   clickGroupName(groupId){
-
-    console.log(groupId);
-    console.log(this.props.searchFilterFeed)
     this.props.searchFilterFeed(groupId,"FilterGroup");
 
   }
 
   clickGroupButton(index){
-
-    console.log(index);
     this.setState({activeIndex:index});
     if(index === "PUBLIC"){
     this.props.searchFilterFeed("PUBLIC","FilterFeed");}
+    this.props.history.push('/feed');
     if(index === "PERSONAL"){
     this.props.searchFilterFeed("PERSONAL","FilterFeed");}
+    this.props.history.push('/feed');
 
   }
 
@@ -125,3 +123,4 @@ export default class SidebarContent extends React.Component {
     </div>);
   }
 }
+export default withRouter(SidebarContent);

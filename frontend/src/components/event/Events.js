@@ -13,6 +13,7 @@ class Events extends React.Component {
 
     this.state = {
       events: [],
+      myEvents: [],
       loaded: false,
       error: null,
     };
@@ -23,7 +24,11 @@ class Events extends React.Component {
   }
 
   loadActivityData() {
-    this.setState({error: null, loaded: false});
+    // this.setState({error: null, loaded: false});
+    // let isPersonal = "";
+    // if(this.props.filter.personalFilter === "PERSONAL") {
+    //   isPersonal = "/joined";
+    // }
 
     fetch(config.apiPath + "/activity", {
       method: 'GET',
@@ -45,6 +50,28 @@ class Events extends React.Component {
     }).catch((err) => {
       this.setState({error: 'An Error occured.'});
     });
+
+    fetch(config.apiPath + "/activity/joined", {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Access-Token': localStorage.getItem('apiToken')
+      }
+    }).then((res) => {
+      if (!res.ok) {
+        throw new Error("Request failed.");
+      } else if (res.status !== 200) {
+        throw new Error("Forbidden");
+      }
+
+      return res;
+    }).then(res => res.json()).then(res => {
+      this.setState({myEvents: res, loaded: true});
+
+    }).catch((err) => {
+      this.setState({error: 'An Error occured.'});
+    });
+
   }
 
   render() {
@@ -62,7 +89,15 @@ class Events extends React.Component {
     let filterDataBeginn = this.props.filter.filterDate;
     let searchWordName = this.props.filter.searchWord;
 
-    filterData = this.state.events.filter(function (a,b)
+    if(this.props.filter.filterFeed === "PERSONAL") {
+      filterData = this.state.myEvents;
+      console.log( "1. " + this.props.filter.filterFeed);
+    } else {
+      console.log(this.props.filter.filterFeed);
+      filterData = this.state.events;
+    }
+
+    filterData = filterData.filter(function (a,b)
                     {
                       return (new Date(a.time)) >= filterDataBeginn;
                     });
@@ -103,6 +138,8 @@ class Events extends React.Component {
     } else {
       filterData = this.state.events;
     }
+
+
     console.log(filterData);
 
     return (<React.Fragment>
