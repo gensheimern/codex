@@ -23,6 +23,7 @@
     "prop-types": "^15.6.1",
     "react": "^16.3.1",
     "react-dom": "^16.3.1",
+    "react-dropzone": "^4.2.11",
     "react-google-recaptcha": "^0.11.1",
     "react-icons": "^2.2.7",
     "react-material-ui-form-validator": "^1.1.4",
@@ -34,7 +35,8 @@
     "rimraf": "^2.6.2",
     "scroll-into-view-if-needed": "^2.2.4",
     "smooth-scroll-into-view-if-needed": "^1.1.5",
-    "socket.io-client": "^2.1.1"
+    "socket.io-client": "^2.1.1",
+    "superagent": "^3.8.3"
   },
   "proxy": "http://localhost:5000",
   "devDependencies": {
