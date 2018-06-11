@@ -241,7 +241,10 @@ class CreateEventCard extends React.Component {
 		let userArray = this.state.invitePeople.map((userid) => {
 				if(userid.ValueKey === decoded.userId) {
 						return invite = true
+				} else {
+					return invite = false
 				}
+
 		 });
 
 		if(invite){
