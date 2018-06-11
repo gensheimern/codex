@@ -9,7 +9,6 @@ const restaurantRouter = require('./routes/restaurant/RestaurantRouter');
 const { verifyMiddleware } = require('./routes/auth/Auth');
 const apiRouter = require('./routes/MainRouter');
 const errorHandler = require('./middleware/errorHandler');
-const cors = require('cors');
 const fileUpload = require('express-fileupload');
 
 const app = express();
