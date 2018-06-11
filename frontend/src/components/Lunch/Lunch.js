@@ -7,6 +7,8 @@ import {Card,CardText} from 'material-ui/Card';
 import Paper from 'material-ui/Paper';
 import { Link } from 'react-router-dom';
 import ImageUpload from './ImageUpload';
+import config from '../../config';
+
 
 
 class Lunch extends React.Component {
@@ -35,13 +37,12 @@ class Lunch extends React.Component {
   this.setState({
     [name]: e.target.value
   });
-
-
 }
 
   validateForm() {
       return this.state.email.length > 0 && this.state.password.length > 0;
   }
+
 
 
   render() {
@@ -100,6 +101,17 @@ class Lunch extends React.Component {
           <div className="errorText"> {this.state.errorText} </div>
 
           <ImageUpload />
+
+
+    <form ref='uploadForm'
+      id='uploadForm'
+      action={ 'http://localhost:5000/api/upload'}
+      method='post'
+      encType="multipart/form-data">
+        <input type="file" name="sampleFile" />
+        <input type='submit' value='Upload!' />
+    </form>
+
 
 
                 <br/>
