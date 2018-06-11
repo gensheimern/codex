@@ -53,9 +53,19 @@ export default class Dsgvo extends React.Component{
         
         return(
         <div>
-            <FlatButton className="flatButton1" label="read here" onClick={this.handleOpen}/>
+            <FlatButton 
+            className="flatButton1" 
+            label="read here "  // General Data Protection
+            labelStyle= {{ 
+              textTransform: 'none',
+                }}
+            hoverColor= "#F5F5F5"
+            
+            onClick={this.handleOpen}
+            />
+
             <Dialog
-            title="Datenschutzerklärung"
+            title="General Data Protection"
             actions={actions}
             modal={false}
             open={this.state.open}

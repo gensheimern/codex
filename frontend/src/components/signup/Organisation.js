@@ -146,7 +146,6 @@ export default class Organisation extends React.Component{
 					label="Cancel"
 					primary={true}
 					//disabled={!this.validateForm()}
-					style = {styles.organisationButton}
 					//onClick={this.handleSubmit}
 				/>
 
