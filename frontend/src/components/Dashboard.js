@@ -1,8 +1,8 @@
 import React from 'react';
 import FeedToolbar from './MenuComponents/FeedToolbar';
-import Groups from './Groups';
+import SidebarContent from './MenuComponents/SidebarContent';
 import MainContent from './MainContent';
-import SidebarContentCalender from './MenuComponents/SidebarContentCalender';
+import SidebarContentCalendar from './personal/SidebarContentCalendar';
 import PropTypes from 'prop-types';
 
 export default class Dashboard extends React.Component {
@@ -37,11 +37,10 @@ export default class Dashboard extends React.Component {
 					overflow: 'hidden',
 					boxShadow: '5px 5px 5px lightgrey',
 				}}>
-					<Groups
+					<SidebarContent
 						changeContent={this.props.changeContent}
 						searchFilterFeed={this.props.searchFilterFeed}
 						closeDrawer={() => {}}
-						id="groups-wrapper"
 					/>
 				</div>
 				<div style={{
@@ -59,7 +58,13 @@ export default class Dashboard extends React.Component {
 					...defaultStyle,
 					width: '28%',
 				}}>
-					<SidebarContentCalender mainContentNumber={this.props.mainContentNumber} searchFilterFeed={this.props.searchFilterFeed} changeContent={this.props.changeContent}/>
+					<SidebarContentCalendar
+						filter={this.props.filter}
+						filterPersonalFeed = {this.props.filterPersonalFeed}
+ 						mainContentNumber={this.props.mainContentNumber}
+						searchFilterFeed={this.props.searchFilterFeed}
+						changeContent={this.props.changeContent}
+					/>
 				</div>
 			</React.Fragment>
 		);

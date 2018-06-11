@@ -2,9 +2,12 @@ import React from "react";
 import Toolbar, { ToolbarGroup } from 'material-ui/Toolbar';
 import Avatar from 'material-ui/Avatar';
 import Notification from 'material-ui/svg-icons/social/notifications';
-import { Link, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import notificationChecker from '../notification/notificationChecker';
 import Badge from 'material-ui/Badge';
+import Popover, { PopoverAnimationVertical } from 'material-ui/Popover';
+import Menu from 'material-ui/Menu';
+import MenuItem from 'material-ui/MenuItem';
 import config from '../../config';
 
 class ProfileToolbar extends React.Component {
@@ -15,7 +18,27 @@ class ProfileToolbar extends React.Component {
 			newNotifications: 0,
 			unseenNotifications: 0,
 			unsubscribed: false,
+			menuOpen: false,
+			anchor: null,
+			userImg: '',
+			userFirstName: '',
+			userLastName: '',
 		};
+	}
+
+	showSettings = (event) => {
+		event.preventDefault();
+
+		this.setState({
+			menuOpen: true,
+			anchor: event.currentTarget,
+		});
+	}
+
+	hideSettings = () => {
+		this.setState({
+			menuOpen: false,
+		});
 	}
 
 	componentDidMount() {
@@ -28,6 +51,7 @@ class ProfileToolbar extends React.Component {
 		});
 
 		this.loadUnseenNotifications();
+		this.loadProfileData();
 	}
 
 	loadUnseenNotifications() {
@@ -54,6 +78,37 @@ class ProfileToolbar extends React.Component {
         }).catch((error) => {
 			this.setState({
 				unseenNotifications: 0,
+			});
+        });
+	}
+
+	loadProfileData() {
+		fetch(config.apiPath + "/user/me/", {
+            method: 'GET',
+            headers: {
+				'Content-Type': 'application/json',
+				'X-Access-Token': localStorage.getItem('apiToken'),
+            }
+		})
+		.then((res) => {
+            if(!res.ok) {
+                throw new Error("Response not ok.");
+            } else if(res.status !== 200) {
+                throw new Error("An error occured.");
+            }
+            return res.json();
+		})
+		.then((res) => {
+            this.setState({
+				userImg: res.image,
+				userFirstName: res.firstName,
+				userLastName: res.name,
+			});
+        }).catch((error) => {
+			this.setState({
+				userImg: '',
+				userFirstName: '',
+				userLastName: '',
 			});
         });
 	}
@@ -91,10 +146,48 @@ class ProfileToolbar extends React.Component {
 						cursor: 'pointer',
 					}}/>
 				</Badge>)
-			:	(<Notification onClick={() => {
-					this.readNotifications();
-					this.props.history.push('/notifications');
-				}}/>);
+			:	(<Notification
+					onClick={() => {
+						this.readNotifications();
+						this.props.history.push('/notifications');
+					}}
+					style={{
+						cursor: 'pointer',
+					}}
+				/>);
+
+		const settingsMenu = (
+			<Popover
+				open={this.state.menuOpen}
+				anchorEl={this.state.anchor}
+				anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
+				targetOrigin={{horizontal: 'left', vertical: 'top'}}
+				onRequestClose={this.hideSettings}
+				animation={PopoverAnimationVertical}
+			>
+				<Menu>
+					<MenuItem
+						primaryText="Profile Settings"
+						onClick={() => {
+							this.props.history.push('/profile');
+							this.hideSettings();
+						}}
+					/>
+					<MenuItem
+						primaryText="Change organization"
+						disabled={true}
+						onClick={() => {/* TODO: */}}
+					/>
+					<MenuItem
+						primaryText="Logout"
+						onClick={() => {
+							this.props.history.push('/logout');
+							this.hideSettings();
+						}}
+					/>
+				</Menu>
+			</Popover>
+		);
 
 		return (
 			<React.Fragment>
@@ -108,9 +201,24 @@ class ProfileToolbar extends React.Component {
 					</ToolbarGroup>
 
 					<ToolbarGroup>
-						<Link to="/profile">
-							<Avatar>MM</Avatar>
-						</Link>
+						{!this.state.userImg
+							? (<Avatar
+								onClick={this.showSettings}
+								style={{
+									cursor: 'pointer',
+								}}
+							>
+								{this.state.userFirstName[0]}{this.state.userLastName[0]}
+							</Avatar>)
+							: (<Avatar
+								src={this.state.userImg}
+								onClick={this.showSettings}
+								style={{
+									cursor: 'pointer',
+								}}
+							/>)
+						}
+						{settingsMenu}
 					</ToolbarGroup>
 				</Toolbar>
 			</React.Fragment>

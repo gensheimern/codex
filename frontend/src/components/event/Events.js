@@ -48,6 +48,9 @@ class Events extends React.Component {
   }
 
   render() {
+
+
+
     if (this.state.error) {
       return (<p>{this.state.error}</p>);
     }
@@ -59,10 +62,6 @@ class Events extends React.Component {
     let filterDataBeginn = this.props.filter.filterDate;
     let searchWordName = this.props.filter.searchWord;
 
-    console.log(this.props.filter);
-    console.log(this.state.events);
-    console.log("searchword " + searchWordName);
-    console.log("datefilt " + filterDataBeginn );
     filterData = this.state.events.filter(function (a,b)
                     {
                       return (new Date(a.time)) >= filterDataBeginn;

@@ -1,0 +1,20 @@
+.profilePaper {
+	width: 96%;
+	margin: 2%;
+	padding: 6%;
+	text-align: center;
+	display: inline-block;
+}
+
+.left {
+	text-align: left;
+}
+
+.userSettingTextfield {
+	
+}
+
+/* 768px */
+@media only screen and (max-width: 768px) {
+	/**/
+}
