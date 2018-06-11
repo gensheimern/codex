@@ -1,8 +1,9 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const serveStatic = require('serve-static');
+const cors = require('cors');
+const compression = require('compression');
 const path = require('path');
-// const mail = require('./mailservice/mailservice');
 const authenticateRouter = require('./routes/auth/AuthenticateRouter');
 const restaurantRouter = require('./routes/restaurant/RestaurantRouter');
 const { verifyMiddleware } = require('./routes/auth/Auth');
@@ -16,6 +17,9 @@ const app = express();
 // Middlewares
 
 app.use(cors());
+// Enbalbe gzip compression for less traffic
+app.use(compression());
+// User static routing for images and frontend
 app.use(serveStatic(path.join(`${__dirname}/image/user`)));
 app.use(serveStatic(path.join(`${__dirname}/image/imageupload`)));
 app.use(serveStatic(path.join(`${__dirname}/image/activity`)));
@@ -25,7 +29,7 @@ app.use(serveStatic(path.join(`${__dirname}/frontend/build`)));
 
 app.use(bodyParser.json());
 
-// API routes
+/* API routes */
 const apiPath = '/api';
 app.use(`${apiPath}/restaurant`, restaurantRouter);
 app.use(fileUpload());
@@ -45,13 +49,13 @@ app.post(`${apiPath}/upload`, (req, res) => {
 app.use(`${apiPath}/authenticate`, authenticateRouter);
 app.use(apiPath, verifyMiddleware, apiRouter);
 
+/* User global error handler */
 app.use(errorHandler);
 
+/* Always send the index page to allow dynamic client routing */
 app.get('/*', (req, res) => {
 	res.sendFile(path.join(`${__dirname}/frontend/build/index.html`));
 });
-
-// app.use('/mail', verifyMiddleware, mail);
 
 
 module.exports = app;

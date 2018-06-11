@@ -5,6 +5,7 @@ import GroupFA from 'react-icons/lib/fa/group';
 import PlaceMUI from 'react-icons/lib/md/place';
 import TextField from 'material-ui/TextField';
 import DeleteMUI from 'react-icons/lib/md/delete';
+import FlatButton from 'material-ui/FlatButton';
 
 export default class CollapsedContent extends React.Component {
 
@@ -103,6 +104,7 @@ export default class CollapsedContent extends React.Component {
       let participatesIMGPlus;
       let message;
       let counter = 1;
+      let eventRef = this.props.event.id;
 
       if (this.props.messages.length !==0 ){
         message = this.props.messages.map((messageItem, index) => {
@@ -119,7 +121,28 @@ export default class CollapsedContent extends React.Component {
                 </div>
               </div>
               <div className="commentDelete">
-              {messageItem.author.me ? <DeleteMUI /> : <span />}
+              {messageItem.author.me ? <FlatButton
+                                        icon={<DeleteMUI/>}
+                                        onClick={() => { return fetch(config.apiPath + "/activity/" + eventRef+
+                                                                      "/message/" + messageItem.id, {
+                                    			method: 'DELETE',
+                                    			headers: {
+                                    				'Content-Type': 'application/json',
+                                    				'X-Access-Token': localStorage.getItem('apiToken'),
+                                    			}
+                                    		})
+                                    		.then((res) => {
+                                          this.props.loadMessages()
+
+                                    			if (!res.ok || res.status !== 201) {
+                                    				// handle error
+                                    			} else {
+                                    				// this.renderSnackbar();
+                                    				// this.props.history.push('/feed');
+                                    			}
+                                    		})
+                                    	}}/>
+                                       : <span />}
 
               </div>
             </div>

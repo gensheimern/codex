@@ -24,6 +24,8 @@ export default class CreateTeamButton extends React.Component {
                   invitePeople: [],
                   selectedIcon : defaultSelectedIcon,};
     this.handleOpen = this.handleOpen.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+
     this.handleChangeN = this.handleChangeN.bind(this);
     this.handleChangeD = this.handleChangeD.bind(this);
     this.handleChangeI = this.handleChangeI.bind(this);
@@ -33,7 +35,7 @@ export default class CreateTeamButton extends React.Component {
   }
 
   handleClick = () => {
-    this.props.closeDrawer();
+  //  this.props.closeDrawer();
     this.handleOpen();
   };
 
@@ -47,18 +49,22 @@ export default class CreateTeamButton extends React.Component {
  handleSubmit(e) {
      e.preventDefault();
 
+     console.log(this.state);
+
      if(this.state.name !== "") {
          fetch(config.apiPath + "/team ", {
              method: 'POST',
              body: JSON.stringify({
-                 name: this.state.name
+                 name: this.state.name,
+                 Description: this.state.description,
+                 Group_Icon : this.state.selectedIcon.icon,
              }),
              headers: {
                  'Content-Type': 'application/json',
                  'X-Access-Token': localStorage.getItem('apiToken')
              }
          }).then(() => {
-             this.props.update();
+           this.handleClose();
          }).catch((err) => {
              console.log("display error");
 
@@ -68,6 +74,31 @@ export default class CreateTeamButton extends React.Component {
              showError: true
          });
      }
+
+
+     let emails = this.state.invitePeople.map((e) => {
+   		return(e.ValueEmail + ",")
+   	});
+    console.log(emails);
+   	fetch(config.apiPath + "/sendmail/joinevent", {
+   		method: 'POST',
+   		body: JSON.stringify({
+   			email: emails,
+
+   		}),
+   		headers: {
+   			'Content-Type': 'application/json',
+   			'X-Access-Token': localStorage.getItem('apiToken'),
+   		}
+   	})
+   	.then((res) => {
+   		if (!res.ok || res.status !== 201) {
+   			// handle error
+   		} else {
+   			this.renderSnackbar();
+   			this.props.history.push('/feed');
+   		}
+   	});
  }
 
  handleChangeN = event => {

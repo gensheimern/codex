@@ -136,7 +136,7 @@ const NotificationController = {
 
 			await NotificationModel.addNotification(notification.user.id, 'notification', accepted ? 'Event invitation accepted.' : 'Event invitation declined.', notification.message, notification.targetId);
 
-			// await NotificationModel.deleteNotification(notificationId); // FIXME: Einkommentieren
+			await NotificationModel.deleteNotification(notificationId);
 
 			res.json({
 				success: true,
