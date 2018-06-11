@@ -25,7 +25,8 @@ const ActivityController = {
 		const { userId } = req.token;
 		const { activityId } = req.params;
 
-		const activityPromise = ActivityModel.getActivityById(activityId);
+		const activity = await ActivityModel.getActivityById(activityId);
+		const userOrganization = UserModel.getOrganization(userId);
 
 		const isParticipant = await ParticipatesModel.isParticipant(userId, activityId);
 		const isPrivate = await ActivityModel.isPrivate(activityId);
@@ -37,7 +38,12 @@ const ActivityController = {
 			return;
 		}
 
-		const activity = await activityPromise;
+		if (!isPrivate && activity.Organization !== userOrganization) {
+			res.status(403).json({
+				message: 'Permission denied.',
+			});
+			return;
+		}
 
 		if (activity === null) {
 			res.status(404).json({
@@ -59,7 +65,9 @@ const ActivityController = {
 			return;
 		}
 
-		const result = await ActivityModel.createActivity(activity, userId);
+		const organizationId = UserModel.getOrganization(userId);
+
+		const result = await ActivityModel.createActivity(activity, userId, organizationId);
 
 		// Add invited participants
 		let participantsAdded = 0;
