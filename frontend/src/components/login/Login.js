@@ -72,7 +72,7 @@ export default class Login extends Component {
             } else {
                 // TODO Code without local storage
             }
-
+console.log(this.props.history);
             this.props.history.push("/feed");
         }).catch((err) => {
             
