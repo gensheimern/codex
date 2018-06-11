@@ -2,11 +2,8 @@ import React, {
     Component
 } from "react";
 import "./Login.css";
-
 import config from '../../config';
 import TextField from 'material-ui/TextField';
-import Dialog from 'material-ui/Dialog';
-import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import {Card,CardText} from 'material-ui/Card';
 import Paper from 'material-ui/Paper';
@@ -75,32 +72,7 @@ export default class Login extends Component {
 
             this.props.history.push("/feed");
         }).catch((err) => {
-            const actions = [
-                <FlatButton
-                  label="Cancel"
-                  primary={true}
-                  onClick={this.handleClose}
-                />,
-                <FlatButton
-                  label="Discard"
-                  primary={true}
-                  onClick={this.handleClose}
-                />,
-              ];
-            this.setState({
-                errorPrompt: (
-                <div>
-                    <RaisedButton label="Alert" onClick={this.handleOpen} />
-                    <Dialog
-                    actions={actions}
-                    modal={false}
-                    open={this.state.open}
-                    onRequestClose={this.handleClose}
-                    >
-                     Password or Email wrong!
-                    </Dialog>
-                </div>)
-            });
+            
         });
     }
 
@@ -126,7 +98,7 @@ export default class Login extends Component {
 				heigt: 40.57,
 				width: '30%',
 				borderRadius: 3,
-				boxShadow: "inset 0 1 3 0 rgba(0,0,0,0.5),0 1 2 0 rgba(0,0,0,0.5)",
+				backgroundColor: "#1EA185",
 				display: 'block',
 				marginLeft: 'auto',
 				marginRight: 'auto',
@@ -164,7 +136,7 @@ export default class Login extends Component {
 					style= {styles.textField}
 				/>
 
-          <div className="errorText"> {this.state.errorText} </div>
+                <div className="errorText"> {this.state.errorText} </div>
 
                 <Link to = "">Forgot password?</Link>
                 <br/>
@@ -176,7 +148,7 @@ export default class Login extends Component {
 					primary={true}
 					disabled={!this.validateForm()}
 					style = {styles.loginButton}
-          onClick={this.handleSubmit}
+                    onClick={this.handleSubmit}
 				/>
                 <br/>
                 <p>Don't have an account yet?&nbsp;
