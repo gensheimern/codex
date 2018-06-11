@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import GroupsDrawer from './GroupsDrawerMobile';
 import SearchFeed from './SearchFeed';
 import SearchBar from './SearchBar';
-
-import "./sidebars.css";
+import './navbar.css';
 
 class AppNavTop extends Component {
 	constructor(props) {
@@ -49,17 +48,7 @@ class AppNavTop extends Component {
 		);
 
 		return (
-			<div className="MobileNavTop">
-				{/*<FlatButton
-					style={{
-						padding: 0,
-						width: '25%',
-						height: '100%',
-						float: 'left',
-					}}
-					icon={<IconGroup color="white" />}
-				/>*/}
-
+			<div className="navbartop">
 				<GroupsDrawer
 					searchFilterFeed={this.props.searchFilterFeed}
 					changeContent={this.props.changeContent}

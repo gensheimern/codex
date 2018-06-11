@@ -1,13 +1,3 @@
-
- 	.isJoinedBorder {
-	border: '0px solid white';
-    box-shadow: '0 0 0px white';
-}
-
-.isNotJoinedBorder {
-	/* TODO */
-}
-
 .eventCard {
 	margin: 4%;
 	background-color: white;
@@ -17,15 +7,16 @@
 	overflow: auto;
 	box-shadow: 0px 81px 40px -76px #00000091 !important;
 }
+
 @media only screen and (max-width: 768px) {
-.eventCardHeader, .eventCardHeader img {
-	position: relative;
-	padding-right:0px;
-	padding-left:0px;
-	width: 100%;
-	height: 70pt;
-	box-shadow: 0px 81px 40px -76px #00000091;
-}
+	.eventCardHeader, .eventCardHeader img {
+		position: relative;
+		padding-right:0px;
+		padding-left:0px;
+		width: 100%;
+		height: 70pt;
+		box-shadow: 0px 81px 40px -76px #00000091;
+	}
 }
 
 .eventCardHeader, .eventCardHeader img {
@@ -59,36 +50,25 @@
 	float:left;
 	background-color: #1ea185;
 	height: 100%;
-  max-width: 70%;
-  text-align: left;
-  padding-top: 1%;
-  padding-bottom: 1%;
-  padding-left: 3%;
-  padding-right: 3%;
+	max-width: 70%;
+	text-align: left;
+	padding-top: 1%;
+	padding-bottom: 1%;
+	padding-left: 3%;
+	padding-right: 3%;
 }
 
 .joinBtnWrapper {
 	position: relative;
-      width: 30%;
-      height: 30px;
-	    border-radius: 4px;
-	    background: #f8c947;
-	    color: white;
-	    margin-right: 20px;
-	    float: right;
-	    top: -20pt;
-	    font-size: 10pt;
-
-	/*display: inline-block;
-    position: relative;
-    padding: 5px 60px;
-    top: -90px;
-    font-size: 30px;
-    border-radius: 4px;
-    background: #75a045;
-    color: white;
-    float: right;
-    margin-right: 20px;*/
+	width: 30%;
+	height: 30px;
+	border-radius: 4px;
+	background: #f8c947;
+	color: white;
+	margin-right: 20px;
+	float: right;
+	top: -20pt;
+	font-size: 10pt;
 }
 
 .joinBtn {
@@ -103,85 +83,85 @@
 }
 
 .eventGroup {
-    width: 100%;
-		height:70pt;
-		background-color: white;
-		padding-top:5pt;
-		padding-bottom:5pt;
-		padding-left: 20px;
-		padding-right: 20px;
+	width: 100%;
+	height: 70pt;
+	background-color: white;
+	padding-top: 5pt;
+	padding-bottom: 5pt;
+	padding-left: 20px;
+	padding-right: 20px;
 }
 
 .eventGroup h4 {
-  font-size:13px;
+	font-size: 13px;
 }
 
-.myimage{
-height:6vh;
-width:6vh;
-border-radius: 50%;
-margin-left: -15px;
+.myimage {
+	height: 6vh;
+	width: 6vh;
+	border-radius: 50%;
+	margin-left: -15px;
 }
+
 .participates-image {
-	margin-left:15px;
+	margin-left: 15px;
 }
+
 .alreadyJoningText {
-  margin-left:-15px;
+	margin-left: -15px;
 }
 
 @media only screen and (min-width: 769px) {
-.event-extend-info {
-  margin-top:25px;
-  margin-bottom:10px;
-}
+	.event-extend-info {
+		margin-top: 25px;
+		margin-bottom: 10px;
+	}
+
+	.extendedInfo {
+		display: none;
+	}
 }
 
 @media only screen and (max-width: 768px) {
-.participates-image {
-	display:none;
+	.participates-image {
+		display: none;
+	}
 }
-}
-@media only screen and (min-width: 769px) {
-.extendedInfo {
-display: none;
-}
-}
+
 .dateInfo {
 	display: inline-block;
 }
 
 .timeInfo{
-	display:inline-block;
-	float:right;
-
+	display: inline-block;
+	float: right;
 }
 
 .activity-hr {
-
-    margin-top: 5px;
-    margin-bottom: 10px;
-    border: 0;
-    border-top: 1px solid #eee;
-
+	margin-top: 5px;
+	margin-bottom: 10px;
+	border: 0;
+	border-top: 1px solid #eee;
 }
 
 #collapseFA {
 	float: right;
 }
-#collapseKommentare {
-	display:inline-block;
 
+#collapseKommentare {
+	display: inline-block;
 }
+
 #participant-counter {
-	float:right;
+	float: right;
 }
 
 .participants-row {
-	float:left;
+	float: left;
 }
 
 .participants-counter-icon {
-	float:left;
+	float: left;
 	height: 6vh;
 	width: 6vh;
 	background-color: #f8c947;
@@ -189,134 +169,138 @@ display: none;
 	border-radius: 50%;
 }
 
-.card-wrapper:before,
-.card-wrapper:after {
-    content : "";
-    display : table;
+.card-wrapper:before, .card-wrapper:after {
+	content : "";
+	display : table;
 }
+
 .card-wrapper:after {
-    clear : both;
+	clear :both;
 }
 
 .alreadyJoining {
-	padding-top:10px;
+	padding-top: 10px;
 }
+
 .addComment hr {
 	border-color: #f8c947 !important ;
 }
 
 .event-textfield img {
-	height:4vh;
-	width:4vh;
+	height: 4vh;
+	width: 4vh;
 	border-radius: 50%;
-
 }
 
 .myTextfield {
 	float: left;
-
-padding-left: 10px;
+	padding-left: 10px;
 }
 
-.texfield-profile-picture img  , .commentUserImage img {
-	height:6vh;
-	width:6vh;
-	float:left;
-
+.texfield-profile-picture img, .commentUserImage img {
+	height: 6vh;
+	width: 6vh;
+	float: left;
 }
+
 .joinInfo {
-  margin-left:15px;
+	margin-left: 15px;
+}
 
-}
 .commentWrapper {
-	display:flex;
-	padding-bottom:20px;
+	display: flex;
+	padding-bottom: 20px;
 }
+
 .commentWrapper h6{
-	margin-top:5px;
-	margin-bottom:2px;
+	margin-top: 5px;
+	margin-bottom: 2px;
 }
+
 .commentUserImage {
-	float:left;
-	height:100%;
-	padding-right:10px;
+	float: left;
+	height: 100%;
+	padding-right: 10px;
 }
 .commentInfoWrapper {
-	width:70%;
+	width: 70%;
 }
-.commentContentWrapper {
 
-	float:left;
+.commentContentWrapper {
+	float: left;
 }
 
 .commentDelete {
-	float:right;
+	float: right;
 }
 
 .collapseOnClick {
-	clear:both;
+	clear: both;
 }
 
 .createEventEditPicture {
-  padding:0 !important;
+	padding-top: 20px !important;
 }
 
 .meetingPoint {
-  float:left;
-  width:50%;
+	float: left;
+	width: 50%;
 }
 
 .timepickerMeeting {
-  width:50%;
-  padding-left:2%;
-  padding-top:1.2%;
-  float:left;
+	width: 50%;
+	padding-left: 2%;
+	padding-top: 1.2%;
+	float: left;
 }
 
 .timepicker {
-  overflow: hidden;
-  float: left;
-  width:50%;
-  padding-left:2%;
+	overflow: hidden;
+	float: left;
+	width: 50%;
+	padding-left: 2%;
 }
+
 .datepicker {
-  overflow: hidden;
-  width:50%;
-  float:left;
+	overflow: hidden;
+	width: 50%;
+	float: left;
 }
 
 .MoreOptionsCreateEvent {
-  float:right;
-  padding-right:20px;
-  padding-top:20px;
+	float: right;
+	padding-right: 20px;
+	padding-top: 20px;
 }
 
 .maxPeopleWrapper {
-  width:100%;
+	width: 100%;
 }
 
 .collapsedContendReminder {
-  width:82%;
-  float:left;
-  padding-top:3%;
+	width: 82%;
+	float: left;
+	padding-top: 3%;
 }
 
 @media only screen and (max-width: 768px) {
-.createEventPickImageWrapper {
-  padding:0px !important;
-}
+	.createEventPickImageWrapper {
+		padding: 0px !important;
+	}
 
-.createEventPickImageWrapper img {
-  width:100%;
-}
+	.createEventPickImageWrapper img {
+		width: 100%;
+	}
 
-.createEventCardWrapper {
-  height:900px;
-}
-.createEventButton {
-  background-color:#F8C947 !important;
-  position:fixed !important;
-  height:70px !important;
-  bottom:0px;
-}
+	.createEventCardWrapper {
+		/*height: 900px;*/
+		padding-bottom: 200px;
+	}
+
+	.createEventButton {
+		background-color: #F8C947 !important;
+		position: fixed !important;
+		height: 50px !important;
+		bottom: 53px;
+	}
 }

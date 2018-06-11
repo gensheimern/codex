@@ -100,7 +100,7 @@ export default class Notifications extends React.Component {
 
 		return (
 			<div style={{
-				height: '100vh',
+				padding: '2%',
 			}}>
 				{this.state.notifications.map(notification => {
 					switch (notification.type) {

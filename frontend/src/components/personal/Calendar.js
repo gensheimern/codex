@@ -1,21 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Paper from 'material-ui/Paper';
-import { withRouter } from 'react-router-dom';
+import muiThemable from 'material-ui/styles/muiThemeable';
 import './Calendar.css';
 
 const monthNames = [
-	'January',
-	'February',
-	'March',
-	'April',
-	'May',
-	'June',
-	'July',
-	'August',
-	'September',
-	'Oktober',
-	'November',
-	'December',
+	'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December',
 ];
 
 class Calendar extends React.Component {
@@ -25,38 +15,37 @@ class Calendar extends React.Component {
 
 		this.state = {
 			date: new Date(),
-			activeDates: [],
 		};
 	}
 
 	monthChange = (forward) => {
-		const year = this.state.date.getFullYear();
-		const month = forward
-			? this.state.date.getMonth() + 1
-			: this.state.date.getMonth() - 1;
-		let day = this.state.date.getDate();
+		this.setState((prevState, props) => {
+			const year = prevState.date.getFullYear();
+			const month = forward
+				? prevState.date.getMonth() + 1
+				: prevState.date.getMonth() - 1;
+			let day = prevState.date.getDate();
 
-		const daysInNewMonth = new Date(year, month + 1, 0).getDate();
+			const daysInNewMonth = new Date(year, month + 1, 0).getDate();
 
-		if (day > daysInNewMonth) {
-			day = daysInNewMonth;
-		}
+			if (day > daysInNewMonth) {
+				day = daysInNewMonth;
+			}
 
-		this.setState({
-			date: new Date(year, month, day),
+			props.changeDate(new Date(year, month, day));
+
+			return ({
+				date: new Date(year, month, day),
+			});
 		});
-
-		this.props.changeDate(new Date(year, month, day));
 	}
 
 	render() {
 		const buttonStyle = {
 			outline: 'none',
 			border: 0,
-			backgroundColor: 'white',
+			backgroundColor: 'transparent',
 		};
-
-
 
 		let days = [];
 
@@ -68,120 +57,87 @@ class Calendar extends React.Component {
 		const daysOfLastMonthShown = ((new Date(year, month - 1, 1).getDay() + 6) % 7);
 		const daysOfNextMonthShown = (7 -((daysOfLastMonthShown + daysInMonth) % 7)) % 7;
 
+		// Add dates of last month that are in the same week as the first day in the current month
 		for (let i = daysOfLastMonthShown - 1; i >= 0; i--) {
 			days.push({
 				name: daysInLastMonth - i,
-				backgroundColor: 'white',
+				backgroundColor: 'transparent',
 				color: 'lightgrey',
+				border: 'transparent',
 				date: new Date(this.state.date.getFullYear(), this.state.date.getMonth() - 1, daysInLastMonth - i),
 			});
 		}
 
+		// Add days of the current month
 		for(let i = 1; i <= daysInMonth; i++) {
-			let bgColor = '#ffffff';
+			let backgroundColor = 'transparent';
 			let color = 'black';
+			let border = 'white';
 
+			// Mark all days with events
+			this.props.possibleDates.forEach((date) => {
+				if (date.getDate() === i && date.getMonth() === this.state.date.getMonth() && date.getFullYear() === this.state.date.getFullYear()) {
+					border = '#cacaca';
+				}
+			});
+
+			// Mark all days with joined events
 			this.props.eventDates.forEach((date) => {
 				if (date.getDate() === i && date.getMonth() === this.state.date.getMonth() && date.getFullYear() === this.state.date.getFullYear()) {
-					bgColor = '#f8c947';
+					border = this.props.muiTheme.palette.primary1Color;
 				}
 			});
 
 			if (this.state.date.getDate() === i) {
-				bgColor = '#1EA185';
+				backgroundColor = this.props.muiTheme.palette.primary1Color;
 				color = '#ffffff';
 			}
 
 			days.push({
 				name: i,
-				backgroundColor: bgColor,
+				backgroundColor,
 				color,
+				border,
 				date: new Date(this.state.date.getFullYear(), this.state.date.getMonth(), i),
 			});
 		}
 
+		// Add dates of next month that are in the same week as the last day in the current month
 		for (let i = 1; i < daysOfNextMonthShown + 1; i++) {
 			days.push({
 				name: i,
-				backgroundColor: 'white',
+				backgroundColor: 'transparent',
 				color: 'lightgrey',
+				border: 'transparent',
 				date: new Date(this.state.date.getFullYear(), this.state.date.getMonth() + 1, i),
 			});
 		}
-
-		/*const days = [
-			{
-				name: '29',
-				date: new Date(),
-				backgroundColor: 'white',
-				color: 'grey',
-			}, {
-				name: '30',
-				date: new Date(),
-				backgroundColor: 'white',
-				color: 'grey',
-			}, {
-				name: '1',
-				date: new Date(),
-				backgroundColor: 'white',
-				color: 'black',
-			}, {
-				name: '2',
-				date: new Date(),
-				backgroundColor: 'white',
-				color: 'black',
-			}, {
-				name: '3',
-				date: new Date(),
-				backgroundColor: 'white',
-				color: 'black',
-			}, {
-				name: '40',
-				date: new Date(),
-				backgroundColor: 'white',
-				color: 'black',
-			}, {
-				name: '5',
-				date: new Date(),
-				backgroundColor: 'white',
-				color: 'black',
-			}, {
-				name: '6',
-				date: new Date(),
-				backgroundColor: 'white',
-				color: 'black',
-			}
-		];*/
 
 		const weekdays = ['MO', 'TU', 'WE', 'TH', 'FR', 'SA', 'SO'];
 
 		return (
 			<Paper style={{
-				padding: '1vw',
+				padding: '3vw',
 			}}>
 				<div style={{
 					textAlign: 'center',
 					fontSize: '120%'
 				}}>
-				<button style={buttonStyle} onClick={() => this.monthChange(false)}>&lt;</button>
-				{this.state.date.getDate()} {monthNames[this.state.date.getMonth()]} {this.state.date.getFullYear()}
-				<button style={buttonStyle} onClick={() => this.monthChange(true)}>&gt;</button>
+					<button style={buttonStyle} onClick={() => this.monthChange(false)}>&lt;</button>
+					{this.state.date.getDate()} {monthNames[this.state.date.getMonth()]} {this.state.date.getFullYear()}
+					<button style={buttonStyle} onClick={() => this.monthChange(true)}>&gt;</button>
 				</div>
 
-				<div style={{
-					width: '100%',
-				}}>
-					{
-						weekdays.map((weekday, index) => (
-							<div key={index} className="weekday">
-								<div className="contents">
-									{weekday}
-								</div>
-							</div>
-						))
-					}
-				</div>
+				{/* Weekday names */}
+				{weekdays.map((weekday, index) => (
+					<div key={index} className="weekday">
+						<div className="contents">
+							{weekday}
+						</div>
+					</div>
+				))}
 
+				{/* Days in month */}
 				<div style={{
 					width: '100%',
 					overflow: 'hidden',
@@ -195,11 +151,11 @@ class Calendar extends React.Component {
 									cursor: 'pointer',
 									backgroundColor: day.backgroundColor,
 									color: day.color,
+									border: `2px solid ${day.border}`,
 								}}
 								onClick={() => {
 									this.setState({date: day.date});
 									this.props.changeDate(day.date);
-									console.log(this.props.filterPersonalFeed);
 									this.props.filterPersonalFeed(day.date);
 
 								}}
@@ -216,4 +172,13 @@ class Calendar extends React.Component {
 		);
 	}
 }
-export default withRouter(Calendar);
+
+Calendar.propTypes  = {
+	changeDate: PropTypes.func.isRequired,
+	eventDates: PropTypes.arrayOf(PropTypes.object).isRequired,
+	possibleDates: PropTypes.arrayOf(PropTypes.object).isRequired,
+	searchFilterFeed: PropTypes.func.isRequired,
+	mainContentNumber: PropTypes.number.isRequired,
+};
+
+export default muiThemable()(Calendar);

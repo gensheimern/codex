@@ -23,12 +23,11 @@ mailer.extend(app, {
 });
 
 router.post('/', (req, res) => {
-
 	app.mailer.send('notification', {
-		to: req.body.email, // REQUIRED. This can be a comma delimited string just like a normal email to field.
+		to: req.body.email, // REQUIRED. Can be a comma delimited string just like a normal email field.
 		subject: req.body.subject,
-		event : req.body.event,
-		time : req.body.time,
+		event: req.body.event,
+		time: req.body.time,
 		action: req.body.action,
 		user: req.body.user,
 	}, (err) => {
@@ -46,13 +45,12 @@ router.post('/', (req, res) => {
 });
 
 router.post('/joinevent', (req, res) => {
-
 	app.mailer.send('joinEvent', {
-		to: req.body.email, // REQUIRED. This can be a comma delimited string just like a normal email to field.
-		subject: "Invetation to " +req.body.event,
-		event : req.body.event,
-		time : req.body.time,
-		action: "Invetation",
+		to: req.body.email, // REQUIRED. Can be a comma delimited string just like a normal email field.
+		subject: `Invitation to ${req.body.event}`,
+		event: req.body.event,
+		time: req.body.time,
+		action: 'Invitation',
 	}, (err) => {
 		if (err) {
 			// handle error
@@ -68,13 +66,12 @@ router.post('/joinevent', (req, res) => {
 });
 
 router.post('/joingroup', (req, res) => {
-
 	app.mailer.send('joinGroup', {
-		to: req.body.email, // REQUIRED. This can be a comma delimited string just like a normal email to field.
+		to: req.body.email, // REQUIRED. Can be a comma delimited string just like a normal email field.
 		subject: req.body.subject,
-		group : req.body.group,
-		time : req.body.time,
-		action: "invites",
+		group: req.body.group,
+		time: req.body.time,
+		action: 'invites',
 		user: req.body.user,
 	}, (err) => {
 		if (err) {

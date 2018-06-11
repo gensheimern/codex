@@ -10,7 +10,7 @@ import { withRouter } from 'react-router-dom';
 import notificationChecker from '../notification/notificationChecker';
 import Badge from 'material-ui/Badge';
 import config from '../../config';
-import './sidebars.css';
+import './navbar.css';
 
 const FeedIcon = <IconFeed/>;
 const CalendarIcon = <IconCalendar/>;
@@ -100,14 +100,15 @@ class AppNavBottom extends Component {
 						color: 'white',
 						top: 1,
 						right: 12,
-						fontSize: "10px",
-						width: "16px",
-						height: "16px",
-						padding : "0px !important",
-						margin : "0px !important",
+						fontSize: '10px',
+						width: '16px',
+						height: '16px',
+						padding : '0px !important',
+						margin : '0px !important',
 					}}
-					style={{            padding : "0px !important",
-}}
+					style={{
+						padding : "0px !important",
+					}}
 				>
 					<Notification onClick={() => {
 						this.readNotifications();
@@ -116,7 +117,7 @@ class AppNavBottom extends Component {
 					className="BadgeNotif"
 					style={{
 						cursor: 'pointer',
-						padding : "0px !important",
+						padding : '0px !important',
 						top: 1,
 						right: 12,
 					}}
@@ -132,7 +133,7 @@ class AppNavBottom extends Component {
 		};
 
 		return (
-			<Paper zDepth={1}>
+			<Paper className="navbarbottom" zDepth={1}>
 				<BottomNavigation selectedIndex={this.props.index}>
 					<BottomNavigationItem
 						icon={FeedIcon}

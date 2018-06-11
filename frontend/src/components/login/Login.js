@@ -127,7 +127,6 @@ export default class Login extends Component {
 				width: '30%',
 				borderRadius: 3,
 				boxShadow: "inset 0 1 3 0 rgba(0,0,0,0.5),0 1 2 0 rgba(0,0,0,0.5)",
-				backgroundColor: "#1EA185",
 				display: 'block',
 				marginLeft: 'auto',
 				marginRight: 'auto',
