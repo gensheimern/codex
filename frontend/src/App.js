@@ -6,7 +6,7 @@ import MediaQuery from 'react-responsive';
 import './App.css';
 import Login from './components/login/Login';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import Organization from './components/signup/Organisation';
+import Organization from './components/signup/Organization';
 import Signup from './components/signup/Signup';
 import Dashboard from './components/Dashboard';
 import MobileContent from './components/MobileContent';

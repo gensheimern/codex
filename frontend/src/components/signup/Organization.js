@@ -1,5 +1,5 @@
 import React from "react";
-import "./Organisation.css";
+import "./Organization.css";
 import RaisedButton from 'material-ui/RaisedButton';
 //import config from '../../config';
 import Paper from 'material-ui/Paper';
@@ -7,7 +7,7 @@ import TextField from 'material-ui/TextField';
 import {Card, CardText} from 'material-ui/Card';
 //import AutoComplete from 'material-ui/AutoComplete';
 
-export default class Organisation extends React.Component{
+export default class Organization extends React.Component{
 
     constructor(props) {
 		super(props);
@@ -96,8 +96,8 @@ export default class Organisation extends React.Component{
 
 
         return(
-            <div className="organisationBg">
-			<form className="organisation" >
+            <div className="organizationBg">
+			<form className="organization" >
 				<div>
 					<Paper style={styles.paperStyle} zDepth={1} />
  				</div>
@@ -106,14 +106,14 @@ export default class Organisation extends React.Component{
 				<center>
 					<h3 className="h3header">Lunchplanner</h3>
 				</center>
-                <Card className="organisationCard">
+                <Card className="organizationCard">
 				<CardText>
 				<h2 className="h2header">Organization</h2>
 				
                 {/*<AutoComplete
 					fullWidth={true}
                     ref = {"autocomplete"}
-                    floatingLabelText="Organisation"
+                    floatingLabelText="Organization"
                    	filter={AutoComplete.fuzzyFilter}
                     dataSource={this.state.usersList}
                     dataSourceConfig={this.state.usersListConfig}
