@@ -4,6 +4,7 @@ import config from '../../config';
 import MediaQuery from 'react-responsive';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
+import GroupInfo from '../groupmanager/GroupInfo';
 import { withRouter } from 'react-router-dom';
 
 class Events extends React.Component {
@@ -149,12 +150,6 @@ class Events extends React.Component {
             (matches) => {
               if (matches) {
                 return <div>
-                  <div className="feedInfo" style={{
-                      paddingLeft: "2%"
-                    }}>
-                    <h3>PUBLIC</h3>
-                    <p>12 | Welcome to the public channel of VSF Experts. You can find all your colleagues here.</p>
-                  </div>
                   <div className="addButton">
                     <hr/>
 
@@ -180,6 +175,9 @@ class Events extends React.Component {
             }
           }
         </MediaQuery>
+        <div>
+          <GroupInfo filter={this.props.filter}/>
+        </div>
         <div className="feed">
           {filterData.map(event => (<EventItem key={event.id} event={event}/>))}
         </div>

@@ -47,18 +47,25 @@ class SidebarContent extends React.Component {
   }
 
   clickGroupName(groupId){
-    this.props.searchFilterFeed(groupId,"FilterGroup");
+    this.props.closeDrawer();
+    this.props.searchFilterFeed(groupId,"FilterFeed");
+        this.props.history.push('/feed');
 
   }
 
   clickGroupButton(index){
     this.setState({activeIndex:index});
     if(index === "PUBLIC"){
-    this.props.searchFilterFeed("PUBLIC","FilterFeed");}
-    this.props.history.push('/feed');
-    if(index === "PERSONAL"){
-    this.props.searchFilterFeed("PERSONAL","FilterFeed");}
-    this.props.history.push('/feed');
+    this.props.searchFilterFeed("PUBLIC","FilterFeed");
+    this.props.closeDrawer();
+    this.props.history.push('/feed');}
+    else if(index === "PERSONAL"){
+    this.props.searchFilterFeed("PERSONAL","FilterFeed");
+    this.props.closeDrawer();
+    this.props.history.push('/feed');}
+    else {
+      this.clickGroupName(this.state.groups[index].id)
+    }
 
   }
 
@@ -83,15 +90,7 @@ class SidebarContent extends React.Component {
              name={"PUBLIC"}
              main={true}>
            </GroupSidebarButton>
-        <div className="divider"/>
-          <GroupSidebarButton
-             key={"group PERSONAL"}
-             index={"PERSONAL"}
-             isActive={this.state.activeIndex==="PERSONAL"}
-             clickGroupButton={this.clickGroupButton}
-             name={"PERSONAL"}
-             main={true}>
-           </GroupSidebarButton>
+
         <div className="divider"/>
         <div style={{width:"100%"}}>
           <p style={{

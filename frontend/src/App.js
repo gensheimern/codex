@@ -29,7 +29,6 @@ class App extends Component {
 				filterWord: 'TimeDown',
 				searchWord: '',
 				filterDate: new Date(),
-				filterGroup: '',
 				filterFeed: 'PUBLIC',
 				personalFilter: new Date(),
 			}
@@ -87,9 +86,6 @@ class App extends Component {
 							}
 						}))
 						break;
-				case 'FilterGroup':
-						console.log('wow');
-									break;
 			default:
 				return null;
 		}

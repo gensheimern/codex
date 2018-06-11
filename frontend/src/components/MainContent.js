@@ -12,6 +12,10 @@ import FloatingActionButton from 'material-ui/FloatingActionButton';
 import FlatButton from 'material-ui/FlatButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 
+// <div className="FilterDiv">
+// <FilterDropDown searchFilterFeed={this.props.searchFilterFeed}/>
+// </div>
+
 
 export default class MainContent extends React.Component {
 	FEED = 0;
@@ -26,9 +30,7 @@ export default class MainContent extends React.Component {
 		if (this.props.mainContentNumber === this.FEED) {
 			return (
 				<React.Fragment>
-					<div className="FilterDiv">
-						<FilterDropDown searchFilterFeed={this.props.searchFilterFeed}/>
-					</div>
+
 					<Events
 						filter={this.props.filter}
 					/>
