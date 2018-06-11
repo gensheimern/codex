@@ -26,7 +26,7 @@ const ActivityController = {
 		const { activityId } = req.params;
 
 		const activity = await ActivityModel.getActivityById(activityId);
-		const userOrganization = UserModel.getOrganization(userId);
+		const userOrganization = await UserModel.getOrganization(userId);
 
 		const isParticipant = await ParticipatesModel.isParticipant(userId, activityId);
 		const isPrivate = await ActivityModel.isPrivate(activityId);
@@ -65,7 +65,7 @@ const ActivityController = {
 			return;
 		}
 
-		const organizationId = UserModel.getOrganization(userId);
+		const organizationId = await UserModel.getOrganization(userId);
 
 		const result = await ActivityModel.createActivity(activity, userId, organizationId);
 

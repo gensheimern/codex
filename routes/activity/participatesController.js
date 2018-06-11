@@ -56,7 +56,7 @@ const ParticipatesController = {
 
 		const activity = await ActivityModel.getActivityById(activityId);
 		const ActivityOrganization = activity.Organization;
-		const UserOrganization = UserModel.getOrganization(userId);
+		const UserOrganization = await UserModel.getOrganization(userId);
 
 		if (!isPrivate && !isHost && ActivityOrganization !== UserOrganization) {
 			res.status(403).json({
