@@ -1,5 +1,5 @@
 import React from 'react';
-import ReCAPTCHA from 'react-google-recaptcha';
+// import ReCAPTCHA from 'react-google-recaptcha';
 import config from '../../../config';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
