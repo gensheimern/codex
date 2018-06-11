@@ -26,43 +26,43 @@
 }
 
 @media only screen and (max-width: 400px) {
-    .calendarDate .contents, .weekday .contents {
+		.calendarDate .contents, .weekday .contents {
 		font-size: 120%;
 	}
 }
 
 @media only screen and (min-width: 400px) and (max-width: 600px) {
-    .calendarDate .contents, .weekday .contents {
+		.calendarDate .contents, .weekday .contents {
 		font-size: 180%;
 	}
 }
 
 @media only screen and (min-width: 600px) and (max-width: 768px) {
-    .calendarDate .contents, .weekday .contents {
+		.calendarDate .contents, .weekday .contents {
 		font-size: 250%;
 	}
 }
 
 @media only screen and (min-width: 768px) and (max-width: 1000px) {
-    .calendarDate .contents, .weekday .contents {
+		.calendarDate .contents, .weekday .contents {
 		font-size: 120%;
 	}
 }
 
 @media only screen and (min-width: 1000px) and (max-width: 1100px) {
-    .calendarDate .contents, .weekday .contents {
+		.calendarDate .contents, .weekday .contents {
 		font-size: 120%;
 	}
 }
 
 @media only screen and (min-width: 1100px) and (max-width: 1800px) {
-    .calendarDate .contents, .weekday .contents {
+		.calendarDate .contents, .weekday .contents {
 		font-size: 160%;
 	}
 }
 
 @media only screen and (min-width: 1800px) {
-    .calendarDate .contents, .weekday .contents {
+		.calendarDate .contents, .weekday .contents {
 		font-size: 240%;
 	}
 }

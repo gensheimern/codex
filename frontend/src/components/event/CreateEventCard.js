@@ -12,6 +12,7 @@ import config from '../../config';
 import Snackbar from 'material-ui/Snackbar';
 import FlatButton from 'material-ui/FlatButton';
 import Paper from 'material-ui/Paper';
+import jwt_decode from 'jwt-decode';
 import { withRouter } from 'react-router-dom';
 
 const eventImages = [
@@ -67,7 +68,7 @@ class CreateEventCard extends React.Component {
 			addressValue: '',
 			meetingPoint: '',
 			open: false,
-			cardTitle: 'Edit group picture',
+			cardTitle: 'Edit event picture',
 			cardImage: 'weblogin',
 			collapse: false,
 			invitePeople: [],
@@ -83,11 +84,12 @@ class CreateEventCard extends React.Component {
 			month: (new Date()).getUTCMonth(),
 			day: (new Date()).getUTCDate(),
 			hours: '12',
-			minutes: '0',
+			minutes: '00',
 			meetingHours:'11',
 			meetingMinutes:'45',
 			snackbaropen: false,
 			errorCreate: '',
+			errorInvite: '',
 			cardspace: '',
 		}
 
@@ -116,6 +118,7 @@ class CreateEventCard extends React.Component {
 
 	callBackInvitePeople(invitePeople){
 		this.setState({ invitePeople });
+		this.checkInvite();
 	}
 
 	callbackAddress(myAddress){
@@ -198,6 +201,17 @@ class CreateEventCard extends React.Component {
 		}
 	}
 
+	checkInvite(){
+
+	this.setState({
+		invitePeople:
+			(this.state.invitePeople.reduce((x, y) => x.findIndex(e=> e.ValueKey === y.ValueKey)<0 ? [...x, y]: x, [])
+
+				)
+			}
+		)
+	}
+
 	renderSnackbar = () => {
 		this.setState({
 			snackbaropen: true,
@@ -220,9 +234,23 @@ class CreateEventCard extends React.Component {
 	}
 
 	createEvent() {
+
+		var token = localStorage.getItem('apiToken')
+		var decoded = jwt_decode(token);
+		var invite = false
 		let userArray = this.state.invitePeople.map((userid) => {
-					return userid.ValueKey
+				if(userid.ValueKey === decoded.userId) {
+						return invite = true
+				} else {
+					return invite = false
+				}
+
 		 });
+
+		if(invite){
+			this.setState({errorInvite:"Your can not invite yourself"})
+		}
+		else {
 
 		if(parseInt(this.getMaxPeopleValue(), 10) >= userArray.length +1 || parseInt(this.getMaxPeopleValue(), 10) === 0 ){
 
@@ -284,7 +312,7 @@ class CreateEventCard extends React.Component {
 			this.props.history.push('/feed');
 		}
 	});
-
+}
 
 		}
 
@@ -331,7 +359,9 @@ class CreateEventCard extends React.Component {
 					</div>
 					<br/>
 						<div className="timepickerMeeting">
-								<CreateEventTimePicker time={this.callbackTimeMeetingPoint} />
+								<CreateEventTimePicker hours={this.state.meetingHours}
+																			 minutes={this.state.meetingMinutes}
+																			 time={this.callbackTimeMeetingPoint} />
 						</div>
 						<div className="collapsedContendReminder">
 						< ReminderToggle
@@ -360,6 +390,7 @@ class CreateEventCard extends React.Component {
 						onChange={this.handleChangeDescription}
 					/>
 					<InvitePeople people={this.callBackInvitePeople}/>
+					<div style={{color:"red"}}>{this.state.errorInvite} </div>
 					{images}
 				</div>
 			);
@@ -385,7 +416,7 @@ class CreateEventCard extends React.Component {
 							subtitle={this.state.cardTitle}
 						/>}
 				>
-					<img   src={this.state.cardImage + ".jpg"} alt="" />
+					<img   className='eventCardImg' src={this.state.cardImage + ".jpg"} alt="" />
 				</CardMedia>
 
 				<CardText>
@@ -401,7 +432,9 @@ class CreateEventCard extends React.Component {
 					</div>
 					<div className="timeDatePicker">
 						<div className="timepicker">
-							<CreateEventTimePicker time={this.callbackTime} />
+							<CreateEventTimePicker hours={this.state.hours}
+																		 minutes={this.state.minutes}
+																		 time={this.callbackTime} />
 						</div>
 						<div style={{clear: 'both'}}/>
 						</div>
