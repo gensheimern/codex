@@ -8,6 +8,7 @@ import './signup.css';
 import Paper from 'material-ui/Paper';
 import Checkbox from 'material-ui/Checkbox';
 import {Link} from 'react-router-dom';
+import Dsgvo from './Dsgvo'; // In englisch General Data Protection (GDPR)
 
 export default class Signup extends React.Component {
 	emailRegExp = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -82,10 +83,13 @@ export default class Signup extends React.Component {
 			  maxWidth: 250,
 			},
 			checkbox: {				
-				paddingLeft: 100,
-				paddingRight: 197,
-				marginBottom: 16,
-				fontWeight: 0,
+				//paddingLeft: 100,
+				//paddingRight: 180,
+				width: '60%',
+				float: 'left',
+				paddingTop: 8,
+				//marginBottom: 16,
+				//fontWeight: 0,
 			},
 			
 			cardStyle:{
@@ -219,11 +223,13 @@ export default class Signup extends React.Component {
 				<br/>
 				
 				<Checkbox
-          			label="Datenschutzerklärung "
+          			label="General Data Protection "
           			checked={this.state.checked}
           			onCheck={this.updateCheck.bind(this)}
           			style={styles.checkbox}
-        		/>
+				/>
+				<Dsgvo/>
+				<br/>
 				
 				<RaisedButton
 					backgroundColor="#b9b9b9"

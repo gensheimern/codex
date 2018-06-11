@@ -7,15 +7,7 @@
 import React from 'react';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
-import RaisedButton from 'material-ui/RaisedButton';
-import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 import CreateDsgvoText from '../signup/DsgvoText';
-
-const styles = {
-    radioButton: {
-      marginTop: 16,
-    },
-  };
 
 /**
  * Dialog content can be scrollable.
@@ -53,9 +45,19 @@ export default class Dsgvo extends React.Component{
         
         return(
         <div>
-            <FlatButton className="flatButton1" label="read here" onClick={this.handleOpen}/>
+            <FlatButton 
+            className="flatButton1" 
+            label="read here "  // General Data Protection
+            labelStyle= {{ 
+              textTransform: 'none',
+                }}
+            hoverColor= "#F5F5F5"
+            
+            onClick={this.handleOpen}
+            />
+
             <Dialog
-            title="Datenschutzerklärung"
+            title="General Data Protection"
             actions={actions}
             modal={false}
             open={this.state.open}
