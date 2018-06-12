@@ -44,29 +44,43 @@ export default class Dsgvo extends React.Component{
         ];     
         
         return(
-        <div>
-            <FlatButton 
-            className="flatButton1" 
-            label="read here "  // General Data Protection
-            labelStyle= {{ 
-              textTransform: 'none',
-                }}
-            hoverColor= "#F5F5F5"
-            
-            onClick={this.handleOpen}
-            />
+            <React.Fragment>
+                {/* <FlatButton 
+                    className="flatButton1" 
+                    label="read here "  // General Data Protection
+                    labelStyle= {{ 
+                        textTransform: 'none',
+                    }}
+                    hoverColor= "#F5F5F5"
+                    onClick={this.handleOpen}
+                /> */}
 
-            <Dialog
-            title="General Data Protection"
-            actions={actions}
-            modal={false}
-            open={this.state.open}
-            onRequestClose={this.handleClose}
-            autoScrollBodyContent={true}
-            >
-           <p>{CreateDsgvoText.dsgvo}</p>
-            </Dialog>
-        </div>        
+                <p style={{
+                    textAlign: 'left',
+                }}>
+                    Accept <span
+                        style={{
+                            fontWeight: 500,
+                            textDecoration: 'underline',
+                            cursor: 'pointer',
+                        }}
+                        onClick={this.handleOpen}
+                    >
+                        General Data Protection
+                    </span>
+                </p>
+
+                <Dialog
+                    title="General Data Protection"
+                    actions={actions}
+                    modal={false}
+                    open={this.state.open}
+                    onRequestClose={this.handleClose}
+                    autoScrollBodyContent={true}
+                >
+                    <p>{CreateDsgvoText.dsgvo}</p>
+                </Dialog>
+            </React.Fragment>        
         );
     }
 }

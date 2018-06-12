@@ -2,6 +2,12 @@ body {
 	background-color: #F1F1F1;
 }
 
+@media only screen and (min-width: 1921px) {
+	body {
+		margin: 0 10%;
+	}
+}
+
 label {
 	font-weight: normal;
 }

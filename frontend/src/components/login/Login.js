@@ -10,6 +10,7 @@ import {Card,CardText} from 'material-ui/Card';
 import Paper from 'material-ui/Paper';
 import { Link } from 'react-router-dom';
 import Logout from './Logout';
+import logo from '../../IMG/logo/Logo_3.png';
 
 export default class Login extends Component {
 
@@ -72,7 +73,7 @@ export default class Login extends Component {
             } else {
                 // TODO Code without local storage
             }
-console.log(this.props.history);
+
             this.props.history.push("/feed");
         }).catch((err) => {
             
@@ -88,7 +89,10 @@ console.log(this.props.history);
 				borderRadius: 7,
 				display: 'block',
 				marginLeft: 'auto',
-				marginRight: 'auto',
+                marginRight: 'auto',
+                marginTop: '20px',
+                backgroundColor: 'transparent',
+                boxShadow: 'none',
             },
 
             textField:{
@@ -112,10 +116,15 @@ console.log(this.props.history);
             <div className = "loginBg">
             <form className ="login" >
                 <div>
-                    <Paper style={styles.paperStyle} zDepth= {1}/>
+                    <Paper style={styles.paperStyle} zDepth= {1}>
+                        <img src={logo} alt="logo" style={{
+                            width: 'calc(100% + 18px)',
+                            margin: '-8px',
+                        }} />
+                    </Paper>
                 </div>
                 <center>
-                    <h3 className = "h3header">Lunchplannner</h3>
+                    <h3 className = "h3header">Meet'n'eat</h3>
                 </center>
                 <Card className = "loginCard">
                 <CardText>
