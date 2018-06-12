@@ -19,6 +19,12 @@ const Participates = {
 		return databaseConnection.queryp('INSERT INTO participates (User_Id, Activity_Id, Accepted) VALUES (?, ?, ?)', [userId, activityId, acceptedFlag]);
 	},
 
+	async addTeam(activityId, teamId, accepted) {
+		const acceptedFlag = accepted ? 1 : 0;
+		console.log(activityId);
+		return databaseConnection.queryp('INSERT INTO teamParticipates (Team_Id, Activity_Id, Accepted) VALUES (?, ?, ?)', [teamId, activityId, acceptedFlag]);
+	},
+
 	async deleteParticipant(activityId, userId) {
 		return databaseConnection.queryp('DELETE FROM participates WHERE User_Id = ? AND Activity_Id = ?', [userId, activityId]);
 	},

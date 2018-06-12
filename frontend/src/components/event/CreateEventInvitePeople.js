@@ -21,6 +21,8 @@ export default class CreateEventInvitePeople extends React.Component {
 
   componentDidMount(){
     this.loadUsers();
+    this.loadGroups();
+
   }
 
   loadUsers(){
@@ -54,6 +56,38 @@ export default class CreateEventInvitePeople extends React.Component {
     });
   }
 
+  loadGroups(){
+    fetch(config.apiPath + "/team/", {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Access-Token': localStorage.getItem('apiToken')
+      }
+    })
+    .then((res) => {
+      if (!res.ok) {
+        throw new Error("Request failed.");
+        } else if (res.status !== 200) {
+        throw new Error("Forbidden");
+      }
+      return res;
+    })
+    .then(res => res.json())
+    .then(res => {
+        res.map(userid => {
+          console.log(userid);
+          this.setState({groups:[...this.state.groups, {textKey: userid.name, ValueEmail: userid.id, ValueKey:"Group"}]})
+        })
+        this.setState({groups: this.state.groups.concat(this.state.usersList)})
+    })
+    .catch((err) => {
+      this.setState({
+        error: 'An Error occured.',
+      });
+    });
+  }
+
+
 
 render(){
 return(
@@ -63,7 +97,7 @@ return(
       ref = {"autocomplete"}
       floatingLabelText="Invite People"
       filter={AutoComplete.fuzzyFilter}
-      dataSource={this.state.usersList}
+      dataSource={this.state.groups}
       dataSourceConfig={this.state.usersListConfig}
       maxSearchResults={5}
       onNewRequest= {(chosenRequest, index) =>{

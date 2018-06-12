@@ -71,6 +71,7 @@ class CreateEventCard extends React.Component {
 			cardImage: 'weblogin',
 			collapse: false,
 			invitePeople: [],
+			inviteGroup: [],
 			invitePeopleID: [],
 			time: '',
 			date: new Date(),
@@ -115,7 +116,7 @@ class CreateEventCard extends React.Component {
 	};
 
 	callBackInvitePeople(invitePeople){
-		this.setState({ invitePeople });
+		this.setState({invitePeople: invitePeople });
 	}
 
 	callbackAddress(myAddress){
@@ -220,10 +221,18 @@ class CreateEventCard extends React.Component {
 	}
 
 	createEvent() {
-		let userArray = this.state.invitePeople.map((userid) => {
-					return userid.ValueKey
-		 });
+		let userArray = [];
+		let groupArray = [];
+		this.state.invitePeople.map((userid) => {
+			if(userid.ValueKey === "Group"){
+				groupArray.push(userid.ValueEmail);
+			} else {
+				userArray.push(userid.ValueKey)
+			}
 
+		 });
+		 console.log(userArray);
+		 console.log(groupArray);
 		if(parseInt(this.getMaxPeopleValue(), 10) >= userArray.length +1 || parseInt(this.getMaxPeopleValue(), 10) === 0 ){
 
 		fetch(config.apiPath + "/activity", {
@@ -240,6 +249,7 @@ class CreateEventCard extends React.Component {
 				timeMeetingPoint: this.state.year + "-" + this.state.month + "-" + this.state.day + " " + this.state.meetingHours + ":" + this.state.meetingMinutes,
 				maxParticipants: parseInt(this.getMaxPeopleValue(), 10),
 				participants: userArray,
+				teams: groupArray,
 			}),
 			headers: {
 				'Content-Type': 'application/json',
