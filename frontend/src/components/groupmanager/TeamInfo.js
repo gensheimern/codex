@@ -1,6 +1,3 @@
-{/*
-      The Component renders the customizable (for Team-Admin) Team-Information which each Team owns.
-  */}
 import React from "react";
 import "./groupmanager.css";
 import FlatButton from 'material-ui/FlatButton';
@@ -11,9 +8,11 @@ import CreateTeamIconButton from './CreateTeamIconButton'
 import InvitePeople from '../event/CreateEventInvitePeople';
 import IconEdit from 'material-ui/svg-icons/image/edit';
 import TextOrTextField from '../tools/TextOrTextField';
-
 import IconGroup from 'material-ui/svg-icons/social/group';
 
+{/*
+      The Component renders the customizable (for Team-Admin) Team-Information which each Team owns.
+  */}
 export default class GroupInfo extends React.Component {
 
   constructor(props) {
@@ -40,7 +39,7 @@ export default class GroupInfo extends React.Component {
     this.loadGroup(this.props.filter.filterFeed);
   }
 
-  loadGroup(x){
+loadGroup(x){
     if(x === "PUBLIC"){
       this.setState({
                       isAdmin : false,
@@ -71,7 +70,7 @@ export default class GroupInfo extends React.Component {
     });
 
 }
-  loadTeamMembers(id){
+loadTeamMembers(id){
     let count = 0;
     let arrayOfMembers = 0;
     fetch(config.apiPath + "/team/" + id + "/member", {
@@ -102,12 +101,12 @@ export default class GroupInfo extends React.Component {
 
   }
 
-  handleClick = () => {
+handleClick = () => {
     this.handleOpen();
   };
 
 
- handleSubmit(e) {
+handleSubmit(e) {
      e.preventDefault();
 
      if(this.state.name !== "") {
@@ -133,7 +132,7 @@ export default class GroupInfo extends React.Component {
      }
  }
 
- handleChangeN = event => {
+handleChangeN = event => {
      this.setState({
          name: event.target.value
      });
@@ -160,8 +159,9 @@ export default class GroupInfo extends React.Component {
     this.state.groups.map((groups) => {if(groups.id === this.props.filter.filterFeed){
                                         return selectedTeam = groups;
                                       }else return "blub";
-                                        })
-    MemberCount = this.loadTeamMembers(selectedTeam.id);
+                                    });
+    (selectedTeam.id === null) ?   null
+      : MemberCount = this.loadTeamMembers(selectedTeam.id);
     }
 
 
