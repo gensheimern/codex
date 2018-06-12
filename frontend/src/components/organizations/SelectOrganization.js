@@ -5,6 +5,10 @@ import RaisedButton from 'material-ui/RaisedButton';
 import config from '../../config';
 import JoinOrganization from '../organizations/JoinOrganization';
 import AddOrganization from './AddOrganization';
+import ListOrganizations from './ListOrganizations';
+
+const NOT_SELECTED = -1;
+const CREATE_NEW = 0;
 
 export default class SelectOrganization extends React.Component {
 	constructor(props) {
@@ -15,7 +19,7 @@ export default class SelectOrganization extends React.Component {
 			loaded: false,
 			error: null,
 			password: '',
-			selected: -1,
+			selected: NOT_SELECTED,
 		};
 		
 		this.back = this.back.bind(this);
@@ -58,7 +62,7 @@ export default class SelectOrganization extends React.Component {
 
 	back() {
 		this.setState({
-			selected: -1,
+			selected: NOT_SELECTED,
 		});
 	}
 
@@ -67,7 +71,7 @@ export default class SelectOrganization extends React.Component {
 			return !this.props.myOrganizations.includes(organization.id);
 		});
 
-		const back = this.state.selected !== -1
+		const back = this.state.selected !== NOT_SELECTED
 			? <FlatButton
 				label="Back"
 				primary={true}
@@ -84,6 +88,65 @@ export default class SelectOrganization extends React.Component {
 			/>,
 		];
 
+		let action = null;
+
+		if (this.state.selected === NOT_SELECTED) {
+			action = (
+				<React.Fragment>
+					<ListOrganizations
+						organizations={organizations}
+						onJoin={(selected) => {
+							this.setState({
+								selected,
+							});
+						}}
+					/>	
+					<RaisedButton
+						label="Create new"
+						primary={true}
+						onClick={() => {
+							this.setState({
+								selected: CREATE_NEW,
+							});
+						}}
+						style={{
+							margin: '2%',
+						}}
+					/>
+				</React.Fragment>	
+			);
+		}
+
+		if (this.state.selected > CREATE_NEW) {
+			action = (
+				<JoinOrganization
+					show={this.state.selected !== NOT_SELECTED}
+					id={this.state.selected}
+					organization={this.state.organizations.filter((element) => element.id === this.state.selected)[0]}
+					saveChange={this.props.saveChange}
+					close={this.props.close}
+				/>
+			);
+		}
+
+		if (organizations.length === 0) {
+			action = (
+				<p style={{
+					width: '100%',
+					textAlign: 'center',
+				}}>No organizations yet. Create one.</p>
+			);
+		}
+
+		if (this.state.selected === CREATE_NEW) {
+			action = (
+				<AddOrganization
+					saveChange={this.props.saveChange}
+					close={this.props.close}
+				/>
+			);
+		}
+
 		return (
 			<Dialog
 				title="Select Organization"
@@ -93,72 +156,7 @@ export default class SelectOrganization extends React.Component {
 				autoScrollBodyContent={true}
 				actions={actions}
 			>
-				{this.state.selected === -1 &&
-				organizations.map(organization => (
-					<div
-						key={organization.id}
-						style={{
-							clear: 'both',
-							overflow: 'hidden',
-						}}
-					>
-						<p
-							style={{
-								float: 'left',
-								margin: '2%',
-							}}
-						>
-							{organization.name} - {organization.description}
-						</p>
-						<RaisedButton
-							label="Join"
-							onClick={() => {
-								this.setState({
-									selected: organization.id,
-								});
-							}}
-							style={{
-								float: 'right',
-							}}
-						/>
-					</div>
-				))}
-				{organizations.length === 0 &&
-					<p style={{
-						width: '100%',
-						textAlign: 'center',
-					}}>No organizations yet. Create one.</p>
-				}
-				{this.state.selected === -1 &&
-				<RaisedButton
-					label="Create new"
-					primary={true}
-					onClick={() => {
-						this.setState({
-							selected: 0,
-						});
-					}}
-					style={{
-						float: 'right',
-					}}
-				/>}
-
-				{this.state.selected > 0 &&
-				<JoinOrganization
-					show={this.state.selected !== -1}
-					id={this.state.selected}
-					organization={this.state.organizations.filter((element) => element.id === this.state.selected)[0]}
-					changeOrganization={this.props.changeOrganization}
-					back={this.back}
-					changedError={this.props.changedError}
-				/>
-				}
-
-				{this.state.selected === 0 &&
-				<AddOrganization
-					back={this.back}
-				/>
-				}
+				{action}
 			</Dialog>
 		);
 	}
