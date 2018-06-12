@@ -1,0 +1,8 @@
+.background {
+  background-image: url("Hintergrundbild.png");
+  height:100%;
+  background-size: cover;
+	background-repeat: no-repeat;
+	background-color: #1EA185;
+	background-position: center top;
+}

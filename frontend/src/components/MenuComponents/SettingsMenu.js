@@ -4,6 +4,8 @@ import Popover, { PopoverAnimationVertical } from 'material-ui/Popover';
 import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
 import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right';
+import ArrowDropDown from 'material-ui/svg-icons/hardware/keyboard-arrow-down';
+import ArrowDropUp from 'material-ui/svg-icons/hardware/keyboard-arrow-up';
 import Add from 'material-ui/svg-icons/content/add';
 import Divider from 'material-ui/Divider';
 import config from '../../config';
@@ -18,6 +20,8 @@ class SettingsMenu extends React.Component {
 			organizations: [],
 			changed: false,
 			changedError: false,
+
+			showOrganizations: false,
 			showOtherOrganizations: false,
 		};
 
@@ -134,7 +138,7 @@ class SettingsMenu extends React.Component {
 					/>
 					<MenuItem
 						primaryText="Change organization"
-						rightIcon={<ArrowDropRight />}
+						rightIcon={<ArrowDropDown />}
 						disabled={!this.state.loaded}
 						menuItems={
 							[
