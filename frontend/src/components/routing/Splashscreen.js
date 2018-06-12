@@ -1,7 +1,7 @@
 import React from 'react';
 import config from '../../config';
 import { Redirect } from 'react-router-dom';
-import logo from '../../IMG/codex_logo1x.png';
+import logo from '../../IMG/logo/Logo_1.png';
 import LinearProgress from 'material-ui/LinearProgress';
 
 export default class Splashscreen extends React.Component {
@@ -51,18 +51,16 @@ export default class Splashscreen extends React.Component {
 		if (!this.state.loaded || !this.state.timeout) {
 			return (
 				<div style={{
+					position: 'fixed',
+					top: 'calc(50% - 35vw)',
+					left: 'calc(50% - 40vw)',
 					width: '80vw',
 					height: '80vw',
-					maxHeight: '60vh',
-					marginTop: '20vh',
-					marginLeft: 'auto',
-					marginRight: 'auto',
-					textAlign: 'center',
 				}}>
 					<img
 						style={{
 							marginBottom: '5%',
-							height: '100%',
+							width: '100%',
 						}}
 						src={logo}
 						alt="Logo"

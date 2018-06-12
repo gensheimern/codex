@@ -116,13 +116,8 @@ class Calendar extends React.Component {
 		const weekdays = ['MO', 'TU', 'WE', 'TH', 'FR', 'SA', 'SO'];
 
 		return (
-			<Paper style={{
-				padding: '3vw',
-			}}>
-				<div style={{
-					textAlign: 'center',
-					fontSize: '120%'
-				}}>
+			<Paper className="calendarPaper">
+				<div className="currentDateDisplay">
 					<button style={buttonStyle} onClick={() => this.monthChange(false)}>&lt;</button>
 					{this.state.date.getDate()} {monthNames[this.state.date.getMonth()]} {this.state.date.getFullYear()}
 					<button style={buttonStyle} onClick={() => this.monthChange(true)}>&gt;</button>

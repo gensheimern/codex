@@ -3,17 +3,16 @@ import ReCAPTCHA from 'react-google-recaptcha';
 import config from '../../config';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import {Card, /*CardMedia, CardTitle,*/ CardText} from 'material-ui/Card';
+import { Card, CardText } from 'material-ui/Card';
 import './signup.css';
 import Paper from 'material-ui/Paper';
 import Checkbox from 'material-ui/Checkbox';
 import {Link} from 'react-router-dom';
-import Dsgvo from './Dsgvo'; // In englisch General Data Protection (GDPR)
+import Dsgvo from './Dsgvo'; // In english General Data Protection (GDPR)
+import logo from '../../IMG/logo/Logo_3.png';
 
 export default class Signup extends React.Component {
 	emailRegExp = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
-	//Recaptcha = require('react-recaptcha');
 
 	constructor(props) {
 		super(props);
@@ -79,19 +78,6 @@ export default class Signup extends React.Component {
 
 	render() {
 		const styles = {
-			block: {
-			  maxWidth: 250,
-			},
-			checkbox: {				
-				//paddingLeft: 100,
-				//paddingRight: 180,
-				width: '60%',
-				float: 'left',
-				paddingTop: 8,
-				//marginBottom: 16,
-				//fontWeight: 0,
-			},
-			
 			cardStyle:{
 				width: 440,
 				borderRadius: 5,
@@ -108,7 +94,10 @@ export default class Signup extends React.Component {
 				borderRadius: 7,
 				display: 'block',
 				marginLeft: 'auto',
-				marginRight: 'auto',	
+				marginRight: 'auto',
+				marginTop: '20px',
+                backgroundColor: 'transparent',
+                boxShadow: 'none',
 			},
 			textField:{
 				width: '80%',
@@ -152,12 +141,17 @@ export default class Signup extends React.Component {
 			<div className="signupBg">
 			<form className="signup" onSubmit={this.signupUser}>
 				<div>
-					<Paper style={styles.paperStyle} zDepth={1} />
+					<Paper style={styles.paperStyle} zDepth={1}>
+						<img src={logo} alt="logo" style={{
+                            width: 'calc(100% + 18px)',
+                            margin: '-8px',
+                        }} />
+					</Paper>
  				</div>
 
 				<br/>
 				<center>
-					<h3 className="h3header">Lunchplanner</h3>
+					<h3 className="h3header">Meet'n'eat</h3>
 				</center>
 
 				<Card className="signupCard">
@@ -221,14 +215,19 @@ export default class Signup extends React.Component {
 					onChange={(captcha) => this.setState({ captcha })}
 				/>
 				<br/>
-				
-				<Checkbox
-          			label="General Data Protection "
-          			checked={this.state.checked}
-          			onCheck={this.updateCheck.bind(this)}
-          			style={styles.checkbox}
-				/>
-				<Dsgvo/>
+
+				<div style={{paddingLeft: '10%'}}>
+					<Checkbox
+						checked={this.state.checked}
+						onCheck={this.updateCheck.bind(this)}
+						style={{
+							width: '24px',
+							float: 'left',
+						}}
+					/>
+					
+					<Dsgvo/>
+				</div>
 				<br/>
 				
 				<RaisedButton
