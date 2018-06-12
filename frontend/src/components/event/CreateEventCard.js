@@ -117,6 +117,7 @@ class CreateEventCard extends React.Component {
 
 	callBackInvitePeople(invitePeople){
 		this.setState({invitePeople: invitePeople });
+		this.checkInvite()
 	}
 
 	callbackAddress(myAddress){
@@ -220,6 +221,17 @@ class CreateEventCard extends React.Component {
 		node.scrollIntoView({behavior:'smooth'})
 	}
 
+	checkInvite(){
+
+	this.setState({
+		invitePeople:
+			(this.state.invitePeople.reduce((x, y) => x.findIndex(e=> e.ValueKey === y.ValueKey)<0 ? [...x, y]: x, [])
+
+				)
+			}
+		)
+	}
+
 	createEvent() {
 		let userArray = [];
 		let groupArray = [];
@@ -258,7 +270,10 @@ class CreateEventCard extends React.Component {
 		})
 		.then((res) => {
 			if (!res.ok || res.status !== 201) {
-				// handle error
+				if(res.status === 400){
+					this.setState({errorCreate: 'Maximum of ' + parseInt(this.getMaxPeopleValue(), 10) + ' participants' });
+
+				}
 			} else {
 				this.renderSnackbar();
 				this.props.history.push('/feed');

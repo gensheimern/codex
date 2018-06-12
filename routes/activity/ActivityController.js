@@ -2,6 +2,7 @@ const ActivityModel = require('../../models/ActivityModel');
 const ParticipatesModel = require('../../models/participatesModel');
 const NotificationModel = require('../../models/NotificationModel');
 const UserModel = require('../../models/UserModel');
+const TeamModel = require('../../models/UserModel');
 const MemberModel = require('../../models/MemberModel');
 const transforms = require('../transforms');
 const { validActivity } = require('./activityValidation');
@@ -49,6 +50,34 @@ const ActivityController = {
 		}
 	},
 
+	async getActivityOfTeam(req, res) {
+		const { userId } = req.token;
+		const { teamId } = req.params;
+
+		const activityPromise = ActivityModel.getActivityOfTeam(teamId);
+
+		// const isParticipant = await TeamModel.isParticipant(userId, activityId);
+		// const isPrivate = await ActivityModel.isPrivate(activityId);
+		//
+		// if (!isParticipant && isPrivate) {
+		// 	res.status(403).json({
+		// 		message: 'Permission denied.',
+		// 	});
+		// 	return;
+		// }
+
+		const activity = await activityPromise;
+
+		if (activity === null) {
+			res.status(404).json({
+				message: 'Activity not found',
+			});
+		} else {
+			res.json(transforms(userId).transformActivity(activity));
+		}
+	},
+
+
 	async createActivity(req, res) {
 		let participantsAdded = 0;
 		const { participants } = req.body;
@@ -70,6 +99,21 @@ const ActivityController = {
 		if (teams instanceof Array) {
 			const { maxParticipants } = activity;
 
+			teams.forEach(async (teamId) => {
+				teamsAdded += 1;
+				try {
+					await ParticipatesModel.addTeamToEvent(teamId, result.insertId);
+						const member = await MemberModel.getMemberOfTeam(teamId);
+						member.map(userid => {
+							if(userid.User_Id !== userId){
+							invitePeople.push(userid.User_Id);
+							}
+						})
+						} catch (err) {
+						console.log(err);
+						participantsAdded -= 1;
+						}
+
 			const actualCountParticipants = invitePeople.length + participants.length
 			if (actualCountParticipants >= maxParticipants && maxParticipants !== 0) {
 				res.status(400).json({
@@ -77,33 +121,13 @@ const ActivityController = {
 				});
 			}
 
-			teams.forEach(async (teamId) => {
-				teamsAdded += 1;
-				try {
-
-						const member = await MemberModel.getMemberOfTeam(teamId);
-						member.map(userid => {
-							if(userid.User_Id !== userId){
-							invitePeople.push(userid.User_Id);
-							}
-						})
-
-						invitePeople.forEach(async (userId) => {
-						await ParticipatesModel.addParticipant(result.insertId, userId, false);
-						const user = await UserModel.getUserById(userId);
-
-						await NotificationModel.addNotification(userId, 'joinEvent', 'Event invitation', `${user.Firstname} ${user.Name} invited you to join the event '${activity.name}'.`, result.insertId);
-						})
-
-						} catch (err) {
-						console.log(err);
-						participantsAdded -= 1;
-						}
-
-
 		// Add invited participants
 		if (participants instanceof Array) {
 			const { maxParticipants } = activity;
+			participants.map(e => {
+				invitePeople.push(e);
+			})
+			invitePeople = invitePeople.reduce((x, y) => x.findIndex(e=> e===y)<0 ? [...x, y]: x, []);
 			participants.forEach(async (participantId) => {
 				participantsAdded += 1;
 				try {

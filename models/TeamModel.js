@@ -28,6 +28,7 @@ const Team = {
 		);
 	},
 
+
 	/**
 	 * Creates a new team.
 	 * @param {string} teamName Name of the team.
@@ -76,6 +77,10 @@ const Team = {
 	 */
 	async isTeammanager(userId, teamId) {
 		return databaseConnection.querypBool('SELECT Team_Id FROM Team WHERE Team_Id = ? AND Teammanager = ?', [teamId, userId]);
+	},
+
+	async isTeamParticipant(userId, teamId) {
+		return databaseConnection.querypBool('SELECT * FROM member_of WHERE User_Id = ? AND Team_Id = ? AND Accepted = 1', [userId, teamId]);
 	},
 
 };
