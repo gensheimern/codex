@@ -1,5 +1,7 @@
+{/*
+      The Component renders the customizable (for Team-Admin) Team-Information which each Team owns.
+  */}
 import React from "react";
-
 import "./groupmanager.css";
 import FlatButton from 'material-ui/FlatButton';
 import config from '../../config';
@@ -9,6 +11,8 @@ import CreateTeamIconButton from './CreateTeamIconButton'
 import InvitePeople from '../event/CreateEventInvitePeople';
 import IconEdit from 'material-ui/svg-icons/image/edit';
 import TextOrTextField from '../tools/TextOrTextField';
+
+import IconGroup from 'material-ui/svg-icons/social/group';
 
 export default class GroupInfo extends React.Component {
 
@@ -21,12 +25,14 @@ export default class GroupInfo extends React.Component {
                   selectedIcon : "",
                   groups:[],
                   team:{},
+                  MemberCount:0
                 };
     this.handleChangeN = this.handleChangeN.bind(this);
     this.handleChangeD = this.handleChangeD.bind(this);
     this.handleChangeI = this.handleChangeI.bind(this);
     this.callBackInvitePeople = this.callBackInvitePeople.bind(this);
     this.loadGroup = this.loadGroup.bind(this);
+    this.loadTeamMembers = this.loadTeamMembers.bind(this);
 
 
   }
@@ -65,6 +71,36 @@ export default class GroupInfo extends React.Component {
     });
 
 }
+  loadTeamMembers(id){
+    let count = 0;
+    let arrayOfMembers = 0;
+    fetch(config.apiPath + "/team/" + id + "/member", {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Access-Token': localStorage.getItem('apiToken')
+      }
+    }).then((res) => {
+      if (!res.ok) {
+        throw new Error("Request failed.");
+      } else if (res.status !== 200) {
+        throw new Error("Forbidden");
+      } else {
+        return res;
+      }
+    }).then(res => res.json()).then(res => {
+      res.map((member) => {
+        count++;
+      })
+      this.setState({MemberCount:count})
+
+    })
+    .catch((err) => {
+      console.log('Request failed.');
+    });
+    return count;
+
+  }
 
   handleClick = () => {
     this.handleOpen();
@@ -117,53 +153,63 @@ export default class GroupInfo extends React.Component {
  }
   render() {
     let selectedTeam;
-    console.log("kappa");
-    console.log(this.state.groups);
-    if(this.props.filter.filterFeed === "PERSONAL"){
-          selectedTeam={name: this.state.name, description:this.state.description}
+    let MemberCount;
+    if(this.props.filter.filterFeed === "PUBLIC"){
+      selectedTeam = this.state;
     }else {
-      selectedTeam= this.state.groups.map((groups) => {if(groups.id === this.props.filter.filterFeed)
-                                                          return (groups)
-                                                      });
-
+    this.state.groups.map((groups) => {if(groups.id === this.props.filter.filterFeed){
+                                        return selectedTeam = groups;
+                                      }else return "blub";
+                                        })
+    MemberCount = this.loadTeamMembers(selectedTeam.id);
     }
-    console.log(selectedTeam);
 
 
-    return (<div>
-
-      <TextOrTextField
-        value={selectedTeam.name}
-        onChange={this.handleChangeN}
-        isTextField={this.isAdmin}
-        />
-      <TextOrTextField
-        value={selectedTeam.description}
-        onChange={this.handleChangeD}
-        isTextField={this.isAdmin}
-        />
-
-
-
-
+    return (<div style={{}}>
+      <div style={{	height: "32px",
+                    width: "273px",
+                    color: "#4A4A4A",
+                    fontFamily: "Trebuchet MS",
+                    fontSize: "18px",
+                    fontWeight: "bold",
+                    lineHeight: "21px",
+                    marginLeft:"5%",
+                    marginTop:"2%"}}>
+        <TextOrTextField
+          value={selectedTeam.name}
+          onChange={this.handleChangeN}
+          isTextField={this.isAdmin}
+          />
+      </div>
+      <span style={{float:"left",
+                    margin:"0% 5% 3% 5%"}}>
+        {<IconGroup/>}
+        {this.state.MemberCount}
+      </span>
+      <div style={{	height: "32px",
+                    width: "90%",
+                    color: "#727272",
+                    fontFamily: "Trebuchet MS",
+                    fontSize: "14px",
+                    lineHeight: "16px",
+                    marginLeft:"5%",
+                    }}>
+        <TextOrTextField
+          value={selectedTeam.description}
+          onChange={this.handleChangeD}
+          isTextField={this.isAdmin}
+          />
+      </div>
+      <div style={{	boxSizing: "border-box",
+                    margin:"2% 2% 2% 2%",
+                    opacity:"0.2",
+                    width: "100%",
+                    border: "1px solid #727272",
+                  }}/>
     </div>
     );
   }
 }
-
-
-        // {(this.props.isActive) ? this.props.main || <EditTeam /> :<div></div>
-        // }
-
-
-
-
-
-
-
-
-
-
 
         <div className="CreateTeamButton">
           <FlatButton
@@ -179,6 +225,3 @@ export default class GroupInfo extends React.Component {
                                         }}
             />
         </div>
-
-
-

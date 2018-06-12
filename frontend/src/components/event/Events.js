@@ -4,7 +4,7 @@ import config from '../../config';
 import MediaQuery from 'react-responsive';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
-import GroupInfo from '../groupmanager/GroupInfo';
+import TeamInfo from '../groupmanager/TeamInfo';
 import { withRouter } from 'react-router-dom';
 
 class Events extends React.Component {
@@ -145,13 +145,15 @@ class Events extends React.Component {
 
     return (<React.Fragment>
       <div>
+        <div>
+          <TeamInfo filter={this.props.filter}/>
+        </div>
         <MediaQuery query="(min-device-width: 768px)">
           {
             (matches) => {
               if (matches) {
                 return <div>
                   <div className="addButton">
-                    <hr/>
 
                     <FloatingActionButton
                       backgroundColor="#f8c947"
@@ -175,9 +177,6 @@ class Events extends React.Component {
             }
           }
         </MediaQuery>
-        <div>
-          <GroupInfo filter={this.props.filter}/>
-        </div>
         <div className="feed">
           {filterData.map(event => (<EventItem key={event.id} event={event}/>))}
         </div>
