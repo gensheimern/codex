@@ -21,7 +21,8 @@ beforeEach(() => {
 		},
     }]);
 
-    fetchMock.get(config.apiPath +'/user/me',{
+    fetchMock.get(config.apiPath +'/user/me/',
+    {
         id: 6,
         firstName: 'Max',
         name: 'Mustermann',
@@ -34,6 +35,10 @@ beforeEach(() => {
         unseenNotifications: 4,
 		
     });
+});
+
+afterEach(() => {
+    fetchMock.restore();
 });
 
 describe('ProfileToolbar Snapshot', () => {

@@ -53,4 +53,4 @@ configure({
 
 
 
-// Add global test initialization here
+// Add global test initialization here...hat nicht so funktioniert wie gewollt,deshalb momentan in jeder komponente für sich einzeln
