@@ -27,7 +27,7 @@ const MemberController = {
 		}
 	},
 
-	 /**
+	/**
 	 * Adds a new member to a team.
 	 * @param {Request} req Request object.
 	 * @param {Response} res Response object.

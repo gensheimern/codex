@@ -235,17 +235,15 @@ class CreateEventCard extends React.Component {
 	createEvent() {
 		let userArray = [];
 		let groupArray = [];
-		this.state.invitePeople.map((userid) => {
+		this.state.invitePeople.forEach((userid) => {
 			if(userid.ValueKey === "Group"){
 				groupArray.push(userid.ValueEmail);
 			} else {
 				userArray.push(userid.ValueKey)
 			}
-
 		 });
-		 console.log(userArray);
-		 console.log(groupArray);
-		if(parseInt(this.getMaxPeopleValue(), 10) >= userArray.length +1 || parseInt(this.getMaxPeopleValue(), 10) === 0 ){
+
+		if(parseInt(this.getMaxPeopleValue(), 10) >= userArray.length +1 || parseInt(this.getMaxPeopleValue(), 10) === 0 ) {
 
 		fetch(config.apiPath + "/activity", {
 			method: 'POST',

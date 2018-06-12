@@ -2,7 +2,6 @@ const ActivityModel = require('../../models/ActivityModel');
 const ParticipatesModel = require('../../models/participatesModel');
 const NotificationModel = require('../../models/NotificationModel');
 const UserModel = require('../../models/UserModel');
-const TeamModel = require('../../models/UserModel');
 const MemberModel = require('../../models/MemberModel');
 const transforms = require('../transforms');
 const { validActivity } = require('./activityValidation');
@@ -103,45 +102,45 @@ const ActivityController = {
 				teamsAdded += 1;
 				try {
 					await ParticipatesModel.addTeamToEvent(teamId, result.insertId);
-						const member = await MemberModel.getMemberOfTeam(teamId);
-						member.map(userid => {
-							if(userid.User_Id !== userId){
+					const member = await MemberModel.getMemberOfTeam(teamId);
+					member.forEach((userid) => {
+						if (userid.User_Id !== userId) {
 							invitePeople.push(userid.User_Id);
-							}
-						})
-						} catch (err) {
-						console.log(err);
-						participantsAdded -= 1;
 						}
-
-			const actualCountParticipants = invitePeople.length + participants.length
-			if (actualCountParticipants >= maxParticipants && maxParticipants !== 0) {
-				res.status(400).json({
-					message: 'Too many participants.',
-				});
-			}
-
-		// Add invited participants
-		if (participants instanceof Array) {
-			const { maxParticipants } = activity;
-			participants.map(e => {
-				invitePeople.push(e);
-			})
-			invitePeople = invitePeople.reduce((x, y) => x.findIndex(e=> e===y)<0 ? [...x, y]: x, []);
-			participants.forEach(async (participantId) => {
-				participantsAdded += 1;
-				try {
-					await ParticipatesModel.addParticipant(result.insertId, participantId, false);
-
-					const user = await UserModel.getUserById(userId);
-
-					await NotificationModel.addNotification(participantId, 'joinEvent', 'Event invitation', `${user.Firstname} ${user.Name} invited you to join the event '${activity.name}'.`, result.insertId);
+					});
 				} catch (err) {
 					participantsAdded -= 1;
 				}
-			});
-		}
 
+				const actualCountParticipants = invitePeople.length + participants.length;
+				if (actualCountParticipants >= maxParticipants && maxParticipants !== 0) {
+					res.status(400).json({
+						message: 'Too many participants.',
+					});
+				}
+
+				// Add invited participants
+				if (participants instanceof Array) {
+					participants.forEach((e) => {
+						invitePeople.push(e);
+					});
+					invitePeople = invitePeople.reduce(
+						(x, y) => (x.findIndex(e => e === y) < 0 ? [...x, y] : x),
+						[],
+					);
+					participants.forEach(async (participantId) => {
+						participantsAdded += 1;
+						try {
+							await ParticipatesModel.addParticipant(result.insertId, participantId, false);
+
+							const user = await UserModel.getUserById(userId);
+
+							await NotificationModel.addNotification(participantId, 'joinEvent', 'Event invitation', `${user.Firstname} ${user.Name} invited you to join the event '${activity.name}'.`, result.insertId);
+						} catch (err) {
+							participantsAdded -= 1;
+						}
+					});
+				}
 			});
 		}
 
@@ -152,6 +151,7 @@ const ActivityController = {
 		res.status(201).json({
 			activityId: result.insertId,
 			addedParticipants: participantsAdded,
+			addedTeams: teamsAdded,
 		});
 	},
 

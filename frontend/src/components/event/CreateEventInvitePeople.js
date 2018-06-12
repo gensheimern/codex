@@ -74,7 +74,7 @@ export default class CreateEventInvitePeople extends React.Component {
     })
     .then(res => res.json())
     .then(res => {
-        res.map(userid => {
+        res.forEach(userid => {
           console.log(userid);
           this.setState({groups:[...this.state.groups, {textKey: userid.name, ValueEmail: userid.id, ValueKey:"Group"}]})
         })

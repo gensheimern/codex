@@ -12,6 +12,7 @@
 		"prod": "npm start",
 		"build": "npm run build --prefix frontend",
 		"lint": "eslint .",
+		"lint:fix": "eslint . --fix",
 		"test": "mocha test --recursive",
 		"test:coverage": "nyc --reporter=text --reporter=html npm test"
 	},
