@@ -17,7 +17,7 @@ const app = express();
 
 app.use(cors());
 app.use(serveStatic(path.join(`${__dirname}/image/user`)));
-app.use(serveStatic(path.join(`${__dirname}/image/imageupload`)));
+app.use(serveStatic(path.join(`${__dirname}/image/lunch`)));
 app.use(serveStatic(path.join(`${__dirname}/image/activity`)));
 app.use(serveStatic(path.join(`${__dirname}/image/activity/card`)));
 app.use(serveStatic(path.join(`${__dirname}/frontend/build`)));
@@ -32,8 +32,10 @@ app.post(`${apiPath}/upload`, (req, res) => {
 	if (!req.files) {
 		return res.status(400).send('No files were uploaded.');
 	}
-	const { sampleFile } = req.files;
-	sampleFile.mv(`${__dirname}/image/user/test.jpg`, (err) => {
+	console.log(req.files);
+	const { image } = req.files;
+		console.log(image);
+image.mv(`${__dirname}/image/lunch/` + image.name, (err) => {
 		if (err) {
 			return res.status(500).send(err);
 		}
