@@ -8,6 +8,7 @@ const authenticateRouter = require('./routes/auth/AuthenticateRouter');
 const { verifyMiddleware } = require('./routes/auth/Auth');
 const apiRouter = require('./routes/MainRouter');
 const errorHandler = require('./middleware/errorHandler');
+const UserController = require('./routes/user/UserController');
 
 const app = express();
 
@@ -28,6 +29,7 @@ app.use(bodyParser.json());
 /* API routes */
 const apiPath = '/api';
 app.use(`${apiPath}/authenticate`, authenticateRouter);
+app.post(`${apiPath}/user`, UserController.addUser);
 app.use(apiPath, verifyMiddleware, apiRouter);
 
 /* User global error handler */
