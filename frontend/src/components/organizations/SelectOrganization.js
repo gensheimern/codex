@@ -22,7 +22,7 @@ export default class SelectOrganization extends React.Component {
 			password: '',
 			selected: NOT_SELECTED,
 		};
-		
+
 		this.back = this.back.bind(this);
 	}
 
@@ -111,7 +111,7 @@ export default class SelectOrganization extends React.Component {
 								selected,
 							});
 						}}
-					/>	
+					/>
 					<RaisedButton
 						label="Create new"
 						primary={true}
@@ -124,7 +124,7 @@ export default class SelectOrganization extends React.Component {
 							margin: '2%',
 						}}
 					/>
-				</React.Fragment>	
+				</React.Fragment>
 			);
 		}
 

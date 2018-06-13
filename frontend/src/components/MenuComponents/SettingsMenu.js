@@ -38,7 +38,7 @@ class SettingsMenu extends React.Component {
 			loaded: false,
 		});
 
-		fetch(config.apiPath + "/user/me/organizations", {
+		return fetch(config.apiPath + "/user/me/organizations", {
             method: 'GET',
             headers: {
 				'Content-Type': 'application/json',
@@ -104,14 +104,14 @@ class SettingsMenu extends React.Component {
 	}
 
 	saveChange = (newOrganization) => {
-		/* this.setState((prevState, props) => ({
-			organizations: prevState.organizations.map((organization) => ({
-				...organization,
-				active: organization.id === newOrganization,
-			}))
-		})); */
-
-		this.loadOrganizations();
+		this.loadOrganizations().then((res) => {
+			this.setState((prevState, props) => ({
+				organizations: prevState.organizations.map((organization) => ({
+					...organization,
+					active: organization.id === newOrganization,
+				}))
+			}));
+		});
 	}
 
 	render() {
@@ -138,7 +138,7 @@ class SettingsMenu extends React.Component {
 						insetChildren={!organization.active}
 						onClick={() => {
 							if (organization.active) return;
-							
+
 							this.changeOrganization(organization.id);
 						}}
 					/>
@@ -190,7 +190,7 @@ class SettingsMenu extends React.Component {
 					/>
 
 					{this.state.showOrganizations ? listOfOrganizations : null}
-					
+
 					<MenuItem
 						primaryText="Logout"
 						onClick={() => {

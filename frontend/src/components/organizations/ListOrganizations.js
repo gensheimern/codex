@@ -6,31 +6,44 @@ import EditIcon from 'material-ui/svg-icons/image/edit';
 
 export default class ListOrganizations extends React.Component {
 	render() {
-		return this.props.organizations.map(organization => (
-			<div
-				key={organization.id}
-				style={{
-					clear: 'both',
-					overflow: 'hidden',
-				}}
-			>
-				<p
+		return this.props.organizations.map(organization => {
+				let actionIcon;
+				if (!this.props.joined) {
+					actionIcon = <AddList />;
+				} else {
+					if (organization.admin.me) {
+						actionIcon = <EditIcon />;
+					} else {
+						actionIcon = <ClosedIcon />;
+					}
+				}
+
+			return (
+				<div
+					key={organization.id}
 					style={{
-						float: 'left',
-						margin: '2%',
+						clear: 'both',
+						overflow: 'hidden',
 					}}
 				>
-					{organization.name} - {organization.description}
-				</p>
-				<IconButton
-					onClick={() => { this.props.onJoin(organization.id) }}
-					style={{
-						float: 'left',
-					}}
-				>
-					{!this.props.joined ? <AddList /> : (organization.admin.me ? <EditIcon /> : <ClosedIcon />) }
-				</IconButton>
-			</div>
-		));
+					<p
+						style={{
+							float: 'left',
+							margin: '2%',
+						}}
+					>
+						{organization.name} - {organization.description}
+					</p>
+					<IconButton
+						onClick={() => { this.props.onJoin(organization.id) }}
+						style={{
+							float: 'left',
+						}}
+					>
+						{actionIcon}
+					</IconButton>
+				</div>
+			)
+		});
 	}
 }
