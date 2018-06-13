@@ -70,9 +70,10 @@ loadGroup(x){
     });
 
 }
-async loadTeamMembers(id){
+loadTeamMembers(id){
     let count = 0;
-    let arrayOfMembers = fetch(config.apiPath + "/team/" + id + "/member", {
+    let arrayOfMembers = 0;
+    fetch(config.apiPath + "/team/" + id + "/member", {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -90,15 +91,12 @@ async loadTeamMembers(id){
       res.map((member) => {
         count++;
       })
-      console.log("begin");
       this.setState({MemberCount:count})
 
     })
     .catch((err) => {
       console.log('Request failed.');
     });
-    let wow = await arrayOfMembers.json();
-    console.log("end");
     return count;
 
   }
@@ -158,13 +156,12 @@ handleChangeN = event => {
     if(this.props.filter.filterFeed === "PUBLIC"){
       selectedTeam = this.state;
     }else {
-      console.log(this.state);
     this.state.groups.map((groups) => {if(groups.id === this.props.filter.filterFeed){
                                         return selectedTeam = groups;
                                       }else return "blub";
                                     });
-
-     MemberCount = this.loadTeamMembers(selectedTeam.id);
+    (selectedTeam.id === null) ?   null
+      : MemberCount = this.loadTeamMembers(selectedTeam.id);
     }
 
 
@@ -187,7 +184,7 @@ handleChangeN = event => {
       <span style={{float:"left",
                     margin:"0% 5% 3% 5%"}}>
         {<IconGroup/>}
-        {MemberCount}
+        {this.state.MemberCount}
       </span>
       <div style={{	height: "32px",
                     width: "90%",

@@ -14,7 +14,6 @@ export default class TextOrTextField extends React.Component {
         return(<React.Fragment key={XXX +"TextOrTextField"}>
                     {XXX ?
                       <TextField
-                        key={"wowowowwowow"+ XXX}
                         multiLine={true}
                         rows={1}
                         value={this.props.value}
