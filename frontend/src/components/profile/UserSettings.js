@@ -82,9 +82,13 @@ export default class UserSettings extends React.Component {
 				'Content-Type': 'application/json',
 				'X-Access-Token': localStorage.getItem('apiToken'),
 			},
-			body: {
-				//
-			},
+			body: JSON.stringify({
+				firstName: this.state.firstName,
+				name: this.state.lastName,
+				email: this.state.email,
+				password: this.state.password,
+				image: this.state.image,
+			}),
 		}).then((res) => {
 			if (!res.ok) {
 				throw new Error("Request failed.");
@@ -114,6 +118,7 @@ export default class UserSettings extends React.Component {
 				value={this.state[id]}
 				onChange={this.handleChange(id)}
 				floatingLabelText={label}
+				className="userSettingTextfield"
 			/>
 		);
 	}
@@ -186,15 +191,3 @@ export default class UserSettings extends React.Component {
 UserSettings.propTypes = {
 	handleError: PropTypes.func.isRequired,
 };
-
-/* const ControlledTextField = (props) => {
-	return (
-		<TextField
-			id={this.props.id}
-			label={this.props.label}
-			value={this.props.value}
-			onChange={this.props.handleChange}
-			floatingLabelText={this.props.label}
-		/>
-	);
-}; */

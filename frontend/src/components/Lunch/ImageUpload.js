@@ -1,7 +1,5 @@
 import React from 'react';
 import Dropzone from 'react-dropzone';
-import config from '../../config';
-
 
 export default class ImageUpload extends React.Component {
   constructor(props) {
@@ -40,7 +38,6 @@ export default class ImageUpload extends React.Component {
       dropzoneText: "Successfully uploaded.",
       uploadFile: files,
       })
-
 
   this.setState({
     uploadedFile: files[0]

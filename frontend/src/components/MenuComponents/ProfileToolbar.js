@@ -20,6 +20,9 @@ class ProfileToolbar extends React.Component {
 			unsubscribed: false,
 			menuOpen: false,
 			anchor: null,
+			userImg: '',
+			userFirstName: '',
+			userLastName: '',
 		};
 	}
 
@@ -48,6 +51,7 @@ class ProfileToolbar extends React.Component {
 		});
 
 		this.loadUnseenNotifications();
+		this.loadProfileData();
 	}
 
 	loadUnseenNotifications() {
@@ -74,6 +78,37 @@ class ProfileToolbar extends React.Component {
         }).catch((error) => {
 			this.setState({
 				unseenNotifications: 0,
+			});
+        });
+	}
+
+	loadProfileData() {
+		fetch(config.apiPath + "/user/me/", {
+            method: 'GET',
+            headers: {
+				'Content-Type': 'application/json',
+				'X-Access-Token': localStorage.getItem('apiToken'),
+            }
+		})
+		.then((res) => {
+            if(!res.ok) {
+                throw new Error("Response not ok.");
+            } else if(res.status !== 200) {
+                throw new Error("An error occured.");
+            }
+            return res.json();
+		})
+		.then((res) => {
+            this.setState({
+				userImg: res.image,
+				userFirstName: res.firstName,
+				userLastName: res.name,
+			});
+        }).catch((error) => {
+			this.setState({
+				userImg: '',
+				userFirstName: '',
+				userLastName: '',
 			});
         });
 	}
@@ -166,12 +201,23 @@ class ProfileToolbar extends React.Component {
 					</ToolbarGroup>
 
 					<ToolbarGroup>
-						<Avatar
-							onClick={this.showSettings}
-							style={{
-								cursor: 'pointer',
-							}}
-						>MM</Avatar>
+						{!this.state.userImg
+							? (<Avatar
+								onClick={this.showSettings}
+								style={{
+									cursor: 'pointer',
+								}}
+							>
+								{this.state.userFirstName[0]}{this.state.userLastName[0]}
+							</Avatar>)
+							: (<Avatar
+								src={this.state.userImg}
+								onClick={this.showSettings}
+								style={{
+									cursor: 'pointer',
+								}}
+							/>)
+						}
 						{settingsMenu}
 					</ToolbarGroup>
 				</Toolbar>

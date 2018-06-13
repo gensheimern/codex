@@ -20,7 +20,7 @@ export default class CreateEventTimePicker extends React.Component {
     <TimePicker
       textFieldStyle={{width:'100%'}}
       format="24hr"
-      hintText="12:00"
+      hintText={this.props.hours + ":" + this.props.minutes}
       minutesStep={15}
       autoOk={true}
       onChange={this.props.time}
