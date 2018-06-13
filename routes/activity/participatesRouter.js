@@ -8,6 +8,9 @@ router.get('/:activityId/participants', asyncMiddleware(participatesController.g
 
 router.post('/:activityId/participants/:userId?', myMiddleware, asyncMiddleware(participatesController.addParticipation));
 
+router.post('/:activityId/participants/?', myMiddleware, asyncMiddleware(participatesController.addParticipationArray));
+
+
 router.delete('/:activityId/participants/:userId?', myMiddleware, asyncMiddleware(participatesController.deleteParticipation));
 
 

@@ -5,6 +5,7 @@ import GroupFA from 'react-icons/lib/fa/group';
 import PlaceMUI from 'react-icons/lib/md/place';
 import TextField from 'material-ui/TextField';
 import DeleteMUI from 'react-icons/lib/md/delete';
+import FlatButton from 'material-ui/FlatButton';
 
 export default class CollapsedContent extends React.Component {
 
@@ -13,8 +14,9 @@ export default class CollapsedContent extends React.Component {
 
     this.state = {
       imgPath: '',
+      value:'',
     };
-
+    this.handleChange = this.handleChange.bind(this);
     this._onKeyPress = this._onKeyPress.bind(this);
   }
 
@@ -45,9 +47,8 @@ export default class CollapsedContent extends React.Component {
     })
     .then(res => res.json())
     .then(res => {
-            this.props.loadMessages();
-      console.log("jupfetched");
-
+      this.props.loadMessages();
+      this.setState({value:''});
     })
 
     .catch((err) => {
@@ -92,6 +93,9 @@ export default class CollapsedContent extends React.Component {
     });
   }
 
+  handleChange(e){
+    this.setState({ value: e.target.value });
+  }
 
   ToggleCollapse(){
 
@@ -100,6 +104,7 @@ export default class CollapsedContent extends React.Component {
       let participatesIMGPlus;
       let message;
       let counter = 1;
+      let eventRef = this.props.event.id;
 
       if (this.props.messages.length !==0 ){
         message = this.props.messages.map((messageItem, index) => {
@@ -116,7 +121,28 @@ export default class CollapsedContent extends React.Component {
                 </div>
               </div>
               <div className="commentDelete">
-              {messageItem.author.me ? <DeleteMUI /> : <span />}
+              {messageItem.author.me ? <FlatButton
+                                        icon={<DeleteMUI/>}
+                                        onClick={() => { return fetch(config.apiPath + "/activity/" + eventRef+
+                                                                      "/message/" + messageItem.id, {
+                                    			method: 'DELETE',
+                                    			headers: {
+                                    				'Content-Type': 'application/json',
+                                    				'X-Access-Token': localStorage.getItem('apiToken'),
+                                    			}
+                                    		})
+                                    		.then((res) => {
+                                          this.props.loadMessages()
+
+                                    			if (!res.ok || res.status !== 201) {
+                                    				// handle error
+                                    			} else {
+                                    				// this.renderSnackbar();
+                                    				// this.props.history.push('/feed');
+                                    			}
+                                    		})
+                                    	}}/>
+                                       : <span />}
 
               </div>
             </div>
@@ -171,10 +197,12 @@ export default class CollapsedContent extends React.Component {
                 </div>
                 <div  className="myTextfield">
                 <TextField
+                      value={this.state.value}
                       hintText= "Add a new comment"
                       fullWidth={true}
                       className="addComment"
                       onKeyPress={this._onKeyPress}
+                      onChange={this.handleChange}
                       ref="myTextfield"
                 />
                 </div>

@@ -25,6 +25,24 @@ const NotificationController = {
 		res.json(notifications.map(transforms().transformNotification));
 	},
 
+	async getUnseenNotifications(req, res) {
+		const { userId } = req.token;
+		const targetId = req.params.userId;
+
+		if (Number(userId) !== Number(targetId)) {
+			res.status(403).json({
+				message: 'Invalid user id.',
+			});
+			return;
+		}
+
+		const notifications = await NotificationModel.getAllNotifications(targetId);
+
+		const unseenNotifications = notifications.filter(notification => !notification.Seen);
+
+		res.json({ unseenNotifications: unseenNotifications.length });
+	},
+
 	async deleteNotification(req, res) {
 		const { userId } = req.token;
 		const targetId = req.params.userId;
@@ -118,7 +136,7 @@ const NotificationController = {
 
 			await NotificationModel.addNotification(notification.user.id, 'notification', accepted ? 'Event invitation accepted.' : 'Event invitation declined.', notification.message, notification.targetId);
 
-			// await NotificationModel.deleteNotification(notificationId); // FIXME: Einkommentieren
+			await NotificationModel.deleteNotification(notificationId);
 
 			res.json({
 				success: true,

@@ -1,24 +1,64 @@
 .centered {
-  text-align: center;
+	text-align: center;
 }
 
 .listTeams {
-  width: 100%;
-  font-size: 12pt;
-  margin-top: 0%;
-  padding: 1% 5%;
-  /* border: 7px solid blue; */
+	width: 100%;
+	font-size: 12pt;
+	margin-top: 0%;
+	padding: 1% 5%;
 }
 
 .CreateTeam {
-  width: 100%;
-  font-size: 12pt;
-  margin: auto;
-  padding: 1% 5%;
+	width: 100%;
+	font-size: 12pt;
+	margin: auto;
+	padding: 1% 5%;
+	height: 100%;
+	overflow-y: scroll;
 }
+
 .groupdisplay{
-        width: 70%;
-        height: 96%;
-        overflow-y: scroll;
-        float: left;
-  }
+	width: 70%;
+	height: 96%;
+	overflow-y: scroll;
+	float: left;
+}
+
+.unselectedIcon{
+	background-color:#D3D3D3;
+	border: none;
+	color: #1EA185;
+	padding: 20px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	margin: 6px 5px;
+	border-radius: 50%;
+	min-width: 32px;
+	height: 32px;
+	width: 32px !important;
+	line-height : 0px !important;
+	padding : 0px;
+	float: left;
+}
+
+.selectedIcon{
+	background-color:#D3D3D3;
+	border: none;
+	color: #1EA185;
+	padding: 20px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	margin: 6px 5px;
+	border-radius: 50%;
+	min-width: 32px;
+	height: 32px;
+	width: 32px !important;
+	line-height : 0px !important;
+	padding : 0px;
+	float: left;
+	box-shadow: 0 0 0 2px black;
+	min-width: 32px;
+}

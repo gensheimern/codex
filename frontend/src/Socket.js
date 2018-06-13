@@ -18,12 +18,16 @@ class Socket {
 	}
 
 	unsubscribe(topic) {
-		this.connection.emit('unsubscribe', topic);
+		this.connection.emit('unsubscribe', {
+			topic,
+			token: localStorage.getItem('apiToken'),
+		});
 	}
 }
 
-function getSocket()  {
-	return socket || new Socket();
+function getSocket() {
+	socket = new Socket();
+	return socket;
 }
 
 export default getSocket;

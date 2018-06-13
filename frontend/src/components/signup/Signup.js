@@ -3,16 +3,16 @@ import ReCAPTCHA from 'react-google-recaptcha';
 import config from '../../config';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-import {Card, /*CardMedia, CardTitle,*/ CardText} from 'material-ui/Card';
+import { Card, CardText } from 'material-ui/Card';
 import './signup.css';
 import Paper from 'material-ui/Paper';
 import Checkbox from 'material-ui/Checkbox';
-import {Link} from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
+import Dsgvo from './Dsgvo'; // In english General Data Protection (GDPR)
+import logo from '../../IMG/logo/Logo_3.png';
 
-export default class Signup extends React.Component {
+class Signup extends React.Component {
 	emailRegExp = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
-	//Recaptcha = require('react-recaptcha');
 
 	constructor(props) {
 		super(props);
@@ -29,6 +29,7 @@ export default class Signup extends React.Component {
 			img: "",
 			checked: false,
 			captcha: '',
+			errorMessage: '',
 		}
 	}
 
@@ -60,34 +61,46 @@ export default class Signup extends React.Component {
 	signupUser = (e) => {
 		e.preventDefault();
 
+		this.setState({
+			errorMessage: '',
+		});
+
 		fetch(config.apiPath + "/user", {
 			method: 'POST',
 			body: JSON.stringify({
 				firstName: this.state.firstName,
-				lastName: this.state.lastName,
+				name: this.state.lastName,
 				email: this.state.email,
 				password: this.state.password,
 				image: this.state.img,
+				captcha: this.state.captcha,
 			}),
 			headers: {
 				'Content-Type': 'application/json',
 				'X-Access-Token': localStorage.getItem('apiToken')
 			}
-		});
+		})
+		.then((res) => {
+            if (res.status === 409) {
+				throw new Error('Email address already in use.');
+			} else if (res.status === 400) {
+				throw new Error('Invalid user data.');
+			} else if(res.status !== 201 || !res.ok) {
+                throw new Error("An error occured.");
+            }
+            return res.json();
+		})
+		.then((res) => {
+            this.props.history.push('/organization');
+        }).catch((error) => {
+			this.setState({
+				errorMessage: error.message,
+			});
+        });
 	}
 
 	render() {
 		const styles = {
-			block: {
-			  maxWidth: 250,
-			},
-			checkbox: {				
-				paddingLeft: 100,
-				paddingRight: 197,
-				marginBottom: 16,
-				fontWeight: 0,
-			},
-			
 			cardStyle:{
 				width: 440,
 				borderRadius: 5,
@@ -104,7 +117,10 @@ export default class Signup extends React.Component {
 				borderRadius: 7,
 				display: 'block',
 				marginLeft: 'auto',
-				marginRight: 'auto',	
+				marginRight: 'auto',
+				marginTop: '20px',
+                backgroundColor: 'transparent',
+                boxShadow: 'none',
 			},
 			textField:{
 				width: '80%',
@@ -147,13 +163,16 @@ export default class Signup extends React.Component {
 		return(
 			<div className="signupBg">
 			<form className="signup" onSubmit={this.signupUser}>
-				<div>
-					<Paper style={styles.paperStyle} zDepth={1} />
- 				</div>
+				<Paper style={styles.paperStyle} zDepth={1}>
+					<img src={logo} alt="logo" style={{
+                        width: 'calc(100% + 18px)',
+                        margin: '-8px',
+                    }} />
+				</Paper>
 
 				<br/>
 				<center>
-					<h3 className="h3header">Lunchplanner</h3>
+					<h3 className="h3header">Meet'n'eat</h3>
 				</center>
 
 				<Card className="signupCard">
@@ -212,18 +231,28 @@ export default class Signup extends React.Component {
 				
 				<ReCAPTCHA 
 					ref="recaptcha"
-					sitekey="6LfY-1wUAAAAAAjaNfCOZrbJKO8fmWdLSgC0u9xm"
+					sitekey={config.recaptchaKey}
 					style = {styles.reCAPTCHA}
-					onChange={(captcha) => this.setState({ captcha })}
+					onChange={(captcha) => {
+						this.setState({captcha});
+						console.log("Captcha: " + captcha);
+					}}
 				/>
 				<br/>
-				
-				<Checkbox
-          			label="Datenschutzerklärung "
-          			checked={this.state.checked}
-          			onCheck={this.updateCheck.bind(this)}
-          			style={styles.checkbox}
-        		/>
+
+				<div style={{paddingLeft: '10%'}}>
+					<Checkbox
+						checked={this.state.checked}
+						onCheck={this.updateCheck.bind(this)}
+						style={{
+							width: '24px',
+							float: 'left',
+						}}
+					/>
+					
+					<Dsgvo/>
+				</div>
+				<br/>
 				
 				<RaisedButton
 					backgroundColor="#b9b9b9"
@@ -235,6 +264,7 @@ export default class Signup extends React.Component {
 				/>
 				<br/>
 				<center>
+					{this.state.errorMessage ? <p style={{color: 'red'}}>{this.state.errorMessage}</p> : null}
 					<p>Have an account already?&nbsp;
 						<Link to = "/login">Log in here </Link>
 					</p>
@@ -249,3 +279,5 @@ export default class Signup extends React.Component {
 		);
 	}
 }
+
+export default withRouter(Signup);

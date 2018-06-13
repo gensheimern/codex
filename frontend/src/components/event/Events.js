@@ -2,8 +2,11 @@ import React from 'react';
 import EventItem from './EventItem';
 import config from '../../config';
 import MediaQuery from 'react-responsive';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import ContentAdd from 'material-ui/svg-icons/content/add';
+import { withRouter } from 'react-router-dom';
 
-export default class Events extends React.Component {
+class Events extends React.Component {
 
   constructor(props) {
     super(props);
@@ -45,6 +48,9 @@ export default class Events extends React.Component {
   }
 
   render() {
+
+
+
     if (this.state.error) {
       return (<p>{this.state.error}</p>);
     }
@@ -52,9 +58,17 @@ export default class Events extends React.Component {
     if (!this.state.loaded) {
       return (<p>Loading</p>);
     }
+    let filterData;
+    let filterDataBeginn = this.props.filter.filterDate;
+    let searchWordName = this.props.filter.searchWord;
+
+    filterData = this.state.events.filter(function (a,b)
+                    {
+                      return (new Date(a.time)) >= filterDataBeginn;
+                    });
 
     if(!(this.props.filterWord === null)){
-      switch(this.props.filterWord) {
+      switch(this.props.filter.filterWord) {
           case 'TimeDown':
           this.state.events.sort(function(obj1, obj2){
           return new Date(obj1.time) - new Date(obj2.time)})
@@ -84,13 +98,12 @@ export default class Events extends React.Component {
           return (obj1.time) - (obj2.time)})
     }
       }
-      let filterData;
-    if(!(this.props.searchWord === null)){
-            console.log(this.props.searchWord);
-      filterData = this.state.events.filter(event => event.name.toUpperCase().includes(this.props.searchWord.toUpperCase()));
+    if(!(searchWordName === null)){
+      filterData = filterData.filter(event => event.name.toUpperCase().includes(searchWordName.toUpperCase()));
     } else {
       filterData = this.state.events;
     }
+    console.log(filterData);
 
     return (<React.Fragment>
       <div>
@@ -108,7 +121,21 @@ export default class Events extends React.Component {
                   <div className="addButton">
                     <hr/>
 
+                    <FloatingActionButton
+                      backgroundColor="#f8c947"
+                      mini={true}
+                      style={{
+                        margin: '0 2%',
+                      }}
+                      onClick={() => {
+                        this.props.history.push('/addevent');
+                      }}
+                    >
+                      <ContentAdd/>
+                    </FloatingActionButton>
+                    ADD EVENT
                   </div>
+
                 </div>
               } else {
                 return null
@@ -124,3 +151,5 @@ export default class Events extends React.Component {
 
   }
 }
+
+export default withRouter(Events);

@@ -47,6 +47,7 @@ export default class LocationSearchInput extends React.Component {
         {({ getInputProps, suggestions, getSuggestionItemProps }) => (
           <div>
           <TextField
+                style={{width:"100%"}}
                 floatingLabelFocusStyle={{color:"rgb(30 161 133)"}}
                 underlineFocusStyle={{borderColor:"rgb(30 161 133)"}}
                 floatingLabelFixed={true}
@@ -62,8 +63,8 @@ export default class LocationSearchInput extends React.Component {
                 const className = suggestion.active ? 'suggestion-item--active' : 'suggestion-item';
                 // inline style for demonstration purpose
                 const style = suggestion.active
-                            ? { backgroundColor: '#fafafa', cursor: 'pointer' }
-                            : { backgroundColor: '#ffffff', cursor: 'pointer' };
+                            ? { backgroundColor: '#fafafa', cursor: 'pointer',marginTop:"10px" }
+                            : { backgroundColor: '#ffffff', cursor: 'pointer' ,marginTop:"10px"};
                 return (
                   <div {...getSuggestionItemProps(suggestion, { className, style })}>
                     <span>{suggestion.description}</span>

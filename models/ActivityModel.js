@@ -1,4 +1,5 @@
 const databaseConnection = require('./DatabaseConnection');
+const UserModel = require('./UserModel');
 
 const Activity = {
 
@@ -8,12 +9,36 @@ const Activity = {
 	 * @returns {Promise<Array<Activity>>} The activities visible for the user.
 	 */
 	async getAllActivities(userId) {
+		const organization = await UserModel.getOrganization(userId);
+
+		if (organization === null) {
+			return databaseConnection.queryp(
+				`SELECT Activity.*, User.*
+				FROM Activity
+					INNER JOIN User
+					ON Activity.Host = User.User_Id
+				WHERE Private = 0
+				AND Organization IS NULL
+				UNION
+				SELECT Activity.*, User.*
+				FROM Activity
+					INNER JOIN User
+					ON Activity.Host = User.User_Id
+						INNER JOIN participates
+						ON Activity.Activity_Id = participates.Activity_Id
+				WHERE Private = 1
+				AND participates.User_Id = ?`,
+				[organization, userId],
+			);
+		}
+
 		return databaseConnection.queryp(
 			`SELECT Activity.*, User.*
 			FROM Activity
 				INNER JOIN User
 				ON Activity.Host = User.User_Id
 			WHERE Private = 0
+			AND Organization = ?
 			UNION
 			SELECT Activity.*, User.*
 			FROM Activity
@@ -23,6 +48,21 @@ const Activity = {
 					ON Activity.Activity_Id = participates.Activity_Id
 			WHERE Private = 1
 			AND participates.User_Id = ?`,
+			[organization, userId],
+		);
+	},
+
+	async getJoinedActivities(userId) {
+		return databaseConnection.queryp(
+			`SELECT Activity.*, User.*
+			FROM Activity
+				INNER JOIN User
+				ON Activity.Host = User.User_Id
+					INNER JOIN participates
+					ON Activity.Activity_Id = participates.Activity_Id
+			WHERE participates.User_Id = ?
+				AND Activity.Time > CURRENT_TIMESTAMP()
+			ORDER BY Activity.Time`,
 			[userId],
 		);
 	},
@@ -41,11 +81,15 @@ const Activity = {
 	 * @param {object} activity The data of the activity to create.
 	 * @param {number} userId The user creating the activity (host).
 	 */
-	async createActivity(activity, userId) {
+	async createActivity(activity, userId, organizationId) {
 		const eventTag = activity.event ? 1 : 0;
 		const privateTag = activity.private ? 1 : 0;
 
-		return databaseConnection.queryp('INSERT INTO Activity (Description, Activityname, Place, Time, Eventtag, Private, Host, Banner, MaxParticipants) VALUES (?,?,?,?,?,?,?,?,?)', [activity.description, activity.name, activity.place, activity.time, eventTag, privateTag, userId, activity.banner, activity.maxParticipants]);
+		if (organizationId === null) {
+			return databaseConnection.queryp('INSERT INTO Activity (Description, Activityname, Place, Time, Eventtag, Private, Host, Banner, MaxParticipants, Organization) VALUES (?,?,?,?,?,?,?,?, ?, NULL)', [activity.description, activity.name, activity.place, activity.time, eventTag, privateTag, userId, activity.banner, activity.maxParticipants]);
+		}
+
+		return databaseConnection.queryp('INSERT INTO Activity (Description, Activityname, Place, Time, Eventtag, Private, Host, Banner, MaxParticipants, Organization) VALUES (?,?,?,?,?,?,?,?,?,?)', [activity.description, activity.name, activity.place, activity.time, eventTag, privateTag, userId, activity.banner, activity.maxParticipants, organizationId]);
 	},
 
 	/**
