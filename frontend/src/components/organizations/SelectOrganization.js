@@ -7,6 +7,7 @@ import JoinOrganization from '../organizations/JoinOrganization';
 import AddOrganization from './AddOrganization';
 import ListOrganizations from './ListOrganizations';
 import Divider from 'material-ui/Divider';
+import SelectOrganizationDialog from './SelectOrganizationDialog';
 
 const NOT_SELECTED = -1;
 const CREATE_NEW = 0;
@@ -61,6 +62,49 @@ export default class SelectOrganization extends React.Component {
         });
 	}
 
+	leaveOrganization(organizationId) {
+		fetch(`${config.apiPath }/user/me/organizations/${organizationId}`, {
+            method: 'DELETE',
+            headers: {
+				'Content-Type': 'application/json',
+				'X-Access-Token': localStorage.getItem('apiToken'),
+			},
+		})
+		.then((res) => {
+            if(!res.ok) {
+                throw new Error("Response not ok.");
+            } else if(res.status !== 200) {
+                throw new Error("An error occured.");
+            }
+            return res.json();
+		})
+		.then((res) => {
+			this.props.close();
+        }).catch((error) => {});
+	}
+
+	deleteOrganization(organizationId) {
+		fetch(`${config.apiPath }/organization/${organizationId}`, {
+            method: 'DELETE',
+            headers: {
+				'Content-Type': 'application/json',
+				'X-Access-Token': localStorage.getItem('apiToken'),
+			},
+		})
+		.then((res) => {
+            if(!res.ok) {
+                throw new Error("Response not ok.");
+            } else if(res.status !== 200) {
+                throw new Error("An error occured.");
+            }
+            return res.json();
+		})
+		.then((res) => {
+			// TODO: Reload
+			//this.props.close();
+        }).catch((error) => {});
+	}
+
 	back() {
 		this.setState({
 			selected: NOT_SELECTED,
@@ -72,23 +116,6 @@ export default class SelectOrganization extends React.Component {
 			return !this.props.myOrganizations.map(o => o.id).includes(organization.id);
 		});
 
-		const back = this.state.selected !== NOT_SELECTED
-			? <FlatButton
-				label="Back"
-				primary={true}
-				onClick={this.back}
-			/>
-			: null;
-
-		const actions = [
-			back,
-			<FlatButton
-				label="Cancel"
-				primary={true}
-				onClick={this.props.close}
-			/>,
-		];
-
 		let action = null;
 
 		if (this.state.selected === NOT_SELECTED) {
@@ -98,9 +125,8 @@ export default class SelectOrganization extends React.Component {
 					<ListOrganizations
 						organizations={this.props.myOrganizations}
 						joined={true}
-						onJoin={(selected) => {
-							console.log('Edit ' + selected);
-						}}
+						onLeave={this.leaveOrganization}
+						onDelete={this.deleteOrganization}
 					/>
 					<Divider />
 					<p style={{ fontWeight: 600 }}>Other Organizations:</p>
@@ -136,6 +162,7 @@ export default class SelectOrganization extends React.Component {
 					organization={this.state.organizations.filter((element) => element.id === this.state.selected)[0]}
 					saveChange={this.props.saveChange}
 					close={this.props.close}
+					back={this.back}
 				/>
 			);
 		}
@@ -159,16 +186,14 @@ export default class SelectOrganization extends React.Component {
 		}
 
 		return (
-			<Dialog
-				title="Select Organization"
-				modal={false}
+			<SelectOrganizationDialog
 				open={this.props.show}
-				onRequestClose={this.props.close}
-				autoScrollBodyContent={true}
-				actions={actions}
+				close={this.props.close}
+				back={this.back}
+				backBtn={this.state.selected !== NOT_SELECTED}
 			>
 				{action}
-			</Dialog>
+			</SelectOrganizationDialog>
 		);
 	}
 }
