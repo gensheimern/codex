@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import GroupsDrawer from './GroupsDrawerMobile';
+import SettingsMenu from './SettingsMenu';
 import SearchFeed from './SearchFeed';
 import SearchBar from './SearchBar';
 import AppMore from './AppMore';
@@ -12,6 +14,8 @@ class AppNavTop extends Component {
 
 		this.state = {
 			show: false,
+			showSettingsMenu: false,
+			anchor: null,
 		};
 	}
 
@@ -21,16 +25,32 @@ class AppNavTop extends Component {
 		}));
 	}
 
+	showSettings = (event) => {
+		event.preventDefault();
+
+		this.setState({
+			showSettingsMenu: true,
+			anchor: event.currentTarget,
+		});
+	}
+
+	hideSettings = () => {
+		this.setState({
+			showSettingsMenu: false,
+		});
+	}
+
 	render() {
 		const searchFeed = (
 			<React.Fragment>
 				<div style={{
-					width: '40%',
+					width: 'calc(100% - 168px)',
 					height: '100%',
 					textAlign: 'center',
 					float: 'left',
 					fontSize: '20px',
 					paddingTop: '15px',
+					paddingLeft: '56px',
 					color: 'white',
 				}}>
 					{this.props.name}
@@ -42,6 +62,22 @@ class AppNavTop extends Component {
 			</React.Fragment>
 		);
 
+		const nameField = (
+			<div style={{
+				width: 'calc(100% - 112px)',
+				height: '100%',
+				textAlign: 'center',
+				float: 'left',
+				fontSize: '20px',
+				paddingTop: '15px',
+				paddingLeft: '56px',
+				paddingRight: '56px',
+				color: 'white',
+			}}>
+				{this.props.name}
+			</div>
+		);
+
 		const searchBar = (
 			<SearchBar
 				searchFilterFeed={this.props.searchFilterFeed}
@@ -49,17 +85,31 @@ class AppNavTop extends Component {
 			/>
 		);
 
+		let search = this.state.show ? searchBar : searchFeed;
+
+		if (!this.props.showSearch) {
+			search = nameField;
+		}
+
+
 		return (
 			<div className="navbartop">
 				<GroupsDrawer
 					searchFilterFeed={this.props.searchFilterFeed}
 					changeContent={this.props.changeContent}
 				/>
-				{this.state.show ? searchBar : searchFeed}
-				<AppMore />
+				{search}
+
+				<AppMore onClick={this.showSettings} />
+				<SettingsMenu
+					menuOpen={this.state.showSettingsMenu}
+					anchor={this.state.anchor}
+					hideSettings={this.hideSettings}
+					history={this.props.history}
+				/>
 			</div>
 		);
 	}
 }
 
-export default AppNavTop;
+export default withRouter(AppNavTop);

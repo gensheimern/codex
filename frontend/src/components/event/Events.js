@@ -103,7 +103,6 @@ class Events extends React.Component {
     } else {
       filterData = this.state.events;
     }
-    console.log(filterData);
 
     return (<React.Fragment>
       <div>

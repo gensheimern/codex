@@ -36,6 +36,7 @@ export default class MobileContent extends React.Component {
 					<AppNavTop
 						searchFilterFeed={this.props.searchFilterFeed}
 						name="Feed"
+						showSearch={content === 0}
 					/>
 				</div>
 		);

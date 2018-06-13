@@ -11,10 +11,10 @@ export default class SearchFeed extends React.Component {
 			<FlatButton
 				style={{
 					padding: 0,
-					width: '20%',
+					width: '56px',
 					height: '100%',
 					float: 'left',
-					minWidth: '50px',
+					minWidth: '56px',
 				}}
 				backgroundColor="#1EA185"
 				icon={ <IconSearch color="white"/> }

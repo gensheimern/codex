@@ -41,11 +41,13 @@ export default class SearchBar extends React.Component {
 			<React.Fragment>
 				<div style={{
 					padding: 0,
-					width: '40%',
+					width: 'calc(100% - 168px)',
+					paddingLeft: '56px',
 					height: '100%',
 					float: 'left',
 				}}>
 					<TextField
+						id="SearchBarTextField"
 						value={this.state.searchWord}
 						onChange={this.handleChange}
 						style={{
@@ -68,7 +70,7 @@ export default class SearchBar extends React.Component {
 					onClick={this.handleClose}
 					style={{
 						padding: 0,
-						width: '20%',
+						width: '56px',
 						height: '100%',
 						float: 'left',
 						minWidth: '56px',

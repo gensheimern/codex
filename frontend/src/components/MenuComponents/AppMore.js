@@ -8,10 +8,10 @@ export default class AppMore extends React.Component {
 			<FlatButton
 				style={{
 					padding: 0,
-					width: '15%',
+					width: '56px',
 					height: '100%',
 					float: 'left',
-					minWidth: '25px',
+					minWidth: '56px',
 				}}
 				backgroundColor="#1EA185"
 				icon={ <MoreIcon color="white"/> }
