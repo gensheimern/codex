@@ -1,6 +1,8 @@
 const PartOfModel = require('../../models/PartOfModel');
 const OrganizationModel = require('../../models/OrganizationModel');
+const UserModel = require('../../models/UserModel');
 const transforms = require('../transforms');
+const Auth = require('../auth/Auth');
 
 const PartOfController = {
 
@@ -25,9 +27,15 @@ const PartOfController = {
 	async getOrganizationsOfUser(req, res) {
 		const { userId } = req.token;
 
-		const organizations = await PartOfModel.getOrganizationsOfUser(userId);
+		const dbOrganizations = await PartOfModel.getOrganizationsOfUser(userId);
+		const organizations = dbOrganizations.map(transforms(userId).transformOrganization);
 
-		res.json(organizations.map(transforms(userId).transformOrganization));
+		const organizationOfUser = await UserModel.getOrganization();
+		res.json(organizations.map(organization => ({
+			...organization,
+			active: organization.id === organizationOfUser,
+		}
+		)));
 	},
 
 	async getActiveOrganizationsOfUser(req, res) {
@@ -98,10 +106,27 @@ const PartOfController = {
 		const { userId } = req.token;
 		const { organizationId } = req.params;
 
-		const result = await PartOfModel.addMemberOfOrganization();
+		const participating = await PartOfModel.isPartOf(userId, organizationId);
+		let result;
+		if (!participating && organizationId !== 'null') {
+			const { password } = req.body;
+			const organization = await OrganizationModel.getOrganizationById(organizationId);
+
+			const validPassword = await Auth.validateHash(password, organization.Organizationpassword);
+			if (!validPassword) {
+				res.status(403).json({
+					success: false,
+					message: 'Invalid organization password.',
+				});
+				return;
+			}
+
+			result = await PartOfModel.addMemberOfOrganization(userId, organizationId);
+		}
+
 		await PartOfModel.setActiveOrganization(userId, organizationId);
 
-		if (result.affectedRows !== 1) {
+		if (!participating && organizationId !== 'null' && result.affectedRows !== 1) {
 			res.status(404).json({
 				success: false,
 				message: 'Organization not found.',

@@ -59,10 +59,6 @@ export default class ProfileContent extends React.Component {
 
 	}
 
-	componentDidMount() {
-		// this.getMyProfile();
-	}
-
 	handleChange = name => ev => {
 		this.setState({
 			[name]: ev.target.value,
@@ -90,27 +86,30 @@ export default class ProfileContent extends React.Component {
 
 		return (
 			<React.Fragment>
-				<UserSettings
-					handleError={this.handleError}
-				/>
+				<div className="settingscol">
+					<UserSettings
+						handleError={this.handleError}
+					/>
 
-				<br />
+					<br />
 
-				<AccountSettings
-					handleError={this.handleError}
-				/>
+					<AccountSettings
+						handleError={this.handleError}
+					/>
 
-				<br/>
+					<br/>
+				</div>
+				<div className="settingscol">
+					<NotificationSettings
+						handleChange={this.handleChange}
+					/>
 
-				<NotificationSettings
-					handleChange={this.handleChange}
-				/>
+					<br />
 
-				<br />
-
-				<LanguageSettings
-					handleChange={this.handleChange}
-				/>
+					<LanguageSettings
+						handleChange={this.handleChange}
+					/>
+				</div>
 			</React.Fragment>
 		);
 	}

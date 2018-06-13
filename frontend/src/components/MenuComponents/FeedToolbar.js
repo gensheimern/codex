@@ -2,6 +2,7 @@ import React from 'react';
 import FilterToolbar from './FilterToolbar';
 import ProfileToolbar from './ProfileToolbar';
 import { Link } from 'react-router-dom';
+import logo from '../../IMG/logo/Logo_2.png';
 
 export default class FeedToolbar extends React.Component {
 	render() {
@@ -25,12 +26,14 @@ export default class FeedToolbar extends React.Component {
 							backgroundColor: '#1EA185',
 							height: '56px',
 							fontSize: '2.5vw',
-							padding: '5px',
 							textAlign: 'center',
 							boxShadow: 'lightgrey 5px 5px 5px',
-						
 						}}>
-							Lunch Planner
+							<img src={logo} alt="logo" style={{
+								width: '211px',
+								maxWidth: '100%',
+								verticalAlign: 'baseline',
+							}} />
 						</div>
 					</Link>
 

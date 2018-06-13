@@ -11,6 +11,7 @@ const { verifyMiddlewareRestaurant } = require('./routes/authRestaurant/Auth');
 const apiRouter = require('./routes/MainRouter');
 const apiRouterRestaurant = require('./routes/MainRouterRestaurant');
 const errorHandler = require('./middleware/errorHandler');
+const UserController = require('./routes/user/UserController');
 const fileUpload = require('express-fileupload');
 const RestaurantController = require('./routes/restaurant/RestaurantController');
 

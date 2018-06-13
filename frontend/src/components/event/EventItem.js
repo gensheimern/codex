@@ -28,7 +28,6 @@ export default class EventItem extends React.Component {
 	}
 
 	loadMessages() {
-		console.log("drin")
 		this.setState({
 			error: null,
 		});

@@ -54,6 +54,17 @@ const ParticipatesController = {
 			return;
 		}
 
+		const activity = await ActivityModel.getActivityById(activityId);
+		const ActivityOrganization = activity.Organization;
+		const UserOrganization = await UserModel.getOrganization(userId);
+
+		if (!isPrivate && !isHost && ActivityOrganization !== UserOrganization) {
+			res.status(403).json({
+				message: 'Permission denied',
+			});
+			return;
+		}
+
 		if (activityFull) {
 			res.status(409).json({
 				message: 'Activity has reached member limit.',
@@ -66,8 +77,6 @@ const ParticipatesController = {
 			participantId,
 			Number(userId) === Number(participantId),
 		);
-
-		const activity = await ActivityModel.getActivityById(activityId);
 
 		if (userId !== participantId) {
 			await NotificationModel.addNotification(participantId, 'joinEvent', 'Event invitation', `You are invited to join the event '${activity.Activityname}'.`, activityId);
@@ -104,20 +113,21 @@ const ParticipatesController = {
 
 		const result = await ParticipatesModel.deleteParticipant(activityId, participantId);
 
+		if (result.affectedRows !== 1) {
+			res.status(404).json({
+				message: 'Participation deletion not possible.',
+			});
+			return;
+		}
+
 		const activity = await ActivityModel.getActivityById(activityId);
 		const user = await UserModel.getUserById(userId);
 		NotificationModel.notifyEvent(activityId, 'notification', `'${user.Firstname} ${user.Name}' left`, `'${user.Firstname} ${user.Name}' left your event '${activity.Activityname}'.`, activityId, null)
 			.catch(() => {});
 
-		if (result.affectedRows === 1) {
-			res.json({
-				message: 'Participation successfully ended.',
-			});
-		} else {
-			res.status(404).json({
-				message: 'Participation deletion not possible.',
-			});
-		}
+		res.json({
+			message: 'Participation successfully ended.',
+		});
 	},
 
 };

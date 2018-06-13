@@ -5,10 +5,8 @@ import Notification from 'material-ui/svg-icons/social/notifications';
 import { withRouter } from 'react-router-dom';
 import notificationChecker from '../notification/notificationChecker';
 import Badge from 'material-ui/Badge';
-import Popover, { PopoverAnimationVertical } from 'material-ui/Popover';
-import Menu from 'material-ui/Menu';
-import MenuItem from 'material-ui/MenuItem';
 import config from '../../config';
+import SettingsMenu from './SettingsMenu';
 
 class ProfileToolbar extends React.Component {
 
@@ -156,38 +154,6 @@ class ProfileToolbar extends React.Component {
 					}}
 				/>);
 
-		const settingsMenu = (
-			<Popover
-				open={this.state.menuOpen}
-				anchorEl={this.state.anchor}
-				anchorOrigin={{horizontal: 'left', vertical: 'bottom'}}
-				targetOrigin={{horizontal: 'left', vertical: 'top'}}
-				onRequestClose={this.hideSettings}
-				animation={PopoverAnimationVertical}
-			>
-				<Menu>
-					<MenuItem
-						primaryText="Profile Settings"
-						onClick={() => {
-							this.props.history.push('/profile');
-							this.hideSettings();
-						}}
-					/>
-					<MenuItem
-						primaryText="Change organization"
-						disabled={true}
-						onClick={() => {/* TODO: */}}
-					/>
-					<MenuItem
-						primaryText="Logout"
-						onClick={() => {
-							this.props.history.push('/logout');
-							this.hideSettings();
-						}}
-					/>
-				</Menu>
-			</Popover>
-		);
 
 		return (
 			<React.Fragment>
@@ -218,7 +184,13 @@ class ProfileToolbar extends React.Component {
 								}}
 							/>)
 						}
-						{settingsMenu}
+
+						<SettingsMenu
+							menuOpen={this.state.menuOpen}
+							anchor={this.state.anchor}
+							hideSettings={this.hideSettings}
+							history={this.props.history}
+						/>
 					</ToolbarGroup>
 				</Toolbar>
 			</React.Fragment>
