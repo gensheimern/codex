@@ -41,7 +41,7 @@ export default class SearchBar extends React.Component {
 			<React.Fragment>
 				<div style={{
 					padding: 0,
-					width: '50%',
+					width: '40%',
 					height: '100%',
 					float: 'left',
 				}}>
@@ -68,7 +68,7 @@ export default class SearchBar extends React.Component {
 					onClick={this.handleClose}
 					style={{
 						padding: 0,
-						width: '25%',
+						width: '20%',
 						height: '100%',
 						float: 'left',
 						minWidth: '56px',

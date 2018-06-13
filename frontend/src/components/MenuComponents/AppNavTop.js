@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import GroupsDrawer from './GroupsDrawerMobile';
 import SearchFeed from './SearchFeed';
 import SearchBar from './SearchBar';
+import AppMore from './AppMore';
+
 import './navbar.css';
 
 class AppNavTop extends Component {
@@ -23,7 +25,7 @@ class AppNavTop extends Component {
 		const searchFeed = (
 			<React.Fragment>
 				<div style={{
-					width: '50%',
+					width: '40%',
 					height: '100%',
 					textAlign: 'center',
 					float: 'left',
@@ -54,6 +56,7 @@ class AppNavTop extends Component {
 					changeContent={this.props.changeContent}
 				/>
 				{this.state.show ? searchBar : searchFeed}
+				<AppMore />
 			</div>
 		);
 	}
