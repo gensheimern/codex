@@ -160,6 +160,10 @@ export default class SelectOrganization extends React.Component {
 						}}
 					/>
 
+					<br style={{
+						clear: 'both',
+					}} />
+
 					<List>
 						<Subheader>My Organizations:</Subheader>
 						<ListOrganizations
