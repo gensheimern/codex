@@ -52,6 +52,7 @@ app.post(`${apiPath}/upload`, (req, res) => {
 
 
 app.use(`${apiPath}/authenticate`, authenticateRouter);
+app.post(`${apiPath}/user`, UserController.addUser);
 app.use(`${apiPath}/authenticateRestaurant`, authenticateRestaurantRouter);
 
 app.post(`${apiPath}/restaurant`, RestaurantController.addRestaurant);

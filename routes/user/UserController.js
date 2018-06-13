@@ -118,31 +118,33 @@ const UserController = {
 		const oldUser = await UserModel.getUserById(targetId);
 		const newUser = {
 			...transforms().transformUser(oldUser),
-			password: oldUser.Password,
 			...req.body,
+			password: oldUser.Password,
 		};
 
-		const { oldPassword, password } = req.body;
+		if (req.body.password !== undefined) {
+			const { oldPassword, password } = req.body;
 
-		let validOldPassword = false;
-		try {
-			validOldPassword = await validateHash(oldPassword, oldUser.Password);
-		} catch (error) {
-			validOldPassword = false;
-		}
+			let validOldPassword = false;
+			try {
+				validOldPassword = await validateHash(oldPassword, oldUser.Password);
+			} catch (error) {
+				validOldPassword = false;
+			}
 
-		if (!validOldPassword) {
-			res.status(401).json({
-				success: false,
-				message: 'Invalid old password.',
-			});
-			return;
-		}
+			if (!validOldPassword) {
+				res.status(401).json({
+					success: false,
+					message: 'Invalid old password.',
+				});
+				return;
+			}
 
-		if (password) {
-			newUser.password = await hashPassword(password);
-		} else {
-			newUser.password = oldUser.Password;
+			if (password) {
+				newUser.password = await hashPassword(password);
+			} else {
+				newUser.password = oldUser.Password;
+			}
 		}
 
 		const result = await UserModel.updateUser(targetId, newUser);

@@ -253,7 +253,7 @@ describe('User controller', () => {
 			expect(res.body().message, 'Message set').to.be.a('string');
 		});
 
-		it('should reject invalid user data', async () => {
+		/* it('should reject invalid user data', async () => {
 			mockModels.push(TestTools.mockNotCalled(userModel, 'updateUser'));
 			mockModels.push(TestTools.mockModel(userModel, 'getUserById', null, {
 				User_Id: 5,
@@ -278,7 +278,7 @@ describe('User controller', () => {
 			correctResponseType(res, 401);
 			expect(res.body().success, 'Update successful').to.be.false;
 			expect(res.body().message, 'Message set').to.be.a('string');
-		});
+		}); */
 
 		it('should return an error if the user does not exist', async () => {
 			mockModels.push(TestTools.mockModel(userModel, 'updateUser', null, TestTools.dbUpdateFailed));
