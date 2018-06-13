@@ -5,12 +5,11 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import {Card,CardText} from 'material-ui/Card';
 import Paper from 'material-ui/Paper';
-import { Link } from 'react-router-dom';
 import ImageUpload from './ImageUpload';
 import {Tabs, Tab} from 'material-ui/Tabs';
 import DatePicker from './CreateEventDatePicker';
 import axios from 'axios';
-
+import config from '../../config';
 
 
 class Lunch extends React.Component {
@@ -27,10 +26,28 @@ class Lunch extends React.Component {
           yearFrom:'',
           monthFrom:'',
           dayFrom:'',
+          textValue:'',
+          priceValue:'',
       };
       this.callbackDateFrom = this.callbackDateFrom.bind(this);
       this.handleFile = this.handleFile.bind(this);
+      this.handleTextChange = this.handleTextChange.bind(this);
+      this.handlePriceChange = this.handlePriceChange.bind(this);
 
+  }
+
+  resetState = () => {
+    this.setState({
+      email: "",
+      password: "",
+      errorPrompt: "",
+      uploadFile: null,
+      open: false,
+      errorText: "",
+      value:1,
+      textValue:'',
+      priceValue:'',
+    })
   }
 
   handleOpen = () => {
@@ -46,23 +63,51 @@ class Lunch extends React.Component {
   }
 
   handleSubmit = () => {
+    console.log("lkjlkjlkj");
+    if(this.state.uploadFile !== null){
     const fd = new FormData();
-    const config = {
+    const configAxios = {
                headers: { 'content-type': 'multipart/form-data' }
            }
 
     fd.append('image',this.state.uploadFile[0],"lunch_" + this.state.uploadFile[0].name);
-    axios.post('http://localhost:5000/api/upload',fd, config)
+    axios.post('http://localhost:5000/api/upload',fd, configAxios)
       .then(res => {
           console.log(res);
       });
-  }
+    }
+      console.log("halloooooooooooooooo");
+      fetch(config.apiPath + "/restaurant/lunch", {
+  			method: 'POST',
+  			body: JSON.stringify({
+          Time: this.state.yearFrom + "-" + this.state.monthFrom + "-" + this.state.dayFrom,
+          LunchImage: this.state.uploadFile[0].name,
+          LunchText: this.state.textValue,
+          Price: this.state.priceValue,
 
-  handleChange = name => e => {
-  this.setState({
-    [name]: e.target.value
+  			}),
+  			headers: {
+  				'Content-Type': 'application/json',
+  				'X-Access-Token': localStorage.getItem('apiToken'),
+  			}
+  		})
+  		.then((res) => {
+  			if (!res.ok || res.status !== 201) {
+  				// handle error
+          console.log(res);
+          throw new Error("invalid iwas");
+  			}
+        this.resetState();
   });
 }
+
+  handleTextChange(e){
+    this.setState({ textValue: e.target.value });
+  }
+
+  handlePriceChange(e){
+    this.setState({ priceValue: e.target.value });
+  }
 
 callbackDateFrom(event, mydate){
   this.setState({
@@ -74,10 +119,9 @@ callbackDateFrom(event, mydate){
 
 showPreview(){
   if(this.state.uploadFile !== null){
-    return <img style={{width:"100%", height:"auto"}} src={this.state.uploadFile[0].preview} />
+    return <img alt="uploadedImage" style={{width:"100%", height:"auto"}} src={this.state.uploadFile[0].preview} />
   } else {
     return <ImageUpload handleFile={this.handleFile} />
-
   }
 }
 
@@ -109,12 +153,14 @@ Tab () {
           </div>
         <TextField
                 style={styles.textField}
-                hintText="Type your text"
+                hintText="Type your lunch"
                 multiLine={true}
+                onChange={this.handleTextChange}
         />
         <TextField
                 style={styles.textField}
                 hintText="Price"
+                onChange={this.handlePriceChange}
         />
       </div>
     </Tab>
@@ -126,7 +172,6 @@ Tab () {
   render() {
         return(
             <div className = "loginBg">
-            <form className ="login" >
                 <div>
                     <Paper style={styles.paperStyle} zDepth= {1}/>
                 </div>
@@ -149,10 +194,10 @@ Tab () {
 					label="Send"
 					primary={true}
 					style = {styles.loginButton}
+          onClick = {this.handleSubmit}
 				/>
                 </CardText>
                 </Card>
-            </form>
             </div>
             );
 

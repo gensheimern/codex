@@ -28,7 +28,7 @@ export default class ImageUpload extends React.Component {
        border:"2px solid green",
        width:"80%",
        marginLeft:"10%",
-       marginLeft:"10%",
+       marginReft:"10%",
        marginTop:"20px",
        paddingTop:"25px",
        paddingBottom:"25px",
@@ -55,7 +55,7 @@ export default class ImageUpload extends React.Component {
         multiple={false}
         accept="image/*"
         onDrop={this.onImageDrop.bind(this)}>
-        {this.state.dropZoneText}
+        <div className="dropZoneText">{this.state.dropZoneText} </div>
       </Dropzone>
 
     )}

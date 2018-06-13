@@ -54,7 +54,6 @@ app.use(`${apiPath}/authenticate`, authenticateRouter);
 app.use(`${apiPath}/authenticateRestaurant`, authenticateRestaurantRouter);
 
 app.post(`${apiPath}/restaurant`, RestaurantController.addRestaurant);
-
 app.use(`${apiPath}/restaurant`, verifyMiddlewareRestaurant, apiRouterRestaurant);
 app.use(apiPath, verifyMiddleware, apiRouter);
 
