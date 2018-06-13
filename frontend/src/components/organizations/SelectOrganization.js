@@ -1,6 +1,4 @@
 import React from 'react';
-import Dialog from 'material-ui/Dialog';
-import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import config from '../../config';
 import JoinOrganization from '../organizations/JoinOrganization';
@@ -62,7 +60,7 @@ export default class SelectOrganization extends React.Component {
         });
 	}
 
-	leaveOrganization(organizationId) {
+	leaveOrganization = (organizationId) => {
 		fetch(`${config.apiPath }/user/me/organizations/${organizationId}`, {
             method: 'DELETE',
             headers: {
@@ -79,11 +77,11 @@ export default class SelectOrganization extends React.Component {
             return res.json();
 		})
 		.then((res) => {
-			this.props.close();
+			this.props.reload();
         }).catch((error) => {});
 	}
 
-	deleteOrganization(organizationId) {
+	deleteOrganization = (organizationId) => {
 		fetch(`${config.apiPath }/organization/${organizationId}`, {
             method: 'DELETE',
             headers: {
@@ -100,9 +98,9 @@ export default class SelectOrganization extends React.Component {
             return res.json();
 		})
 		.then((res) => {
-			// TODO: Reload
-			//this.props.close();
-        }).catch((error) => {});
+			this.props.reload();
+		})
+		.catch((error) => {});
 	}
 
 	back() {
@@ -155,31 +153,46 @@ export default class SelectOrganization extends React.Component {
 		}
 
 		if (this.state.selected > CREATE_NEW) {
+			const selectedOrganzation = this.state.organizations.filter((element) => element.id === this.state.selected)[0];
 			action = (
 				<JoinOrganization
 					show={this.state.selected !== NOT_SELECTED}
-					id={this.state.selected}
-					organization={this.state.organizations.filter((element) => element.id === this.state.selected)[0]}
-					saveChange={this.props.saveChange}
-					close={this.props.close}
+					organization={selectedOrganzation}
+					reload={this.props.reload}
 					back={this.back}
+					close={this.props.close}
 				/>
 			);
 		}
 
 		if (organizations.length === 0) {
 			action = (
-				<p style={{
-					width: '100%',
-					textAlign: 'center',
-				}}>No organizations yet. Create one.</p>
+				<React.Fragment>
+					<p style={{
+						width: '100%',
+						textAlign: 'center',
+					}}>No organizations yet. Create one.</p>
+					<RaisedButton
+						label="Create new"
+						primary={true}
+						onClick={() => {
+							this.setState({
+								selected: CREATE_NEW,
+							});
+						}}
+						style={{
+							margin: '2%',
+						}}
+					/>
+				</React.Fragment>
 			);
 		}
 
 		if (this.state.selected === CREATE_NEW) {
 			action = (
 				<AddOrganization
-					saveChange={this.props.saveChange}
+					reload={this.props.reload}
+					back={this.back}
 					close={this.props.close}
 				/>
 			);

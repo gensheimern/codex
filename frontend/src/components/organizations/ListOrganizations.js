@@ -2,14 +2,13 @@ import React from 'react';
 import IconButton from 'material-ui/IconButton';
 import AddList from 'material-ui/svg-icons/av/playlist-add';
 import ClosedIcon from 'material-ui/svg-icons/navigation/close';
-import EditIcon from 'material-ui/svg-icons/image/edit';
 import DeleteIcon from 'material-ui/svg-icons/action/delete'
 
 export default class ListOrganizations extends React.Component {
 	render() {
 		return this.props.organizations.map(organization => {
 				let actionIcon;
-				let action = () => {};
+				let action;
 
 				if (!this.props.joined) {
 					actionIcon = <AddList />;
@@ -39,12 +38,12 @@ export default class ListOrganizations extends React.Component {
 							maxWidth: '80%',
 						}}
 					>
-						{organization.name} - {organization.description}
+						<span style={{fontWeight: '600'}}>{organization.name}</span> - {organization.description}
 					</p>
 					<IconButton
 						onClick={() => { action(organization.id) }}
 						style={{
-							float: 'left',
+							float: 'right',
 						}}
 					>
 						{actionIcon}

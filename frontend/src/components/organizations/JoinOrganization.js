@@ -46,8 +46,8 @@ export default class JoinOrganization extends React.Component {
 				changedError: false,
 			});
 
-			this.props.saveChange(organizationId);
-			this.props.close();
+			this.props.reload();
+			this.props.back();
         }).catch((error) => {
 			this.setState({
 				changedError: true,
@@ -55,10 +55,6 @@ export default class JoinOrganization extends React.Component {
         });
 	}
 
-	createOrganization() {
-		console.log('Created new Organization.');
-		// TODO:
-	}
 
 	handleChange = name => e => {
 		this.setState({
@@ -90,7 +86,7 @@ export default class JoinOrganization extends React.Component {
 					label="Join"
 					primary={true}
 					onClick={() => {
-						this.joinOrganization(this.props.id, this.state.password);
+						this.joinOrganization(this.props.organization.id, this.state.password);
 					}}
 					style={{
 						float: 'right',

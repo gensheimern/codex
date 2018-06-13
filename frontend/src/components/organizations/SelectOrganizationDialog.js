@@ -15,7 +15,7 @@ export default class SelectOrganizationDialog extends React.Component {
 		const actions = [
 			back,
 			<FlatButton
-				label="Cancel"
+				label="Close"
 				primary={true}
 				onClick={this.props.close}
 			/>,

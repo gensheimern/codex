@@ -13,6 +13,7 @@ export default class AddOrganization extends React.Component {
 			password: '',
 			retypePassword: '',
 			createdError: false,
+			clicked: false,
 		};
 
 		this.createOrganization = this.createOrganization.bind(this);
@@ -48,9 +49,10 @@ export default class AddOrganization extends React.Component {
 				createdError: false,
 			});
 
-			this.joinOrganization(res.organizationId, this.state.password);
-			this.props.saveChange(res.organizationId);
-			this.props.close();
+			this.joinOrganization(res.organizationId, this.state.password)
+				.then(this.props.reload).catch();
+
+			this.props.back();
         }).catch((error) => {
 			this.setState({
 				createdError: true,
@@ -59,7 +61,7 @@ export default class AddOrganization extends React.Component {
 	}
 
 	joinOrganization(organizationId, password) {
-		fetch(`${config.apiPath }/user/me/organizations/${organizationId}`, {
+		return fetch(`${config.apiPath }/user/me/organizations/${organizationId}`, {
             method: 'POST',
             headers: {
 				'Content-Type': 'application/json',
@@ -68,8 +70,7 @@ export default class AddOrganization extends React.Component {
 			body: JSON.stringify({
 				password,
 			}),
-		})
-		.catch(() => {});
+		});
 	}
 
 	handleChange = name => e => {
@@ -134,6 +135,10 @@ export default class AddOrganization extends React.Component {
 					primary={true}
 					disabled={!this.validParams()}
 					onClick={() => {
+						if (this.state.clicked) return;
+						this.setState({
+							clicked: true,
+						});
 						this.createOrganization();
 					}}
 				/>

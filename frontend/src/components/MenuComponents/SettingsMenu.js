@@ -22,7 +22,7 @@ class SettingsMenu extends React.Component {
 			changedError: false,
 
 			showOrganizations: false,
-			showOtherOrganizations: false,
+			showSelectDialog: false,
 		};
 
 		this.loadOrganizations = this.loadOrganizations.bind(this);
@@ -70,7 +70,7 @@ class SettingsMenu extends React.Component {
 			changedError: false,
 		});
 
-		fetch(`${config.apiPath }/user/me/organizations/${organizationId}`, {
+		return fetch(`${config.apiPath }/user/me/organizations/${organizationId}`, {
             method: 'POST',
             headers: {
 				'Content-Type': 'application/json',
@@ -91,11 +91,11 @@ class SettingsMenu extends React.Component {
 		.then((res) => {
             this.setState({
 				changed: true,
-				showOtherOrganizations: false,
+				showSelectDialog: false,
 				changedError: false,
 			});
 
-			this.saveChange(organizationId);
+			this.loadOrganizations();
         }).catch((error) => {
 			this.setState({
 				changedError: true,
@@ -103,14 +103,15 @@ class SettingsMenu extends React.Component {
         });
 	}
 
-	saveChange = (newOrganization) => {
-		this.loadOrganizations().then((res) => {
-			this.setState((prevState, props) => ({
-				organizations: prevState.organizations.map((organization) => ({
-					...organization,
-					active: organization.id === newOrganization,
-				}))
-			}));
+	showSelectDialog = () => {
+		this.setState({
+			showSelectDialog: true,
+		});
+	}
+
+	hideSelectDialog = () => {
+		this.setState({
+			showSelectDialog: false,
 		});
 	}
 
@@ -124,6 +125,7 @@ class SettingsMenu extends React.Component {
 				key="noOrganization"
 				primaryText="No Organization"
 				checked={allSelected}
+				disabled={!this.state.loaded}
 				insetChildren={!allSelected}
 				onClick={() => {
 					this.changeOrganization(null);
@@ -135,6 +137,7 @@ class SettingsMenu extends React.Component {
 						key={organization.id}
 						primaryText={organization.name}
 						checked={organization.active}
+						disabled={!this.state.loaded}
 						insetChildren={!organization.active}
 						onClick={() => {
 							if (organization.active) return;
@@ -153,7 +156,7 @@ class SettingsMenu extends React.Component {
 				onClick={() => {
 					this.props.hideSettings();
 					this.setState({
-							showOtherOrganizations: true,
+							showSelectDialog: true,
 					});
 				}}
 			/>,
@@ -202,13 +205,10 @@ class SettingsMenu extends React.Component {
 			</Popover>
 
 			<SelectOrganization
-				show={this.state.showOtherOrganizations}
-				close={() => { this.setState({ showOtherOrganizations: false }); }}
-				changeOrganization={this.changeOrganization}
+				show={this.state.showSelectDialog}
+				close={this.hideSelectDialog}
 				reload={this.loadOrganizations}
 				myOrganizations={this.state.organizations}
-				changedError={this.state.changedError}
-				saveChange={this.saveChange}
 			/>
 		</React.Fragment>
 		);
