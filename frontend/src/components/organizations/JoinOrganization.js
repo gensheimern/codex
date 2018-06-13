@@ -81,6 +81,9 @@ export default class JoinOrganization extends React.Component {
 					floatingLabelText="Organization password"
 					value={this.state.password}
 					onChange={this.handleChange('password')}
+					style={{
+						width: '100%',
+					}}
 				/>
 				<RaisedButton
 					label="Join"
