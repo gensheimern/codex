@@ -40,10 +40,8 @@ const PartOfModel = {
 	},
 
 	async setActiveOrganization(userId, organizationId) {
-		Promise.all(
-			databaseConnection.queryp('UPDATE part_of SET Active = 0 WHERE User_Id = ?', [userId]),
-			databaseConnection.queryp('UPDATE part_of SET Active = 1 WHERE User_Id = ? AND Organization_Id = ?', [userId, organizationId]),
-		);
+		await databaseConnection.queryp('UPDATE part_of SET Active = 0 WHERE User_Id = ?', [userId]);
+		await databaseConnection.queryp('UPDATE part_of SET Active = 1 WHERE User_Id = ? AND Organization_Id = ?', [userId, organizationId]);
 	},
 
 	async isPartOf(userId, organizationId) {
