@@ -9,6 +9,8 @@ import InvitePeople from '../event/CreateEventInvitePeople';
 import IconEdit from 'material-ui/svg-icons/image/edit';
 import TextOrTextField from '../tools/TextOrTextField';
 import IconGroup from 'material-ui/svg-icons/social/group';
+import LoadingAnimation from '../tools/LoadingAnimation';
+
 
 {/*
       The Component renders the customizable (for Team-Admin) Team-Information which each Team owns.
@@ -22,9 +24,10 @@ export default class GroupInfo extends React.Component {
                   description:"",
                   invitePeople: [],
                   selectedIcon : "",
-                  groups:[],
+                  MemberCount:0,
+                  loading: false,
                   team:{},
-                  MemberCount:0
+                  groups:[],
                 };
     this.handleChangeN = this.handleChangeN.bind(this);
     this.handleChangeD = this.handleChangeD.bind(this);
@@ -36,15 +39,24 @@ export default class GroupInfo extends React.Component {
 
   }
   componentDidMount() {
-    this.loadGroup(this.props.filter.filterFeed);
+
   }
+  shouldComponentUpdate(nextProps, nextState) {
+      return nextProps.filter !== this.props.filter ;
+    }
 
 loadGroup(x){
+  this.setState({
+    loading: true,
+  });
+
     if(x === "PUBLIC"){
       this.setState({
                       isAdmin : false,
-                      name: "PUBLIC",
-                      description:"Welcome into the PUBLIC Channel of VSF Experts! You can find all your colleagues here.",
+                      team:{name: "PUBLIC",description:"Welcome into the PUBLIC Channel of VSF Experts! You can find all your colleagues here.",},
+                        loading: false,
+
+
       });
     }
 
@@ -64,8 +76,16 @@ loadGroup(x){
       }
     }).then(res => res.json()).then(res => {
       this.setState({groups: res});
-    })
-    .catch((err) => {
+      console.log("22222");
+      console.log(this.state.groups);
+      {(this.state.groups === null) ? null :
+      this.state.groups.map((groups) => {if(groups.id === this.props.filter.filterFeed){
+                                              return this.state.team = groups;
+                                            }else return "blub";
+                                          });
+      this.loadTeamMembers(this.state.team.id);
+}}
+    ).catch((err) => {
       console.log('Request failed.');
     });
 
@@ -92,6 +112,9 @@ loadTeamMembers(id){
         count++;
       })
       this.setState({MemberCount:count})
+      this.setState({
+        loading: false,
+      });
 
     })
     .catch((err) => {
@@ -150,20 +173,14 @@ handleChangeN = event => {
  callBackInvitePeople(invitePeople){
    this.setState({ invitePeople })
  }
-  render() {
-    let selectedTeam;
-    let MemberCount;
-    if(this.props.filter.filterFeed === "PUBLIC"){
-      selectedTeam = this.state;
-    }else {
-    this.state.groups.map((groups) => {if(groups.id === this.props.filter.filterFeed){
-                                        return selectedTeam = groups;
-                                      }else return "blub";
-                                    });
-    (selectedTeam.id === null) ?   null
-      : MemberCount = this.loadTeamMembers(selectedTeam.id);
-    }
 
+  render() {
+    this.loadGroup(this.props.filter.filterFeed);
+
+    if (this.state.loading) {
+      return <LoadingAnimation/>
+    }
+    console.log(this.state);
 
     return (<div style={{}}>
       <div style={{	height: "32px",
@@ -176,7 +193,7 @@ handleChangeN = event => {
                     marginLeft:"5%",
                     marginTop:"2%"}}>
         <TextOrTextField
-          value={selectedTeam.name}
+          value={this.state.team.name}
           onChange={this.handleChangeN}
           isTextField={this.isAdmin}
           />
@@ -195,7 +212,7 @@ handleChangeN = event => {
                     marginLeft:"5%",
                     }}>
         <TextOrTextField
-          value={selectedTeam.description}
+          value={this.state.team.description}
           onChange={this.handleChangeD}
           isTextField={this.isAdmin}
           />
