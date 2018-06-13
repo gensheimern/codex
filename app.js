@@ -9,6 +9,7 @@ const restaurantRouter = require('./routes/restaurant/RestaurantRouter');
 const { verifyMiddleware } = require('./routes/auth/Auth');
 const apiRouter = require('./routes/MainRouter');
 const errorHandler = require('./middleware/errorHandler');
+const UserController = require('./routes/user/UserController');
 const fileUpload = require('express-fileupload');
 
 const app = express();
@@ -46,6 +47,7 @@ app.post(`${apiPath}/upload`, (req, res) => {
 	return true;
 });
 app.use(`${apiPath}/authenticate`, authenticateRouter);
+app.post(`${apiPath}/user`, UserController.addUser);
 app.use(apiPath, verifyMiddleware, apiRouter);
 
 /* User global error handler */

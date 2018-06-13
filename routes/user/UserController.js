@@ -1,7 +1,9 @@
+const fetch = require('node-fetch');
 const UserModel = require('../../models/UserModel');
 const transforms = require('../transforms');
 const { validUser } = require('./userValidation');
 const { hashPassword, validateHash } = require('../auth/Auth');
+const config = require('../../config');
 
 const UserController = {
 
@@ -41,6 +43,18 @@ const UserController = {
 		if (user) {
 			res.status(409).json({
 				message: 'E-Mail address already in use.',
+			});
+			return;
+		}
+
+		const { captcha } = req.body;
+		const captchaVerification = await fetch(`
+			https://www.google.com/recaptcha/api/siteverify?secret=${config.CAPTCHA_KEY}&response=${captcha}`, { method: 'POST' })
+			.then(resp => resp.json());
+
+		if (!captchaVerification.success) {
+			res.status(400).json({
+				message: 'Captcha not solved.',
 			});
 			return;
 		}

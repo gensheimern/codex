@@ -7,11 +7,11 @@ import { Card, CardText } from 'material-ui/Card';
 import './signup.css';
 import Paper from 'material-ui/Paper';
 import Checkbox from 'material-ui/Checkbox';
-import {Link} from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import Dsgvo from './Dsgvo'; // In english General Data Protection (GDPR)
 import logo from '../../IMG/logo/Logo_3.png';
 
-export default class Signup extends React.Component {
+class Signup extends React.Component {
 	emailRegExp = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 	constructor(props) {
@@ -29,6 +29,7 @@ export default class Signup extends React.Component {
 			img: "",
 			checked: false,
 			captcha: '',
+			errorMessage: '',
 		}
 	}
 
@@ -60,20 +61,42 @@ export default class Signup extends React.Component {
 	signupUser = (e) => {
 		e.preventDefault();
 
+		this.setState({
+			errorMessage: '',
+		});
+
 		fetch(config.apiPath + "/user", {
 			method: 'POST',
 			body: JSON.stringify({
 				firstName: this.state.firstName,
-				lastName: this.state.lastName,
+				name: this.state.lastName,
 				email: this.state.email,
 				password: this.state.password,
 				image: this.state.img,
+				captcha: this.state.captcha,
 			}),
 			headers: {
 				'Content-Type': 'application/json',
 				'X-Access-Token': localStorage.getItem('apiToken')
 			}
-		});
+		})
+		.then((res) => {
+            if (res.status === 409) {
+				throw new Error('Email address already in use.');
+			} else if (res.status === 400) {
+				throw new Error('Invalid user data.');
+			} else if(res.status !== 201 || !res.ok) {
+                throw new Error("An error occured.");
+            }
+            return res.json();
+		})
+		.then((res) => {
+            this.props.history.push('/organization');
+        }).catch((error) => {
+			this.setState({
+				errorMessage: error.message,
+			});
+        });
 	}
 
 	render() {
@@ -140,14 +163,12 @@ export default class Signup extends React.Component {
 		return(
 			<div className="signupBg">
 			<form className="signup" onSubmit={this.signupUser}>
-				<div>
-					<Paper style={styles.paperStyle} zDepth={1}>
-						<img src={logo} alt="logo" style={{
-                            width: 'calc(100% + 18px)',
-                            margin: '-8px',
-                        }} />
-					</Paper>
- 				</div>
+				<Paper style={styles.paperStyle} zDepth={1}>
+					<img src={logo} alt="logo" style={{
+                        width: 'calc(100% + 18px)',
+                        margin: '-8px',
+                    }} />
+				</Paper>
 
 				<br/>
 				<center>
@@ -212,7 +233,10 @@ export default class Signup extends React.Component {
 					ref="recaptcha"
 					sitekey={config.recaptchaKey}
 					style = {styles.reCAPTCHA}
-					onChange={(captcha) => this.setState({ captcha })}
+					onChange={(captcha) => {
+						this.setState({captcha});
+						console.log("Captcha: " + captcha);
+					}}
 				/>
 				<br/>
 
@@ -240,6 +264,7 @@ export default class Signup extends React.Component {
 				/>
 				<br/>
 				<center>
+					{this.state.errorMessage ? <p style={{color: 'red'}}>{this.state.errorMessage}</p> : null}
 					<p>Have an account already?&nbsp;
 						<Link to = "/login">Log in here </Link>
 					</p>
@@ -254,3 +279,5 @@ export default class Signup extends React.Component {
 		);
 	}
 }
+
+export default withRouter(Signup);

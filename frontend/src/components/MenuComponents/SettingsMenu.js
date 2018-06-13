@@ -3,11 +3,13 @@ import { withRouter } from 'react-router-dom';
 import Popover, { PopoverAnimationVertical } from 'material-ui/Popover';
 import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
-import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right';
+import ArrowDropDown from 'material-ui/svg-icons/hardware/keyboard-arrow-down';
+import ArrowDropUp from 'material-ui/svg-icons/hardware/keyboard-arrow-up';
 import Add from 'material-ui/svg-icons/content/add';
 import Divider from 'material-ui/Divider';
 import config from '../../config';
 import SelectOrganization from '../organizations/SelectOrganization';
+
 
 class SettingsMenu extends React.Component {
 	constructor(props) {
@@ -18,7 +20,9 @@ class SettingsMenu extends React.Component {
 			organizations: [],
 			changed: false,
 			changedError: false,
-			showOtherOrganizations: false,
+
+			showOrganizations: false,
+			showSelectDialog: false,
 		};
 
 		this.loadOrganizations = this.loadOrganizations.bind(this);
@@ -34,7 +38,7 @@ class SettingsMenu extends React.Component {
 			loaded: false,
 		});
 
-		fetch(config.apiPath + "/user/me/organizations", {
+		return fetch(config.apiPath + "/user/me/organizations", {
             method: 'GET',
             headers: {
 				'Content-Type': 'application/json',
@@ -66,7 +70,7 @@ class SettingsMenu extends React.Component {
 			changedError: false,
 		});
 
-		fetch(`${config.apiPath }/user/me/organizations/${organizationId}`, {
+		return fetch(`${config.apiPath }/user/me/organizations/${organizationId}`, {
             method: 'POST',
             headers: {
 				'Content-Type': 'application/json',
@@ -87,11 +91,11 @@ class SettingsMenu extends React.Component {
 		.then((res) => {
             this.setState({
 				changed: true,
-				showOtherOrganizations: false,
+				showSelectDialog: false,
 				changedError: false,
 			});
 
-			this.saveChange(organizationId);
+			this.loadOrganizations();
         }).catch((error) => {
 			this.setState({
 				changedError: true,
@@ -99,20 +103,65 @@ class SettingsMenu extends React.Component {
         });
 	}
 
-	saveChange = (newOrganization) => {
-		this.setState((prevState, props) => ({
-			organizations: prevState.organizations.map((organization) => ({
-				...organization,
-				active: organization.id === newOrganization,
-			}))
-		}));
+	showSelectDialog = () => {
+		this.setState({
+			showSelectDialog: true,
+		});
+	}
 
-		this.loadOrganizations();
+	hideSelectDialog = () => {
+		this.setState({
+			showSelectDialog: false,
+		});
 	}
 
 	render() {
 		const allSelected = this.state.organizations.reduce(
 			(total, organization) => total && !organization.active, true);
+
+		const listOfOrganizations = [
+			<Divider key="divider1" />,
+			<MenuItem
+				key="noOrganization"
+				primaryText="No Organization"
+				checked={allSelected}
+				disabled={!this.state.loaded}
+				insetChildren={!allSelected}
+				onClick={() => {
+					this.changeOrganization(null);
+				}}
+			/>,
+			...this.state.organizations.map((organization) => {
+				return (
+					<MenuItem
+						key={organization.id}
+						primaryText={organization.name}
+						checked={organization.active}
+						disabled={!this.state.loaded}
+						insetChildren={!organization.active}
+						onClick={() => {
+							if (organization.active) return;
+
+							this.changeOrganization(organization.id);
+						}}
+					/>
+				);
+			}),
+			<Divider inset={true} key="divider2" />,
+			<MenuItem
+				key="other"
+				primaryText="Other"
+				leftIcon={<Add />}
+				insetChildren={true}
+				onClick={() => {
+					this.props.hideSettings();
+					this.setState({
+							showSelectDialog: true,
+					});
+				}}
+			/>,
+			<Divider key="divider3" />,
+		];
 
 		return (
 		<React.Fragment>
@@ -134,46 +183,17 @@ class SettingsMenu extends React.Component {
 					/>
 					<MenuItem
 						primaryText="Change organization"
-						rightIcon={<ArrowDropRight />}
+						rightIcon={this.state.showOrganizations ? <ArrowDropUp /> : <ArrowDropDown />}
 						disabled={!this.state.loaded}
-						menuItems={
-							[
-								<MenuItem
-									primaryText="No Organization"
-									checked={allSelected}
-									insetChildren={!allSelected}
-									onClick={() => {
-										this.changeOrganization(null);
-									}}
-								/>,
-								...this.state.organizations.map((organization) => {
-									return (
-										<MenuItem
-											primaryText={organization.name}
-											checked={organization.active}
-											insetChildren={!organization.active}
-											onClick={() => {
-												if (organization.active) return;
-												
-												this.changeOrganization(organization.id);
-											}}
-										/>
-									);
-								}),
-								<Divider />,
-								<MenuItem
-									primaryText="Other"
-									rightIcon={<Add />}
-									onClick={() => {
-										this.props.hideSettings();
-										this.setState({
-											showOtherOrganizations: true,
-										});
-									}}
-								/>,
-							]
-						}
+						onClick={() => {this.setState(
+							(prevState) => ({
+								showOrganizations: !prevState.showOrganizations,
+							})
+						);}}
 					/>
+
+					{this.state.showOrganizations ? listOfOrganizations : null}
+
 					<MenuItem
 						primaryText="Logout"
 						onClick={() => {
@@ -184,15 +204,12 @@ class SettingsMenu extends React.Component {
 				</Menu>
 			</Popover>
 
-			{this.state.showOtherOrganizations &&
 			<SelectOrganization
-				show={true}
-				close={() => { this.setState({ showOtherOrganizations: false }); }}
-				changeOrganization={this.changeOrganization}
+				show={this.state.showSelectDialog}
+				close={this.hideSelectDialog}
 				reload={this.loadOrganizations}
-				myOrganizations={this.state.organizations.map(o => o.id)}
-				changedError={this.state.changedError}
-			/>}
+				myOrganizations={this.state.organizations}
+			/>
 		</React.Fragment>
 		);
 	}

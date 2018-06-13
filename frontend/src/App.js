@@ -104,11 +104,11 @@ class App extends Component {
 				{/* Public routes */}
 				<Route exact path="/login" component={Login} />
 				<Route exact path="/signup" component={Signup} />
-				<Route exact path="/logout" component={Login} />
+				<Route exact path="/logout" render={(props) => (<Login logout={true} history={props.history} />)} />
+				<Route exact path="/organization" component={Organization}/>
 				<Route exact path="/restaurantlogin" component={RestaurantLogin} />
 				<Route exact path="/restaurantsignup" component={RestaurantSignup} />
 				<Route exact path="/lunch" component={Lunch} />
-				<Route exact path="/organisation" component={Organization}/>
 
 				{/* Protected routes (login required) */}
 				<Route exact path="/(feed|notifications|profile|addteam|addevent|personal)" render={(props) => (

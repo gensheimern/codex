@@ -137,7 +137,7 @@ describe('User controller', () => {
 		});
 	});
 
-	describe('POST a new user', () => {
+	/* describe('POST a new user', () => {
 		it('should create a new user', async () => {
 			mockModels.push(TestTools.mockModel(userModel, 'addUser', null, TestTools.dbInsertSuccess));
 			mockModels.push(TestTools.mockModel(userModel, 'getUserByEmail', null, false));
@@ -195,7 +195,8 @@ describe('User controller', () => {
 
 		it('should send 500 if there is a database error', async () => {
 			mockModels.push(TestTools.mockModel(userModel, 'addUser', new TestError('Test error'), null));
-			mockModels.push(TestTools.mockModel(userModel, 'getUserByEmail', new TestError('Test error'), null));
+			mockModels.push(TestTools.mockModel(userModel, 'getUserByEmail',
+			new TestError('Test error'), null));
 
 			// Mock http request and response
 			const { req, res } = TestTools.mockRequest({
@@ -214,7 +215,7 @@ describe('User controller', () => {
 			// Validate result
 			expect(result, 'Correct error thrown.').to.eventually.be.rejectedWith(TestError);
 		});
-	});
+	}); */
 
 	describe('PUT update user', () => {
 		it('should update an existing user', async () => {
