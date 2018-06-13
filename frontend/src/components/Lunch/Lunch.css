@@ -6,3 +6,15 @@
 	background-color: #1EA185;
 	background-position: center top;
 }
+
+.h2header {
+  margin-bottom: 20px !important;
+}
+
+.DateWrapper {
+  float:left;
+  width:90%;
+  margin-left:5%;
+  margin-right:5%;
+  margin-top:40px;
+}

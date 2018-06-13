@@ -4,9 +4,11 @@ const serveStatic = require('serve-static');
 const path = require('path');
 // const mail = require('./mailservice/mailservice');
 const authenticateRouter = require('./routes/auth/AuthenticateRouter');
-const restaurantRouter = require('./routes/restaurant/RestaurantRouter');
+const authenticateRestaurantRouter = require('./routes/authRestaurant/AuthenticateRouter');
 const { verifyMiddleware } = require('./routes/auth/Auth');
+const { verifyMiddlewareRestaurant } = require('./routes/auth/Auth');
 const apiRouter = require('./routes/MainRouter');
+const apiRouterRestaurant = require('./routes/MainRouterRestaurant');
 const errorHandler = require('./middleware/errorHandler');
 const cors = require('cors');
 const fileUpload = require('express-fileupload');
@@ -26,7 +28,6 @@ app.use(bodyParser.json());
 
 // API routes
 const apiPath = '/api';
-app.use(`${apiPath}/restaurant`, restaurantRouter);
 app.use(fileUpload());
 app.post(`${apiPath}/upload`, (req, res) => {
 	if (!req.files) {
@@ -43,8 +44,14 @@ image.mv(`${__dirname}/image/lunch/` + image.name, (err) => {
 	});
 	return true;
 });
+
+
+
 app.use(`${apiPath}/authenticate`, authenticateRouter);
+app.use(`${apiPath}/authenticateRestaurant`, authenticateRestaurantRouter);
+
 app.use(apiPath, verifyMiddleware, apiRouter);
+app.use(apiPath, verifyMiddlewareRestaurant, apiRouterRestaurant);
 
 app.use(errorHandler);
 
