@@ -6,6 +6,7 @@ import config from '../../config';
 import JoinOrganization from '../organizations/JoinOrganization';
 import AddOrganization from './AddOrganization';
 import ListOrganizations from './ListOrganizations';
+import Divider from 'material-ui/Divider';
 
 const NOT_SELECTED = -1;
 const CREATE_NEW = 0;
@@ -68,7 +69,7 @@ export default class SelectOrganization extends React.Component {
 
 	render() {
 		const organizations = this.state.organizations.filter((organization) => {
-			return !this.props.myOrganizations.includes(organization.id);
+			return !this.props.myOrganizations.map(o => o.id).includes(organization.id);
 		});
 
 		const back = this.state.selected !== NOT_SELECTED
@@ -93,6 +94,16 @@ export default class SelectOrganization extends React.Component {
 		if (this.state.selected === NOT_SELECTED) {
 			action = (
 				<React.Fragment>
+					<p style={{ fontWeight: 600 }}>My Organizations:</p>
+					<ListOrganizations
+						organizations={this.props.myOrganizations}
+						joined={true}
+						onJoin={(selected) => {
+							console.log('Edit ' + selected);
+						}}
+					/>
+					<Divider />
+					<p style={{ fontWeight: 600 }}>Other Organizations:</p>
 					<ListOrganizations
 						organizations={organizations}
 						onJoin={(selected) => {

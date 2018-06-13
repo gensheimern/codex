@@ -206,7 +206,7 @@ class SettingsMenu extends React.Component {
 				close={() => { this.setState({ showOtherOrganizations: false }); }}
 				changeOrganization={this.changeOrganization}
 				reload={this.loadOrganizations}
-				myOrganizations={this.state.organizations.map(o => o.id)}
+				myOrganizations={this.state.organizations}
 				changedError={this.state.changedError}
 				saveChange={this.saveChange}
 			/>

@@ -2,6 +2,7 @@ import React from 'react';
 import IconButton from 'material-ui/IconButton';
 import AddList from 'material-ui/svg-icons/av/playlist-add';
 import ClosedIcon from 'material-ui/svg-icons/navigation/close';
+import EditIcon from 'material-ui/svg-icons/image/edit';
 
 export default class ListOrganizations extends React.Component {
 	render() {
@@ -27,7 +28,7 @@ export default class ListOrganizations extends React.Component {
 						float: 'left',
 					}}
 				>
-					{organization.active ? <ClosedIcon /> : <AddList />}
+					{!this.props.joined ? <AddList /> : (organization.admin.me ? <EditIcon /> : <ClosedIcon />) }
 				</IconButton>
 			</div>
 		));
