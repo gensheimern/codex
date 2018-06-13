@@ -2,8 +2,7 @@ const router = require('express').Router();
 const restaurantRouter = require('./restaurant/RestaurantRouter');
 
 
-
-router.use('/restaurant', restaurantRouter);
+router.use('/', restaurantRouter);
 
 
 router.use('*', (req, res) => {

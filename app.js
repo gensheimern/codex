@@ -7,11 +7,12 @@ const path = require('path');
 const authenticateRouter = require('./routes/auth/AuthenticateRouter');
 const authenticateRestaurantRouter = require('./routes/authRestaurant/AuthenticateRouter');
 const { verifyMiddleware } = require('./routes/auth/Auth');
-const { verifyMiddlewareRestaurant } = require('./routes/auth/Auth');
+const { verifyMiddlewareRestaurant } = require('./routes/authRestaurant/Auth');
 const apiRouter = require('./routes/MainRouter');
 const apiRouterRestaurant = require('./routes/MainRouterRestaurant');
 const errorHandler = require('./middleware/errorHandler');
 const fileUpload = require('express-fileupload');
+const RestaurantController = require('./routes/restaurant/RestaurantController');
 
 const app = express();
 
@@ -37,10 +38,9 @@ app.post(`${apiPath}/upload`, (req, res) => {
 	if (!req.files) {
 		return res.status(400).send('No files were uploaded.');
 	}
-	console.log(req.files);
+
 	const { image } = req.files;
-		console.log(image);
-image.mv(`${__dirname}/image/lunch/` + image.name, (err) => {
+	image.mv(`${__dirname}/image/lunch/${image.name}`, (err) => {
 		if (err) {
 			return res.status(500).send(err);
 		}
@@ -50,12 +50,13 @@ image.mv(`${__dirname}/image/lunch/` + image.name, (err) => {
 });
 
 
-
 app.use(`${apiPath}/authenticate`, authenticateRouter);
 app.use(`${apiPath}/authenticateRestaurant`, authenticateRestaurantRouter);
 
+app.post(`${apiPath}/restaurant`, RestaurantController.addRestaurant);
+
+app.use(`${apiPath}/restaurant`, verifyMiddlewareRestaurant, apiRouterRestaurant);
 app.use(apiPath, verifyMiddleware, apiRouter);
-app.use(apiPath, verifyMiddlewareRestaurant, apiRouterRestaurant);
 
 /* User global error handler */
 app.use(errorHandler);

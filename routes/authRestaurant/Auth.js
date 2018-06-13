@@ -43,7 +43,7 @@ const Auth = {
 		}
 
 		return new Promise((resolve, reject) => {
-			jwt.sign(tokenPayload, config.JWT_SECRET, (err, token) => {
+			jwt.sign(tokenPayload, config.RESTAURANT_SECRET, (err, token) => {
 				if (err) reject(err);
 				else resolve(token);
 			});
@@ -57,7 +57,7 @@ const Auth = {
 	 */
 	async validateJWT(token) {
 		return new Promise((resolve, reject) => {
-			jwt.verify(token, config.JWT_SECRET, (err, decoded) => {
+			jwt.verify(token, config.RESTAURANT_SECRET, (err, decoded) => {
 				if (err) reject(err);
 				else resolve(decoded);
 			});
