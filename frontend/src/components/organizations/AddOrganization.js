@@ -105,6 +105,9 @@ export default class AddOrganization extends React.Component {
 					floatingLabelText="Name"
 					value={this.state.name}
 					onChange={this.handleChange('name')}
+					style={{
+						width: '100%',
+					}}
 				/>
 				<br/>
 				<TextField
@@ -112,6 +115,9 @@ export default class AddOrganization extends React.Component {
 					floatingLabelText="Description"
 					value={this.state.description}
 					onChange={this.handleChange('description')}
+					style={{
+						width: '100%',
+					}}
 				/>
 				<br/>
 				<TextField
@@ -119,6 +125,9 @@ export default class AddOrganization extends React.Component {
 					floatingLabelText="Password"
 					value={this.state.password}
 					onChange={this.handleChange('password')}
+					style={{
+						width: '100%',
+					}}
 				/>
 				<br/>
 				<TextField
@@ -127,6 +136,9 @@ export default class AddOrganization extends React.Component {
 					value={this.state.retypePassword}
 					onChange={this.handleChange('retypePassword')}
 					errorText={this.differentPasswords() ? 'Passwords not matching' : null}
+					style={{
+						width: '100%',
+					}}
 				/>
 				<br/>
 
@@ -140,6 +152,9 @@ export default class AddOrganization extends React.Component {
 							clicked: true,
 						});
 						this.createOrganization();
+					}}
+					style={{
+						float: 'right',
 					}}
 				/>
 				{this.state.createdError ? errorMessage : null}
