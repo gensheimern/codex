@@ -4,13 +4,12 @@ const lunchValidation = {
 
 		return lunchValidation.validPrice(lunch.price)
 			&& lunchValidation.validText(lunch.lunchText)
-			&& lunchValidation.validTime(lunch.time)
-
+			&& lunchValidation.validTime(lunch.time);
 	},
 
 	validPrice(price) {
 		// TODO: Check for valid characters
-		return typeof name === 'string'
+		return typeof price === 'string'
 			&& price.length > 0;
 	},
 

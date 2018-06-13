@@ -8,7 +8,6 @@ const LunchController = {
 
 	async getAllLunch(req, res) {
 		const { restaurantId } = req.token;
-		console.log("drin");
 		const lunch = await LunchModel.getAllLunch(restaurantId);
 		res.json(lunch);
 	},
@@ -55,7 +54,7 @@ const LunchController = {
 
 		res.status(201).json({
 			lunchId: result.insertId,
-			message: 'Success. Lunch added.' ,
+			message: 'Success. Lunch added.',
 		});
 	},
 

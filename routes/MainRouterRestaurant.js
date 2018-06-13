@@ -7,7 +7,6 @@ router.use('/lunch', lunchRouter);
 router.use('/', restaurantRouter);
 
 
-
 router.use('*', (req, res) => {
 	res.status(404).json({
 		message: 'Invalid api route.',

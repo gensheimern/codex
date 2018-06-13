@@ -6,7 +6,6 @@ const AuthenticateController = {
 		const { email, password } = req.body;
 
 		const restaurant = await Restaurant.getRestaurantByEmail(email.toLowerCase());
-		console.log(restaurant);
 		if (!restaurant || !restaurant.Password) {
 			res.status(403).json({
 				success: false,

@@ -7,12 +7,9 @@ const LunchRestaurant = {
 	 * @param {number} userId The id of the user fetching the LunchRestaurants.
 	 * @returns {Promise<Array<LunchRestaurant>>} The LunchRestaurants visible for the user.
 	 */
-	async getAllLunch(userId) {
-    console.log("drin");
-		return databaseConnection.queryp(
-			`SELECT LunchRestaurant.*
-			FROM LunchRestaurant`
-		);
+	async getAllLunch() {
+		return databaseConnection.queryp(`SELECT LunchRestaurant.*
+			FROM LunchRestaurant`);
 	},
 
 	async getJoinedLunch(userId) {
@@ -45,7 +42,6 @@ const LunchRestaurant = {
 	 * @param {number} userId The user creating the lunchRestaurantId (host).
 	 */
 	async createLunchRestaurant(lunchRestaurantId, userId) {
-
 		return databaseConnection.queryp('INSERT INTO LunchRestaurant (Host, Time, LunchImage, Lunchtext, Price) VALUES (?,?,?,?,?)', [userId, lunchRestaurantId.Time, lunchRestaurantId.LunchImage, lunchRestaurantId.LunchText, lunchRestaurantId.Price]);
 	},
 
