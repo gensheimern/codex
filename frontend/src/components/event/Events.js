@@ -5,6 +5,7 @@ import MediaQuery from 'react-responsive';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import { withRouter } from 'react-router-dom';
+import FilterDropDown from '../MenuComponents/FilterDropDown.js';
 
 class Events extends React.Component {
 
@@ -13,6 +14,7 @@ class Events extends React.Component {
 
     this.state = {
       events: [],
+      groupEvents: [],
       loaded: false,
       error: null,
     };
@@ -23,7 +25,11 @@ class Events extends React.Component {
   }
 
   loadActivityData() {
-    this.setState({error: null, loaded: false});
+    // this.setState({error: null, loaded: false});
+    // let isPersonal = "";
+    // if(this.props.filter.personalFilter === "PERSONAL") {
+    //   isPersonal = "/joined";
+    // }
 
     fetch(config.apiPath + "/activity", {
       method: 'GET',
@@ -45,6 +51,28 @@ class Events extends React.Component {
     }).catch((err) => {
       this.setState({error: 'An Error occured.'});
     });
+
+//TODO: richtiger fetch für gruppenjoines
+    fetch(config.apiPath + "/activity/joined", {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Access-Token': localStorage.getItem('apiToken')
+      }
+    }).then((res) => {
+      if (!res.ok) {
+        throw new Error("Request failed.");
+      } else if (res.status !== 200) {
+        throw new Error("Forbidden");
+      }
+
+      return res;
+    }).then(res => res.json()).then(res => {
+      this.setState({groupEvents: res, loaded: true});
+
+    }).catch((err) => {
+      this.setState({error: 'An Error occured.'});
+    });
   }
 
   render() {
@@ -62,7 +90,13 @@ class Events extends React.Component {
     let filterDataBeginn = this.props.filter.filterDate;
     let searchWordName = this.props.filter.searchWord;
 
-    filterData = this.state.events.filter(function (a,b)
+    if(this.props.filter.filterFeed === "PUBLIC") {
+      filterData = this.state.events;
+    } else {
+      filterData = this.state.groupEvents;
+    }
+
+    filterData = filterData.filter(function (a,b)
                     {
                       return (new Date(a.time)) >= filterDataBeginn;
                     });
@@ -103,7 +137,6 @@ class Events extends React.Component {
     } else {
       filterData = this.state.events;
     }
-
     return (<React.Fragment>
       <div>
         <MediaQuery query="(min-device-width: 768px)">
@@ -111,14 +144,7 @@ class Events extends React.Component {
             (matches) => {
               if (matches) {
                 return <div>
-                  <div className="feedInfo" style={{
-                      paddingLeft: "2%"
-                    }}>
-                    <h3>PUBLIC</h3>
-                    <p>12 | Welcome to the public channel of VSF Experts. You can find all your colleagues here.</p>
-                  </div>
                   <div className="addButton">
-                    <hr/>
 
                     <FloatingActionButton
                       backgroundColor="#f8c947"
@@ -137,7 +163,9 @@ class Events extends React.Component {
 
                 </div>
               } else {
-                return null
+                return 			<FilterDropDown
+                							searchFilterFeed={this.props.searchFilterFeed}
+                						/>
               }
             }
           }

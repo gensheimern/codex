@@ -34,8 +34,8 @@ const Team = {
 	 * @param {number} userId ID of the user creating a team.
 	 * @returns {Promise<DBResult>} The result fetched from the database.
 	 */
-	async addTeam(teamName, userId) {
-		return databaseConnection.queryp('INSERT INTO Team (Teamname, Teammanager) VALUES (?, ?);', [teamName, userId]);
+	async addTeam(teamName, description, teamIcon, userId) {
+		return databaseConnection.queryp('INSERT INTO Team (Teamname, Description, Team_icon, Teammanager) VALUES (?, ?, ?, ?);', [teamName, description, teamIcon, userId]);
 	},
 
 	/**

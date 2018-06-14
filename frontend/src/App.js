@@ -29,7 +29,7 @@ class App extends Component {
 				filterWord: 'TimeDown',
 				searchWord: '',
 				filterDate: new Date(),
-				filterGroup: '',
+				filterFeed: 'PUBLIC',
 				personalFilter: new Date(),
 			}
 		};
@@ -78,9 +78,14 @@ class App extends Component {
 						}
 					}))
 					break;
-				case 'FilterGroup':
-						console.log('wow');
-									break;
+					case 'FilterFeed':
+						this.setState((oldState) => ({
+							filter: {
+								...oldState.filter,
+								filterFeed: value,
+							}
+						}))
+						break;
 			default:
 				return null;
 		}

@@ -31,6 +31,8 @@ describe('Transformation of database output', () => {
 		const dbTeam = {
 			Team_Id: 2,
 			Teamname: 'Test Team',
+			description: 'Test Description 1',
+			icon: 'Icon1.jpg',
 			User_Id: 1,
 			Firstname: 'Max',
 			Name: 'Mustermann',
@@ -45,6 +47,8 @@ describe('Transformation of database output', () => {
 		expect(result).to.deep.equal({
 			id: 2,
 			name: 'Test Team',
+			description: 'Test Description 1',
+			icon: 'Icon1.jpg',
 			manager: {
 				id: 1,
 				firstName: 'Max',
