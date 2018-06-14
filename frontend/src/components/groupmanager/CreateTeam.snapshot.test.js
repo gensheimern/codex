@@ -14,7 +14,7 @@ describe('CreateTeam Snapshot', () => {
         const component = renderer.create(
             <MemoryRouter>
                 <MuiThemeProvider>
-                    <CreateTeam icons={[]} invitePeople={[]} icon={[]} />
+                    <CreateTeam icons={[]} invitePeople={[]} />
                 </MuiThemeProvider>
             </MemoryRouter>
         );
