@@ -44,7 +44,7 @@ exports[`CreateEventChip  Snapshot renders 1`] = `
       </div>
       <input
         disabled={false}
-        id="undefined-Today-undefined-28645"
+        id="CreateEventDatePicker"
         onBlur={[Function]}
         onChange={[Function]}
         onClick={[Function]}

@@ -8,12 +8,11 @@ beforeEach(() => {
   window.localStorage = {getItem: () => ""};
   fetchMock.get(config.apiPath +'/user/me', 
   [ { id: 6,
-  firstName: "Max",
-  name: "Mustermann",
-  email: "max.mustermann@web.de",
-  image: "",
-  me: true
-      
+      firstName: "Max",
+      name: "Mustermann",
+      email: "max.mustermann@web.de",
+      image: "",
+      me: true    
   }]);
 });
 

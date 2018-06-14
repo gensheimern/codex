@@ -39,6 +39,36 @@ beforeEach(() => {
         unseenNotifications: 4,
 		
     });
+
+    fetchMock.get(config.apiPath +'/organization/', {
+        id: 8,
+		name: "Test",
+		description: "Dies ist ein Test",
+		admin: {
+            id: 6,
+            firstName: 'Max',
+            name: 'Mustermann',
+            email: 'max.mustermann@gmail.com',
+            image: '',
+            me: true,
+		},
+		
+    });
+    fetchMock.get(config.apiPath +'/user/me/organizations', {
+        id: 8,
+		name: "Test",
+		description: "Dies ist ein Test",
+		admin: {
+            id: 6,
+            firstName: 'Max',
+            name: 'Mustermann',
+            email: 'max.mustermann@gmail.com',
+            image: '',
+            me: true,
+		},
+		
+    });
+    
 });
 
 afterEach(() => {

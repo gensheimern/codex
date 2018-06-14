@@ -1,20 +1,22 @@
-/* @author:Stella Neser
-*  Komponente ist ein Snapshottest
-*/
+/**
+ * @author:Stella Neser
+ *  Komponente ist ein Snapshottest
+ */
 import React from 'react';
 import renderer from'react-test-renderer';
-import CreateTeam from './CreateTeam';
+import NotificationSettings from './NotificationSettings';
 import config from '../../config';
 import {MemoryRouter} from 'react-router-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 const fetchMock = require('fetch-mock');
-describe('CreateTeam Snapshot', () => {
+
+describe('NotificationSetting Snapshot', () => {
     test('renders', () =>{
         const component = renderer.create(
             <MemoryRouter>
                 <MuiThemeProvider>
-                    <CreateTeam icons={[]} invitePeople={[]} icon={[]} />
+                    <NotificationSettings/>
                 </MuiThemeProvider>
             </MemoryRouter>
         );

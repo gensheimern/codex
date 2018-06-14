@@ -114,6 +114,7 @@ class AccountSettings extends React.Component {
 	render() {
 		const hiddenPassword = (
 			<TextField
+				id = "changePassword"
 				value={''}
 				floatingLabelText="Change Password"
 				style={{
