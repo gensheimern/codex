@@ -51,9 +51,8 @@ class Events extends React.Component {
     }).catch((err) => {
       this.setState({error: 'An Error occured.'});
     });
-
-//TODO: richtiger fetch für gruppenjoines
-    fetch(config.apiPath + "/activity/joined", {
+if(this.props.filter.filterFeed !== "PUBLIC"){
+    fetch(config.apiPath +  "/activity/teamid/" + this.props.filter.filterFeed, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -73,7 +72,7 @@ class Events extends React.Component {
     }).catch((err) => {
       this.setState({error: 'An Error occured.'});
     });
-  }
+  }}
 
   render() {
 

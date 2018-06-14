@@ -2,6 +2,7 @@ const ActivityModel = require('../../models/ActivityModel');
 const ParticipatesModel = require('../../models/participatesModel');
 const NotificationModel = require('../../models/NotificationModel');
 const UserModel = require('../../models/UserModel');
+const MemberModel = require('../../models/MemberModel');
 const transforms = require('../transforms');
 const { validActivity } = require('./activityValidation');
 
@@ -54,10 +55,39 @@ const ActivityController = {
 		}
 	},
 
+	async getActivityOfTeam(req, res) {
+		const { userId } = req.token;
+		const { teamId } = req.params;
+
+		const activityPromise = ActivityModel.getActivityOfTeam(teamId);
+
+		// const isParticipant = await TeamModel.isParticipant(userId, activityId);
+		// const isPrivate = await ActivityModel.isPrivate(activityId);
+		//
+		// if (!isParticipant && isPrivate) {
+		// 	res.status(403).json({
+		// 		message: 'Permission denied.',
+		// 	});
+		// 	return;
+		// }
+
+		const activity = await activityPromise;
+
+		if (activity === null) {
+			res.status(404).json({
+				message: 'Activity not found',
+			});
+		} else {
+			res.json(transforms(userId).transformActivity(activity));
+		}
+	},
+
+
 	async createActivity(req, res) {
+		let participantsAdded = 0;
+		const { participants } = req.body;
 		const { userId } = req.token;
 		const activity = req.body;
-
 		if (!validActivity(activity)) {
 			res.status(400).json({
 				message: 'Invalid event information.',
@@ -69,32 +99,59 @@ const ActivityController = {
 
 		const result = await ActivityModel.createActivity(activity, userId, organizationId);
 
-		// Add invited participants
-		let participantsAdded = 0;
-		const { participants } = req.body;
-
-		if (participants instanceof Array) {
+		// Add invited teams
+		let teamsAdded = 0;
+		let invitePeople = [];
+		const { teams } = req.body;
+		if (teams instanceof Array) {
 			const { maxParticipants } = activity;
 
-			if (participants.length >= maxParticipants && maxParticipants !== 0) {
-				res.status(400).json({
-					message: 'Too many participants.',
-				});
-			}
-
-			participants.forEach(async (participantId) => {
-				participantsAdded += 1;
+			teams.forEach(async (teamId) => {
+				teamsAdded += 1;
 				try {
-					await ParticipatesModel.addParticipant(result.insertId, participantId, false);
-
-					const user = await UserModel.getUserById(userId);
-
-					await NotificationModel.addNotification(participantId, 'joinEvent', 'Event invitation', `${user.Firstname} ${user.Name} invited you to join the event '${activity.name}'.`, result.insertId);
+					await ParticipatesModel.addTeamToEvent(teamId, result.insertId);
+					const member = await MemberModel.getMemberOfTeam(teamId);
+					member.forEach((userid) => {
+						if (userid.User_Id !== userId) {
+							invitePeople.push(userid.User_Id);
+						}
+					});
 				} catch (err) {
 					participantsAdded -= 1;
 				}
+
+				const actualCountParticipants = invitePeople.length + participants.length;
+				if (actualCountParticipants >= maxParticipants && maxParticipants !== 0) {
+					res.status(400).json({
+						message: 'Too many participants.',
+					});
+				}
+
+				// Add invited participants
+				if (participants instanceof Array) {
+					participants.forEach((e) => {
+						invitePeople.push(e);
+					});
+					invitePeople = invitePeople.reduce(
+						(x, y) => (x.findIndex(e => e === y) < 0 ? [...x, y] : x),
+						[],
+					);
+					participants.forEach(async (participantId) => {
+						participantsAdded += 1;
+						try {
+							await ParticipatesModel.addParticipant(result.insertId, participantId, false);
+
+							const user = await UserModel.getUserById(userId);
+
+							await NotificationModel.addNotification(participantId, 'joinEvent', 'Event invitation', `${user.Firstname} ${user.Name} invited you to join the event '${activity.name}'.`, result.insertId);
+						} catch (err) {
+							participantsAdded -= 1;
+						}
+					});
+				}
 			});
 		}
+
 
 		// Add host
 		await ParticipatesModel.addParticipant(result.insertId, userId, true);
@@ -102,6 +159,7 @@ const ActivityController = {
 		res.status(201).json({
 			activityId: result.insertId,
 			addedParticipants: participantsAdded,
+			addedTeams: teamsAdded,
 		});
 	},
 
