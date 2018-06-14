@@ -52,7 +52,7 @@ class Events extends React.Component {
       this.setState({error: 'An Error occured.'});
     });
 if(this.props.filter.filterFeed !== "PUBLIC"){
-    fetch(config.apiPath +  "/activity/teamid/" + this.props.filter.filterFeed, {
+    fetch(config.apiPath +  "/activity/teamId/" + this.props.filter.filterFeed, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
