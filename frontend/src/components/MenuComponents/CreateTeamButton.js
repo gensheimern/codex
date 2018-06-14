@@ -20,7 +20,9 @@ export default class CreateTeamButton extends React.Component {
     super(props);
     this.state = {open: false,
                   name: "",
+                  errtextName:"",
                   description:"",
+                  errTextDescription:"",
                   invitePeople: [],
                   selectedIcon : defaultSelectedIcon,};
     this.handleOpen = this.handleOpen.bind(this);
@@ -105,11 +107,14 @@ export default class CreateTeamButton extends React.Component {
      this.setState({
          name: event.target.value
      });
+     (this.state.name > 30) ? this.setState({errtextName:"Too many characters for a name, max.30!"}) : this.setState({errtextName:""})
  }
  handleChangeD = event => {
      this.setState({
          description: event.target.value
      });
+     (this.state.description > 80) ? this.setState({errTextDescription:"Too many characters for a description, max.80!"}) : this.setState({errTextDescription:""})
+
  }
  handleChangeI(x){
      this.setState({
@@ -158,7 +163,9 @@ export default class CreateTeamButton extends React.Component {
        <div>
          <CreateGroupContent
            name={this.state.name}
+           errtextName = {this.state.errtextName}
            description={this.state.description}
+           errTextDescription = {this.state.errTextDescription}
            invitePeople={this.state.invitePeople}
            selectedIcon={this.state.selectedIcon}
            handleChangeN={this.handleChangeN}

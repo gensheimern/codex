@@ -33,6 +33,7 @@ export default class GroupInfo extends React.Component {
 
   }
   componentDidMount() {
+    this.loadGroup(this.props.filter.filterFeed);
 
   }
   shouldComponentUpdate(nextProps, nextState) {
@@ -47,7 +48,7 @@ loadGroup(x){
     if(x === "PUBLIC"){
       this.setState({
                       isAdmin : false,
-                      team:{name: "PUBLIC",description:"Welcome into the PUBLIC Channel of VSF Experts! You can find all your colleagues here.",},
+                      team:{name: "PUBLIC",description:"This is the PUBLIC Channel of VSF Experts! You can find all your colleagues here.",},
                         loading: false,
 
 
@@ -167,7 +168,6 @@ handleChangeN = event => {
  }
 
   render() {
-    this.loadGroup(this.props.filter.filterFeed);
 
     if (this.state.loading) {
       return <LoadingAnimation/>
