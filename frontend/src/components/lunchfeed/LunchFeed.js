@@ -1,6 +1,8 @@
 import React from 'react';
 import Card from './Card';
 import config from '../../config';
+import EventCard from '../event/EventCard';
+import LunchPaper from './LunchPaper';
 
 class LunchFeed extends React.Component {
 
@@ -56,7 +58,9 @@ render(){
   if(this.state.lunchList !== null){
   lunches = this.state.lunchList.map((lunchItem) =>  {
     console.log(lunchItem.LunchImage);
-    return <Card
+    return(
+      /*
+      <Card
         image={lunchItem.LunchImage}
         name={lunchItem.Name}
         place={lunchItem.Place}
@@ -67,11 +71,29 @@ render(){
         price={lunchItem.Price}
         text={lunchItem.LunchText}
         />
+        */
+
+            <LunchPaper
+            image={lunchItem.LunchImage}
+            name={lunchItem.Name}
+            place={lunchItem.Place}
+            zipcode={lunchItem.Zipcode}
+            street={lunchItem.Street}
+            streetNumber={lunchItem.StreetNumber}
+            time={lunchItem.Time}
+            price={lunchItem.Price}
+            text={lunchItem.LunchText}
+             />
+
+
+
+      )
   })
 }
   console.log(this.state.lunchList);
   return(
       <div>
+
         {lunches}
       </div>
   )
