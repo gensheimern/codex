@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const serveStatic = require('serve-static');
 const cors = require('cors');
+const helmet = require('helmet');
 const compression = require('compression');
 const path = require('path');
 const authenticateRouter = require('./routes/auth/AuthenticateRouter');
@@ -17,11 +18,22 @@ const RestaurantController = require('./routes/restaurant/RestaurantController')
 
 const app = express();
 
-// Middlewares
-
+/* Middlewares */
+// Set security HTTP headers
+app.use(helmet());
+app.use(helmet.referrerPolicy({ policy: 'same-origin' }));
+app.use(helmet.contentSecurityPolicy({
+	directives: {
+		defaultSrc: ["'self'"],
+		styleSrc: ["'self'", 'maxcdn.bootstrapcdn.com'],
+	},
+	reportOnly: true,
+}));
+// Enable cors requests
 app.use(cors());
 // Enbalbe gzip compression for less traffic
 app.use(compression());
+
 // User static routing for images and frontend
 app.use(serveStatic(path.join(`${__dirname}/image/user`)));
 app.use(serveStatic(path.join(`${__dirname}/image/lunch`)));
