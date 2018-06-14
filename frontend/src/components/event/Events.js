@@ -14,7 +14,7 @@ class Events extends React.Component {
 
     this.state = {
       events: [],
-      myEvents: [],
+      groupEvents: [],
       loaded: false,
       error: null,
     };
@@ -52,6 +52,7 @@ class Events extends React.Component {
       this.setState({error: 'An Error occured.'});
     });
 
+//TODO: richtiger fetch für gruppenjoines
     fetch(config.apiPath + "/activity/joined", {
       method: 'GET',
       headers: {
@@ -72,7 +73,6 @@ class Events extends React.Component {
     }).catch((err) => {
       this.setState({error: 'An Error occured.'});
     });
-
   }
 
   render() {
@@ -90,12 +90,14 @@ class Events extends React.Component {
     let filterDataBeginn = this.props.filter.filterDate;
     let searchWordName = this.props.filter.searchWord;
 
-    if(this.props.filter.filterFeed === "PERSONAL") {
-      filterData = this.state.myEvents;
-      console.log( "1. " + this.props.filter.filterFeed);
-    } else {
-      console.log(this.props.filter.filterFeed);
+    if(this.props.filter.filterFeed === "PUBLIC") {
       filterData = this.state.events;
+      console.log( "1. " + this.props.filter.filterFeed);
+      console.log(this.state);
+    } else {
+      console.log("2. " + this.props.filter.filterFeed);
+      console.log(this.state);
+      filterData = this.state.groupEvents;
     }
 
     filterData = filterData.filter(function (a,b)
