@@ -4,19 +4,17 @@
  */
 import React from 'react';
 import renderer from'react-test-renderer';
-import SearchFeed from './SearchFeed';
+import AddButton from './AddButton';
 import config from '../../config';
 import {MemoryRouter} from 'react-router-dom';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+
 const fetchMock = require('fetch-mock');
 
-describe('SearchFeed Snapshot', () => {
+describe('AddButton Snapshot', () => {
     test('renders', () =>{
         const component = renderer.create(
             <MemoryRouter>
-                <MuiThemeProvider>
-                    <SearchFeed/>
-                </MuiThemeProvider>
+                <AddButton/>
             </MemoryRouter>
         );
         let tree= component.toJSON();

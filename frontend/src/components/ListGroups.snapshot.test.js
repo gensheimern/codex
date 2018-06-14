@@ -4,18 +4,35 @@
  */
 import React from 'react';
 import renderer from'react-test-renderer';
-import SearchFeed from './SearchFeed';
-import config from '../../config';
+import ListGroups from './ListGroups';
+import config from '../config';
 import {MemoryRouter} from 'react-router-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+
 const fetchMock = require('fetch-mock');
 
-describe('SearchFeed Snapshot', () => {
+beforeEach(() => {
+    window.localStorage = {getItem: () => ""};
+    fetchMock.get(config.apiPath +'/team', 
+    [ { id: 6,
+		name: "Döner",
+		manager: {
+			id: 6,
+		    firstName: "Max",
+		    name: "Mustermann",
+		    email: "max.mustermann@web.de",
+		    image: "",
+		    me: true,
+		},
+    }]);
+});
+
+describe('ListGroups Snapshot', () => {
     test('renders', () =>{
         const component = renderer.create(
             <MemoryRouter>
                 <MuiThemeProvider>
-                    <SearchFeed/>
+                    <ListGroups/>
                 </MuiThemeProvider>
             </MemoryRouter>
         );

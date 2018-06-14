@@ -1,8 +1,13 @@
+/**
+ * @author:Stella Neser
+ *  Komponente ist ein Snapshottest
+ */
 import React from 'react';
 import renderer from'react-test-renderer';
 import Events from './Events';
 import config from '../../config';
 import {MemoryRouter} from 'react-router-dom';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 const fetchMock = require('fetch-mock');
 
@@ -57,7 +62,9 @@ describe('Events Snapshot', () => {
     test('renders', () =>{
         const component = renderer.create(
             <MemoryRouter>
-            <Events/>
+                <MuiThemeProvider>
+                    <Events/>
+                </MuiThemeProvider>
             </MemoryRouter>
         );
         let tree= component.toJSON();

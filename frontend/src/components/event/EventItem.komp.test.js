@@ -1,3 +1,7 @@
+/**
+ * @author:Stella Neser
+ *  Komponente ist ein Komponententest
+ */
 import React from 'react';
 import {shallow, mount, render } from 'enzyme';
 import EventItem from './EventItem';

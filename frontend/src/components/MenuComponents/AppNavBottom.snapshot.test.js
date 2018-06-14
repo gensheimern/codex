@@ -1,3 +1,7 @@
+/**
+ * @author:Stella Neser
+ *  Komponente ist ein Snapshottest
+ */
 import React from 'react';
 import renderer from'react-test-renderer';
 import AppNavBottom from './AppNavBottom';
