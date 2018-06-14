@@ -51,7 +51,8 @@ class Events extends React.Component {
     }).catch((err) => {
       this.setState({error: 'An Error occured.'});
     });
-if(this.props.filter.filterFeed !== "PUBLIC"){
+
+    if(this.props.filter.filterFeed !== "PUBLIC"){
     fetch(config.apiPath +  "/activity/teamId/" + this.props.filter.filterFeed, {
       method: 'GET',
       headers: {
@@ -67,6 +68,7 @@ if(this.props.filter.filterFeed !== "PUBLIC"){
 
       return res;
     }).then(res => res.json()).then(res => {
+      console.log(res);
       this.setState({groupEvents: res, loaded: true});
 
     }).catch((err) => {
@@ -94,7 +96,7 @@ if(this.props.filter.filterFeed !== "PUBLIC"){
     } else {
       filterData = this.state.groupEvents;
     }
-
+    console.log(filterData);
     filterData = filterData.filter(function (a,b)
                     {
                       return (new Date(a.time)) >= filterDataBeginn;
