@@ -71,7 +71,7 @@ class Lunch extends React.Component {
            }
 
     fd.append('image',this.state.uploadFile[0],"lunch_" + this.state.uploadFile[0].name);
-    axios.post('http://localhost:5000/api/upload',fd, configAxios)
+    axios.post('http://localhost:5000/api/upload/lunch',fd, configAxios)
       .then(res => {
           console.log(res);
       });
@@ -81,7 +81,7 @@ class Lunch extends React.Component {
   			method: 'POST',
   			body: JSON.stringify({
           Time: this.state.yearFrom + "-" + this.state.monthFrom + "-" + this.state.dayFrom,
-          LunchImage: this.state.uploadFile[0].name,
+          LunchImage: this.state.uploadFile ? this.state.uploadFile[0].name : null ,
           LunchText: this.state.textValue,
           Price: this.state.priceValue,
 

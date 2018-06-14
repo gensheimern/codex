@@ -15,12 +15,13 @@ export default class MobileContent extends React.Component {
 			case 'addteam': content = 6; break;
 			case 'addevent': content = 2; break;
 			case 'personal': content = 1; break;
+			case 'lunchfeed': content = 7; break;
 			default: content = 0; break;
 		}
 
 		return (
 			<div className="mobileContent-wrapper">
-					
+
 					<div style={{width: '100%'}}>
 						<MainContent
 							filterPersonalFeed = {this.props.filterPersonalFeed}

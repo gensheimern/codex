@@ -8,8 +8,14 @@ const LunchRestaurant = {
 	 * @returns {Promise<Array<LunchRestaurant>>} The LunchRestaurants visible for the user.
 	 */
 	async getAllLunch() {
-		return databaseConnection.queryp(`SELECT LunchRestaurant.*
-			FROM LunchRestaurant`);
+		return databaseConnection.queryp(
+			`SELECT LunchRestaurant.*, Restaurant.*
+			FROM LunchRestaurant
+				INNER JOIN Restaurant
+				ON Restaurant.Restaurant_Id = LunchRestaurant.Host
+				WHERE LunchRestaurant.Time < CURRENT_TIMESTAMP()
+			ORDER BY LunchRestaurant.Time`,
+			);
 	},
 
 	async getJoinedLunch(userId) {
