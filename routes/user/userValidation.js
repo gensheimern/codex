@@ -25,8 +25,7 @@ const userValidation = {
 	validName(name) {
 		// TODO: Check for valid characters
 		// TODO: Check for length
-		return !!name
-			&& typeof name === 'string'
+		return typeof name === 'string'
 			&& name.length > 0;
 	},
 
@@ -34,8 +33,7 @@ const userValidation = {
 		// TODO: Check for valid characters
 		// TODO: Check for length
 
-		return !!password
-			&& typeof password === 'string'
+		return typeof password === 'string'
 			&& password.length > 0;
 	},
 

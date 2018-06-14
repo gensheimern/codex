@@ -49,7 +49,7 @@ class RestaurantLogin extends Component {
     handleSubmit = event => {
         event.preventDefault();
 
-        fetch(config.apiPath + "/authenticate", {
+        fetch(config.apiPath + "/authenticateRestaurant", {
             method: 'POST',
             body: JSON.stringify({
                 email: this.state.email,
@@ -74,7 +74,7 @@ class RestaurantLogin extends Component {
                 // TODO Code without local storage
             }
 
-            this.props.history.push("/feed");
+            this.props.history.push("/lunch");
         }).catch((err) => {
             const actions = [
                 <FlatButton

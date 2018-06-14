@@ -6,3 +6,24 @@
 	background-color: #1EA185;
 	background-position: center top;
 }
+
+.loginBg {
+  height:100vh;
+}
+
+.h2header {
+  margin-bottom: 20px !important;
+}
+
+.DateWrapper {
+  float:left;
+  width:90%;
+  margin-left:5%;
+  margin-right:5%;
+  margin-top:40px;
+}
+
+.dropZoneText {
+  margin-left:50px;
+  margin-right:50px;
+}

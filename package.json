@@ -30,6 +30,7 @@
 	"author": "CODEX Team",
 	"license": "ISC",
 	"dependencies": {
+		"axios": "^0.18.0",
 		"bcrypt": "^2.0.1",
 		"body-parser": "^1.18.2",
 		"compression": "^1.7.2",
@@ -44,6 +45,7 @@
 		"jsonwebtoken": "^8.2.1",
 		"mysql": "^2.15.0",
 		"mysql2": "^1.5.3",
+		"node-fetch": "^2.1.2",
 		"nodemon": "^1.17.4",
 		"serve-static": "^1.13.2",
 		"socket.io": "^2.1.1"

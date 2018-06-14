@@ -40,7 +40,7 @@ const OrganizationController = {
 
 		const result = await OrganizationModel.addOrganization(userId, organization);
 
-		res.json({
+		res.status(201).json({
 			organizationId: result.insertId,
 		});
 	},

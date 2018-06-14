@@ -11,7 +11,7 @@ export default class SearchFeed extends React.Component {
 			<FlatButton
 				style={{
 					padding: 0,
-					width: '25%',
+					width: '56px',
 					height: '100%',
 					float: 'left',
 					minWidth: '56px',
