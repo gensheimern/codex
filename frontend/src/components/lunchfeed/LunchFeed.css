@@ -54,7 +54,7 @@ overflow:hidden;
 margin-top:20px;
 }
 
-.LunchImageDialog, img{
+.LunchImageDialog, .img{
   object-fit: contain;
   width:100%;
 
