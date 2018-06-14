@@ -38,6 +38,8 @@ describe('Team controller', () => {
 				{
 					Team_Id: 1,
 					Teamname: 'Test1',
+					description:"Test description 1",
+					icon:"Icon1.jpg",
 					Firstname: 'Max',
 					Name: 'Mustermann',
 					Email: 'valid@email.com',
@@ -47,6 +49,8 @@ describe('Team controller', () => {
 				{
 					Team_Id: 2,
 					Teamname: 'Test2',
+					description:"Test description 2",
+					icon:"Icon2.jpg",
 					Firstname: 'Nico',
 					Name: 'Mustermann',
 					Email: 'valid2@email.com',
@@ -67,6 +71,8 @@ describe('Team controller', () => {
 				{
 					id: 1,
 					name: 'Test1',
+					description:"Test description 1",
+					icon:"Icon1.jpg",
 					manager: {
 						firstName: 'Max',
 						name: 'Mustermann',
@@ -78,6 +84,8 @@ describe('Team controller', () => {
 				{
 					id: 2,
 					name: 'Test2',
+					description:"Test description 2",
+					icon:"Icon2.jpg",
 					manager: {
 						firstName: 'Nico',
 						name: 'Mustermann',
@@ -110,6 +118,8 @@ describe('Team controller', () => {
 			mockModels.push(TestTools.mockModel(teamModel, 'getTeamById', null, {
 				Team_Id: 5,
 				Teamname: 'Test1',
+				description:"Test description 1",
+				icon:"Icon1.jpg",
 				Firstname: 'Max',
 				Name: 'Mustermann',
 				Email: 'valid@email.com',
@@ -133,6 +143,8 @@ describe('Team controller', () => {
 			expect(res.body(), 'Correct response body').to.deep.equal({
 				id: 5,
 				name: 'Test1',
+				description:"Test description 1",
+				icon:"Icon1.jpg",
 				manager: {
 					firstName: 'Max',
 					name: 'Mustermann',
@@ -193,6 +205,8 @@ describe('Team controller', () => {
 			const { req, res } = TestTools.mockRequest({
 				body: {
 					name: 'Test Team',
+					description:"Test description 1",
+					icon:"Icon1.jpg",
 				},
 			});
 
@@ -229,6 +243,8 @@ describe('Team controller', () => {
 			const { req, res } = TestTools.mockRequest({
 				body: {
 					name: 'Test Team',
+					description:"Test description 1",
+					icon:"Icon1.jpg",
 				},
 			});
 
@@ -253,6 +269,8 @@ describe('Team controller', () => {
 				},
 				body: {
 					name: 'Test Team',
+					description:"Test description 1",
+					icon:"Icon1.jpg",
 				},
 			});
 
@@ -274,6 +292,8 @@ describe('Team controller', () => {
 			const { req, res } = TestTools.mockRequest({
 				body: {
 					name: 'Test Team',
+					description:"Test description 1",
+					icon:"Icon1.jpg",
 				},
 			});
 
@@ -318,6 +338,8 @@ describe('Team controller', () => {
 				},
 				body: {
 					name: 'Test Team',
+					description:"Test description 1",
+					icon:"Icon1.jpg",
 				},
 			});
 
@@ -378,6 +400,8 @@ describe('Team controller', () => {
 			const { req, res } = TestTools.mockRequest({
 				params: {
 					teamId: '8',
+					description:"Test description 1",
+					icon:"Icon1.jpg",
 				},
 			});
 
