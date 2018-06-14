@@ -25,6 +25,32 @@ beforeEach(() => {
 		    me: true,
 		},
     }]);
+    fetchMock.get(config.apiPath +'/user/me/organizations', 
+    [ { id: 6,
+		name: "Das Team",
+		description: "",
+		admin: {
+			id: 6,
+		    firstName: "Max",
+		    name: "Mustermann",
+		    email: "max.mustermann@web.de",
+		    image: "",
+		    me:true,
+		},
+    }]);
+    fetchMock.get(config.apiPath +'/organization/', 
+    [ { id: 6,
+		name: "Das Team",
+		description: "",
+		admin: {
+			id: 6,
+		    firstName: "Max",
+		    name: "Mustermann",
+		    email: "max.mustermann@web.de",
+		    image: "",
+		    me:true,
+		},
+    }]);
 });
 
 describe('AppNavTop Snapshot', () => {

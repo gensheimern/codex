@@ -32,7 +32,7 @@ exports[`CreateEventInvitePeople Snapshot renders 1`] = `
     >
       <label
         className={undefined}
-        htmlFor="undefined-undefined-InvitePeople-21622"
+        htmlFor="undefined-undefined-InvitePeople-16631"
         onClick={undefined}
         style={
           Object {
@@ -55,7 +55,7 @@ exports[`CreateEventInvitePeople Snapshot renders 1`] = `
       <input
         autoComplete="off"
         disabled={false}
-        id="undefined-undefined-InvitePeople-21622"
+        id="undefined-undefined-InvitePeople-16631"
         onBlur={[Function]}
         onChange={[Function]}
         onFocus={[Function]}
