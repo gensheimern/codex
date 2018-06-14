@@ -17,16 +17,25 @@ class LunchPaper extends React.Component {
 constructor(props){
   super(props);
   this.state = {
-    open: false,
+    openImage: false,
+    openAddress:false,
   }
 }
 
-handleOpen = () => {
-  this.setState({open: true});
+handleOpenImage = () => {
+  this.setState({openImage: true});
 };
 
-handleClose = () => {
-  this.setState({open: false});
+handleCloseImage = () => {
+  this.setState({openImage: false});
+};
+
+handleOpenAddress = () => {
+  this.setState({openImage: true});
+};
+
+handleCloseAddress = () => {
+  this.setState({openImage: false});
 };
 
 checkForImage = () => {
@@ -44,7 +53,7 @@ checkForText = () => {
     return (
       <div>
       this.props.name + " uploaded his lunch as a picture. Please Click here to see more info"
-      <RaisedButton onClick={this.handleOpen} label="LUNCHCARD" secondary={true} style={{marginTop:"30px",}} />
+      <RaisedButton onClick={this.handleOpenImage} label="LUNCHCARD" secondary={true} style={{marginTop:"30px",}} />
       </div>
     )
   }else {
@@ -58,8 +67,15 @@ render() {
   <div>
   <Dialog
     modal={false}
-    open={this.state.open}
-    onRequestClose={this.handleClose}
+    open={this.state.openImage}
+    onRequestClose={this.handleCloseImage}
+  >
+  <img src={"lunch_" + this.props.image} alt="LunchImageDialog" className="LunchImageDialog"/>
+  </Dialog>
+  <Dialog
+    modal={false}
+    open={this.state.openAddress}
+    onRequestClose={this.handleCloseAddress}
   >
   <img src={"lunch_" + this.props.image} alt="LunchImageDialog" className="LunchImageDialog"/>
   </Dialog>
@@ -67,15 +83,12 @@ render() {
     <div className="LunchImageContainer">
       <img src={this.checkForImage()} alt="LunchImage" className="LunchImage"/>
       <div className="LunchImageMiddle">
-        <div className="LunchImageText">
+        <div className="LunchImageText" onClick={this.handleOpenAddress}>
           <h4> {this.props.name} </h4>
         </div>
       </div>
     </div>
     <div className="LunchTextBody">
-    <div className="LunchAddress">
-      <h3 stlye={{color:"#1ea185"}}>{this.props.place + " " + this.props.street + " " + this.props.streetNumber}</h3>
-    </div>
       <div className="text">
        {this.checkForText()}
       </div>
