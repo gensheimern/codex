@@ -4,19 +4,22 @@
  */
 import React from 'react';
 import renderer from'react-test-renderer';
+import MobileContent from './MobileContent';
+import config from '../config';
 import {MemoryRouter} from 'react-router-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import Signup from './Signup';
-import config from '../../config';
 
-describe('Signup Snapshot', () => {
+const fetchMock = require('fetch-mock');
+
+
+describe('MobileContent Snapshot', () => {
     test('renders', () =>{
         const component = renderer.create(
             <MemoryRouter>
                 <MuiThemeProvider>
-                    <Signup />
+                    <MobileContent/>
                 </MuiThemeProvider>
-            </MemoryRouter> 
+            </MemoryRouter>
         );
         let tree= component.toJSON();
         expect(tree).toMatchSnapshot();

@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CollapsedContent Snapshot renders 1`] = `
+<div>
+  <div
+    className="collapse-activity"
+  >
+    <hr
+      className="activity-hr"
+    />
+  </div>
+</div>
+`;

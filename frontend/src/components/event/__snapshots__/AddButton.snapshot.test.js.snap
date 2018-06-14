@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AddButton Snapshot renders 1`] = `
+<a
+  href="/newEvent"
+  onClick={[Function]}
+>
+  <div
+    style={
+      Object {
+        "backgroundColor": "#aaa",
+        "borderRadius": "50%",
+        "float": "left",
+        "fontSize": "18pt",
+        "height": "30px",
+        "marginLeft": "2%",
+        "width": "30px",
+      }
+    }
+  >
+      +
+  </div>
+  <h2
+    style={
+      Object {
+        "color": "white",
+      }
+    }
+  >
+     ADD EVENT
+  </h2>
+</a>
+`;
