@@ -24,6 +24,12 @@ class Events extends React.Component {
     this.loadActivityData();
   }
 
+  componentDidUpdate(prevProps) {
+    if (this.props.filter.filterFeed !== prevProps.filter.filterFeed) {
+      this.loadActivityData();
+      console.log("wow");
+    }
+}
   loadActivityData() {
     // this.setState({error: null, loaded: false});
     // let isPersonal = "";
@@ -97,47 +103,52 @@ class Events extends React.Component {
       filterData = this.state.groupEvents;
     }
     console.log(filterData);
-    filterData = filterData.filter(function (a,b)
-                    {
-                      return (new Date(a.time)) >= filterDataBeginn;
-                    });
+    // filterData = filterData.filter(function (a,b)
+    //                 {
+    //                   return (new Date(a.time)) >= filterDataBeginn;
+    //                 });
+    //                 console.log(filterData);
 
     if(!(this.props.filterWord === null)){
       switch(this.props.filter.filterWord) {
           case 'TimeDown':
-          this.state.events.sort(function(obj1, obj2){
+          filterData.sort(function(obj1, obj2){
           return new Date(obj1.time) - new Date(obj2.time)})
     ;break
           case 'TimeUp':
-          this.state.events.sort(function(obj1, obj2){
+          filterData.sort(function(obj1, obj2){
           return new Date(obj2.time) - new Date(obj1.time)})
     ;break
           case 'NameDown':
-          this.state.events.sort(function(obj1, obj2){
+          filterData.sort(function(obj1, obj2){
           return (obj1.name.localeCompare(obj2.name))})
     ;break
           case 'NameUp':
-          this.state.events.sort(function(obj1, obj2){
+          filterData.sort(function(obj1, obj2){
           return (obj2.name.localeCompare(obj1.name))})
     ;break
           case 'Oldest':
-          this.state.events.sort(function(obj1, obj2){
+          filterData.sort(function(obj1, obj2){
           return (obj1.id) - (obj2.id)})
     ;break
           case 'Newest':
-          this.state.events.sort(function(obj1, obj2){
+          filterData.sort(function(obj1, obj2){
           return (obj2.id) - (obj1.id)})
     ;break
           default:
-          this.state.events.sort(function(obj1, obj2){
+          filterData.sort(function(obj1, obj2){
           return (obj1.time) - (obj2.time)})
     }
       }
+      console.log(filterData);
+
     if(!(searchWordName === null)){
       filterData = filterData.filter(event => event.name.toUpperCase().includes(searchWordName.toUpperCase()));
     } else {
-      filterData = this.state.events;
+      filterData = filterData;
     }
+    console.log(filterData);
+
     return (<React.Fragment>
       <div>
         <MediaQuery query="(min-device-width: 768px)">
