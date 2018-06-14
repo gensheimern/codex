@@ -229,124 +229,126 @@ class CreateEventCard extends React.Component {
 	};
 
 	scrolltoBottom(){
-		let node = document.getElementById('createbutton')
-		node.scrollIntoView({behavior:'smooth'})
+		let node = document.getElementById('createbutton');
+		node.scrollIntoView({behavior:'smooth'});
 	}
 
 	createEvent() {
 
-		var token = localStorage.getItem('apiToken')
-		var decoded = jwt_decode(token);
-		var invite = false
+		const token = localStorage.getItem('apiToken');
+		const decoded = jwt_decode(token);
+		let invite = false;
 		let userArray = this.state.invitePeople.map((userid) => {
-				if(userid.ValueKey === decoded.userId) {
-						return invite = true
-				} else {
-					return invite = false
-				}
+			if(userid.ValueKey === decoded.userId) {
+				return invite = true;
+			} else {
+				return invite = false;
+			}
 
-		 });
+		});
 
 		if(invite){
-			this.setState({errorInvite:"Your can not invite yourself"})
-		}
-		else {
+			this.setState({errorInvite:"Your can not invite yourself"});
+		} else {
+			if(parseInt(this.getMaxPeopleValue(), 10) >= userArray.length +1 || parseInt(this.getMaxPeopleValue(), 10) === 0 ) {
 
-		if(parseInt(this.getMaxPeopleValue(), 10) >= userArray.length +1 || parseInt(this.getMaxPeopleValue(), 10) === 0 ){
-
-		fetch(config.apiPath + "/activity", {
-			method: 'POST',
-			body: JSON.stringify({
-				description: this.state.descriptionValue,
-				name: this.state.address[0],
-				place: this.combineAddress(),
-				time: this.state.year + "-" + this.state.month + "-" + this.state.day + " " + this.state.hours + ":" + this.state.minutes,
-				event: false,
-				private: this.state.private,
-				banner: this.state.cardImage + "_card.jpg",
-				meetingPoint: this.state.meetingPoint,
-				timeMeetingPoint: this.state.year + "-" + this.state.month + "-" + this.state.day + " " + this.state.meetingHours + ":" + this.state.meetingMinutes,
-				maxParticipants: parseInt(this.getMaxPeopleValue(), 10),
-				participants: userArray,
-			}),
-			headers: {
-				'Content-Type': 'application/json',
-				'X-Access-Token': localStorage.getItem('apiToken'),
-			}
-		})
-		.then((res) => {
-			if (!res.ok || res.status !== 201) {
-				// handle error
+				fetch(config.apiPath + "/activity", {
+					method: 'POST',
+					body: JSON.stringify({
+						description: this.state.descriptionValue,
+						name: this.state.address[0],
+						place: this.combineAddress(),
+						time: this.state.year + "-" + this.state.month + "-" + this.state.day + " " + this.state.hours + ":" + this.state.minutes,
+						event: false,
+						private: this.state.private,
+						banner: this.state.cardImage + "_card.jpg",
+						meetingPoint: this.state.meetingPoint,
+						timeMeetingPoint: this.state.year + "-" + this.state.month + "-" + this.state.day + " " + this.state.meetingHours + ":" + this.state.meetingMinutes,
+						maxParticipants: parseInt(this.getMaxPeopleValue(), 10),
+						participants: userArray,
+					}),
+					headers: {
+						'Content-Type': 'application/json',
+						'X-Access-Token': localStorage.getItem('apiToken'),
+					}
+				})
+				.then((res) => {
+					if (!res.ok || res.status !== 201) {
+						// handle error
+					} else {
+						this.renderSnackbar();
+						this.props.history.push('/feed');
+					}
+				});
 			} else {
-				this.renderSnackbar();
-				this.props.history.push('/feed');
-			}
-		});
-	} else {
-		this.setState({errorCreate: 'Maximum of ' + parseInt(this.getMaxPeopleValue(), 10) + ' participants' });
+				this.setState({errorCreate: 'Maximum of ' + parseInt(this.getMaxPeopleValue(), 10) + ' participants' });
 
+			}
+
+			let emails = this.state.invitePeople.map((e) => {
+				return(e.ValueEmail + ",")
+			});
+
+			fetch(config.apiPath + "/sendmail/joinevent", {
+				method: 'POST',
+				body: JSON.stringify({
+					email: emails,
+					event: this.state.address[0],
+					time: this.state.year + "-" + this.state.month + "-" + this.state.day + " " + this.state.hours + ":" + this.state.minutes,
+
+				}),
+				headers: {
+					'Content-Type': 'application/json',
+					'X-Access-Token': localStorage.getItem('apiToken'),
+				}
+			})
+			.then((res) => {
+				if (!res.ok || res.status !== 201) {
+					// handle error
+				} else {
+					this.renderSnackbar();
+					this.props.history.push('/feed');
+				}
+			});
+		}
 	}
 
-	let emails = this.state.invitePeople.map((e) => {
-		return(e.ValueEmail + ",")
-	});
-
-	fetch(config.apiPath + "/sendmail/joinevent", {
-		method: 'POST',
-		body: JSON.stringify({
-			email: emails,
-			event: this.state.address[0],
-			time: this.state.year + "-" + this.state.month + "-" + this.state.day + " " + this.state.hours + ":" + this.state.minutes,
-
-		}),
-		headers: {
-			'Content-Type': 'application/json',
-			'X-Access-Token': localStorage.getItem('apiToken'),
-		}
-	})
-	.then((res) => {
-		if (!res.ok || res.status !== 201) {
-			// handle error
-		} else {
-			this.renderSnackbar();
-			this.props.history.push('/feed');
-		}
-	});
-}
-
-		}
-
-		collapseImagePicker(){
-			if(this.state.open){
-		 return(
+	collapseImagePicker() {
+		if (this.state.open) {
+			return(
 			 	eventImages.map((data,index) => (
 					<img
-					key={"profilePicture" + index}
-					src={data.img + ".jpg"}
-					onClick={() => this.cardImage(data.title,data.img)}
-					width="100px"
-					height="100px"
-					alt=""
-					id="pickimage"
-				/>
+						key={"profilePicture" + index}
+						src={data.img + ".jpg"}
+						onClick={() => this.cardImage(data.title,data.img)}
+						width="100px"
+						height="100px"
+						alt=""
+						id="pickimage"
+					/>
 				))
 			)
 		}
 	}
 
+	uninvite = id => () => {
+		// TODO: Remove invited people
+		/* this.setState((prevState) => ({
+				invitePeople: prevState.invitePeople.filter((value) => value.valueKey !== id),
+			})
+		); */
+	}
 
-
-		collapsedContent() {
-		if(this.state.collapse){
-			let images = this.state.invitePeople.map((image,index) => {
-				// return  <img key={image} src={image} />
-				return (<InviteChip key={"chip" + index} name={image.textKey} peopleImage={image.ValueImage} />)
-			});
+	collapsedContent() {
+		if(this.state.collapse) {
+			let images = this.state.invitePeople.map((image,index) => 
+				(<InviteChip key={"chip" + index} name={image.textKey} peopleImage={image.ValueImage} delete={this.uninvite(image.valueKey)} />)
+			);
 
 			return(
 				<div className="collapsedContentWrapper">
 					<div className="meetingPoint">
-							<TextField
+						<TextField
 							floatingLabelFixed={true}
 							floatingLabelFocusStyle={{ color: 'rgb(30, 161, 133)' }}
 							underlineFocusStyle={{ borderColor: 'rgb(30, 161, 133)' }}
@@ -355,23 +357,25 @@ class CreateEventCard extends React.Component {
 							value={this.state.meetingPoint}
 							onChange={this.handleChangeMeetingPoint}
 							style={{width:'100%'}}
-							/>
+						/>
 					</div>
 					<br/>
-						<div className="timepickerMeeting">
-								<CreateEventTimePicker hours={this.state.meetingHours}
-																			 minutes={this.state.meetingMinutes}
-																			 time={this.callbackTimeMeetingPoint} />
+
+					<div className="timepickerMeeting">
+						<CreateEventTimePicker
+							hours={this.state.meetingHours}
+							minutes={this.state.meetingMinutes}
+							time={this.callbackTimeMeetingPoint} />
 						</div>
 						<div className="collapsedContendReminder">
-						< ReminderToggle
-							label={'Reminder'}
-							toggle={this.callbackToggleReminder}
-						/>
-						< ReminderToggle
-							label={'Private'}
-							toggle={this.callbackTogglePrivate}
-						/>
+							< ReminderToggle
+								label={'Reminder'}
+								toggle={this.callbackToggleReminder}
+							/>
+							< ReminderToggle
+								label={'Private'}
+								toggle={this.callbackTogglePrivate}
+							/>
 						</div>
 						<TextField
 							fullWidth={true}
@@ -381,24 +385,29 @@ class CreateEventCard extends React.Component {
 							value={this.state.maxPeopleValue}
 							onChange={this.handleChangeMaxPeople}
 						/>
-					<TextField
-						fullWidth={true}
-						underlineFocusStyle={{borderColor:"rgb(30, 161, 133)"}}
-						floatingLabelFixed={true}
-						hintText="Description"
-						value={this.state.descriptionValue}
-						onChange={this.handleChangeDescription}
-					/>
-					<InvitePeople people={this.callBackInvitePeople}/>
-					<div style={{color:"red"}}>{this.state.errorInvite} </div>
-					{images}
+						<TextField
+							fullWidth={true}
+							underlineFocusStyle={{borderColor:"rgb(30, 161, 133)"}}
+							floatingLabelFixed={true}
+							hintText="Description"
+							value={this.state.descriptionValue}
+							onChange={this.handleChangeDescription}
+						/>
+
+						<InvitePeople people={this.callBackInvitePeople}/>
+
+						<div style={{color:"red"}}>
+							{this.state.errorInvite}
+						</div>
+
+						{images}
 				</div>
 			);
 		}
 	}
 
 	render() {
-		return (<div>
+		return (<div className="createEventWeb">
 		<Paper className="createEventWrapper">
 			<Card className="createEventCardWrapper">
 				<Snackbar
@@ -408,15 +417,16 @@ class CreateEventCard extends React.Component {
 					onRequestClose={this.renderSnackbarClose}
 				/>
 				<CardMedia
-					overlayContentStyle={{padding:"2px"}}
+					overlayContentStyle={{ padding: '2px' }}
 					overlay={
 						<CardTitle
 							onClick={this.handleOpen}
 							className="createEventEditPicture"
 							subtitle={this.state.cardTitle}
-						/>}
+						/>
+					}
 				>
-					<img   className='eventCardImg' src={this.state.cardImage + ".jpg"} alt="" />
+					<img className='eventCardImg' src={`${this.state.cardImage}.jpg`} alt="" />
 				</CardMedia>
 
 				<CardText>
@@ -424,20 +434,21 @@ class CreateEventCard extends React.Component {
 					<Maps
 						callbackAdress={this.handleChangeAddressValue}
 						myAddress={this.callbackAddress}
-						>
+					>
 						{renderFunc}
 					</Maps>
 					<div className="datepicker">
-							<CreateEventDatePicker date={this.callbackDate} />
+						<CreateEventDatePicker date={this.callbackDate} />
 					</div>
 					<div className="timeDatePicker">
 						<div className="timepicker">
-							<CreateEventTimePicker hours={this.state.hours}
-																		 minutes={this.state.minutes}
-																		 time={this.callbackTime} />
+							<CreateEventTimePicker
+								hours={this.state.hours}
+								minutes={this.state.minutes}
+								time={this.callbackTime} />
 						</div>
 						<div style={{clear: 'both'}}/>
-						</div>
+					</div>
 					<div
 						className="MoreOptionsCreateEvent"
 						onClick={this.toggleCollapse}
@@ -459,12 +470,11 @@ class CreateEventCard extends React.Component {
 				fullWidth={true}
 			/>
 		</Paper>
-			<div id="createbutton"> </div>
-		</div>
-		);
+		<div id="createbutton"> </div>
+		</div>);
+	}
+}
 
-}
-}
 const renderFunc = ({ getInputProps, getSuggestionItemProps, suggestions }) => (
 	<div className="autocomplete-root">
 		<input {...getInputProps()} />

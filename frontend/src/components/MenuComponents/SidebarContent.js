@@ -2,9 +2,10 @@ import React from 'react';
 import "./sidebars.css";
 import config from '../../config';
 import CreateTeamButton from './CreateTeamButton.js';
+import { withRouter } from 'react-router-dom';
 import GroupSidebarButton from './GroupSidebarButton.js'
 
-export default class SidebarContent extends React.Component {
+class SidebarContent extends React.Component {
   constructor(props) {
     super(props);
 
@@ -46,21 +47,25 @@ export default class SidebarContent extends React.Component {
   }
 
   clickGroupName(groupId){
-
-    console.log(groupId);
-    console.log(this.props.searchFilterFeed)
-    this.props.searchFilterFeed(groupId,"FilterGroup");
+    this.props.closeDrawer();
+    this.props.searchFilterFeed(groupId,"FilterFeed");
+        this.props.history.push('/feed');
 
   }
 
   clickGroupButton(index){
-
-    console.log(index);
     this.setState({activeIndex:index});
     if(index === "PUBLIC"){
-    this.props.searchFilterFeed("PUBLIC","FilterFeed");}
-    if(index === "PERSONAL"){
-    this.props.searchFilterFeed("PERSONAL","FilterFeed");}
+    this.props.searchFilterFeed("PUBLIC","FilterFeed");
+    this.props.closeDrawer();
+    this.props.history.push('/feed');}
+    else if(index === "PERSONAL"){
+    this.props.searchFilterFeed("PERSONAL","FilterFeed");
+    this.props.closeDrawer();
+    this.props.history.push('/feed');}
+    else {
+      this.clickGroupName(this.state.groups[index].id)
+    }
 
   }
 
@@ -85,15 +90,7 @@ export default class SidebarContent extends React.Component {
              name={"PUBLIC"}
              main={true}>
            </GroupSidebarButton>
-        <div className="divider"/>
-          <GroupSidebarButton
-             key={"group PERSONAL"}
-             index={"PERSONAL"}
-             isActive={this.state.activeIndex==="PERSONAL"}
-             clickGroupButton={this.clickGroupButton}
-             name={"PERSONAL"}
-             main={true}>
-           </GroupSidebarButton>
+
         <div className="divider"/>
         <div style={{width:"100%"}}>
           <p style={{
@@ -125,3 +122,4 @@ export default class SidebarContent extends React.Component {
     </div>);
   }
 }
+export default withRouter(SidebarContent);

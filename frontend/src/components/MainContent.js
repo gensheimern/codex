@@ -6,13 +6,12 @@ import ProfileContent from './profile/Profile.js';
 import CreateEventCard from './event/CreateEventCard';
 import CreateTeam from './groupmanager/CreateTeam';
 import Notifications from './notification/Notifications';
-import FilterDropDown from './MenuComponents/FilterDropDown.js';
 import Dialog from 'material-ui/Dialog';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import FlatButton from 'material-ui/FlatButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import LunchFeed from './lunchfeed/LunchFeed.js';
-
+import TeamInfo from './groupmanager/TeamInfo';
 
 export default class MainContent extends React.Component {
 	FEED = 0;
@@ -28,11 +27,12 @@ export default class MainContent extends React.Component {
 		if (this.props.mainContentNumber === this.FEED) {
 			return (
 				<React.Fragment>
-					<div className="FilterDiv">
-						<FilterDropDown searchFilterFeed={this.props.searchFilterFeed}/>
-					</div>
+					<div>
+	          <TeamInfo filter={this.props.filter}/>
+	        </div>
 					<Events
 						filter={this.props.filter}
+						searchFilterFeed={this.props.searchFilterFeed}
 					/>
 				</React.Fragment>
 			);

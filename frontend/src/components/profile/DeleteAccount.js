@@ -67,7 +67,7 @@ export default class DeleteAccount extends React.Component {
     			label="Delete"
 				onClick={this.deleteAccount}
 				backgroundColor="#ED6559"
-				labelColor="white"
+				labelColor="#ffffff"
     		/>
 		];
 
@@ -87,9 +87,9 @@ export default class DeleteAccount extends React.Component {
 				<RaisedButton
 					label="Delete Account"
 					backgroundColor="#ED6559"
-					color="white"
+					color="#ffffff"
 					onClick={this.handleDeleteAccount}
-					labelColor="white"
+					labelColor="#ffffff"
 				/>
 
 				{this.state.showDeleteAccountError ? deleteAccountError : null}

@@ -130,6 +130,7 @@ export default class CreateTeam extends React.Component {
             this.state = {
                 icons : iconsToSelect,
                 activeIndex : "0",
+                errText:"",
             }
         }
         componentDidUpdate(prevProps, prevState) {
@@ -191,12 +192,16 @@ export default class CreateTeam extends React.Component {
                         </div>
                 					<TextField
                 						floatingLabelFixed={true}
+                            multiLine={true}
+                            rows={1}
+                            rowsMax={2}
                 						floatingLabelFocusStyle={{ color: 'rgb(30 161 133)' }}
                 						underlineFocusStyle={{ borderColor: 'rgb(30 161 133)' }}
                 						floatingLabelText="Name"
                 						hintText="Nice Group Of PPL"
                             value={this.props.name}
                 						onChange={this.props.handleChangeN}
+                            errorText={this.props.errTextName}
                             style={{marginTop :"5%",
                                     width:"100%",}}
                 					/>
@@ -204,12 +209,16 @@ export default class CreateTeam extends React.Component {
 
                 					<TextField
                             floatingLabelFixed={true}
+                            multiLine={true}
+                            rows={1}
+                            rowsMax={4}
                             floatingLabelFocusStyle={{ color: 'rgb(30 161 133)' }}
                             underlineFocusStyle={{ borderColor: 'rgb(30 161 133)' }}
                             floatingLabelText="Description"
                             hintText="a bunch of ppl that doesnt suck."
                             value={this.props.description}
                             onChange={this.props.handleChangeD}
+                            errorText={this.props.errTextDescription}
                             style={{marginBottom :"3%",
                                     width:"100%",}}
                           />

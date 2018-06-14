@@ -7,6 +7,7 @@ import AppNavTop from './MenuComponents/AppNavTop';
 export default class MobileContent extends React.Component {
 	render() {
 		let content = 0;
+		let displayName;
 
 		switch (this.props.match.params[0]) {
 			case 'feed': content = 0; break;
@@ -18,6 +19,7 @@ export default class MobileContent extends React.Component {
 			case 'lunchfeed': content = 7; break;
 			default: content = 0; break;
 		}
+
 
 		return (
 			<div className="mobileContent-wrapper">
@@ -36,7 +38,7 @@ export default class MobileContent extends React.Component {
 					/>
 					<AppNavTop
 						searchFilterFeed={this.props.searchFilterFeed}
-						name="Feed"
+						name={displayName}
 						showSearch={content === 0}
 					/>
 				</div>

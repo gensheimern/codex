@@ -1,0 +1,17 @@
+<div className="CreateTeamButton">
+  <FlatButton
+    icon={<IconEdit color="#FFFFFF"/>}
+    onClick={this.handleClick}
+    target="_blank"
+    style={{color:"white",
+      minWidth:"0px",
+      margin:"0px",
+      float:"right",
+      marginRight:"2%",
+      marginLeft:"2%",
+                                }}
+    />
+</div>
+
+import FlatButton from 'material-ui/FlatButton';
+import IconEdit from 'material-ui/svg-icons/image/edit';

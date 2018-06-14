@@ -7,6 +7,7 @@ import config from '../../config';
 import LoadingAnimation from '../tools/LoadingAnimation';
 import PropTypes from 'prop-types';
 import ImageIcon from 'material-ui/svg-icons/image/image';
+import RaisedButton from 'material-ui/RaisedButton';
 
 import './profile.css';
 
@@ -146,7 +147,7 @@ export default class UserSettings extends React.Component {
 		return (
 			<Paper className="profilePaper" zDepth={2}>
 				<Badge
-					badgeContent={<ImageIcon style={{color: 'white'}}/>}
+					badgeContent={<ImageIcon style={{color: '#ffffff'}}/>}
 					badgeStyle={{
 						backgroundColor: '#1ea185',
 						top: 100,
@@ -183,6 +184,20 @@ export default class UserSettings extends React.Component {
 				{this.makeTextField('division', 'Division')}
 
 				{this.makeTextField('room', 'Room')}
+
+				<br />
+
+				<RaisedButton
+					label="Save"
+					disabled={this.state.saved}
+					backgroundColor="#32AA90"
+					color="#ffffff"
+					onClick={this.saveUserData}
+					style={{
+						color: '#ffffff',
+						float: 'right',
+					}}
+				/>
 			</Paper>
 		);
 	}

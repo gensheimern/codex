@@ -7,17 +7,16 @@ export default class AddButton extends React.Component {
 		return (
 			<Link to="/newEvent">
 				<div style={{
-					width: "30px",
-					height: "30px",
-					borderRadius: "50%",
-					backgroundColor: "#aaa",
-					float: "left",
-					marginLeft: "2%",
-					fontSize: "18pt",
+					width: '30px',
+					height: '30px',
+					borderRadius: '50%',
+					backgroundColor: '#aaa',
+					float: 'left',
+					marginLeft: '2%',
+					fontSize: '18pt',
 				}}>&nbsp;&nbsp;+</div>
-				<h2 style={{color: "white",}}>&nbsp;ADD EVENT</h2>
+				<h2 style={{color: 'white'}}>&nbsp;ADD EVENT</h2>
 			</Link>
 		);
 	}
-
 }
