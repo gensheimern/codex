@@ -1,7 +1,5 @@
 import React from 'react';
-import Card from './Card';
 import config from '../../config';
-import EventCard from '../event/EventCard';
 import LunchPaper from './LunchPaper';
 
 class LunchFeed extends React.Component {
