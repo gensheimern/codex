@@ -8,7 +8,7 @@ const config = require('./config');
 const { createLiveMessage } = require('./LiveMessages');
 
 const onStart = () => {
-	console.log(`Server started: https://${os.hostname()}:${config.PORT}\n`);
+	console.log(`Server started: https://${os.hostname()}:${process.env.NODE_ENV === 'production' ? config.SECURE_PORT : config.PORT}\n`);
 
 	// Print a warning if default jwt secret is used, because it may cause vulnerabilities.
 	if (config.JWT_SECRET === 'secret') {
