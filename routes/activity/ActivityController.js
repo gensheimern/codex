@@ -78,7 +78,7 @@ const ActivityController = {
 				message: 'Activity not found',
 			});
 		} else {
-			res.json(transforms(userId).transformActivity(activity));
+			res.json(activity);
 		}
 	},
 
