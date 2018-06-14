@@ -68,7 +68,7 @@ class Events extends React.Component {
 
       return res;
     }).then(res => res.json()).then(res => {
-      this.setState({myEvents: res, loaded: true});
+      this.setState({groupEvents: res, loaded: true});
 
     }).catch((err) => {
       this.setState({error: 'An Error occured.'});
@@ -141,12 +141,9 @@ class Events extends React.Component {
     } else {
       filterData = this.state.events;
     }
-<<<<<<< HEAD
 
 
     console.log(filterData);
-=======
->>>>>>> development
 
     return (<React.Fragment>
       <div>
