@@ -15,6 +15,7 @@ render(){
     return(
       <div>
         <DatePicker
+          id="CreateEventDatePicker"
           textFieldStyle={{width:'100%'}}
           onChange={this.props.date}
           autoOk={true}
