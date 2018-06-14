@@ -6,7 +6,6 @@ import ProfileContent from './profile/Profile.js';
 import CreateEventCard from './event/CreateEventCard';
 import CreateTeam from './groupmanager/CreateTeam';
 import Notifications from './notification/Notifications';
-import FilterDropDown from './MenuComponents/FilterDropDown.js';
 import Dialog from 'material-ui/Dialog';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import FlatButton from 'material-ui/FlatButton';

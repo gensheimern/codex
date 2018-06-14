@@ -11,7 +11,6 @@ export default class CreateEventDatePicker extends React.Component{
 
 render(){
   const today = new Date();
-  console.log(today);
     return(
       <div>
         <DatePicker

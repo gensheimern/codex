@@ -7,20 +7,22 @@ import AppNavTop from './MenuComponents/AppNavTop';
 export default class MobileContent extends React.Component {
 	render() {
 		let content = 0;
+		let displayName;
 
 		switch (this.props.match.params[0]) {
-			case 'feed': content = 0; break;
-			case 'notifications': content = 3; break;
-			case 'profile': content = 4; break;
-			case 'addteam': content = 6; break;
-			case 'addevent': content = 2; break;
-			case 'personal': content = 1; break;
+			case 'feed': content = 0; displayName = "FEED"; break;
+			case 'notifications': content = 3; displayName = "Notifications"; break;
+			case 'profile': content = 4; displayName = "Profile"; break;
+			case 'addteam': content = 6; displayName = "add Team"; break;
+			case 'addevent': content = 2; displayName = "add EVENT"; break;
+			case 'personal': content = 1; displayName = "Schedule"; break;
 			default: content = 0; break;
 		}
 
+
 		return (
 			<div className="mobileContent-wrapper">
-					
+
 					<div style={{width: '100%'}}>
 						<MainContent
 							filterPersonalFeed = {this.props.filterPersonalFeed}
@@ -35,7 +37,7 @@ export default class MobileContent extends React.Component {
 					/>
 					<AppNavTop
 						searchFilterFeed={this.props.searchFilterFeed}
-						name="Feed"
+						name={displayName}
 						showSearch={content === 0}
 					/>
 				</div>

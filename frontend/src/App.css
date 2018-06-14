@@ -29,7 +29,8 @@ label {
 .mobileContent-wrapper{
 	margin-top: 56px;
 	margin-bottom: 56px;
-	width: 100%;
+	width: 98%;
+	height: 97%;
 	-webkit-overflow-scrolling: touch;
 }
 
@@ -41,12 +42,12 @@ label {
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-	background: #888; 
+	background: #888;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-	background: #555; 
+	background: #555;
 }
 
 @media only screen and (max-width: 768px) {

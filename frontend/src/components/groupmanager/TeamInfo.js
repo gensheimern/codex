@@ -1,20 +1,14 @@
 import React from "react";
 import "./groupmanager.css";
-import FlatButton from 'material-ui/FlatButton';
 import config from '../../config';
-import TextField from 'material-ui/TextField';
-import InviteChip from '../event/CreateEventChip';
-import CreateTeamIconButton from './CreateTeamIconButton'
-import InvitePeople from '../event/CreateEventInvitePeople';
-import IconEdit from 'material-ui/svg-icons/image/edit';
 import TextOrTextField from '../tools/TextOrTextField';
 import IconGroup from 'material-ui/svg-icons/social/group';
 import LoadingAnimation from '../tools/LoadingAnimation';
 
 
-{/*
+/*
       The Component renders the customizable (for Team-Admin) Team-Information which each Team owns.
-  */}
+  */
 export default class GroupInfo extends React.Component {
 
   constructor(props) {
@@ -58,7 +52,7 @@ loadGroup(x){
 
 
       });
-    }
+    } else {
 
     fetch(config.apiPath + "/team", {
       method: 'GET',
@@ -76,23 +70,21 @@ loadGroup(x){
       }
     }).then(res => res.json()).then(res => {
       this.setState({groups: res});
-      console.log("22222");
-      console.log(this.state.groups);
-      {(this.state.groups === null) ? null :
+      (this.state.groups === null) ? console.log("wow") :
       this.state.groups.map((groups) => {if(groups.id === this.props.filter.filterFeed){
-                                              return this.state.team = groups;
+                                              return this.setState({team : groups});
                                             }else return "blub";
                                           });
       this.loadTeamMembers(this.state.team.id);
-}}
+    }
     ).catch((err) => {
       console.log('Request failed.');
     });
-
+  }
 }
+
 loadTeamMembers(id){
     let count = 0;
-    let arrayOfMembers = 0;
     fetch(config.apiPath + "/team/" + id + "/member", {
       method: 'GET',
       headers: {
@@ -109,7 +101,7 @@ loadTeamMembers(id){
       }
     }).then(res => res.json()).then(res => {
       res.map((member) => {
-        count++;
+        return count++;
       })
       this.setState({MemberCount:count})
       this.setState({
@@ -180,7 +172,6 @@ handleChangeN = event => {
     if (this.state.loading) {
       return <LoadingAnimation/>
     }
-    console.log(this.state);
 
     return (<div style={{}}>
       <div style={{	height: "32px",
@@ -227,18 +218,3 @@ handleChangeN = event => {
     );
   }
 }
-
-        <div className="CreateTeamButton">
-          <FlatButton
-            icon={<IconEdit color="#FFFFFF"/>}
-            onClick={this.handleClick}
-            target="_blank"
-            style={{color:"white",
-              minWidth:"0px",
-              margin:"0px",
-              float:"right",
-              marginRight:"2%",
-              marginLeft:"2%",
-                                        }}
-            />
-        </div>

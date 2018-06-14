@@ -92,11 +92,7 @@ class Events extends React.Component {
 
     if(this.props.filter.filterFeed === "PUBLIC") {
       filterData = this.state.events;
-      console.log( "1. " + this.props.filter.filterFeed);
-      console.log(this.state);
     } else {
-      console.log("2. " + this.props.filter.filterFeed);
-      console.log(this.state);
       filterData = this.state.groupEvents;
     }
 
@@ -141,10 +137,6 @@ class Events extends React.Component {
     } else {
       filterData = this.state.events;
     }
-
-
-    console.log(filterData);
-
     return (<React.Fragment>
       <div>
         <div>

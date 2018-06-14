@@ -3,12 +3,6 @@ import TextField from 'material-ui/TextField';
 
 export default class TextOrTextField extends React.Component {
 
-    constructor(props) {
-      super(props);
-    }
-
-
-
   render() {
     let XXX = this.props.isTextField;
         return(<React.Fragment key={XXX +"TextOrTextField"}>
