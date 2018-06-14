@@ -7,7 +7,10 @@ import Dialog from 'material-ui/Dialog';
 const style = {
   height: "300px",
   width: "90%",
-  margin: "4%",
+  marginTop: "6%",
+  marginBottom: "4%",
+  marginLeft: "4%",
+  marginRight: "4%",
   textAlign: 'center',
   display: 'inline-block',
 };
@@ -31,11 +34,11 @@ handleCloseImage = () => {
 };
 
 handleOpenAddress = () => {
-  this.setState({openImage: true});
+  this.setState({openAddress: true});
 };
 
 handleCloseAddress = () => {
-  this.setState({openImage: false});
+  this.setState({openAddress: false});
 };
 
 checkForImage = () => {
@@ -52,7 +55,7 @@ checkForText = () => {
   if(this.props.text === ""){
     return (
       <div>
-      this.props.name + " uploaded his lunch as a picture. Please Click here to see more info"
+      {this.props.name + " uploaded his lunchcard as a picture. Please Click here to see more info"}
       <RaisedButton onClick={this.handleOpenImage} label="LUNCHCARD" secondary={true} style={{marginTop:"30px",}} />
       </div>
     )
@@ -76,8 +79,11 @@ render() {
     modal={false}
     open={this.state.openAddress}
     onRequestClose={this.handleCloseAddress}
+    title={this.props.name}
   >
-  <img src={"lunch_" + this.props.image} alt="LunchImageDialog" className="LunchImageDialog"/>
+    {this.props.place} <br />
+    {this.props.zipcode}<br /><br />
+    {this.props.street + " " + this.props.streetNumber}
   </Dialog>
    <Paper style={style} zDepth={3} >
     <div className="LunchImageContainer">
@@ -93,6 +99,8 @@ render() {
        {this.checkForText()}
       </div>
     </div>
+    <RaisedButton onClick={this.handleOpenImage} label="CREATE EVENT" secondary={true} style={{marginTop:"10px",width:"100%"}} />
+
     </Paper>
   </div>
 );
