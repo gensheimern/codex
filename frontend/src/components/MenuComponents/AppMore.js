@@ -1,11 +1,8 @@
 import React from 'react';
 import FlatButton from 'material-ui/FlatButton';
-import IconSearch from 'material-ui/svg-icons/action/search';
+import MoreIcon from 'material-ui/svg-icons/navigation/more-vert';
 
-
-import "./sidebars.css"
-
-export default class SearchFeed extends React.Component {
+export default class AppMore extends React.Component {
 	render() {
 		return (
 			<FlatButton
@@ -17,7 +14,7 @@ export default class SearchFeed extends React.Component {
 					minWidth: '56px',
 				}}
 				backgroundColor="#1EA185"
-				icon={ <IconSearch color="white"/> }
+				icon={ <MoreIcon color="white"/> }
 				onClick={this.props.onClick}
 			/>
 		);

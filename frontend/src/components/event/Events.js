@@ -141,9 +141,12 @@ class Events extends React.Component {
     } else {
       filterData = this.state.events;
     }
+<<<<<<< HEAD
 
 
     console.log(filterData);
+=======
+>>>>>>> development
 
     return (<React.Fragment>
       <div>
