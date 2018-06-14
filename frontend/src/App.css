@@ -29,8 +29,7 @@ label {
 .mobileContent-wrapper{
 	margin-top: 56px;
 	margin-bottom: 56px;
-	width: 98%;
-	height: 97%;
+	width: 100%;
 	-webkit-overflow-scrolling: touch;
 }
 

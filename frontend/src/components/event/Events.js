@@ -4,8 +4,8 @@ import config from '../../config';
 import MediaQuery from 'react-responsive';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
-import TeamInfo from '../groupmanager/TeamInfo';
 import { withRouter } from 'react-router-dom';
+import FilterDropDown from '../MenuComponents/FilterDropDown.js';
 
 class Events extends React.Component {
 
@@ -139,9 +139,6 @@ class Events extends React.Component {
     }
     return (<React.Fragment>
       <div>
-        <div>
-          <TeamInfo filter={this.props.filter}/>
-        </div>
         <MediaQuery query="(min-device-width: 768px)">
           {
             (matches) => {
@@ -166,7 +163,9 @@ class Events extends React.Component {
 
                 </div>
               } else {
-                return null
+                return 			<FilterDropDown
+                							searchFilterFeed={this.props.searchFilterFeed}
+                						/>
               }
             }
           }
