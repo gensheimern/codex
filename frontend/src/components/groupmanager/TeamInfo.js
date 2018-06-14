@@ -5,216 +5,220 @@ import TextOrTextField from '../tools/TextOrTextField';
 import IconGroup from 'material-ui/svg-icons/social/group';
 import LoadingAnimation from '../tools/LoadingAnimation';
 
-
 /*
-      The Component renders the customizable (for Team-Admin) Team-Information which each Team owns.
-  */
+ *	The component renders the customizable (for Team-Admin) Team-Information which each Team owns.
+ */
 export default class GroupInfo extends React.Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {isAdmin : "",
-                  name: "",
-                  description:"",
-                  invitePeople: [],
-                  selectedIcon : "",
-                  MemberCount:0,
-                  loading: false,
-                  team:{},
-                  groups:[],
-                };
-    this.handleChangeN = this.handleChangeN.bind(this);
-    this.handleChangeD = this.handleChangeD.bind(this);
-    this.handleChangeI = this.handleChangeI.bind(this);
-    this.callBackInvitePeople = this.callBackInvitePeople.bind(this);
-    this.loadGroup = this.loadGroup.bind(this);
-    this.loadTeamMembers = this.loadTeamMembers.bind(this);
+	constructor(props) {
+		super(props);
+		this.state = {
+			isAdmin : '',
+			name: '',
+			description: '',
+			invitePeople: [],
+			selectedIcon: '',
+			memberCount: 0,
+			loading: false,
+			team: {},
+		};
 
+		this.callBackInvitePeople = this.callBackInvitePeople.bind(this);
+		this.loadGroup = this.loadGroup.bind(this);
+		this.loadTeamMembers = this.loadTeamMembers.bind(this);
+	}
 
-  }
-  componentDidMount() {
-    this.loadGroup(this.props.filter.filterFeed);
+	componentDidMount() {
+		this.loadGroup(this.props.filter.filterFeed);
+	}
 
-  }
-  shouldComponentUpdate(nextProps, nextState) {
-      return nextProps.filter !== this.props.filter ;
-    }
+	componentDidUpdate(prevProps) {
+		if (this.props.filter.filterFeed !== prevProps.filter.filterFeed) {
+			this.loadGroup(this.props.filter.filterFeed);
+		}
+	}
 
-loadGroup(x){
-  this.setState({
-    loading: true,
-  });
+	loadGroup(id) {
+		if(id === "PUBLIC") {
+			this.setState({
+				isAdmin : false,
+				team: {
+					name: 'PUBLIC',
+					description: 'This is the PUBLIC Channel of VSF Experts! You can find all your colleagues here.',
+				},
+			});
+		} else {
+			this.setState({
+				loading: true,
+			});
 
-    if(x === "PUBLIC"){
-      this.setState({
-                      isAdmin : false,
-                      team:{name: "PUBLIC",description:"This is the PUBLIC Channel of VSF Experts! You can find all your colleagues here.",},
-                        loading: false,
+			fetch(`${config.apiPath}/team/${id}`, {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					'X-Access-Token': localStorage.getItem('apiToken')
+				}
+			}).then((res) => {
+				if (!res.ok) {
+					throw new Error("Request failed.");
+				} else if (res.status !== 200) {
+					throw new Error("Forbidden");
+				}
 
+				return res.json();
+			})
+			.then(team => {
+				this.setState({
+					team,
+					loading: false,
+				});
 
-      });
-    } else {
+				this.loadTeamMembers(team.id);
+			}).catch((err) => {
+				console.log('Request failed.');
+			});
+		}
+	}
 
-    fetch(config.apiPath + "/team", {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Access-Token': localStorage.getItem('apiToken')
-      }
-    }).then((res) => {
-      if (!res.ok) {
-        throw new Error("Request failed.");
-      } else if (res.status !== 200) {
-        throw new Error("Forbidden");
-      } else {
-        return res;
-      }
-    }).then(res => res.json()).then(res => {
-      this.setState({groups: res});
-      (this.state.groups === null) ? console.log("wow") :
-      this.state.groups.map((groups) => {if(groups.id === this.props.filter.filterFeed){
-                                              return this.setState({team : groups});
-                                            }else return "blub";
-                                          });
-      this.loadTeamMembers(this.state.team.id);
-    }
-    ).catch((err) => {
-      console.log('Request failed.');
-    });
-  }
-}
+	loadTeamMembers(id) {
+		fetch(`${config.apiPath}/team/${id}/member`, {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+				'X-Access-Token': localStorage.getItem('apiToken')
+			}
+		}).then((res) => {
+			if (!res.ok) {
+				throw new Error("Request failed.");
+			} else if (res.status !== 200) {
+				throw new Error("Forbidden");
+			}
+			
+			return res.json();
+		}).then(res => {
+			this.setState({
+				memberCount: res.length,
+				loading: false,
+			});
+		})
+		.catch((err) => {
+			console.log('Request failed.');
+		});
+	}
 
-loadTeamMembers(id){
-    let count = 0;
-    fetch(config.apiPath + "/team/" + id + "/member", {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Access-Token': localStorage.getItem('apiToken')
-      }
-    }).then((res) => {
-      if (!res.ok) {
-        throw new Error("Request failed.");
-      } else if (res.status !== 200) {
-        throw new Error("Forbidden");
-      } else {
-        return res;
-      }
-    }).then(res => res.json()).then(res => {
-      res.map((member) => {
-        return count++;
-      })
-      this.setState({MemberCount:count})
-      this.setState({
-        loading: false,
-      });
+	handleSubmit(e) {
+		e.preventDefault();
 
-    })
-    .catch((err) => {
-      console.log('Request failed.');
-    });
-    return count;
+		if (this.state.name === "") {
+			this.setState({
+				showError: true,
+			});
+			return;
+		}
 
-  }
+		fetch(`${config.apiPath}/team`, {
+			method: 'POST',
+			body: JSON.stringify({
+				name: this.state.name
+			}),
+			headers: {
+				'Content-Type': 'application/json',
+				'X-Access-Token': localStorage.getItem('apiToken')
+			}
+		})
+		.then(() => {
+			this.props.update();
+		})
+		.catch((err) => {
+			console.log("display error");
+		});
+	}
 
-handleClick = () => {
-    this.handleOpen();
-  };
+	handleChange = name => e => {
+		this.setState({
+			[name]: e.target.value,
+		});
+	}
 
+	handleChangeI = (selectedIcon) => {
+		this.setState({ selectedIcon });
+	}
 
-handleSubmit(e) {
-     e.preventDefault();
+	callBackInvitePeople(invitePeople) {
+		this.setState({ invitePeople })
+	}
 
-     if(this.state.name !== "") {
-         fetch(config.apiPath + "/team ", {
-             method: 'POST',
-             body: JSON.stringify({
-                 name: this.state.name
-             }),
-             headers: {
-                 'Content-Type': 'application/json',
-                 'X-Access-Token': localStorage.getItem('apiToken')
-             }
-         }).then(() => {
-             this.props.update();
-         }).catch((err) => {
-             console.log("display error");
+	render() {
+		if (this.state.loading) {
+			return (
+				<React.Fragment>
+					<LoadingAnimation />
+					<div style={{
+						boxSizing: 'border-box',
+						margin: '2%',
+						marginTop: '3%',
+						opacity: '0.2',
+						width: '100%',
+						border: '1px solid #727272',
+					}}/>
+				</React.Fragment>
+			);
+		}
 
-         });
-     } else {
-         this.setState({
-             showError: true
-         });
-     }
- }
+		return (
+			<React.Fragment>
+				<div
+					style={{
+						height: '32px',
+						width: '273px',
+						color: '#4A4A4A',
+						fontFamily: 'Trebuchet MS',
+						fontSize: '18px',
+						fontWeight: 'bold',
+						lineHeight: '21px',
+						marginLeft: '5%',
+						marginTop: '2%',
+					}}
+				>
+					<TextOrTextField
+						value={this.state.team.name}
+						onChange={this.handleChange('name')}
+						isTextField={this.isAdmin}
+					/>
+				</div>
 
-handleChangeN = event => {
-     this.setState({
-         name: event.target.value
-     });
- }
- handleChangeD = event => {
-     this.setState({
-         description: event.target.value
-     });
- }
- handleChangeI(x){
-     this.setState({
-         selectedIcon : x
-     });
- }
- callBackInvitePeople(invitePeople){
-   this.setState({ invitePeople })
- }
+				<span style={{
+					float: 'left',
+					margin: '0% 5% 3% 5%',
+				}}>
+					{<IconGroup/>}
+					{this.state.memberCount}
+				</span>
 
-  render() {
+				<div style={{
+					height: '32px',
+					width: '90%',
+					color: '#727272',
+					fontFamily: 'Trebuchet MS',
+					fontSize: '14px',
+					lineHeight: '16px',
+					marginLeft: '5%',
+				}}>
+					<TextOrTextField
+						value={this.state.team.description}
+						onChange={this.handleChange('description')}
+						isTextField={this.isAdmin}
+					/>
+				</div>
 
-    if (this.state.loading) {
-      return <LoadingAnimation/>
-    }
-
-    return (<div style={{}}>
-      <div style={{	height: "32px",
-                    width: "273px",
-                    color: "#4A4A4A",
-                    fontFamily: "Trebuchet MS",
-                    fontSize: "18px",
-                    fontWeight: "bold",
-                    lineHeight: "21px",
-                    marginLeft:"5%",
-                    marginTop:"2%"}}>
-        <TextOrTextField
-          value={this.state.team.name}
-          onChange={this.handleChangeN}
-          isTextField={this.isAdmin}
-          />
-      </div>
-      <span style={{float:"left",
-                    margin:"0% 5% 3% 5%"}}>
-        {<IconGroup/>}
-        {this.state.MemberCount}
-      </span>
-      <div style={{	height: "32px",
-                    width: "90%",
-                    color: "#727272",
-                    fontFamily: "Trebuchet MS",
-                    fontSize: "14px",
-                    lineHeight: "16px",
-                    marginLeft:"5%",
-                    }}>
-        <TextOrTextField
-          value={this.state.team.description}
-          onChange={this.handleChangeD}
-          isTextField={this.isAdmin}
-          />
-      </div>
-      <div style={{	boxSizing: "border-box",
-                    margin:"2% 2% 2% 2%",
-                    opacity:"0.2",
-                    width: "100%",
-                    border: "1px solid #727272",
-                  }}/>
-    </div>
-    );
-  }
+				<div style={{
+					boxSizing: 'border-box',
+					margin: '2%',
+					opacity: '0.2',
+					width: '100%',
+					border: '1px solid #727272',
+				}}/>
+			</React.Fragment>
+		);
+	}
 }
