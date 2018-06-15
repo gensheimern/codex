@@ -56,7 +56,6 @@ const ActivityController = {
 	},
 
 	async getActivityOfTeam(req, res) {
-		const { userId } = req.token;
 		const { teamId } = req.params;
 
 		const activityPromise = ActivityModel.getActivityOfTeam(teamId);
@@ -135,8 +134,7 @@ const ActivityController = {
 						(x, y) => (x.findIndex(e => e === y) < 0 ? [...x, y] : x),
 						[],
 					);
-					console.log(invitePeople);
-					console.log(participants);
+
 					invitePeople.forEach(async (participantId) => {
 						participantsAdded += 1;
 						try {
