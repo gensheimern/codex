@@ -119,7 +119,6 @@ const ActivityController = {
 				} catch (err) {
 					participantsAdded -= 1;
 				}
-
 				const actualCountParticipants = invitePeople.length + participants.length;
 				if (actualCountParticipants >= maxParticipants && maxParticipants !== 0) {
 					res.status(400).json({
@@ -136,7 +135,9 @@ const ActivityController = {
 						(x, y) => (x.findIndex(e => e === y) < 0 ? [...x, y] : x),
 						[],
 					);
-					participants.forEach(async (participantId) => {
+					console.log(invitePeople);
+					console.log(participants);
+					invitePeople.forEach(async (participantId) => {
 						participantsAdded += 1;
 						try {
 							await ParticipatesModel.addParticipant(result.insertId, participantId, false);
