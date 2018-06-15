@@ -1,7 +1,6 @@
 .profilePaper {
 	width: 96%;
 	margin: 2%;
-	padding: 6%;
 	text-align: center;
 	display: inline-block;
 }
@@ -62,4 +61,14 @@
 		width: 50%;
 		float: left;
 	}
+}
+
+.ImageWrapper{
+	height:100px;
+	margin: 24px 24px 12px 12px;
+	left:calc(-50% - 24px);
+}
+
+.ProfileAvatar {
+	padding:0px !important;
 }

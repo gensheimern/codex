@@ -8,6 +8,7 @@ import LoadingAnimation from '../tools/LoadingAnimation';
 import PropTypes from 'prop-types';
 import ImageIcon from 'material-ui/svg-icons/image/image';
 import RaisedButton from 'material-ui/RaisedButton';
+import ImageUpload from './ImageUpload';
 
 import './profile.css';
 
@@ -24,11 +25,13 @@ export default class UserSettings extends React.Component {
 			position: 'Chef',
 			division: 'Team CODEX',
 			room: '000',
+			uploadFile:null,
 
 			loaded: false,
 			error: false,
 			saved: true,
 		};
+		this.handleFile = this.handleFile.bind(this);
 	}
 
 	componentDidMount() {
@@ -52,7 +55,7 @@ export default class UserSettings extends React.Component {
 			} else if (res.status !== 200) {
 				throw new Error("An error occured.");
 			}
-			
+
 			return res.json();
 		})
 		.then(res => {
@@ -96,7 +99,7 @@ export default class UserSettings extends React.Component {
 			} else if (res.status !== 200) {
 				throw new Error("An error occured.");
 			}
-			
+
 			return res.json();
 		})
 		.then(res => {
@@ -131,6 +134,11 @@ export default class UserSettings extends React.Component {
 		});
 	}
 
+	handleFile(file) {
+			this.setState({uploadFile: file});
+	}
+
+
 	render() {
 		if (!this.state.loaded) {
 			return (
@@ -146,13 +154,15 @@ export default class UserSettings extends React.Component {
 
 		return (
 			<Paper className="profilePaper" zDepth={2}>
+			<div className="ImageWrapper">
+			<ImageUpload handleFile={this.handleFile} />
 				<Badge
 					badgeContent={<ImageIcon style={{color: '#ffffff'}}/>}
 					badgeStyle={{
 						backgroundColor: '#1ea185',
 						top: 100,
 						right: 30,
-						padding: '3%',
+
 					}}
 					onClick={() => {console.log('Change image');}}
 				>
@@ -160,13 +170,15 @@ export default class UserSettings extends React.Component {
 					? (<Avatar
 						src={this.state.image}
 						size={100}
+						style={{padding:"0px"}}
+						className="ProfileAvatar"
 					/>)
 					: (<Avatar size={100}>
 							{this.state.firstName[0]}{this.state.lastName[0]}
 					</Avatar>)
 				}
 				</Badge>
-
+				</div>
 				<br/>
 
 				{this.makeTextField('firstName', 'First name')}
