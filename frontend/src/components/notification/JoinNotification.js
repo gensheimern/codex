@@ -6,6 +6,8 @@ import CircularProgress from 'material-ui/CircularProgress';
 import Snackbar from 'material-ui/Snackbar';
 import config from '../../config';
 import TextNotification from './TextNotification';
+import './notifications.css';
+
 
 export default class JoinNotification extends React.Component {
 	constructor(props) {
@@ -88,8 +90,8 @@ export default class JoinNotification extends React.Component {
 	render() {
 		let actions = (
 			<CardActions>
-				<FlatButton label="Accept" onClick={this.handleAccept} />
-				<FlatButton label="Decline" onClick={this.handleDecline} />
+				<FlatButton className="joinButton" label="Accept" onClick={this.handleAccept} hoverColor={"#ffffff"}/>
+				<FlatButton className="cancelButton" label="Decline" onClick={this.handleDecline} />
 			</CardActions>
 		);
 
