@@ -229,6 +229,7 @@ class SidebarContent extends React.Component {
 						<React.Fragment key={event.id}>
 							{hr}
 							<EventItem
+								webFeed={false}
 								event={event}
 								key={event.id}
 							/>
