@@ -26,9 +26,13 @@ class Lunch extends React.Component {
           yearFrom:'',
           monthFrom:'',
           dayFrom:'',
+          yearTo: '',
+          monthTo: '',
+          dayTo: '',
           textValue:'',
           priceValue:'',
       };
+      this.callbackDateTo = this.callbackDateTo.bind(this);
       this.callbackDateFrom = this.callbackDateFrom.bind(this);
       this.handleFile = this.handleFile.bind(this);
       this.handleTextChange = this.handleTextChange.bind(this);
@@ -63,7 +67,7 @@ class Lunch extends React.Component {
   }
 
   handleSubmit = () => {
-    console.log("lkjlkjlkj");
+
     if(this.state.uploadFile !== null){
     const fd = new FormData();
     const configAxios = {
@@ -71,17 +75,17 @@ class Lunch extends React.Component {
            }
 
     fd.append('image',this.state.uploadFile[0],"lunch_" + this.state.uploadFile[0].name);
-    axios.post('http://localhost:5000/api/upload',fd, configAxios)
+    axios.post('http://localhost:5000/api/upload/lunch',fd, configAxios)
       .then(res => {
           console.log(res);
       });
     }
-      console.log("halloooooooooooooooo");
       fetch(config.apiPath + "/restaurant/lunch", {
   			method: 'POST',
   			body: JSON.stringify({
-          Time: this.state.yearFrom + "-" + this.state.monthFrom + "-" + this.state.dayFrom,
-          LunchImage: this.state.uploadFile[0].name,
+          TimeFrom: this.state.yearFrom + "-" + this.state.monthFrom + "-" + this.state.dayFrom,
+          TimeTo: this.state.yearTo + "-" + this.state.monthTo + "-" + this.state.dayTo,
+          LunchImage: this.state.uploadFile ? this.state.uploadFile[0].name : null ,
           LunchText: this.state.textValue,
           Price: this.state.priceValue,
 
@@ -117,6 +121,14 @@ callbackDateFrom(event, mydate){
   });
 }
 
+callbackDateTo(event, mydate){
+  this.setState({
+    yearTo:mydate.getUTCFullYear(),
+    dayTo:mydate.getUTCDate()+1,
+    monthTo:mydate.getUTCMonth()+1,
+  });
+}
+
 showPreview(){
   if(this.state.uploadFile !== null){
     return <img alt="uploadedImage" style={{width:"100%", height:"auto"}} src={this.state.uploadFile[0].preview} />
@@ -139,7 +151,8 @@ Tab () {
       <div>
         <div className="DateWrapper">
           <div className="singleDateWrapper">
-            <DatePicker date={this.callbackDateFrom} hintText={"Pick your Date"} />
+            <DatePicker date={this.callbackDateFrom} hintText={"From"} />
+            <DatePicker date={this.callbackDateTo} hintText={"To"} />
           </div>
         </div>
         <div style={{clear:"both"}}></div>
@@ -149,7 +162,9 @@ Tab () {
     <Tab label="By Hand" >
       <div>
         <div className="DateWrapper">
-            <DatePicker date={this.callbackDateFrom} hintText={"Pick your Date"} />
+            <DatePicker date={this.callbackDateFrom} hintText={"From"} />
+            <DatePicker date={this.callbackDateTo} hintText={"To"} />
+
           </div>
         <TextField
                 style={styles.textField}
