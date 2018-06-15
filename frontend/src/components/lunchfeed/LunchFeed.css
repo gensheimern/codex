@@ -57,5 +57,8 @@ margin-top:20px;
 .LunchImageDialog, .img{
   object-fit: contain;
   width:100%;
+}
 
+.LunchDialogAdress {
+  color:#1ea185;
 }
