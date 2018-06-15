@@ -169,7 +169,6 @@ class Events extends React.Component {
                     >
                       <ContentAdd/>
                     </FloatingActionButton>
-                    ADD EVENT
                   </div>
 
                 </div>

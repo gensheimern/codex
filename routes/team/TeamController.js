@@ -37,7 +37,7 @@ const TeamController = {
 
 	async addTeam(req, res) {
 		const { userId } = req.token;
-		const { name } = req.body;
+		const { name, description } = req.body;
 
 		if (!validTeam(name)) {
 			res.status(400).json({
@@ -46,8 +46,8 @@ const TeamController = {
 			return;
 		}
 
-		const dbRes = await TeamModel.addTeam(name, userId);
-		await MemberModel.addMember(userId, dbRes.insertId, false);
+		const dbRes = await TeamModel.addTeam(name, description, '', userId);// TODO: Add team icon
+		await MemberModel.addMember(userId, dbRes.insertId, true);
 
 		res.status(201).json({
 			teamId: dbRes.insertId,
