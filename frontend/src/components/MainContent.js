@@ -10,12 +10,8 @@ import Dialog from 'material-ui/Dialog';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import FlatButton from 'material-ui/FlatButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
+import LunchFeed from './lunchfeed/LunchFeed.js';
 import TeamInfo from './groupmanager/TeamInfo';
-
-// <div className="FilterDiv">
-// <FilterDropDown searchFilterFeed={this.props.searchFilterFeed}/>
-// </div>
-
 
 export default class MainContent extends React.Component {
 	FEED = 0;
@@ -25,6 +21,7 @@ export default class MainContent extends React.Component {
 	DESKTOP = 5;
 	PROFILE = 4;
 	ADD_TEAM = 6;
+	LUNCHFEED = 7;
 
 	render() {
 		if (this.props.mainContentNumber === this.FEED) {
@@ -43,6 +40,8 @@ export default class MainContent extends React.Component {
 		} else if (this.props.mainContentNumber === this.PERSONAL) {
 			return (<Personal filterPersonalFeed = {this.props.filterPersonalFeed} mainContentNumber={this.props.mainContentNumber}
 				searchFilterFeed={this.props.searchFilterFeed} changeContent={this.props.changeContent}	filter={this.props.filter}/>);
+		} else if(this.props.mainContentNumber === this.LUNCHFEED){
+			return (<LunchFeed />);
 		} else if (this.props.mainContentNumber === this.ADD_EVENT) {
 			return (<CreateEventCard changeContent={this.props.changeContent} />);
 		} else if (this.props.mainContentNumber === this.NOTIFICATIONS) {
