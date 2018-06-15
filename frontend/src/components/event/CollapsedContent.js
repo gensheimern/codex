@@ -152,17 +152,6 @@ export default class CollapsedContent extends React.Component {
 				});
 			}
 
-			let participatesIMG;
-			if (this.props.participants.length !== 0) {
-				//Mapping trough the participates array and returning the profile picture
-				participatesIMG = this.props.participants.map((participatesItem, index) => {
-					const avatar =  <UserAvatar key={participatesItem.id} user={participatesItem} />;
-
-					return index <= 3 ? avatar : true;
-				});
-			}
-
-
 			const avatar = <UserAvatar user={{
 				image: this.state.imgPath,
 				firstName: this.state.userInitials[0],
