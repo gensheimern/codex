@@ -10,6 +10,7 @@ const { verifyMiddleware } = require('./routes/auth/Auth');
 const { verifyMiddlewareRestaurant } = require('./routes/authRestaurant/Auth');
 const apiRouter = require('./routes/MainRouter');
 const apiRouterRestaurant = require('./routes/MainRouterRestaurant');
+const UserController = require('./routes/user/UserController');
 const apiRouterLunch = require('./routes/lunch/LunchRouter');
 const errorHandler = require('./middleware/errorHandler');
 const fileUpload = require('express-fileupload');

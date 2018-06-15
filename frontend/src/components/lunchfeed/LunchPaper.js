@@ -50,12 +50,22 @@ checkForImage = () => {
   }
 }
 
+checkForDialogImage = () => {
+  console.log(this.props.image);
+  if(this.props.image === null){
+    return null
+  }else {
+    return   <img src={"lunch_" + this.props.image} alt="LunchImageDialog" className="LunchImageDialog"/>
+
+  }
+}
+
 checkForText = () => {
   console.log(this.props.text);
   if(this.props.text === ""){
     return (
       <div>
-      {this.props.name + " uploaded his lunchcard as a picture. Please Click here to see more info"}
+      {this.props.name + " uploaded his lunchcard as a picture. Please Click above to see more info"}
       <RaisedButton onClick={this.handleOpenImage} label="LUNCHCARD" secondary={true} style={{marginTop:"30px",}} />
       </div>
     )
@@ -82,8 +92,11 @@ render() {
     title={this.props.name}
   >
     {this.props.place} <br />
-    {this.props.zipcode}<br /><br />
+    {this.props.zipcode}<br />
     {this.props.street + " " + this.props.streetNumber}
+    <br />
+    <br />
+    {this.checkForDialogImage()}
   </Dialog>
    <Paper style={style} zDepth={3} >
     <div className="LunchImageContainer">
