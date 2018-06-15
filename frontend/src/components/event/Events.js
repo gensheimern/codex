@@ -24,6 +24,12 @@ class Events extends React.Component {
     this.loadActivityData();
   }
 
+  componentDidUpdate(prevProps) {
+    if (this.props.filter.filterFeed !== prevProps.filter.filterFeed) {
+      this.loadActivityData();
+      console.log("wow");
+    }
+}
   loadActivityData() {
     // this.setState({error: null, loaded: false});
     // let isPersonal = "";
@@ -52,8 +58,8 @@ class Events extends React.Component {
       this.setState({error: 'An Error occured.'});
     });
 
-//TODO: richtiger fetch für gruppenjoines
-    fetch(config.apiPath + "/activity/joined", {
+    if(this.props.filter.filterFeed !== "PUBLIC"){
+    fetch(config.apiPath +  "/activity/teamId/" + this.props.filter.filterFeed, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -68,12 +74,13 @@ class Events extends React.Component {
 
       return res;
     }).then(res => res.json()).then(res => {
+      console.log(res);
       this.setState({groupEvents: res, loaded: true});
 
     }).catch((err) => {
       this.setState({error: 'An Error occured.'});
     });
-  }
+  }}
 
   render() {
 
@@ -95,48 +102,52 @@ class Events extends React.Component {
     } else {
       filterData = this.state.groupEvents;
     }
-
+    console.log(filterData);
     filterData = filterData.filter(function (a,b)
                     {
                       return (new Date(a.time)) >= filterDataBeginn;
                     });
+                    console.log(filterData);
 
     if(!(this.props.filterWord === null)){
       switch(this.props.filter.filterWord) {
           case 'TimeDown':
-          this.state.events.sort(function(obj1, obj2){
+          filterData.sort(function(obj1, obj2){
           return new Date(obj1.time) - new Date(obj2.time)})
     ;break
           case 'TimeUp':
-          this.state.events.sort(function(obj1, obj2){
+          filterData.sort(function(obj1, obj2){
           return new Date(obj2.time) - new Date(obj1.time)})
     ;break
           case 'NameDown':
-          this.state.events.sort(function(obj1, obj2){
+          filterData.sort(function(obj1, obj2){
           return (obj1.name.localeCompare(obj2.name))})
     ;break
           case 'NameUp':
-          this.state.events.sort(function(obj1, obj2){
+          filterData.sort(function(obj1, obj2){
           return (obj2.name.localeCompare(obj1.name))})
     ;break
           case 'Oldest':
-          this.state.events.sort(function(obj1, obj2){
+          filterData.sort(function(obj1, obj2){
           return (obj1.id) - (obj2.id)})
     ;break
           case 'Newest':
-          this.state.events.sort(function(obj1, obj2){
+          filterData.sort(function(obj1, obj2){
           return (obj2.id) - (obj1.id)})
     ;break
           default:
-          this.state.events.sort(function(obj1, obj2){
+          filterData.sort(function(obj1, obj2){
           return (obj1.time) - (obj2.time)})
     }
       }
+      console.log(filterData);
+
     if(!(searchWordName === null)){
       filterData = filterData.filter(event => event.name.toUpperCase().includes(searchWordName.toUpperCase()));
     } else {
-      filterData = this.state.events;
     }
+    console.log(filterData);
+
     return (<React.Fragment>
       <div>
         <MediaQuery query="(min-device-width: 768px)">
@@ -171,7 +182,7 @@ class Events extends React.Component {
           }
         </MediaQuery>
         <div className="feed">
-          {filterData.map(event => (<EventItem key={event.id} event={event}/>))}
+          {filterData.map(event => (<EventItem webFeed={this.props.webFeed} key={event.id} event={event}/>))}
         </div>
       </div>
     </React.Fragment>);

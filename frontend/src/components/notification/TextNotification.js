@@ -13,12 +13,23 @@ const TextNotification = (props) => {
 
 	return (
 		<Card
+			containerStyle={{
+				overflow: "hidden", borderRadius: "5px",
+			}}
+			textStyle={
+				{	height: "2.02%",	color: "#484444",	fontFamily: "Trebuchet MS",	fontSize: "16px",	lineHeight: "19px",}
+			}
 			style={{
+				borderRadius:"8px",
 				margin: '5px',
+				marginBottom:"10px",
 				...seenStyle,
 			}}
 		>
 			<CardHeader
+				titleStyle={
+					{	height: "2.02%",	color: "#484444",	fontFamily: "Trebuchet MS",	fontSize: "16px",	fontWeight: "bold",	lineHeight: "19px",}
+				}
 				title={`${title} - ${type}`}
 				subtitle={`${message} - ${created}`}
 				style={{

@@ -1,11 +1,13 @@
 import React from 'react';
 import config from '../../config';
 import dateParser from './dateParser';
-import GroupFA from 'react-icons/lib/fa/group';
+// import GroupFA from 'react-icons/lib/fa/group';
 import PlaceMUI from 'react-icons/lib/md/place';
 import TextField from 'material-ui/TextField';
 import DeleteMUI from 'react-icons/lib/md/delete';
 import FlatButton from 'material-ui/FlatButton';
+import IconDesc from 'material-ui/svg-icons/notification/event-note';
+
 
 export default class CollapsedContent extends React.Component {
 
@@ -106,8 +108,7 @@ export default class CollapsedContent extends React.Component {
 
 	ToggleCollapse(){
 		if(this.props.collapse) {
-			let participatesIMG;
-			let participatesIMGPlus;
+
 			let message;
 
 			if (this.props.messages.length !==0 ) {
@@ -138,39 +139,19 @@ export default class CollapsedContent extends React.Component {
 				});
 			}
 
-			if (this.props.participants.length !== 0) {
-				//Mapping trough the participates array and returning the profile picture
-				participatesIMG = this.props.participants.map((participatesItem, index) =>
-					index <= 3 ? (
-						<img
-							className="myimage"
-							key={index}
-							src={ participatesItem.image }
-							alt="profile"
-						/>
-					) : true);
-			}
 
-			if (this.props.participants.length > 4) {
-				participatesIMGPlus = <div className="participants-counter-icon"><h4> +{this.props.participants.length - 4}</h4></div>
-			}
 
 
 			return (
 				<div className="collapse-activity">
 					<div className="event-extend-info">
+						<hr/>
+						<h4>  <IconDesc style={{width:"1em", height:"1em"}}/> {'"'}{this.props.event.description}{'"'} </h4>
 						<h4> <PlaceMUI />  {this.props.event.place} </h4>
 					</div>
+
 					<div className="extendedInfo">
-						<div className="alreadyJoining">
-							<h6> Already joining </h6>
-						</div>
-						<div className="joinInfo">
-							<div className="participants-images">
-								<div className="participants-row">{participatesIMG}</div> {participatesIMGPlus}
-									<span id="participant-counter"> <h6><GroupFA />{" "} {this.props.participants.length}/{this.props.event.maxParticipants} </h6></span>
-								</div>
-							</div>
+
 						</div>
 						<div style={{ clear: 'both' }} />
 						<hr className="activity-hr" />

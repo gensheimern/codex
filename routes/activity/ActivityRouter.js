@@ -9,6 +9,8 @@ router.get('/joined', asyncMiddleware(ActivityController.getJoinedActivities));
 
 router.get('/:activityId', asyncMiddleware(ActivityController.getActivityById));
 
+router.get('/teamid/:teamId', asyncMiddleware(ActivityController.getActivityOfTeam));
+
 router.post('/', asyncMiddleware(ActivityController.createActivity));
 
 router.delete('/:activityId', asyncMiddleware(ActivityController.deleteActivity));

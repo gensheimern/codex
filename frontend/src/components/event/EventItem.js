@@ -168,6 +168,7 @@ export default class EventItem extends React.Component {
 				postComment={this.postComment}
 				messages={this.state.messages}
 				loadMessages={this.loadMessages}
+				webFeed={this.props.webFeed}
 			/>
 		);
 	}
