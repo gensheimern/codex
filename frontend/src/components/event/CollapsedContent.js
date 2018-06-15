@@ -6,6 +6,8 @@ import PlaceMUI from 'react-icons/lib/md/place';
 import TextField from 'material-ui/TextField';
 import DeleteMUI from 'react-icons/lib/md/delete';
 import FlatButton from 'material-ui/FlatButton';
+import IconDesc from 'material-ui/svg-icons/notification/event-note';
+
 
 export default class CollapsedContent extends React.Component {
 
@@ -159,18 +161,13 @@ export default class CollapsedContent extends React.Component {
 			return (
 				<div className="collapse-activity">
 					<div className="event-extend-info">
+						<hr/>
+						<h4>  <IconDesc style={{width:"1em", height:"1em"}}/> {'"'}{this.props.event.description}{'"'} </h4>
 						<h4> <PlaceMUI />  {this.props.event.place} </h4>
 					</div>
+
 					<div className="extendedInfo">
-						<div className="alreadyJoining">
-							<h6> Already joining </h6>
-						</div>
-						<div className="joinInfo">
-							<div className="participants-images">
-								<div className="participants-row">{participatesIMG}</div> {participatesIMGPlus}
-									<span id="participant-counter"> <h6><GroupFA />{" "} {this.props.participants.length}/{this.props.event.maxParticipants} </h6></span>
-								</div>
-							</div>
+
 						</div>
 						<div style={{ clear: 'both' }} />
 						<hr className="activity-hr" />

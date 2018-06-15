@@ -182,7 +182,7 @@ class Events extends React.Component {
           }
         </MediaQuery>
         <div className="feed">
-          {filterData.map(event => (<EventItem key={event.id} event={event}/>))}
+          {filterData.map(event => (<EventItem webFeed={this.props.webFeed} key={event.id} event={event}/>))}
         </div>
       </div>
     </React.Fragment>);
