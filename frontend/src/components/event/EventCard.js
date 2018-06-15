@@ -65,6 +65,7 @@ export default class EventCard extends React.Component {
 		let buttonColor;
 		if (this.props.joined && this.props.loaded) {
             isJoinedBorder = {
+								borderRadius:"12px",
                 border: '4px solid #00BAB1',
             };
 			buttonColor = {
@@ -78,7 +79,6 @@ export default class EventCard extends React.Component {
 								backgroundColor:"#F8C947",
 						};
 		}
-
 
 		return (
 			<div className ="card-wrapper">
@@ -103,11 +103,14 @@ export default class EventCard extends React.Component {
 								<div className="timeInfo">
 										<h4> <ClockFA/>{dateParser.DateparserTime(this.props.event.time) } </h4>
 								</div>
+								{this.props.webFeed &&
 								<div className="participates-image">
-									<h4 className="alreadyJoningText"> <GroupFA/> Already joining </h4>
 									{ participantsImages }
-									  <span id="participant-counter"> <h6><GroupFA />{" "} {this.props.participants.length}/{this.props.event.maxParticipants} </h6></span>
+									  <span id="participant-counter"> <h6><GroupFA />{" "} {this.props.participants.length}/{
+												(this.props.event.maxParticipants === "0") ?
+												this.props.event.maxParticipants : "∞" } </h6></span>
 								</div>
+							}
 							</div>
 							<div >
 								<CollapsedContent loadMessages={this.props.loadMessages} comments={this.updateComments}  messages={this.props.messages} postComment={this.props.postComment} event={this.props.event} participants = {this.props.participants} collapse = {this.props.collapse} />

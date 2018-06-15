@@ -67,6 +67,19 @@ const Activity = {
 		);
 	},
 
+	async getActivityOfTeam(teamId) {
+		return databaseConnection.queryp(
+			`SELECT Activity.*, teamParticipates.*
+			FROM Activity
+				INNER JOIN teamParticipates
+				ON Activity.Activity_Id = teamParticipates.Activity_Id
+				WHERE teamParticipates.Team_Id = ?
+				AND Activity.Time > CURRENT_TIMESTAMP()
+			ORDER BY Activity.Time`,
+			[teamId],
+		);
+	},
+
 	/**
 	 * Fetches specific information of an activity.
 	 * @param {number} activityId The activity to get the information of.

@@ -12,7 +12,7 @@ import config from '../../config';
 import Snackbar from 'material-ui/Snackbar';
 import FlatButton from 'material-ui/FlatButton';
 import Paper from 'material-ui/Paper';
-import jwt_decode from 'jwt-decode';
+// import jwt_decode from 'jwt-decode';
 import { withRouter } from 'react-router-dom';
 
 const eventImages = [
@@ -72,6 +72,7 @@ class CreateEventCard extends React.Component {
 			cardImage: 'weblogin',
 			collapse: false,
 			invitePeople: [],
+			inviteGroup: [],
 			invitePeopleID: [],
 			time: '',
 			date: new Date(),
@@ -235,23 +236,33 @@ class CreateEventCard extends React.Component {
 
 	createEvent() {
 
-		const token = localStorage.getItem('apiToken');
-		const decoded = jwt_decode(token);
+		// const token = localStorage.getItem('apiToken');
+		// const decoded = jwt_decode(token);
 		let invite = false;
-		let userArray = this.state.invitePeople.map((userid) => {
-			if(userid.ValueKey === decoded.userId) {
-				return invite = true;
-			} else {
-				return invite = false;
-			}
+		let userArray = [];
+		let groupArray = [];
 
-		});
+		// let userArray = this.state.invitePeople.map((userid) => {
+		// 	if(userid.ValueKey === decoded.userId) {
+		// 		return invite = true;
+		// 	} else {
+		// 		return invite = false;
+		// 	}
+		this.state.invitePeople.forEach((userid) => {
+			if(userid.ValueKey === "Group"){
+				groupArray.push(userid.ValueEmail);
+			} else {
+				userArray.push(userid.ValueKey)
+			}
+		 });
 
 		if(invite){
 			this.setState({errorInvite:"Your can not invite yourself"});
 		} else {
-			if(parseInt(this.getMaxPeopleValue(), 10) >= userArray.length +1 || parseInt(this.getMaxPeopleValue(), 10) === 0 ) {
-
+			if(parseInt(this.getMaxPeopleValue(), 10) >= userArray.length +1 ||
+			 parseInt(this.getMaxPeopleValue(), 10) === 0 ) {
+				 console.log(userArray);
+				 console.log(groupArray);
 				fetch(config.apiPath + "/activity", {
 					method: 'POST',
 					body: JSON.stringify({
@@ -266,6 +277,7 @@ class CreateEventCard extends React.Component {
 						timeMeetingPoint: this.state.year + "-" + this.state.month + "-" + this.state.day + " " + this.state.meetingHours + ":" + this.state.meetingMinutes,
 						maxParticipants: parseInt(this.getMaxPeopleValue(), 10),
 						participants: userArray,
+						teams: groupArray,
 					}),
 					headers: {
 						'Content-Type': 'application/json',
@@ -311,6 +323,32 @@ class CreateEventCard extends React.Component {
 				}
 			});
 		}
+
+		let emails = this.state.invitePeople.map((e) => {
+		return(e.ValueEmail + ",")
+	});
+
+	fetch(config.apiPath + "/sendmail/joinevent", {
+		method: 'POST',
+		body: JSON.stringify({
+			email: emails,
+			event: this.state.address[0],
+			time: this.state.year + "-" + this.state.month + "-" + this.state.day + " " + this.state.hours + ":" + this.state.minutes,
+
+		}),
+		headers: {
+			'Content-Type': 'application/json',
+			'X-Access-Token': localStorage.getItem('apiToken'),
+		}
+	})
+	.then((res) => {
+		if (!res.ok || res.status !== 201) {
+			// handle error
+		} else {
+			this.renderSnackbar();
+			this.props.history.push('/feed');
+		}
+	});
 	}
 
 	collapseImagePicker() {
@@ -341,7 +379,7 @@ class CreateEventCard extends React.Component {
 
 	collapsedContent() {
 		if(this.state.collapse) {
-			let images = this.state.invitePeople.map((image,index) => 
+			let images = this.state.invitePeople.map((image,index) =>
 				(<InviteChip key={"chip" + index} name={image.textKey} peopleImage={image.ValueImage} delete={this.uninvite(image.valueKey)} />)
 			);
 

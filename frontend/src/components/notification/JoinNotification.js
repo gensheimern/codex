@@ -1,11 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { CardActions } from 'material-ui/Card';
-import FlatButton from 'material-ui/FlatButton';
+import RaisedButton from 'material-ui/RaisedButton';
 import CircularProgress from 'material-ui/CircularProgress';
 import Snackbar from 'material-ui/Snackbar';
 import config from '../../config';
 import TextNotification from './TextNotification';
+import './notifications.css';
+
 
 export default class JoinNotification extends React.Component {
 	constructor(props) {
@@ -88,8 +90,8 @@ export default class JoinNotification extends React.Component {
 	render() {
 		let actions = (
 			<CardActions>
-				<FlatButton label="Accept" onClick={this.handleAccept} />
-				<FlatButton label="Decline" onClick={this.handleDecline} />
+				<RaisedButton className="joinButton" label="Accept" onClick={this.handleAccept} backgroundColor={"#1EA185"} labelStyle={{color: "#FFFFFF"}}/>
+				<RaisedButton className="cancelButton" label="Decline" onClick={this.handleDecline} backgroundColor={"#ED6559"} labelStyle={{color: "#FFFFFF"}}/>
 			</CardActions>
 		);
 
