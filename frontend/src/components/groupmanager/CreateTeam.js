@@ -155,6 +155,7 @@ export default class CreateTeam extends React.Component {
           let iconsSelectDisplay = this.state.icons.map((icon,index) => {
             return (<CreateTeamIconButton
                                 icon ={icon.icon}
+                                key={"key"+ index}
                                 index={index}
                                 isActive={this.state.activeIndex===index}
                                 handleClick=  {
@@ -164,7 +165,7 @@ export default class CreateTeam extends React.Component {
                 )})
 
           let images = this.props.invitePeople.map((image,index) => {
-            return(<InviteChip key={"chip" + index} name={image.textKey} peopleImage={image.ValueImage} />)
+            return(<InviteChip id={"chip" + index} name={image.textKey} peopleImage={image.ValueImage} />)
           });
 
                 return(<div className = "CreateTeam">
