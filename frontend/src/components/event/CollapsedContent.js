@@ -6,6 +6,10 @@ import PlaceMUI from 'react-icons/lib/md/place';
 import TextField from 'material-ui/TextField';
 import DeleteMUI from 'react-icons/lib/md/delete';
 import FlatButton from 'material-ui/FlatButton';
+import SendIcon from 'material-ui/svg-icons/content/send';
+import IconButton from 'material-ui/IconButton';
+import Avatar from 'material-ui/Avatar';
+import UserAvatar from './UserAvatar';
 
 export default class CollapsedContent extends React.Component {
 
@@ -14,6 +18,7 @@ export default class CollapsedContent extends React.Component {
 
 		this.state = {
 			imgPath: '',
+			userInitials: '',
 			value: '',
 			comment: '',
 		};
@@ -26,35 +31,39 @@ export default class CollapsedContent extends React.Component {
 		if (event.key === 'Enter') { // enter key pressed
 			event.preventDefault();
 
-			fetch(`${config.apiPath}/activity/${this.props.event.id}/message`, {
-				method: 'POST',
-				body: JSON.stringify({
-					content: this.state.value,
-				}),
-				headers: {
-					'Content-Type': 'application/json',
-					'X-Access-Token': localStorage.getItem('apiToken'),
-				},
-			})
-			.then((res) => {
-				if (!res.ok) {
-					throw new Error("Request failed.");
-				} else if (res.status !== 201) {
-					throw new Error("Forbidden");
-				}
-
-				return res.json();
-			})
-			.then(res => {
-				this.props.loadMessages();
-				this.setState({value: ''});
-			})
-			.catch((err) => {
-				this.setState({
-					error: 'An Error occured.',
-				});
-			});
+			this.sendComment();
 		}
+	}
+
+	sendComment = () => {
+		fetch(`${config.apiPath}/activity/${this.props.event.id}/message`, {
+			method: 'POST',
+			body: JSON.stringify({
+				content: this.state.value,
+			}),
+			headers: {
+				'Content-Type': 'application/json',
+				'X-Access-Token': localStorage.getItem('apiToken'),
+			},
+		})
+		.then((res) => {
+			if (!res.ok) {
+				throw new Error("Request failed.");
+			} else if (res.status !== 201) {
+				throw new Error("Forbidden");
+			}
+
+			return res.json();
+		})
+		.then(res => {
+			this.props.loadMessages();
+			this.setState({value: ''});
+		})
+		.catch((err) => {
+			this.setState({
+				error: 'An Error occured.',
+			});
+		});
 	}
 
 	componentDidMount() {
@@ -76,7 +85,8 @@ export default class CollapsedContent extends React.Component {
 		})
 		.then(res => {
 			this.setState({
-				imgPath: res.image
+				imgPath: res.image,
+				userInitials: `${res.firstName[0]}${res.name[0]}`,
 			});
 		})
 		.catch((err) => {
@@ -112,10 +122,14 @@ export default class CollapsedContent extends React.Component {
 
 			if (this.props.messages.length !==0 ) {
 				message = this.props.messages.map((messageItem, index) => {
+					const avatar = messageItem.author.image
+						? <Avatar src={messageItem.author.image} />
+						: <Avatar>{messageItem.author.firstName[0]}{messageItem.author.name[0]}</Avatar>;
 					return (
 						<div className="commentWrapper" key={"messageItem"+index}>
 							<div className="commentUserImage">
-								<img src={messageItem.author.image} alt="" />
+								{avatar}
+								{/*<img src={messageItem.author.image} alt="" />*/}
 							</div>
 							<div className="commentInfoWrapper">
 								<div className="commentContentWrapper">
@@ -140,21 +154,22 @@ export default class CollapsedContent extends React.Component {
 
 			if (this.props.participants.length !== 0) {
 				//Mapping trough the participates array and returning the profile picture
-				participatesIMG = this.props.participants.map((participatesItem, index) =>
-					index <= 3 ? (
-						<img
-							className="myimage"
-							key={index}
-							src={ participatesItem.image }
-							alt="profile"
-						/>
-					) : true);
+				participatesIMG = this.props.participants.map((participatesItem, index) => {
+					const avatar =  <UserAvatar key={participatesItem.id} user={participatesItem} />;
+
+					return index <= 3 ? avatar : true;
+				});
 			}
 
 			if (this.props.participants.length > 4) {
 				participatesIMGPlus = <div className="participants-counter-icon"><h4> +{this.props.participants.length - 4}</h4></div>
 			}
 
+			const avatar = <UserAvatar user={{
+				image: this.state.imgPath,
+				firstName: this.state.userInitials[0],
+				name: this.state.userInitials[1],
+			}} style={{float: 'left'}} />;
 
 			return (
 				<div className="collapse-activity">
@@ -177,7 +192,8 @@ export default class CollapsedContent extends React.Component {
 						<div className="event-textfield">
 							{message}
 							<div className="texfield-profile-picture">
-								<img src= {this.state.imgPath} alt=""/>
+								{avatar}
+								{/*<img src= {this.state.imgPath} alt=""/>*/}
 							</div>
 							<div  className="myTextfield">
 							<TextField
@@ -187,7 +203,20 @@ export default class CollapsedContent extends React.Component {
 								className="addComment"
 								onKeyPress={this._onKeyPress}
 								onChange={this.handleChange}
+								style={{
+									float: 'left',
+									width: 'auto',
+								}}
 							/>
+							<IconButton
+								disabled={this.state.value === ''}
+								onClick={this.sendComment}
+								style={{
+									float: 'rignt',
+								}}
+							>
+								<SendIcon color="#f8c947" />
+							</IconButton>
 						</div>
 					</div>
 				</div>
