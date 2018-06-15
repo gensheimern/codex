@@ -103,11 +103,11 @@ class Events extends React.Component {
       filterData = this.state.groupEvents;
     }
     console.log(filterData);
-    // filterData = filterData.filter(function (a,b)
-    //                 {
-    //                   return (new Date(a.time)) >= filterDataBeginn;
-    //                 });
-    //                 console.log(filterData);
+    filterData = filterData.filter(function (a,b)
+                    {
+                      return (new Date(a.time)) >= filterDataBeginn;
+                    });
+                    console.log(filterData);
 
     if(!(this.props.filterWord === null)){
       switch(this.props.filter.filterWord) {
