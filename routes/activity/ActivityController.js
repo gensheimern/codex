@@ -54,6 +54,21 @@ const ActivityController = {
 		}
 	},
 
+	async getActivityOfTeam(req, res) {
+		const { userId } = req.token;
+		const { teamId } = req.params;
+
+		const activity = await ActivityModel.getActivityOfTeam(teamId);
+
+		if (activity === null) {
+			res.status(404).json({
+				message: 'Activity not found',
+			});
+		} else {
+			res.json(activity.map(transforms(userId).transformActivity));
+		}
+	},
+
 	async createActivity(req, res) {
 		const { userId } = req.token;
 		const activity = req.body;

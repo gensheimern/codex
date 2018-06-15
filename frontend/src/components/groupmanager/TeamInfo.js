@@ -170,7 +170,7 @@ export default class GroupInfo extends React.Component {
 				<div
 					style={{
 						height: '32px',
-						width: '273px',
+						width: '90%',
 						color: '#4A4A4A',
 						fontFamily: 'Trebuchet MS',
 						fontSize: '18px',
