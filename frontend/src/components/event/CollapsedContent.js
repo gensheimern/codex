@@ -1,7 +1,7 @@
 import React from 'react';
 import config from '../../config';
 import dateParser from './dateParser';
-import GroupFA from 'react-icons/lib/fa/group';
+// import GroupFA from 'react-icons/lib/fa/group';
 import PlaceMUI from 'react-icons/lib/md/place';
 import TextField from 'material-ui/TextField';
 import DeleteMUI from 'react-icons/lib/md/delete';
@@ -108,8 +108,7 @@ export default class CollapsedContent extends React.Component {
 
 	ToggleCollapse(){
 		if(this.props.collapse) {
-			let participatesIMG;
-			let participatesIMGPlus;
+
 			let message;
 
 			if (this.props.messages.length !==0 ) {
@@ -140,22 +139,7 @@ export default class CollapsedContent extends React.Component {
 				});
 			}
 
-			if (this.props.participants.length !== 0) {
-				//Mapping trough the participates array and returning the profile picture
-				participatesIMG = this.props.participants.map((participatesItem, index) =>
-					index <= 3 ? (
-						<img
-							className="myimage"
-							key={index}
-							src={ participatesItem.image }
-							alt="profile"
-						/>
-					) : true);
-			}
 
-			if (this.props.participants.length > 4) {
-				participatesIMGPlus = <div className="participants-counter-icon"><h4> +{this.props.participants.length - 4}</h4></div>
-			}
 
 
 			return (

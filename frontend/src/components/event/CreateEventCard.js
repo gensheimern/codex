@@ -12,7 +12,7 @@ import config from '../../config';
 import Snackbar from 'material-ui/Snackbar';
 import FlatButton from 'material-ui/FlatButton';
 import Paper from 'material-ui/Paper';
-import jwt_decode from 'jwt-decode';
+// import jwt_decode from 'jwt-decode';
 import { withRouter } from 'react-router-dom';
 
 const eventImages = [
@@ -236,8 +236,8 @@ class CreateEventCard extends React.Component {
 
 	createEvent() {
 
-		const token = localStorage.getItem('apiToken');
-		const decoded = jwt_decode(token);
+		// const token = localStorage.getItem('apiToken');
+		// const decoded = jwt_decode(token);
 		let invite = false;
 		let userArray = [];
 		let groupArray = [];
