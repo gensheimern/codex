@@ -8,13 +8,8 @@ const LunchRestaurant = {
 	 * @returns {Promise<Array<LunchRestaurant>>} The LunchRestaurants visible for the user.
 	 */
 	async getAllLunch() {
-		return databaseConnection.queryp(`SELECT LunchRestaurant.*, Restaurant.*
-				FROM LunchRestaurant
-					INNER JOIN Restaurant
-					ON Restaurant.Restaurant_Id = LunchRestaurant.Host
-					WHERE LunchRestaurant.TimeFrom <= CURRENT_DATE
-					AND LunchRestaurant.TimeTo >= CURRENT_DATE
-				ORDER BY LunchRestaurant.TimeFrom`);
+		return databaseConnection.queryp(`SELECT LunchRestaurant.*
+			FROM LunchRestaurant`);
 	},
 
 	async getJoinedLunch(userId) {
@@ -47,7 +42,7 @@ const LunchRestaurant = {
 	 * @param {number} userId The user creating the lunchRestaurantId (host).
 	 */
 	async createLunchRestaurant(lunchRestaurantId, userId) {
-		return databaseConnection.queryp('INSERT INTO LunchRestaurant (Host, TimeFrom, TimeTo, LunchImage, Lunchtext, Price) VALUES (?,?,?,?,?,?)', [userId, lunchRestaurantId.TimeFrom, lunchRestaurantId.TimeTo, lunchRestaurantId.LunchImage, lunchRestaurantId.LunchText, lunchRestaurantId.Price]);
+		return databaseConnection.queryp('INSERT INTO LunchRestaurant (Host, Time, LunchImage, Lunchtext, Price) VALUES (?,?,?,?,?)', [userId, lunchRestaurantId.Time, lunchRestaurantId.LunchImage, lunchRestaurantId.LunchText, lunchRestaurantId.Price]);
 	},
 
 	/**

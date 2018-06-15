@@ -160,7 +160,7 @@ class AppNavBottom extends Component {
 					/>
 					<BottomNavigationItem
 						icon={ProfileIcon}
-						onClick={() => this.props.history.push('/lunchfeed')}
+						onClick={() => this.props.history.push('/profile')}
 						style={itemStyle}
 					/>
 				</BottomNavigation>

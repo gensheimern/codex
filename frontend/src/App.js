@@ -111,7 +111,7 @@ class App extends Component {
 				<Route exact path="/lunch" component={Lunch} />
 
 				{/* Protected routes (login required) */}
-				<Route exact path="/(feed|notifications|profile|addteam|addevent|personal|lunchfeed)" render={(props) => (
+				<Route exact path="/(feed|notifications|profile|addteam|addevent|personal)" render={(props) => (
 					<Screen
 						filterPersonalFeed = {this.filterPersonalFeed}
 						changeContent={this.changeContent}
