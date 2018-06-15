@@ -20,11 +20,12 @@ export default class CreateTeamButton extends React.Component {
     super(props);
     this.state = {open: false,
                   name: "",
-                  errtextName:"",
+                  errTextName:"",
                   description:"",
                   errTextDescription:"",
                   invitePeople: [],
                   selectedIcon : defaultSelectedIcon,};
+
     this.handleOpen = this.handleOpen.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.validateInput = this.validateInput.bind(this);
@@ -36,17 +37,16 @@ export default class CreateTeamButton extends React.Component {
 
 
   }
-  componentDidUpdate(prevProps) {
-    if (this.props.errTextName !== prevProps.errTextName || this.props.errTextDescription !== prevProps.errTextDescription) {
-      this.validateInput();
-    }
-  }
+
 
   validateInput(){
-    if(this.props.errTextName === "" && this.props.errTextDescription === ""){
+    if((this.state.name).length < 1){
+      console.log((this.state.name).length);
+      return true;
+    } else if(this.state.errTextName === "" && this.state.errTextDescription === ""){
       return false
     } else {
-      return true
+      return true;
     }
   }
 
@@ -123,7 +123,8 @@ export default class CreateTeamButton extends React.Component {
      });
 
      let xn = this.state.name;
-     (xn.length > 30) ? this.setState({errtextName:"Too many characters for a name, max.30!"}) : this.setState({errtextName:""})
+     (xn.length > 30) ? this.setState({errTextName:"Too many characters for a name, max.30!"}) : this.setState({errTextName:""})
+           this.validateInput();
  }
  handleChangeD = event => {
      this.setState({
@@ -131,6 +132,7 @@ export default class CreateTeamButton extends React.Component {
      });
      let xd = this.state.description;
      (xd.length > 80) ? this.setState({errTextDescription:"Too many characters for a description, max.80!"}) : this.setState({errTextDescription:""})
+           this.validateInput();
 
  }
  handleChangeI(x){
@@ -143,6 +145,7 @@ export default class CreateTeamButton extends React.Component {
  }
   render() {
 
+console.log(this.validateInput() + "render");
     const actions = [
                      <FlatButton
                        label="Cancel"
@@ -153,7 +156,7 @@ export default class CreateTeamButton extends React.Component {
                        label="Submit"
                        primary={true}
                        keyboardFocused={true}
-                       disabled={(this.validateInput) ? true : false}
+                       disabled={(this.validateInput()) ? true : false}
                        onClick={this.handleSubmit}
                      />,
                    ];
@@ -181,7 +184,7 @@ export default class CreateTeamButton extends React.Component {
        <div>
          <CreateGroupContent
            name={this.state.name}
-           errTextName = {this.state.errtextName}
+           errTextName = {this.state.errTextName}
            description={this.state.description}
            errTextDescription = {this.state.errTextDescription}
            invitePeople={this.state.invitePeople}

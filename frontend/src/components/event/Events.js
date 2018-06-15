@@ -145,7 +145,6 @@ class Events extends React.Component {
     if(!(searchWordName === null)){
       filterData = filterData.filter(event => event.name.toUpperCase().includes(searchWordName.toUpperCase()));
     } else {
-      filterData = filterData;
     }
     console.log(filterData);
 
