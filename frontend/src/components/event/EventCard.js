@@ -78,32 +78,38 @@ export default class EventCard extends React.Component {
 				if (index > 3) return true;
 
 				return (
+					<div className="participatesImagePreview">
 					<UserAvatar
 						key={user.id}
 						user={user}
 						style={{
-							...avatarStyle,
 							cursor: 'pointer',
+							height:"100%",
+							width:"100%",
 						}}
 						onClick={this.showParticipantsList}
 					/>
+					</div>
 				);
 			});
 
 			if (participantsImages.length > 4) {
 				participantsImages.push(
+					<div className="participatesImagePreview">
 					<Avatar
 						key="moreParticipants"
 						color="#000000"
 						backgroundColor="#f8c947"
 						style={{
-							...avatarStyle,
+							height:"100%",
+							width:"100%",
 							cursor: 'pointer',
 						}}
 						onClick={this.showParticipantsList}
 					>
 						+{participantsImages.length - 4}
 					</Avatar>
+					</div>
 				);
 			}
 		}

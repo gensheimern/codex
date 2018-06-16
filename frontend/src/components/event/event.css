@@ -8,7 +8,20 @@
 	box-shadow: 0px 81px 40px -76px #00000091 !important;
 }
 
+.eventCard, h4 {
+	font-size: 14px;
+}
+
+.participatesImagePreview {
+	height:40px;
+	width:40px;
+	float:left;
+	margin-left:-10px;
+}
+
 @media only screen and (max-width: 768px) {
+
+
 	.eventCardHeader, .eventCardHeader img {
 		position: relative;
 		padding-right:0px;
@@ -17,15 +30,111 @@
 		height: 70pt;
 		box-shadow: 0px 81px 40px -76px #00000091;
 	}
+
+	.createEventPickImageWrapper {
+		padding: 0px !important;
+	}
+
+	.createEventPickImageWrapper img {
+		width: 100%;
+	}
+
+	.createEventCardWrapper {
+		/*height: 900px;*/
+		padding-bottom: 200px;
+	}
+
+	.createEventButton {
+		background-color: #F8C947 !important;
+		position: fixed !important;
+		height: 50px !important;
+		bottom: 53px;
+	}
+
+	.pickimage {
+		height:75px;
+		width:75px;
+		margin-left:2px;
+		margin-right:2px;
+		margin-bottom:2px;
+	}
+	.EventImagePickerWrapper {
+		margin-left:auto;
+		margin-right:auto;
+		margin-bottom: 20px;
+		width:317px;
+	}
+
+	.eventGroup {
+		padding-left: 12px;
+		padding-right: 12px;
+	}
+
 }
+
+@media only screen and (min-width: 769px) {
+	.eventInfo {
+		height:100px;
+	}
+
+	.event-extend-info {
+		margin-top: 25px;
+		margin-bottom: 10px;
+	}
+
+	.extendedInfo {
+		display: none;
+	}
+
+	.createEventWeb {
+		margin: 2%;
+	}
+
+	.participates-image {
+		width:100%
+}
+
+	.participatesImagePreview {
+		height:40px;
+		width:40px;
+	}
+
+	.createEventButton {
+		background-color: #F8C947 !important;
+		height: 50px !important;
+	}
+
+.pickimage {
+	height:100px;
+	width:100px;
+	margin-left:3px;
+	margin-right:3px;
+	margin-bottom:3px;
+}
+
+.EventImagePickerWrapper {
+	margin-left:auto;
+	margin-right:auto;
+	margin-bottom: 20px;
+	cursor:pointer;
+	width:748px;
+}
+.eventGroup {
+	padding-left: 72px;
+	padding-right: 72px;
+}
+
+}
+
 
 .eventCardHeader, .eventCardHeader img {
 	position: relative;
 	padding-right:0px;
 	padding-left:0px;
 	width: 100%;
-	height: 100%;
+	height: 130px;
 	box-shadow: 0px 81px 40px -76px #00000091;
+	object-fit: cover;
 }
 
 .eventCardHeader .after {
@@ -42,7 +151,7 @@
 
 .eventCardTitle {
 	color: white;
-	margin-top: 13%;
+	margin-top: 8%;
 	z-index: 2;
 }
 
@@ -84,17 +193,13 @@
 
 .eventGroup {
 	width: 100%;
-	height: 70pt;
+	height: 100px;
 	background-color: white;
 	padding-top: 5pt;
 	padding-bottom: 5pt;
-	padding-left: 20px;
-	padding-right: 20px;
+
 }
 
-.eventGroup h4 {
-	font-size: 13px;
-}
 
 .myimage {
 	height: 5vh;
@@ -105,26 +210,13 @@
 
 .participates-image {
 	margin-left: 15px;
+	margin-top:10px
 }
 
 .alreadyJoningText {
 	margin-left: -15px;
 }
 
-@media only screen and (min-width: 769px) {
-	.event-extend-info {
-		margin-top: 25px;
-		margin-bottom: 10px;
-	}
-
-	.extendedInfo {
-		display: none;
-	}
-
-	.createEventWeb {
-		margin: 2%;
-	}
-}
 
 
 
@@ -286,67 +378,4 @@
 	width: 82%;
 	float: left;
 	padding-top: 3%;
-}
-
-@media only screen and (max-width: 768px) {
-	.createEventPickImageWrapper {
-		padding: 0px !important;
-	}
-
-	.createEventPickImageWrapper img {
-		width: 100%;
-	}
-
-	.createEventCardWrapper {
-		/*height: 900px;*/
-		padding-bottom: 200px;
-	}
-
-	.createEventButton {
-		background-color: #F8C947 !important;
-		position: fixed !important;
-		height: 50px !important;
-		bottom: 53px;
-	}
-}
-
-
-
-@media only screen and (min-width: 769px) {
-
-	.createEventButton {
-		background-color: #F8C947 !important;
-		height: 50px !important;
-	}
-
-.pickimage {
-	height:100px;
-	width:100px;
-	margin-left:3px;
-	margin-right:3px;
-	margin-bottom:3px;
-}
-
-.EventImagePickerWrapper {
-	margin-left:auto;
-	margin-right:auto;
-	margin-bottom: 20px;
-	cursor:pointer;
-	width:748px;
-}
-}
-@media only screen and (max-width: 768px) {
-.pickimage {
-	height:75px;
-	width:75px;
-	margin-left:2px;
-	margin-right:2px;
-	margin-bottom:2px;
-}
-.EventImagePickerWrapper {
-	margin-left:auto;
-	margin-right:auto;
-	margin-bottom: 20px;
-	width:317px;
-}
 }
