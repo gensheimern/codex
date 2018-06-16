@@ -16,6 +16,7 @@ const apiRouterLunch = require('./routes/lunch/LunchRouter');
 const errorHandler = require('./middleware/errorHandler');
 const fileUpload = require('express-fileupload');
 const RestaurantController = require('./routes/restaurant/RestaurantController');
+require('./routes/LiveSync');
 
 const app = express();
 

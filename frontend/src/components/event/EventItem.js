@@ -1,6 +1,7 @@
 import React from 'react';
 import config from '../../config';
 import EventCard from './EventCard';
+import getSocket from '../../Socket';
 
 export default class EventItem extends React.Component {
 
@@ -25,6 +26,13 @@ export default class EventItem extends React.Component {
 	componentDidMount() {
 		this.loadParticipants();
 		this.loadMessages();
+
+		// Load messages
+		getSocket().subscribe(`messagesChanged-${this.props.event.id}`, this.loadMessages);
+	}
+
+	componentWillUnmount() {
+		getSocket().unsubscribe(`messagesChanged-${this.props.event.id}`);
 	}
 
 	loadMessages() {

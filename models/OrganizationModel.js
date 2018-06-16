@@ -30,7 +30,7 @@ const OrganizationModel = {
 	},
 
 	async isAdmin(userId, organizationId) {
-		return databaseConnection.querypBool('SELECT Organization_Id FROM Organization WHERE Organization_Id = ? AND User_Id = ?', [organizationId, userId]);
+		return databaseConnection.querypBool('SELECT Organization_Id FROM Organization WHERE Organization_Id = ? AND Admin = ?', [organizationId, userId]);
 	},
 
 	async changeAdmin(userId, organizationId) {

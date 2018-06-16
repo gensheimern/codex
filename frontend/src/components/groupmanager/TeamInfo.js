@@ -38,14 +38,66 @@ export default class GroupInfo extends React.Component {
 		}
 	}
 
-	loadGroup(id) {
-		if(id === "PUBLIC") {
+	loadOrganizationMembers(organization) {
+		fetch(`${config.apiPath}/organization/${organization.id}/member`, {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+				'X-Access-Token': localStorage.getItem('apiToken')
+			}
+		}).then((res) => {
+			if (!res.ok) {
+				throw new Error("Request failed.");
+			} else if (res.status !== 200) {
+				throw new Error("Forbidden");
+			}
+
+			return res.json();
+		})
+		.then(member => {
+			const isAdmin = organization.admin.me;
 			this.setState({
-				isAdmin : false,
+				isAdmin,
 				team: {
 					name: 'PUBLIC',
-					description: 'This is the PUBLIC Channel of VSF Experts! You can find all your colleagues here.',
+					description: organization.description,
 				},
+				memberCount: member.length,
+			});
+		}).catch((err) => {
+			console.log('Request failed.');
+		});
+	}
+
+	loadGroup(id) {
+		this.setState({
+			isAdmin: false,
+			memberCount: '-',
+			team: {
+				name: '-',
+				description: '',
+			},
+		});
+		if(id === "PUBLIC") {
+			fetch(`${config.apiPath}/user/me/organizations/active`, {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					'X-Access-Token': localStorage.getItem('apiToken')
+				}
+			}).then((res) => {
+				if (!res.ok) {
+					throw new Error("Request failed.");
+				} else if (res.status !== 200) {
+					throw new Error("Forbidden");
+				}
+
+				return res.json();
+			})
+			.then(organizations => {
+				this.loadOrganizationMembers(organizations[0]);
+			}).catch((err) => {
+				console.log('Request failed.');
 			});
 		} else {
 			this.setState({
@@ -109,7 +161,7 @@ export default class GroupInfo extends React.Component {
 	handleSubmit(e) {
 		e.preventDefault();
 
-		if (this.state.name === "") {
+		if (this.state.name === '' || this.state.description === '') {
 			this.setState({
 				showError: true,
 			});
@@ -119,7 +171,8 @@ export default class GroupInfo extends React.Component {
 		fetch(`${config.apiPath}/team`, {
 			method: 'POST',
 			body: JSON.stringify({
-				name: this.state.name
+				name: this.state.name,
+				description: this.state.description,
 			}),
 			headers: {
 				'Content-Type': 'application/json',
@@ -215,7 +268,6 @@ export default class GroupInfo extends React.Component {
 					boxSizing: 'border-box',
 					margin: '2%',
 					opacity: '0.2',
-					width: '100%',
 					border: '1px solid #727272',
 				}}/>
 			</React.Fragment>
