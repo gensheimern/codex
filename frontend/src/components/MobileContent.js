@@ -13,8 +13,8 @@ export default class MobileContent extends React.Component {
 			case 'feed': content = 0; displayName = "FEED"; break;
 			case 'notifications': content = 3; displayName = "Notifications"; break;
 			case 'profile': content = 4; displayName = "Profile"; break;
-			case 'addteam': content = 6; displayName = "add Team"; break;
-			case 'addevent': content = 2; displayName = "add EVENT"; break;
+			case 'addteam': content = 6; displayName = "Add Team"; break;
+			case 'addevent': content = 2; displayName = "Add Event"; break;
 			case 'personal': content = 1; displayName = "Schedule"; break;
 			case 'lunchfeed': content = 7; displayName = "Lunchfeed"; break;
 

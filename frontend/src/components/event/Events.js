@@ -133,7 +133,7 @@ class Events extends React.Component {
 
 		return (
 			<React.Fragment>
-				<MediaQuery query="(min-device-width: 768px)">
+				<MediaQuery query="(min-device-width: 770px)">
 					{
 						(matches) => {
 							if (matches) {

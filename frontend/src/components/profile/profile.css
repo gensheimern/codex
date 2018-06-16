@@ -14,7 +14,6 @@
 	width: 100% !important;
 }
 
-/* 768px */
 @media only screen and (min-width: 400px) and (max-width: 599px) {
 	.userSettingTextfield {
 		margin: 1%;
@@ -27,7 +26,7 @@
 	}
 }
 
-@media only screen and (min-width: 600px) and (max-width: 768px) {
+@media only screen and (min-width: 600px) and (max-width: 770px) {
 	.userSettingTextfield {
 		margin: 1%;
 		width: 48% !important;
@@ -40,7 +39,7 @@
 	}
 }
 
-@media only screen and (min-width: 768px) and (max-width: 1100px) {
+@media only screen and (min-width: 771px) and (max-width: 1100px) {
 	.userSettingTextfield {
 		width: 100% !important;
 		float: left;
@@ -51,7 +50,7 @@
 	}
 }
 
-@media only screen and (min-width: 1100px) {
+@media only screen and (min-width: 1101px) {
 	.userSettingTextfield {
 		margin: 1%;
 		width: 48% !important;

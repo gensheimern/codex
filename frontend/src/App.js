@@ -133,7 +133,7 @@ class App extends Component {
 function Screen(props) {
 	return (
 		<React.Fragment>
-			<MediaQuery minWidth={768}>
+			<MediaQuery minWidth={770}>
 				{(matches) =>
 					matches
 					?	(<Dashboard {...props} />)
