@@ -67,9 +67,6 @@ export default class EventCard extends React.Component {
 	}
 
 	render() {
-		const avatarStyle = {
-			marginLeft: '-15px',
-		};
 
 		this.checkDate();
 		let participantsImages;
