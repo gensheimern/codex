@@ -264,6 +264,7 @@ export default class SelectOrganization extends React.Component {
 				close={this.props.close}
 				back={this.back}
 				backBtn={this.state.selected !== NOT_SELECTED}
+				modal={this.props.modal}
 			>
 				{action}
 			</SelectOrganizationDialog>

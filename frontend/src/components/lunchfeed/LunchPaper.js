@@ -56,7 +56,6 @@ handleOpenCreate = () => {
 };
 
 checkForImage = () => {
-  console.log(this.props.image);
   if(this.props.image === null){
     return ("weblogin.jpg")
   }else {

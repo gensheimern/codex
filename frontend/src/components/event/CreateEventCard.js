@@ -261,8 +261,6 @@ class CreateEventCard extends React.Component {
 		} else {
 			if(parseInt(this.getMaxPeopleValue(), 10) >= userArray.length +1 ||
 			 parseInt(this.getMaxPeopleValue(), 10) === 0 ) {
-				 console.log(userArray);
-				 console.log(groupArray);
 				fetch(config.apiPath + "/activity", {
 					method: 'POST',
 					body: JSON.stringify({

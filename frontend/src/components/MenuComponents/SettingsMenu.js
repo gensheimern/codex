@@ -209,6 +209,7 @@ class SettingsMenu extends React.Component {
 				close={this.hideSelectDialog}
 				reload={this.loadOrganizations}
 				myOrganizations={this.state.organizations}
+				modal={false}
 			/>
 		</React.Fragment>
 		);

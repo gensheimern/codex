@@ -34,7 +34,7 @@ class SidebarContent extends React.Component {
       } else {
         return res;
       }
-    }).then(res => res.json()).then(res => {console.log(res)
+    }).then(res => res.json()).then(res => {
       this.setState({groups: res});
     })
     .catch((err) => {

@@ -41,7 +41,6 @@ export default class CreateTeamButton extends React.Component {
 
   validateInput(){
     if((this.state.name).length < 1){
-      console.log((this.state.name).length);
       return true;
     } else if(this.state.errTextName === "" && this.state.errTextDescription === ""){
       return false
@@ -64,8 +63,6 @@ export default class CreateTeamButton extends React.Component {
  };
  handleSubmit(e) {
      e.preventDefault();
-
-     console.log(this.state);
 
      if(this.state.name !== "") {
          fetch(config.apiPath + "/team ", {
@@ -94,8 +91,8 @@ export default class CreateTeamButton extends React.Component {
 
      let emails = this.state.invitePeople.map((e) => {
    		return(e.ValueEmail + ",")
-   	});
-    console.log(emails);
+     });
+     
    	fetch(config.apiPath + "/sendmail/joinevent", {
    		method: 'POST',
    		body: JSON.stringify({

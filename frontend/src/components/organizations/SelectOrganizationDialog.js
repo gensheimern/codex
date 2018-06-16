@@ -24,7 +24,7 @@ export default class SelectOrganizationDialog extends React.Component {
 		return (
 			<Dialog
 				title="Select Organizations"
-				modal={false}
+				modal={this.props.modal}
 				autoScrollBodyContent={true}
 				actions={actions}
 				open={this.props.open}
