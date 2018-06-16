@@ -170,7 +170,7 @@ export default class CreateTeamButton extends React.Component {
       </div>
 
       <Dialog
-         title="Create you´re fabulous group!"
+         title="Create your group"
          actions={actions}
          modal={false}
          open={this.state.open}

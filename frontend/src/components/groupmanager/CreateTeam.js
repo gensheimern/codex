@@ -190,14 +190,12 @@ export default class CreateTeam extends React.Component {
 				</div>
 
 				<TextField
-					floatingLabelFixed={true}
 					multiLine={true}
 					rows={1}
 					rowsMax={2}
 					floatingLabelFocusStyle={{ color: 'rgb(30 161 133)' }}
 					underlineFocusStyle={{ borderColor: 'rgb(30 161 133)' }}
 					floatingLabelText="Name"
-					hintText="Nice Group Of PPL"
 					value={this.props.name}
 					onChange={this.props.handleChangeN}
 					errorText={this.props.errTextName}
@@ -209,14 +207,12 @@ export default class CreateTeam extends React.Component {
 				<br/>
 
 				<TextField
-					floatingLabelFixed={true}
 					multiLine={true}
 					rows={1}
 					rowsMax={4}
 					floatingLabelFocusStyle={{ color: 'rgb(30 161 133)' }}
 					underlineFocusStyle={{ borderColor: 'rgb(30 161 133)' }}
 					floatingLabelText="Description"
-					hintText="a bunch of ppl that doesnt suck."
 					value={this.props.description}
 					onChange={this.props.handleChangeD}
 					errorText={this.props.errTextDescription}
