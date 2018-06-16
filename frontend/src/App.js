@@ -94,7 +94,7 @@ class App extends Component {
 		return (
 		<BrowserRouter>
 		<MuiThemeProvider muiTheme={getMuiTheme(customMuiTheme)}>
-		<div id="contentarea">
+		{/*<div id="contentarea">*/}
 			<Switch>
 				{/* Landing page */}
 				<Route exact path="/" component={Splashscreen}/>
@@ -110,19 +110,21 @@ class App extends Component {
 
 				{/* Protected routes (login required) */}
 				<Route exact path="/(feed|notifications|profile|addteam|addevent|personal|lunchfeed)" render={(props) => (
-					<Screen
-						filterPersonalFeed = {this.filterPersonalFeed}
-						changeContent={this.changeContent}
-						searchFilterFeed={this.searchFilterFeed}
-						filter={this.state.filter}
-						mainContentNumber={this.state.mainContentNumber}
-						match={props.match}
-					/>
+					<div id="contentarea">
+						<Screen
+							filterPersonalFeed = {this.filterPersonalFeed}
+							changeContent={this.changeContent}
+							searchFilterFeed={this.searchFilterFeed}
+							filter={this.state.filter}
+							mainContentNumber={this.state.mainContentNumber}
+							match={props.match}
+						/>
+					</div>
 				)} />
 
 				<Route component={NotFound}/>
 			</Switch>
-		</div>
+		{/*</div>*/}
 		</MuiThemeProvider>
 		</BrowserRouter>);
 	}

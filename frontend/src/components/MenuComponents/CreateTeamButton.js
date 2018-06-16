@@ -142,7 +142,6 @@ export default class CreateTeamButton extends React.Component {
  }
   render() {
 
-console.log(this.validateInput() + "render");
     const actions = [
                      <FlatButton
                        label="Cancel"

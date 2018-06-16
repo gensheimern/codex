@@ -16,9 +16,6 @@ const TextNotification = (props) => {
 			containerStyle={{
 				overflow: "hidden", borderRadius: "5px",
 			}}
-			textStyle={
-				{	height: "2.02%",	color: "#484444",	fontFamily: "Trebuchet MS",	fontSize: "16px",	lineHeight: "19px",}
-			}
 			style={{
 				borderRadius:"8px",
 				margin: '5px',
