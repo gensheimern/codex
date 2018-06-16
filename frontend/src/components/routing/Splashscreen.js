@@ -49,8 +49,15 @@ export default class Splashscreen extends React.Component {
 		});
 	}
 
+	isStandalone() {
+		const navigatorSO = window.navigator.standalone;
+		const restSO = window.matchMedia('(display-mode: standalone)').matches;
+
+		return navigatorSO || restSO;
+	}
+
 	render() {
-		if (!this.state.loaded || !this.state.timeout || true) {
+		if (!this.state.loaded || (!this.state.timeout && !this.isStandalone())) {
 			return (
 				<div className="splashscreenWrapper">
 					<img
