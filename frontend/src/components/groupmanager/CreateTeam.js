@@ -133,11 +133,11 @@ export default class CreateTeam extends React.Component {
 				
 	componentDidUpdate(prevProps, prevState) {
 		// only update chart if the data has changed
-		if (prevProps.data !== this.props.data) {
+		/* if (prevProps.data !== this.props.data) {
 			this.chart = this.listTeams.load({
 				data: this.props.data
 			});
-		}
+		} */
 	}
 
 	clickOnSelectedIcon(activeIndex, icon){
@@ -146,22 +146,25 @@ export default class CreateTeam extends React.Component {
 	}
 
 	render() {
-		let iconsSelectDisplay = this.state.icons.map((icon,index) => {
-			return (
-				<CreateTeamIconButton
-					icon={icon.icon}
-					key={'key' + index}
-					index={index}
-					isActive={this.state.activeIndex === index}
-					handleClick={
-						this.clickOnSelectedIcon.bind(this, index)
-					}
-				/>
-			);
-		});
+		let iconsSelectDisplay = this.state.icons.map((icon,index) => 
+			(<CreateTeamIconButton
+				icon={icon.icon}
+				key={'key' + index}
+				index={index}
+				isActive={this.state.activeIndex === index}
+				handleClick={
+					this.clickOnSelectedIcon.bind(this, index)
+				}
+			/>)
+		);
 
 		let images = this.props.invitePeople.map((image,index) =>
-			<InviteChip id={"chip" + index} name={image.textKey} peopleImage={image.ValueImage} />
+			<InviteChip
+				key={index}
+				id={"chip" + index}
+				name={image.textKey}
+				peopleImage={image.ValueImage}
+			/>
 		);
 
 		return (
