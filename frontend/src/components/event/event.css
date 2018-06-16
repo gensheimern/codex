@@ -236,10 +236,14 @@
 
 .collapseOnClick {
 	clear: both;
+	cursor: pointer;
+
 }
 
 .createEventEditPicture {
-	padding-top: 20px !important;
+	padding-top: 5px !important;
+	padding-bottom: 5px !important;
+	cursor: pointer;
 }
 
 .meetingPoint {
@@ -271,6 +275,7 @@
 	float: right;
 	padding-right: 20px;
 	padding-top: 20px;
+	cursor: pointer;
 }
 
 .maxPeopleWrapper {
@@ -303,4 +308,45 @@
 		height: 50px !important;
 		bottom: 53px;
 	}
+}
+
+
+
+@media only screen and (min-width: 769px) {
+
+	.createEventButton {
+		background-color: #F8C947 !important;
+		height: 50px !important;
+	}
+
+.pickimage {
+	height:100px;
+	width:100px;
+	margin-left:3px;
+	margin-right:3px;
+	margin-bottom:3px;
+}
+
+.EventImagePickerWrapper {
+	margin-left:auto;
+	margin-right:auto;
+	margin-bottom: 20px;
+	cursor:pointer;
+	width:748px;
+}
+}
+@media only screen and (max-width: 768px) {
+.pickimage {
+	height:75px;
+	width:75px;
+	margin-left:2px;
+	margin-right:2px;
+	margin-bottom:2px;
+}
+.EventImagePickerWrapper {
+	margin-left:auto;
+	margin-right:auto;
+	margin-bottom: 20px;
+	width:317px;
+}
 }

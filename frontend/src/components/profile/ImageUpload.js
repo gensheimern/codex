@@ -7,7 +7,6 @@ export default class ImageUpload extends React.Component {
      this.state = {
        uploadFile: [],
        style: {
-         border:"1px solid rgba(0, 0, 0, 0.3)",
          width:"100px",
          height:"100px",
          borderRadius:"50%",
@@ -15,6 +14,7 @@ export default class ImageUpload extends React.Component {
          marginRight:"auto",
          color:"rgba(0, 0, 0, 0.3)",
          position:"fixed",
+         zIndex:"30",
 
        },
      };
@@ -26,8 +26,6 @@ export default class ImageUpload extends React.Component {
      this.setState({
        uploadedFile: files[0]
   });
-  console.log(this.state.uploadedFile + " da isses");
-
 }
 
 
@@ -38,7 +36,7 @@ export default class ImageUpload extends React.Component {
         style={this.state.style}
         multiple={false}
         accept="image/*"
-        onClick={this.onImageDrop.bind(this)}>
+        onDrop={this.onImageDrop.bind(this)}>
       </Dropzone>
 
     )}
