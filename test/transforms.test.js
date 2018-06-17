@@ -31,8 +31,8 @@ describe('Transformation of database output', () => {
 		const dbTeam = {
 			Team_Id: 2,
 			Teamname: 'Test Team',
-			description: 'Test Description 1',
-			icon: 'Icon1.jpg',
+			Description: 'Test Description 1',
+			Group_Icon: 'Icon1.jpg',
 			User_Id: 1,
 			Firstname: 'Max',
 			Name: 'Mustermann',

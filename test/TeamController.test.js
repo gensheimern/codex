@@ -38,8 +38,8 @@ describe('Team controller', () => {
 				{
 					Team_Id: 1,
 					Teamname: 'Test1',
-					description: 'Test description 1',
-					icon: 'Icon1.jpg',
+					Description: 'Test description 1',
+					Group_Icon: 'Icon1.jpg',
 					Firstname: 'Max',
 					Name: 'Mustermann',
 					Email: 'valid@email.com',
@@ -49,8 +49,8 @@ describe('Team controller', () => {
 				{
 					Team_Id: 2,
 					Teamname: 'Test2',
-					description: 'Test description 2',
-					icon: 'Icon2.jpg',
+					Description: 'Test description 2',
+					Group_Icon: 'Icon2.jpg',
 					Firstname: 'Nico',
 					Name: 'Mustermann',
 					Email: 'valid2@email.com',
@@ -118,8 +118,8 @@ describe('Team controller', () => {
 			mockModels.push(TestTools.mockModel(teamModel, 'getTeamById', null, {
 				Team_Id: 5,
 				Teamname: 'Test1',
-				description: 'Test description 1',
-				icon: 'Icon1.jpg',
+				Description: 'Test description 1',
+				Group_Icon: 'Icon1.jpg',
 				Firstname: 'Max',
 				Name: 'Mustermann',
 				Email: 'valid@email.com',

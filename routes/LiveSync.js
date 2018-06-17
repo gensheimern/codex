@@ -31,39 +31,39 @@ const LiveSync = {
 		send('globalMessage', title, 'all');
 	},
 
-	async newEvent(scope) {
+	async newEvent() {
 		//
 	},
 
-	async newGroup(scope) {
+	async newGroup() {
 		//
 	},
 
-	async newMember(scope) {
+	async newMember() {
 		//
 	},
 
-	async newParticipant(scope) {
+	async newParticipant() {
 		//
 	},
 
-	async changedSettings(scope) {
+	async changedSettings() {
 		//
 	},
 
-	async newNotification(scope) {
+	async newNotification() {
 		//
 	},
 
-	async personalChanged(scope) {
+	async personalChanged() {
 		//
 	},
 
-	async organizationChanged(scope) {
+	async organizationChanged() {
 		//
 	},
 
-	async newOrganization(scope) {
+	async newOrganization() {
 		//
 	},
 
