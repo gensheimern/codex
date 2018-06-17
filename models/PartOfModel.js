@@ -11,7 +11,7 @@ const PartOfModel = {
 			SELECT Organization.*, User.*
 			FROM Organization
 			INNER JOIN User
-				ON User.User_Id = Organization.Admin
+				ON User.User_Id = Organization.Administrator
 			INNER JOIN part_of
 				ON part_of.Organization_Id = Organization.Organization_Id
 			WHERE part_of.User_Id = ?
@@ -23,7 +23,7 @@ const PartOfModel = {
 			SELECT Organization.*, User.*
 			FROM Organization
 			INNER JOIN User
-				ON User.User_Id = Organization.Admin
+				ON User.User_Id = Organization.Administrator
 			INNER JOIN part_of
 				ON part_of.Organization_Id = Organization.Organization_Id
 			WHERE part_of.User_Id = ?
