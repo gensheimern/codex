@@ -4,6 +4,7 @@ import config from '../../config';
 import CreateTeamButton from './CreateTeamButton.js';
 import { withRouter } from 'react-router-dom';
 import GroupSidebarButton from './GroupSidebarButton.js'
+import getSocket from '../../Socket';
 
 class SidebarContent extends React.Component {
 	constructor(props) {
@@ -42,8 +43,14 @@ class SidebarContent extends React.Component {
 		});
 
 	}
+
 	componentDidMount() {
 		this.getMyGroups();
+		getSocket().subscribe('teamsChanged', this.getMyGroups);
+	}
+
+	componentWillUnmount() {
+		getSocket().unsubscribe('teamsChanged');
 	}
 
 	clickGroupName(groupId){
@@ -111,7 +118,7 @@ class SidebarContent extends React.Component {
 							}}
 							changeContent={this.props.changeContent}
 							closeDrawer={this.props.closeDrawer}
-							reload={this.getMyGroups}
+							reload={() => {}}
 						/>
 
 						<div className="groups">

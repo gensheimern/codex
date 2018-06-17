@@ -2,6 +2,7 @@ const liveMessages = require('../LiveMessages');
 const ParticipatesModel = require('../models/participatesModel');
 const MessageModel = require('../models/MessageModel');
 const ActivityModel = require('../models/ActivityModel');
+const memberModel = require('../models/MemberModel');
 const transforms = require('../routes/transforms');
 
 function send(topic, message, receiver) {
@@ -35,16 +36,38 @@ const LiveSync = {
 		//
 	},
 
-	async newGroup() {
-		//
+	async teamChanged(userId) {
+		try {
+			send('teamsChanged', null, userId);
+		} catch (error) {
+			logError(error);
+		}
 	},
 
-	async newMember() {
-		//
+	async teamAllChanged(teamId) {
+		const member = await memberModel.getMemberOfTeam(teamId);
+
+		try {
+			send('teamsChanged', null, member.map(user => user.User_Id));
+		} catch (error) {
+			logError(error);
+		}
 	},
 
-	async newParticipant() {
-		//
+	async participantsChanged(eventId) {
+		try {
+			const isPrivate = await ActivityModel.isPrivate(eventId);
+			const dbParticipants = await ParticipatesModel.getMemberOfActivity(eventId);
+			const participants = dbParticipants.map(transforms(null).transformUser);
+
+			send(`participantsChanged-${eventId}`, participants, isPrivate ? participants.map(user => user.id) : 'all');
+		} catch (error) {
+			logError(error);
+		}
+	},
+
+	async personalChanged(userId) {
+		send('personalEventsChanged', null, userId);
 	},
 
 	async changedSettings() {
@@ -52,10 +75,6 @@ const LiveSync = {
 	},
 
 	async newNotification() {
-		//
-	},
-
-	async personalChanged() {
 		//
 	},
 

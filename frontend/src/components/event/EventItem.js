@@ -20,6 +20,7 @@ export default class EventItem extends React.Component {
 		this.toggleJoin = this.toggleJoin.bind(this);
 		this.toggleColapse = this.toggleColapse.bind(this);
 		this.loadMessages = this.loadMessages.bind(this);
+		this.loadParticipants = this.loadParticipants.bind(this);
 
 	}
 
@@ -29,10 +30,17 @@ export default class EventItem extends React.Component {
 
 		// Load messages
 		getSocket().subscribe(`messagesChanged-${this.props.event.id}`, this.loadMessages);
+
+		if (this.props.webFeed) {
+			getSocket().subscribe(`participantsChanged-${this.props.event.id}`, this.loadParticipants);
+		}
 	}
 
 	componentWillUnmount() {
 		getSocket().unsubscribe(`messagesChanged-${this.props.event.id}`);
+		if (this.props.webFeed) {
+			getSocket().unsubscribe(`participantsChanged-${this.props.event.id}`);
+		}
 	}
 
 	loadMessages() {
@@ -155,7 +163,8 @@ export default class EventItem extends React.Component {
             this.setState({
                 isJoined: join,
 			});
-        });
+		})
+		.catch(() => {});
 	}
 
 	render() {

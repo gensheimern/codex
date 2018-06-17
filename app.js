@@ -27,7 +27,8 @@ app.use(helmet.referrerPolicy({ policy: 'same-origin' }));
 app.use(helmet.contentSecurityPolicy({
 	directives: {
 		defaultSrc: ["'self'"],
-		styleSrc: ["'self'", "'https://maxcdn.bootstrapcdn.com'", "'sha256-D8Sj8qhd4FvnVwN5w9riiArwsqYOEwHolv228Ic6Vqk='"],
+		styleSrc: ["'self'", 'https://maxcdn.bootstrapcdn.com', "'sha256-D8Sj8qhd4FvnVwN5w9riiArwsqYOEwHolv228Ic6Vqk='"],
+		fontSrc: ["'self'", 'https://maxcdn.bootstrapcdn.com'],
 		scriptSrc: ["'self'", 'maps.googleapis.com'],
 		connectSrc: ["'self'", 'wss://codex-team.de'],
 	},
