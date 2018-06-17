@@ -134,7 +134,6 @@ export default class EditTeamContent extends React.Component {
         }
         componentDidUpdate(prevProps, prevState) {
             // only update chart if the data has changed
-            //console.log('didpdate called');
             if(prevProps.data !== this.props.data) {
                 this.chart = this.listTeams.load({
                     data: this.props.data

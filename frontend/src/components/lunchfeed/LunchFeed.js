@@ -72,6 +72,7 @@ render(){
         */
 
             <LunchPaper
+            key={lunchItem.LunchRestaurant_Id}
             image={lunchItem.LunchImage}
             name={lunchItem.Name}
             place={lunchItem.Place}

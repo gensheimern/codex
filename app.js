@@ -30,7 +30,9 @@ app.use(helmet.referrerPolicy({ policy: 'same-origin' }));
 app.use(helmet.contentSecurityPolicy({
 	directives: {
 		defaultSrc: ["'self'"],
-		styleSrc: ["'self'", 'maxcdn.bootstrapcdn.com'],
+		styleSrc: ["'self'", 'https://maxcdn.bootstrapcdn.com', 'https://fonts.gstatic.com/s/roboto', 'https://fonts.googleapis.com/css?family=Roboto:300,400,500'],
+		scriptSrc: ["'self'", 'maps.googleapis.com'],
+		connectSrc: ["'self'", 'wss://'],
 	},
 	reportOnly: true,
 }));

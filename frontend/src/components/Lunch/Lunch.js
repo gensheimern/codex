@@ -77,7 +77,7 @@ class Lunch extends React.Component {
     fd.append('image',this.state.uploadFile[0],"lunch_" + this.state.uploadFile[0].name);
     axios.post('http://localhost:5000/api/upload/lunch',fd, configAxios)
       .then(res => {
-          console.log(res);
+          // console.log(res);
       });
     }
       fetch(config.apiPath + "/restaurant/lunch", {
@@ -98,7 +98,6 @@ class Lunch extends React.Component {
   		.then((res) => {
   			if (!res.ok || res.status !== 201) {
   				// handle error
-          console.log(res);
           throw new Error("invalid iwas");
   			}
         this.resetState();

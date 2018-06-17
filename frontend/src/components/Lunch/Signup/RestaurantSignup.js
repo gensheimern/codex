@@ -291,23 +291,23 @@ export default class Signup extends React.Component {
 
 
 		return(
-			<div className="signupBg">
-			<form className="signup" >
+			<div className="signupBgR">
+			<form className="signupR" >
 				<div>
 					<Paper style={styles.paperStyle} zDepth={1} />
 				</div>
 
 				<br/>
 				<center>
-					<h3 className="h3header">Lunchplanner</h3>
+					<h3 className="h3headerR">Lunchplanner</h3>
 				</center>
 
-				<Card className="signupCard">
+				<Card className="signupCardR">
 				<CardText>
-				<h2 className="h2header">SIGN UP FOR YOUR RESTAURANT</h2>
+				<h2 className="h2headerR">SIGN UP FOR YOUR RESTAURANT</h2>
 
-				<div className="toggleWrapper">
-						<label className="toggleLabel"style={{
+				<div className="toggleWrapperR">
+						<label className="toggleLabelR"style={{
 							float:"left",
 							 width:"50%",
 							 paddingLeft:"10%",
