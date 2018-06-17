@@ -126,6 +126,60 @@
 
 }
 
+@media only screen and (min-width: 769px) {
+	.smallEventInfo {
+		height: 40px !important;
+	}
+
+	.event-extend-info {
+		margin-top: 25px;
+		margin-bottom: 10px;
+	}
+
+	.extendedInfo {
+		display: none;
+	}
+
+	.createEventWeb {
+		margin: 2%;
+	}
+
+	.participates-image {
+		width:100%
+}
+
+	.participatesImagePreview {
+		height:40px;
+		width:40px;
+	}
+
+	.createEventButton {
+		background-color: #F8C947 !important;
+		height: 50px !important;
+	}
+
+.pickimage {
+	height:100px;
+	width:100px;
+	margin-left:3px;
+	margin-right:3px;
+	margin-bottom:3px;
+}
+
+.EventImagePickerWrapper {
+	margin-left:auto;
+	margin-right:auto;
+	margin-bottom: 20px;
+	cursor:pointer;
+	width:748px;
+}
+.eventGroup {
+	padding-left: 72px;
+	padding-right: 72px;
+}
+
+}
+
 
 .eventCardHeader, .eventCardHeader img {
 	position: relative;

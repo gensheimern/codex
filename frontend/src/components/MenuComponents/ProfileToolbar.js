@@ -13,6 +13,7 @@ class ProfileToolbar extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			show:false,
 			newNotifications: 0,
 			unseenNotifications: 0,
 			unsubscribed: false,
@@ -40,6 +41,9 @@ class ProfileToolbar extends React.Component {
 	}
 
 	componentDidMount() {
+		if(this.props.activeIndex === "notification"){
+		this.props.changeTeamIndex("notification")
+		this.setState({show:true});}
 		notificationChecker.enable('notification', () => {
 			if (!this.state.unsubscribed) {
 				this.setState((prevState, props) => ({
@@ -126,6 +130,16 @@ class ProfileToolbar extends React.Component {
 	}
 
 	render(){
+		const IconNotStyle = {
+			marginLeft: 0,
+		}
+		const UsedIconNotStyle = {
+			marginLeft: 0,
+			borderBottom : "5px solid #1ea185"
+		}
+
+
+
 		const notificationIcon = this.state.newNotifications + this.state.unseenNotifications > 0
 			? 	(<Badge
 					badgeContent={this.state.newNotifications + this.state.unseenNotifications}
@@ -146,23 +160,31 @@ class ProfileToolbar extends React.Component {
 				</Badge>)
 			:	(<Notification
 					onClick={() => {
+						if(this.state.show === false){
+						this.setState({show:true})
 						this.readNotifications();
+						this.props.changeTeamIndex("notification")
 						this.props.history.push('/notifications');
+					} else if(this.state.show === true){
+						this.setState({show:false})
+						this.readNotifications();
+						this.props.changeTeamIndex("PUBLIC")
+						this.props.history.goBack();
+						}
 					}}
 					style={{
 						cursor: 'pointer',
 					}}
 				/>);
 
+				let iconNotifStyle = (this.state.show === true) ? UsedIconNotStyle : IconNotStyle;
 
 		return (
 			<React.Fragment>
 				<Toolbar style={{
 					backgroundColor: 'white',
 				}}>
-					<ToolbarGroup firstChild={true} style={{
-						marginLeft: 0,
-					}}>
+					<ToolbarGroup firstChild={true} style={iconNotifStyle}>
 					{notificationIcon}
 					</ToolbarGroup>
 

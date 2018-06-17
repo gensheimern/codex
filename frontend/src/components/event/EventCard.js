@@ -159,7 +159,7 @@ export default class EventCard extends React.Component {
 				</Popover>
 			);
 		}
-
+		let eventInfoStyle = (this.props.webFeed === true) ? "eventInfo" : "smallEventInfo";
 		return (
 			<div className ="card-wrapper">
 				<div className = "eventCard" style={isJoinedBorder}>
@@ -176,7 +176,7 @@ export default class EventCard extends React.Component {
 							</div>
 					</div>
 						<div className = "eventGroup">
-							<div className="eventInfo">
+							<div className={eventInfoStyle}>
 								<div className="dateInfo">
 								 {this.checkDate()}
 								</div>
@@ -186,7 +186,7 @@ export default class EventCard extends React.Component {
 								{this.props.webFeed &&
 								<div className="participates-image">
 									{ participantsImages }
-									  <span id="participant-counter"> <h6><GroupFA />{" "} {this.props.participants.length}/{
+									  <span id="participant-counter" style={{marginRight:"3%"}}> <h6><GroupFA />{" "} {this.props.participants.length}/{
 												(this.props.event.maxParticipants === "0") ?
 												this.props.event.maxParticipants : "∞" } </h6></span>
 								</div>

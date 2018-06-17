@@ -11,7 +11,6 @@ class SidebarContent extends React.Component {
 
     this.state = {
       groups: [],
-      activeIndex: "PUBLIC",
     };
     this.getMyGroups = this.getMyGroups.bind(this);
     this.componentDidMount = this.componentDidMount.bind(this);
@@ -54,7 +53,7 @@ class SidebarContent extends React.Component {
   }
 
   clickGroupButton(index){
-    this.setState({activeIndex:index});
+    this.props.changeTeamIndex(index);
     if(index === "PUBLIC"){
     this.props.searchFilterFeed("PUBLIC","FilterFeed");
     this.props.closeDrawer();
@@ -74,7 +73,7 @@ class SidebarContent extends React.Component {
       <GroupSidebarButton
          key={"group"+index}
          index={index}
-         isActive={this.state.activeIndex===index}
+         isActive={this.props.activeIndex===index}
          clickGroupButton={this.clickGroupButton}
          name={group.name}
          main={false}>
@@ -85,7 +84,7 @@ class SidebarContent extends React.Component {
           <GroupSidebarButton
              key={"group PUBLIC"}
              index={"PUBLIC"}
-             isActive={this.state.activeIndex==="PUBLIC"}
+             isActive={this.props.activeIndex==="PUBLIC"}
              clickGroupButton={this.clickGroupButton}
              name={"PUBLIC"}
              main={true}>

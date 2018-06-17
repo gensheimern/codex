@@ -31,7 +31,7 @@ export default class MainContent extends React.Component {
 	          <TeamInfo filter={this.props.filter}/>
 	        </div>
 					<Events
-						webFeed={"false"}
+						webFeed={true}
 						filter={this.props.filter}
 						searchFilterFeed={this.props.searchFilterFeed}
 					/>
@@ -83,7 +83,7 @@ export default class MainContent extends React.Component {
 				<FloatingActionButton onClick={this.handleOpen} style={{marginRight: 20}}>
 					<ContentAdd/>
 				</FloatingActionButton>
-				<Events 	webFeed={"true"} filter={this.props.filter} />
+				<Events 	webFeed={false} filter={this.props.filter} />
 	  		</div>);
 		} else if (this.props.mainContentNumber === this.PROFILE) {
 			return (<ProfileContent/>);

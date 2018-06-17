@@ -73,6 +73,8 @@ class Events extends React.Component {
 
 			return res;
 		}).then(res => res.json()).then(res => {
+			console.log("res");
+			console.log(res);
 			this.setState({groupEvents: res, loaded: true});
 
 		}).catch((err) => {
@@ -81,8 +83,6 @@ class Events extends React.Component {
 	}}
 
 	render() {
-
-
 
 		if (this.state.error) {
 			return (<p>{this.state.error}</p>);
@@ -130,7 +130,6 @@ class Events extends React.Component {
 		if (!(searchWordName === null)) {
 			filterData = filterData.filter(event => event.name.toUpperCase().includes(searchWordName.toUpperCase()));
 		}
-
 		return (
 			<React.Fragment>
 				<MediaQuery query="(min-device-width: 768px)">
