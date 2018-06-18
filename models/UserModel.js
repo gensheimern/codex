@@ -70,8 +70,6 @@ const User = {
 		return new Promise((resolve, reject) => {
 			databaseConnection.querypFirst('SELECT Organization_Id FROM part_of WHERE User_Id = ? AND Active = 1', [userId])
 				.then((res) => {
-					console.log('RES:');
-					console.log(res);
 					resolve(res !== null ? res.Organization_Id : null);
 				})
 				.catch(reject);

@@ -89,6 +89,7 @@ export default class MainContent extends React.Component {
 			return (<ProfileContent/>);
 		} else if (this.props.mainContentNumber === this.ADD_TEAM) {
 			return (<CreateTeam/>);
-		}
+		} else 
+			return null;
 	}
 }

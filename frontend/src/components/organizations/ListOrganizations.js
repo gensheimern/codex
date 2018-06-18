@@ -38,6 +38,7 @@ export default class ListOrganizations extends React.Component {
 			return (
 				<ListItem
 					key={organization.id}
+					onClick={() => { action(organization.id) }}
 					rightIconButton={iconButton}
 					primaryText={organization.name}
 					secondaryText={organization.description}

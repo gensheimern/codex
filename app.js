@@ -30,11 +30,12 @@ app.use(helmet());
 app.use(helmet.referrerPolicy({ policy: 'same-origin' }));
 app.use(helmet.contentSecurityPolicy({
 	directives: {
-		defaultSrc: ["'self'"],
-		styleSrc: ["'self'", 'https://maxcdn.bootstrapcdn.com', "'sha256-D8Sj8qhd4FvnVwN5w9riiArwsqYOEwHolv228Ic6Vqk='"],
-		fontSrc: ["'self'", 'https://maxcdn.bootstrapcdn.com'],
-		scriptSrc: ["'self'", 'maps.googleapis.com'],
+		defaultSrc: ["'self'", 'data:'],
+		styleSrc: ["'self'", 'maxcdn.bootstrapcdn.com', "'sha256-D8Sj8qhd4FvnVwN5w9riiArwsqYOEwHolv228Ic6Vqk='"],
+		fontSrc: ["'self'", 'maxcdn.bootstrapcdn.com'],
+		scriptSrc: ["'self'", 'maps.googleapis.com', 'google.com/recaptcha', 'gstatic.com/recaptcha'],
 		connectSrc: ["'self'", 'wss://codex-team.de'],
+		frameSrc: ['google.com'],
 	},
 	reportOnly: true,
 }));
