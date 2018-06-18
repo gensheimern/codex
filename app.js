@@ -21,6 +21,8 @@ const RestaurantController = require('./routes/restaurant/RestaurantController')
 const processImage = require('express-processimage');
 const jimp = require('jimp');
 require('./routes/LiveSync');
+require('./reminders');
+
 
 const app = express();
 

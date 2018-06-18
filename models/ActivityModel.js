@@ -52,6 +52,10 @@ const Activity = {
 		);
 	},
 
+	async getAllActivitiesWithoutChecks() {
+		return databaseConnection.queryp('SELECT Activity.*, User.* FROM Activity INNER JOIN User ON Activity.Host = User.User_Id');
+	},
+
 	async getJoinedActivities(userId) {
 		return databaseConnection.queryp(
 			`SELECT Activity.*, User.*

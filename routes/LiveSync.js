@@ -32,6 +32,26 @@ const LiveSync = {
 		send('globalMessage', title, 'all');
 	},
 
+	async upcomingEvent(activityId) {
+		try {
+			const activity = await ActivityModel.getActivityById(activityId);
+			const member = await ParticipatesModel.getMemberOfActivity(activityId);
+
+			const hours = activity.Time.getHours();
+			let minutes = activity.Time.getMinutes();
+			if (minutes <= 9) {
+				minutes = `0${minutes}`;
+			}
+
+			send('reminder', {
+				event: activityId,
+				message: `Event '${activity.Name}' is due in 30 minutes (${hours}:${minutes}).`,
+			}, member.map(user => user.User_Id));
+		} catch (error) {
+			logError(error);
+		}
+	},
+
 	async newEvent() {
 		//
 	},
@@ -45,9 +65,8 @@ const LiveSync = {
 	},
 
 	async teamAllChanged(teamId) {
-		const member = await memberModel.getMemberOfTeam(teamId);
-
 		try {
+			const member = await memberModel.getMemberOfTeam(teamId);
 			send('teamsChanged', null, member.map(user => user.User_Id));
 		} catch (error) {
 			logError(error);

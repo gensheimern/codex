@@ -25,6 +25,7 @@ const config = {
 	CAPTCHA_KEY: envLocal.CAPTCHA_KEY || process.env.CAPTCHA_KEY,
 	FULLCHAIN_PATH: envLocal.FULLCHAIN_PATH || process.env.FULLCHAIN_PATH,
 	PRIVKEY_PATH: envLocal.PRIVKEY_PATH || process.env.PRIVKEY_PATH,
+	HOST: envLocal.HOST || process.env.HOST,
 };
 
 module.exports = config;
