@@ -5,6 +5,9 @@ import ClosedIcon from 'material-ui/svg-icons/navigation/close';
 import DeleteIcon from 'material-ui/svg-icons/action/delete'
 import { ListItem } from 'material-ui/List';
 
+/**
+ * Shows a list of organizations and offers a specified quick action.
+ */
 export default class ListOrganizations extends React.Component {
 	render() {
 		return this.props.organizations.map(organization => {

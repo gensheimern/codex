@@ -8,6 +8,11 @@ const monthNames = [
 	'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December',
 ];
 
+/**
+ * Show a calendar starting at the current date.
+ * All dates with events are marked grey, dates with events the user is participating
+ * in are marked green.
+ */
 class Calendar extends React.Component {
 
 	constructor(props) {

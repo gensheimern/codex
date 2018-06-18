@@ -52,6 +52,9 @@ const monthName = [
 	'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December',
 ]
 
+/**
+ * Show personal sidebar containing the calendar and the events the user joined in.
+ */
 class SidebarContent extends React.Component {
 	constructor(props) {
 		super(props);

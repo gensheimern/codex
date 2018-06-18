@@ -16,6 +16,9 @@ import axios from 'axios';
 
 import './profile.css';
 
+/**
+ * Shows inputs to change the personal user data saved by the lunch planner.
+ */
 export default class UserSettings extends React.Component {
 	constructor(props) {
 		super(props);

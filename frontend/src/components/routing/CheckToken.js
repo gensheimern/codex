@@ -2,6 +2,10 @@ import React from 'react';
 import { Redirect } from 'react-router-dom';
 import config from '../../config';
 
+/**
+ * Checks if the authentification token is valid when mounted.
+ * If the token expired, the user is redirected to the login.
+ */
 class CheckToken extends React.Component {
 	constructor(props) {
 		super(props);

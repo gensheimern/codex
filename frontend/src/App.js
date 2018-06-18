@@ -19,6 +19,10 @@ import customMuiTheme from './customMuiTheme';
 import CheckToken from './components/routing/CheckToken';
 import GlobalMessage from './components/routing/GlobalMessage';
 
+/**
+ * This is the main component rendered every time.
+ * Here is also the routing to the different pages using the react router.
+ */
 class App extends Component {
 	constructor(props) {
 		super(props);
@@ -61,37 +65,37 @@ class App extends Component {
 	searchFilterFeed(value, type){
 		switch(type) {
 			case 'Sort':
-					this.setState((oldState) => ({
-						filter: {
-							...oldState.filter,
-							filterWord: value,
-						}
-					}))
-					break;
-				case 'Search':
-					this.setState((oldState) => ({
-						filter: {
-							...oldState.filter,
-							searchWord: value,
-						}
-					}))
-					break;
-				case 'Date':
-					this.setState((oldState) => ({
-						filter: {
-							...oldState.filter,
-							filterDate: value,
-						}
-					}))
-					break;
-					case 'FilterFeed':
-						this.setState((oldState) => ({
-							filter: {
-								...oldState.filter,
-								filterFeed: value,
-							}
-						}))
-						break;
+				this.setState((oldState) => ({
+					filter: {
+						...oldState.filter,
+						filterWord: value,
+					}
+				}))
+				break;
+			case 'Search':
+				this.setState((oldState) => ({
+					filter: {
+						...oldState.filter,
+						searchWord: value,
+					}
+				}))
+				break;
+			case 'Date':
+				this.setState((oldState) => ({
+					filter: {
+						...oldState.filter,
+						filterDate: value,
+					}
+				}))
+			break;
+			case 'FilterFeed':
+				this.setState((oldState) => ({
+					filter: {
+						...oldState.filter,
+						filterFeed: value,
+					}
+				}))
+				break;
 			default:
 				return null;
 		}
@@ -101,7 +105,6 @@ class App extends Component {
 		return (
 		<BrowserRouter>
 		<MuiThemeProvider muiTheme={getMuiTheme(customMuiTheme)}>
-		{/*<div id="contentarea">*/}
 			<Switch>
 				{/* Landing page */}
 				<Route exact path="/" component={Splashscreen}/>
@@ -133,12 +136,14 @@ class App extends Component {
 
 				<Route component={NotFound}/>
 			</Switch>
-		{/*</div>*/}
 		</MuiThemeProvider>
 		</BrowserRouter>);
 	}
 }
 
+/**
+ * Component deciding if the web or the app version is rendered using a media query.
+ */
 function Screen(props) {
 	return (
 		<React.Fragment>

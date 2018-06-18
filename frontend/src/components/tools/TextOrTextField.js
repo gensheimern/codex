@@ -1,6 +1,9 @@
 import React from "react";
 import TextField from 'material-ui/TextField';
 
+/**
+ * Renders a textfield of a text depending on a passed value.
+ */
 export default class TextOrTextField extends React.Component {
 
 	render() {

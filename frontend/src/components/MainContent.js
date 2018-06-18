@@ -13,6 +13,9 @@ import ContentAdd from 'material-ui/svg-icons/content/add';
 import LunchFeed from './lunchfeed/LunchFeed.js';
 import TeamInfo from './groupmanager/TeamInfo';
 
+/**
+ * This is a wrapper containing the current main content displayed in the center of the screen.
+ */
 export default class MainContent extends React.Component {
 	FEED = 0;
 	PERSONAL = 1;
