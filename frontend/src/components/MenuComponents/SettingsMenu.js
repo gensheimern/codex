@@ -17,6 +17,7 @@ class SettingsMenu extends React.Component {
 
 		this.state = {
 			show:false,
+			previousIndex: "",
 			loaded: false,
 			organizations: [],
 			changed: false,
@@ -123,6 +124,11 @@ class SettingsMenu extends React.Component {
 		const allSelected = this.state.organizations.reduce(
 			(total, organization) => total && !organization.active, true);
 
+				if(this.state.previousIndex !== this.props.activeIndex && this.props.activeIndex !== "profile"){
+					this.setState({previousIndex:this.props.activeIndex})
+				}
+				let changeInd = this.state.previousIndex;
+
 		const listOfOrganizations = [
 			<Divider key="divider1" />,
 			<MenuItem
@@ -188,7 +194,7 @@ class SettingsMenu extends React.Component {
 
 											} else if(this.state.show === true){
 												this.setState({show:false})
-												this.props.changeTeamIndex("PUBLIC")
+												this.props.changeTeamIndex(changeInd);
 												this.props.history.goBack();
 												this.props.hideSettings();
 											}

@@ -99,23 +99,7 @@ const iconsToSelect = [{
 											{
 												icon : <IconCalendar style={{height:"100%",
 																									width:"100% !important",}}/>
-											},
-											{
-												icon : <IconFeed style={{height:"100%",
-																									width:"100% !important",}}/>
-										},
-											{
-												icon : <IconGroup style={{height:"100%",
-																									width:"100% !important",}}/>
-											},
-											{
-												icon : <IconAdd style={{height:"100%",
-																									width:"100% !important",}}/>
-											},
-											{
-												icon : <IconAdd style={{color:"white important",
-																								backgroundColor:"#F8C947"}}/>
-											},
+											}
 										]
 
 export default class CreateTeam extends React.Component {
@@ -130,7 +114,7 @@ export default class CreateTeam extends React.Component {
 			errText: '',
 		};
 	}
-				
+
 	componentDidUpdate(prevProps, prevState) {
 		// only update chart if the data has changed
 		if (prevProps.data !== this.props.data) {

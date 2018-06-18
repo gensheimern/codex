@@ -14,6 +14,7 @@ class ProfileToolbar extends React.Component {
 		super(props);
 		this.state = {
 			show:false,
+			previousIndex: "",
 			newNotifications: 0,
 			unseenNotifications: 0,
 			unsubscribed: false,
@@ -41,6 +42,7 @@ class ProfileToolbar extends React.Component {
 	}
 
 	componentDidMount() {
+
 		if(this.props.activeIndex === "notification"){
 		this.props.changeTeamIndex("notification")
 		this.setState({show:true});}
@@ -130,6 +132,11 @@ class ProfileToolbar extends React.Component {
 	}
 
 	render(){
+		if(this.state.previousIndex !== this.props.activeIndex && this.props.activeIndex !== "notification"){
+			this.setState({previousIndex:this.props.activeIndex})
+		}
+		let changeInd = this.state.previousIndex;
+
 		const IconNotStyle = {
 			marginLeft: 0,
 		}
@@ -174,9 +181,9 @@ class ProfileToolbar extends React.Component {
 						this.props.changeTeamIndex("notification")
 						this.props.history.push('/notifications');
 					} else if(this.state.show === true){
+						this.props.changeTeamIndex(changeInd);
 						this.setState({show:false})
 						this.readNotifications();
-						this.props.changeTeamIndex("PUBLIC")
 						this.props.history.goBack();
 						}
 					}}
@@ -220,8 +227,9 @@ class ProfileToolbar extends React.Component {
 							hideSettings={this.hideSettings}
 							history={this.props.history}
 							activeIndex={this.props.activeIndex}
-							changeTeamIndex={this.props.changeTeamIndex}/>
-					</ToolbarGroup>
+							changeTeamIndex={this.props.changeTeamIndex}
+							/>
+						</ToolbarGroup>
 				</Toolbar>
 			</React.Fragment>
 		);

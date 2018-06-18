@@ -73,8 +73,6 @@ class Events extends React.Component {
 
 			return res;
 		}).then(res => res.json()).then(res => {
-			console.log("res");
-			console.log(res);
 			this.setState({groupEvents: res, loaded: true});
 
 		}).catch((err) => {

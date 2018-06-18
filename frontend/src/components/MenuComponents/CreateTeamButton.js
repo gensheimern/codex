@@ -92,7 +92,7 @@ export default class CreateTeamButton extends React.Component {
      let emails = this.state.invitePeople.map((e) => {
    		return(e.ValueEmail + ",")
      });
-     
+
    	fetch(config.apiPath + "/sendmail/joinevent", {
    		method: 'POST',
    		body: JSON.stringify({
@@ -166,7 +166,9 @@ export default class CreateTeamButton extends React.Component {
           target="_blank"
           style={{color:"white",
             minWidth:"0px",
-            margin:"0px"}}/>
+            margin:"0px",
+            marginTop:"-3%",
+            }}/>
       </div>
 
       <Dialog

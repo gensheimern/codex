@@ -9,7 +9,7 @@
 }
 
 .eventCard, h4 {
-	font-size: 14px;
+	font-size: 16px;
 }
 
 .participatesImagePreview {
@@ -72,65 +72,13 @@
 
 }
 
-@media only screen and (min-width: 769px) {
 	.eventInfo {
 		height:100px;
 	}
 
-	.event-extend-info {
-		margin-top: 25px;
-		margin-bottom: 10px;
-	}
-
-	.extendedInfo {
-		display: none;
-	}
-
-	.createEventWeb {
-		margin: 2%;
-	}
-
-	.participates-image {
-		width:100%
-}
-
-	.participatesImagePreview {
-		height:40px;
-		width:40px;
-	}
-
-	.createEventButton {
-		background-color: #F8C947 !important;
-		height: 50px !important;
-	}
-
-.pickimage {
-	height:100px;
-	width:100px;
-	margin-left:3px;
-	margin-right:3px;
-	margin-bottom:3px;
-}
-
-.EventImagePickerWrapper {
-	margin-left:auto;
-	margin-right:auto;
-	margin-bottom: 20px;
-	cursor:pointer;
-	width:748px;
-}
-.eventGroup {
-	padding-left: 72px;
-	padding-right: 72px;
-}
-
-}
-
-@media only screen and (min-width: 769px) {
 	.smallEventInfo {
 		height: 40px !important;
 	}
-
 	.event-extend-info {
 		margin-top: 25px;
 		margin-bottom: 10px;
@@ -174,12 +122,13 @@
 	width:748px;
 }
 .eventGroup {
-	padding-left: 72px;
-	padding-right: 72px;
+	padding-left: 42px;
+	padding-right: 42px;
 }
-
+.smallEventGroup{
+	padding-left: 22px;
+	padding-right: 22px;
 }
-
 
 .eventCardHeader, .eventCardHeader img {
 	position: relative;
@@ -187,6 +136,15 @@
 	padding-left:0px;
 	width: 100%;
 	height: 130px;
+	box-shadow: 0px 81px 40px -76px #00000091;
+	object-fit: cover;
+}
+.smallEventCardHeader, .smallEventCardHeader img {
+	position: relative;
+	padding-right:0px;
+	padding-left:0px;
+	width: 100%;
+	height: 90px;
 	box-shadow: 0px 81px 40px -76px #00000091;
 	object-fit: cover;
 }
@@ -202,12 +160,40 @@
 	display: block;
 	background: #0000004d;
 }
+.smallEventCardHeader .after {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 100%;
+	color: white;
+	text-align: center;
+	display: block;
+	background: #0000004d;
+}
 
 .eventCardTitle {
 	color: white;
-	margin-top: 8%;
+	margin-top: 11%;
 	z-index: 2;
 }
+
+@media only screen and (max-width: 768px) {
+
+.smallEventCardTitle {
+	color: white;
+	margin-top: 11%;
+	z-index: 2;
+}
+}
+
+@media only screen and (min-width: 768px) {
+	.smallEventCardTitle {
+		color: white;
+		margin-top: 18%;
+		z-index: 2;
+	}
+	}
 
 .eventName {
 	float:left;
@@ -228,7 +214,7 @@
 	border-radius: 4px;
 	background: #f8c947;
 	color: white;
-	margin-right: 20px;
+	margin-right: 10px;
 	float: right;
 	top: -20pt;
 	font-size: 10pt;

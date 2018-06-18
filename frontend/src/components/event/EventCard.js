@@ -77,7 +77,8 @@ export default class EventCard extends React.Component {
 				return (
 					<div className="participatesImagePreview">
 					<UserAvatar
-						key={user.id}
+						id={user.id + "id"}
+						key={user.id + "key"}
 						user={user}
 						style={{
 							cursor: 'pointer',
@@ -160,13 +161,16 @@ export default class EventCard extends React.Component {
 			);
 		}
 		let eventInfoStyle = (this.props.webFeed === true) ? "eventInfo" : "smallEventInfo";
+		let eventGroupStyle = (this.props.webFeed === true) ? "eventGroup" : "smallEventGroup";
+		let eventCardHeaderStyle = (this.props.webFeed === true) ? "eventCardHeader" : "smallEventCardHeader";
+		let eventCardTitleStyle = (this.props.webFeed === true) ? "eventCardTitle" : "smallEventCardTitle";
 		return (
 			<div className ="card-wrapper">
 				<div className = "eventCard" style={isJoinedBorder}>
-					<div className = "eventCardHeader" >
+					<div className = {eventCardHeaderStyle} >
 						<img src = {this.props.event.banner} alt = "Event banner" />
 							<div className = "after">
-								<div className="eventCardTitle">
+								<div className={eventCardTitleStyle}>
 									<span className = "eventName"> {this.props.event.name} </span>
 									{/*this.getJoinLeaveButton()*/}
 									<div style={buttonColor} className="joinBtnWrapper" onClick={this.props.toggleJoin}>
@@ -175,7 +179,7 @@ export default class EventCard extends React.Component {
 								</div>
 							</div>
 					</div>
-						<div className = "eventGroup">
+						<div className = {eventGroupStyle}>
 							<div className={eventInfoStyle}>
 								<div className="dateInfo">
 								 {this.checkDate()}
@@ -186,9 +190,9 @@ export default class EventCard extends React.Component {
 								{this.props.webFeed &&
 								<div className="participates-image">
 									{ participantsImages }
-									  <span id="participant-counter" style={{marginRight:"3%"}}> <h6><GroupFA />{" "} {this.props.participants.length}/{
+									  <span id="participant-counter" style={{marginRight:"6.3%"}}> <h4><GroupFA />{" "} {this.props.participants.length}/{
 												(this.props.event.maxParticipants === "0") ?
-												this.props.event.maxParticipants : "∞" } </h6></span>
+												this.props.event.maxParticipants : "∞" } </h4></span>
 								</div>
 							}
 							</div>
