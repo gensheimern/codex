@@ -270,6 +270,20 @@
 	margin-left: -15px;
 }
 
+@media only screen and (min-width: 771px) {
+	.event-extend-info {
+		margin-top: 25px;
+		margin-bottom: 10px;
+	}
+
+	.extendedInfo {
+		display: none;
+	}
+
+	.createEventWeb {
+		margin: 2%;
+	}
+}
 
 
 
@@ -434,4 +448,26 @@
 	width: 82%;
 	float: left;
 	padding-top: 3%;
+}
+
+@media only screen and (max-width: 770px) {
+	.createEventPickImageWrapper {
+		padding: 0px !important;
+	}
+
+	.createEventPickImageWrapper img {
+		width: 100%;
+	}
+
+	.createEventCardWrapper {
+		/*height: 900px;*/
+		padding-bottom: 200px;
+	}
+
+	.createEventButton {
+		background-color: #F8C947 !important;
+		position: fixed !important;
+		height: 50px !important;
+		bottom: 53px;
+	}
 }

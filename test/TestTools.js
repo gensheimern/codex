@@ -1,6 +1,7 @@
 const sinon = require('sinon');
 const mock = require('node-mocks-http');
 const TestError = require('./TestError');
+const LiveSync = require('../routes/LiveSync');
 
 const dbConnection = require('../models/DatabaseConnection');
 
@@ -59,6 +60,9 @@ const TestTools = {
 		...defaultDBServerVars,
 	},
 
+	mockLiveSync(method) {
+		return sinon.stub(LiveSync, method);
+	},
 
 	mockDatabase(options = {}) {
 		if (!(options instanceof Object)) {

@@ -161,6 +161,8 @@ describe('Participates controller', () => {
 			mockModels.push(TestTools.mockModel(NotificationModel, 'notifyEvent', null, null));
 			mockModels.push(TestTools.mockModel(UserModel, 'getUserById', null, { Firstname: '', Name: '' }));
 			mockModels.push(TestTools.mockModel(UserModel, 'getOrganization', null, 8));
+			const liveSync = TestTools.mockLiveSync('personalChanged');
+			const liveSync2 = TestTools.mockLiveSync('participantsChanged');
 
 			// Mock http request and response
 			const { req, res } = TestTools.mockRequest({
@@ -172,6 +174,9 @@ describe('Participates controller', () => {
 
 			// Call test method
 			await ParticipatesController.addParticipation(req, res);
+
+			liveSync.restore();
+			liveSync2.restore();
 
 			// Validate result
 			correctResponseType(res, 201);
@@ -192,6 +197,8 @@ describe('Participates controller', () => {
 			mockModels.push(TestTools.mockModel(NotificationModel, 'notifyEvent', null, null));
 			mockModels.push(TestTools.mockModel(UserModel, 'getUserById', null, { Firstname: '', Name: '' }));
 			mockModels.push(TestTools.mockModel(UserModel, 'getOrganization', null, 8));
+			const liveSync = TestTools.mockLiveSync('personalChanged');
+			const liveSync2 = TestTools.mockLiveSync('participantsChanged');
 
 			// Mock http request and response
 			const { req, res } = TestTools.mockRequest({
@@ -203,6 +210,9 @@ describe('Participates controller', () => {
 
 			// Call test method
 			await ParticipatesController.addParticipation(req, res);
+
+			liveSync.restore();
+			liveSync2.restore();
 
 			// Validate result
 			correctResponseType(res, 201);
@@ -224,6 +234,8 @@ describe('Participates controller', () => {
 			mockModels.push(TestTools.mockModel(NotificationModel, 'notifyEvent', null, null));
 			mockModels.push(TestTools.mockModel(UserModel, 'getUserById', null, { Firstname: '', Name: '' }));
 			mockModels.push(TestTools.mockModel(UserModel, 'getOrganization', null, 8));
+			const liveSync = TestTools.mockLiveSync('personalChanged');
+			const liveSync2 = TestTools.mockLiveSync('participantsChanged');
 
 			// Mock http request and response
 			const { req, res } = TestTools.mockRequest({
@@ -234,6 +246,9 @@ describe('Participates controller', () => {
 
 			// Call test method
 			await ParticipatesController.addParticipation(req, res);
+
+			liveSync.restore();
+			liveSync2.restore();
 
 			// Validate result
 			correctResponseType(res, 201);
@@ -254,6 +269,8 @@ describe('Participates controller', () => {
 			mockModels.push(TestTools.mockModel(NotificationModel, 'notifyEvent', null, null));
 			mockModels.push(TestTools.mockModel(UserModel, 'getUserById', null, { Firstname: '', Name: '' }));
 			mockModels.push(TestTools.mockModel(UserModel, 'getOrganization', null, 8));
+			const liveSync = TestTools.mockLiveSync('personalChanged');
+			const liveSync2 = TestTools.mockLiveSync('participantsChanged');
 
 			// Mock http request and response
 			const { req, res } = TestTools.mockRequest({
@@ -265,6 +282,9 @@ describe('Participates controller', () => {
 
 			// Call test method
 			await ParticipatesController.addParticipation(req, res);
+
+			liveSync.restore();
+			liveSync2.restore();
 
 			// Validate result
 			correctResponseType(res, 200);
@@ -285,6 +305,8 @@ describe('Participates controller', () => {
 			mockModels.push(TestTools.mockModel(NotificationModel, 'notifyEvent', null, null));
 			mockModels.push(TestTools.mockModel(UserModel, 'getUserById', null, { Firstname: '', Name: '' }));
 			mockModels.push(TestTools.mockModel(UserModel, 'getOrganization', null, 8));
+			const liveSync = TestTools.mockLiveSync('personalChanged');
+			const liveSync2 = TestTools.mockLiveSync('participantsChanged');
 
 			// Mock http request and response
 			const { req, res } = TestTools.mockRequest({
@@ -296,6 +318,9 @@ describe('Participates controller', () => {
 
 			// Call test method
 			await ParticipatesController.addParticipation(req, res);
+
+			liveSync.restore();
+			liveSync2.restore();
 
 			// Validate result
 			correctResponseType(res, 403);
@@ -316,6 +341,8 @@ describe('Participates controller', () => {
 			mockModels.push(TestTools.mockModel(NotificationModel, 'notifyEvent', null, null));
 			mockModels.push(TestTools.mockModel(UserModel, 'getUserById', null, { Firstname: '', Name: '' }));
 			mockModels.push(TestTools.mockModel(UserModel, 'getOrganization', null, 8));
+			const liveSync = TestTools.mockLiveSync('personalChanged');
+			const liveSync2 = TestTools.mockLiveSync('participantsChanged');
 
 			// Mock http request and response
 			const { req, res } = TestTools.mockRequest({
@@ -327,6 +354,9 @@ describe('Participates controller', () => {
 
 			// Call test method
 			await ParticipatesController.addParticipation(req, res);
+
+			liveSync.restore();
+			liveSync2.restore();
 
 			// Validate result
 			correctResponseType(res, 403);
@@ -348,6 +378,8 @@ describe('Participates controller', () => {
 			mockModels.push(TestTools.mockModel(NotificationModel, 'notifyEvent', null, null));
 			mockModels.push(TestTools.mockModel(UserModel, 'getUserById', null, { Firstname: '', Name: '' }));
 			mockModels.push(TestTools.mockModel(UserModel, 'getOrganization', null, 8));
+			const liveSync = TestTools.mockLiveSync('personalChanged');
+			const liveSync2 = TestTools.mockLiveSync('participantsChanged');
 
 			// Mock http request and response
 			const { req, res } = TestTools.mockRequest({
@@ -359,6 +391,9 @@ describe('Participates controller', () => {
 
 			// Call test method
 			await ParticipatesController.addParticipation(req, res);
+
+			liveSync.restore();
+			liveSync2.restore();
 
 			// Validate result
 			correctResponseType(res, 409);
@@ -380,6 +415,8 @@ describe('Participates controller', () => {
 			mockModels.push(TestTools.mockModel(NotificationModel, 'notifyEvent', null, null));
 			mockModels.push(TestTools.mockModel(UserModel, 'getUserById', null, { Firstname: '', Name: '' }));
 			mockModels.push(TestTools.mockModel(UserModel, 'getOrganization', null, 8));
+			const liveSync = TestTools.mockLiveSync('personalChanged');
+			const liveSync2 = TestTools.mockLiveSync('participantsChanged');
 
 			// Mock http request and response
 			const { req, res } = TestTools.mockRequest({
@@ -391,6 +428,9 @@ describe('Participates controller', () => {
 
 			// Call test method
 			await ParticipatesController.addParticipation(req, res);
+
+			liveSync.restore();
+			liveSync2.restore();
 
 			// Validate result
 			correctResponseType(res, 400);
@@ -437,6 +477,8 @@ describe('Participates controller', () => {
 			mockModels.push(TestTools.mockModel(NotificationModel, 'notifyEvent', null, null));
 			mockModels.push(TestTools.mockModel(UserModel, 'getUserById', null, { Firstname: '', Name: '' }));
 			mockModels.push(TestTools.mockModel(UserModel, 'getOrganization', null, 8));
+			const liveSync = TestTools.mockLiveSync('personalChanged');
+			const liveSync2 = TestTools.mockLiveSync('participantsChanged');
 
 			// Mock http request and response
 			const { req, res } = TestTools.mockRequest({
@@ -447,6 +489,9 @@ describe('Participates controller', () => {
 
 			// Call test method
 			await ParticipatesController.deleteParticipation(req, res);
+
+			liveSync.restore();
+			liveSync2.restore();
 
 			// Validate result
 			correctResponseType(res, 200);
@@ -463,6 +508,8 @@ describe('Participates controller', () => {
 			mockModels.push(TestTools.mockModel(NotificationModel, 'notifyEvent', null, null));
 			mockModels.push(TestTools.mockModel(UserModel, 'getUserById', null, { Firstname: '', Name: '' }));
 			mockModels.push(TestTools.mockModel(UserModel, 'getOrganization', null, 8));
+			const liveSync = TestTools.mockLiveSync('personalChanged');
+			const liveSync2 = TestTools.mockLiveSync('participantsChanged');
 
 			// Mock http request and response
 			const { req, res } = TestTools.mockRequest({
@@ -474,6 +521,9 @@ describe('Participates controller', () => {
 
 			// Call test method
 			await ParticipatesController.deleteParticipation(req, res);
+
+			liveSync.restore();
+			liveSync2.restore();
 
 			// Validate result
 			correctResponseType(res, 200);
@@ -490,6 +540,8 @@ describe('Participates controller', () => {
 			mockModels.push(TestTools.mockModel(NotificationModel, 'notifyEvent', null, null));
 			mockModels.push(TestTools.mockModel(UserModel, 'getUserById', null, { Firstname: '', Name: '' }));
 			mockModels.push(TestTools.mockModel(UserModel, 'getOrganization', null, 8));
+			const liveSync = TestTools.mockLiveSync('personalChanged');
+			const liveSync2 = TestTools.mockLiveSync('participantsChanged');
 
 			// Mock http request and response
 			const { req, res } = TestTools.mockRequest({
@@ -501,6 +553,9 @@ describe('Participates controller', () => {
 
 			// Call test method
 			await ParticipatesController.deleteParticipation(req, res);
+
+			liveSync.restore();
+			liveSync2.restore();
 
 			// Validate result
 			correctResponseType(res, 403);
@@ -517,6 +572,8 @@ describe('Participates controller', () => {
 			mockModels.push(TestTools.mockModel(NotificationModel, 'notifyEvent', null, null));
 			mockModels.push(TestTools.mockModel(UserModel, 'getUserById', null, { Firstname: '', Name: '' }));
 			mockModels.push(TestTools.mockModel(UserModel, 'getOrganization', null, 8));
+			const liveSync = TestTools.mockLiveSync('personalChanged');
+			const liveSync2 = TestTools.mockLiveSync('participantsChanged');
 
 			// Mock http request and response
 			const { req, res } = TestTools.mockRequest({
@@ -528,6 +585,9 @@ describe('Participates controller', () => {
 
 			// Call test method
 			await ParticipatesController.deleteParticipation(req, res);
+
+			liveSync.restore();
+			liveSync2.restore();
 
 			// Validate result
 			correctResponseType(res, 404);

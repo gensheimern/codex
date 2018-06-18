@@ -11,8 +11,8 @@ const transforms = (userId) => {
 	const transformTeam = dbTeam => ({
 		id: dbTeam.Team_Id,
 		name: dbTeam.Teamname,
-		icon: dbTeam.icon,
-		description: dbTeam.description,
+		icon: dbTeam.Group_Icon,
+		description: dbTeam.Description,
 		manager: {
 			...transformUser(dbTeam),
 		},

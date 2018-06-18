@@ -5,40 +5,47 @@ import IconGroup from 'material-ui/svg-icons/social/group';
 
 export default class CreateTeamButton extends React.Component {
 
-  constructor(props) {
-    super(props);
-    this.state = {kappa:true};
+	handleClick = () => {
+		this.props.clickGroupButton(this.props.index)
+	}
 
-    this.handleClick = this.handleClick.bind(this);
+	render() {
+		let className;
+		if (this.props.main) {
+			className = this.props.isActive
+				? 'highlightSidebarContent'
+				: 'nonHighlightSidebarContent';
+		} else {
+			className = this.props.isActive
+				? 'selectedGroup'
+				: 'groupName';
+		}
 
-  }
-handleClick = () => {
-  this.setState({kappa:true});
-  this.props.clickGroupButton(this.props.index)}
-
-
-  render() {
-
-    return (
-      <div className="GroupSidebarButton">
-        <FlatButton
-          icon={<IconGroup style={{
-                          float:"left",
-                          marginRight:"3%",
-                          marginTop:"2%",
-                          marginLeft:"6%",
-                        }}
-              />
-                      }
-          className={
-          (this.props.main) ? ((this.props.isActive) ? 'highlightSidebarContent' : 'nonHighlightSidebarContent' ) : ((this.props.isActive) ? 'selectedGroup' : 'groupName')
-          }
-          onClick={this.handleClick}
-          target="_blank"
-          style={{color:"white", minWidth:"0px",margin:"0px",width : "100%%", textAlign:"left"}}>
-          {this.props.name}
-        </FlatButton>
-    </div>
-    );
-  }
+		return (
+			<div className="GroupSidebarButton">
+				<FlatButton
+					icon={
+						<IconGroup style={{
+							float: 'left',
+							marginRight: '3%',
+							marginTop: '2%',
+							marginLeft: '6%',
+						}} />
+					}
+					className={className}
+					onClick={this.handleClick}
+					target="_blank"
+					style={{
+						color: 'white',
+						minWidth: '0px',
+						margin: '0px',
+						width: '100%',
+						textAlign: 'left',
+					}}
+				>
+					{this.props.name}
+				</FlatButton>
+			</div>
+		);
+	}
 }

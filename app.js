@@ -19,7 +19,8 @@ const errorHandler = require('./middleware/errorHandler');
 const fileUpload = require('express-fileupload');
 const RestaurantController = require('./routes/restaurant/RestaurantController');
 const processImage = require('express-processimage');
-const Jimp = require('jimp');
+const jimp = require('jimp');
+require('./routes/LiveSync');
 
 const app = express();
 
@@ -30,9 +31,10 @@ app.use(helmet.referrerPolicy({ policy: 'same-origin' }));
 app.use(helmet.contentSecurityPolicy({
 	directives: {
 		defaultSrc: ["'self'"],
-		styleSrc: ["'self'", 'https://maxcdn.bootstrapcdn.com', 'https://fonts.gstatic.com/s/roboto', 'https://fonts.googleapis.com/css?family=Roboto:300,400,500'],
+		styleSrc: ["'self'", 'https://maxcdn.bootstrapcdn.com', "'sha256-D8Sj8qhd4FvnVwN5w9riiArwsqYOEwHolv228Ic6Vqk='"],
+		fontSrc: ["'self'", 'https://maxcdn.bootstrapcdn.com'],
 		scriptSrc: ["'self'", 'maps.googleapis.com'],
-		connectSrc: ["'self'", 'wss://'],
+		connectSrc: ["'self'", 'wss://codex-team.de'],
 	},
 	reportOnly: true,
 }));
@@ -90,7 +92,7 @@ app.post(`${apiPath}/upload/profile`, async (req, res) => {
 		return res.send('File uploaded!');
 	});
 
-	Jimp.read(`${__dirname}/image/user/user_${user.userId}_${user.firstName}_${user.name}.jpg`).then((lenna) => {
+	jimp.read(`${__dirname}/image/user/user_${user.userId}_${user.firstName}_${user.name}.jpg`).then((lenna) => {
 		lenna.resize(100, 100) // resize
 			.quality(100) // set JPEG quality
 			.write(`${__dirname}/image/user/user_thumbnail_${user.userId}_${user.firstName}_${user.name}.jpg`); // save

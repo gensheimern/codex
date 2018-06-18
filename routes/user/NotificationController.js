@@ -4,6 +4,7 @@ const ParticipatesModel = require('../../models/participatesModel');
 const ActivityModel = require('../../models/ActivityModel');
 const TeamModel = require('../../models/TeamModel');
 const transforms = require('../transforms');
+const LiveSync = require('../LiveSync');
 
 const NotificationController = {
 
@@ -125,6 +126,9 @@ const NotificationController = {
 		} else if (notification.type === 'joinEvent') {
 			if (accepted) {
 				await ParticipatesModel.acceptParticipation(userId, notification.targetId);
+
+				LiveSync.personalChanged(userId);
+				LiveSync.participantsChanged(notification.targetId);
 
 				const activity = await ActivityModel.getActivityById(notification.targetId);
 

@@ -3,7 +3,6 @@
 -- Host: localhost
 -- Erstellungszeit: 16. Jun 2018 um 12:00
 -- Server-Version: 5.7.22-0ubuntu0.16.04.1
--- PHP-Version: 7.0.30-0ubuntu0.16.04.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -38,10 +37,6 @@ CREATE TABLE `Activity` (
   `Organization` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Daten für Tabelle `Activity`
---
-
 -- --------------------------------------------------------
 
 --
@@ -58,10 +53,6 @@ CREATE TABLE `LunchRestaurant` (
   `Price` varchar(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Daten für Tabelle `LunchRestaurant`
---
-
 -- --------------------------------------------------------
 
 --
@@ -73,10 +64,6 @@ CREATE TABLE `member_of` (
   `Team_Id` int(11) NOT NULL,
   `Accepted` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Daten für Tabelle `member_of`
---
 
 -- --------------------------------------------------------
 
@@ -91,10 +78,6 @@ CREATE TABLE `Message` (
   `Activity_Id` int(11) NOT NULL,
   `User_Id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Daten für Tabelle `Message`
---
 
 -- --------------------------------------------------------
 
@@ -113,10 +96,6 @@ CREATE TABLE `Notification` (
   `User_Id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Daten für Tabelle `Notification`
---
-
 -- --------------------------------------------------------
 
 --
@@ -128,12 +107,8 @@ CREATE TABLE `Organization` (
   `Organizationname` varchar(50) NOT NULL,
   `Organizationpassword` varchar(100) NOT NULL,
   `Description` varchar(200) NOT NULL,
-  `Admin` int(11) NOT NULL
+  `Administrator` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Daten für Tabelle `Organization`
---
 
 -- --------------------------------------------------------
 
@@ -148,10 +123,6 @@ CREATE TABLE `participates` (
   `Accepted` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Daten für Tabelle `participates`
---
-
 -- --------------------------------------------------------
 
 --
@@ -163,21 +134,6 @@ CREATE TABLE `part_of` (
   `Organization_Id` int(11) NOT NULL,
   `Active` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Daten für Tabelle `part_of`
---
-
-INSERT INTO `part_of` (`User_Id`, `Organization_Id`, `Active`) VALUES
-(1, 1, 1),
-(1, 2, 0),
-(10, 1, 1),
-(666, 1, 1),
-(901, 1, 1),
-(904, 1, 1),
-(910, 1, 1),
-(1000, 1, 1),
-(1011, 2, 1);
 
 -- --------------------------------------------------------
 
@@ -197,10 +153,6 @@ CREATE TABLE `Restaurant` (
   `StreetNumber` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Daten für Tabelle `Restaurant`
---
-
 -- --------------------------------------------------------
 
 --
@@ -211,10 +163,6 @@ CREATE TABLE `subscribed` (
   `Subscriber_Id` int(11) NOT NULL,
   `Subscribed_Id` int(11) NOT NULL COMMENT '(passiv)'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='shows the connection (subscribing) between two users ';
-
---
--- Daten für Tabelle `subscribed`
---
 
 -- --------------------------------------------------------
 
@@ -230,10 +178,6 @@ CREATE TABLE `Team` (
   `Group_Icon` varchar(40) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Daten für Tabelle `Team`
---
-
 -- --------------------------------------------------------
 
 --
@@ -245,10 +189,6 @@ CREATE TABLE `teamParticipates` (
   `Team_Id` int(11) NOT NULL,
   `Activity_Id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Daten für Tabelle `teamParticipates`
---
 
 -- --------------------------------------------------------
 
@@ -265,9 +205,7 @@ CREATE TABLE `User` (
   `Image` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Daten für Tabelle `User`
---
+-- --------------------------------------------------------
 
 
 --
@@ -316,7 +254,7 @@ ALTER TABLE `Notification`
 --
 ALTER TABLE `Organization`
   ADD PRIMARY KEY (`Organization_Id`),
-  ADD KEY `Admin` (`Admin`);
+  ADD KEY `Admin` (`Administrator`);
 
 --
 -- Indizes für die Tabelle `participates`
@@ -463,7 +401,7 @@ ALTER TABLE `Notification`
 -- Constraints der Tabelle `Organization`
 --
 ALTER TABLE `Organization`
-  ADD CONSTRAINT `Organization_ibfk_1` FOREIGN KEY (`Admin`) REFERENCES `User` (`User_Id`);
+  ADD CONSTRAINT `Organization_ibfk_1` FOREIGN KEY (`Administrator`) REFERENCES `User` (`User_Id`);
 
 --
 -- Constraints der Tabelle `participates`

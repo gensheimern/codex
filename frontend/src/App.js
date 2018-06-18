@@ -17,6 +17,7 @@ import NotFound from './components/routing/NotFound';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import customMuiTheme from './customMuiTheme';
 import CheckToken from './components/routing/CheckToken';
+import GlobalMessage from './components/routing/GlobalMessage';
 
 class App extends Component {
 	constructor(props) {
@@ -141,7 +142,7 @@ class App extends Component {
 function Screen(props) {
 	return (
 		<React.Fragment>
-			<MediaQuery minWidth={768}>
+			<MediaQuery minWidth={770}>
 				{(matches) =>
 					matches
 					?	(<Dashboard {...props} />)
@@ -149,6 +150,7 @@ function Screen(props) {
 				}
 			</MediaQuery>
 			<CheckToken route={props.match.url} />
+			<GlobalMessage />
 		</React.Fragment>
 	);
 }

@@ -7,14 +7,15 @@
 		"start": "node server",
 		"server": "nodemon server.js --ignore frontend/",
 		"client": "npm start --prefix frontend",
-		"all": "concurrently \"npm run server\" \"npm run client\" --kill-others",
+		"all": "concurrently --names server,client \"npm run server\" \"npm run client\" --kill-others",
 		"preprod": "npm run build --prefix frontend",
 		"prod": "npm start",
 		"build": "npm run build --prefix frontend",
 		"lint": "eslint .",
 		"lint:fix": "eslint . --fix",
 		"test": "mocha test --recursive",
-		"test:coverage": "nyc --reporter=text --reporter=html npm test"
+		"test:coverage": "nyc --reporter=text --reporter=html npm test",
+		"deploy": "npm install&&npm run installclient&&npm run build"
 	},
 	"engines": {
 		"node": ">=6.9.1"
