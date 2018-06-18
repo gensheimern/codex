@@ -200,6 +200,7 @@ console.log(email)
 							color: 'white',
 							minWidth: '0px',
 							margin: '0px',
+							marginTop: '-3%',
 						}}
 					/>
 				</div>

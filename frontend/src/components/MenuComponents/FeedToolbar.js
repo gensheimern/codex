@@ -51,7 +51,9 @@ export default class FeedToolbar extends React.Component {
 						...fixedStyle,
 						width: '28%',
 					}}>
-						<ProfileToolbar />
+						<ProfileToolbar
+						activeIndex={this.props.activeIndex}
+						changeTeamIndex={this.props.changeTeamIndex}/>
 					</div>
 				</div>
 		</React.Fragment>

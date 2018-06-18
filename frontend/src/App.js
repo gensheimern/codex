@@ -25,6 +25,7 @@ class App extends Component {
 
 		this.state = {
 			mainContentNumber: 0,
+			activeIndex: "PUBLIC",
 			filter:{
 				filterWord: 'TimeDown',
 				searchWord: '',
@@ -35,12 +36,17 @@ class App extends Component {
 		};
 
 		this.changeContent = this.changeContent.bind(this);
+		this.changeTeamIndex = this.changeTeamIndex.bind(this);
 		this.searchFilterFeed = this.searchFilterFeed.bind(this);
 		this.filterPersonalFeed = this.filterPersonalFeed.bind(this);
 	}
 
 	changeContent(index) {
 		this.setState({ mainContentNumber: index });
+	}
+
+	changeTeamIndex(index){
+			this.setState({ activeIndex: index });
 	}
 
 	filterPersonalFeed(value){
@@ -119,6 +125,8 @@ class App extends Component {
 							filter={this.state.filter}
 							mainContentNumber={this.state.mainContentNumber}
 							match={props.match}
+							activeIndex={this.state.activeIndex}
+							changeTeamIndex={this.changeTeamIndex}
 						/>
 					</div>
 				)} />

@@ -57,6 +57,10 @@ const User = {
 		return databaseConnection.queryp('UPDATE User SET Firstname=?, Name=?, Email=?, Password=?, Image=? where User_Id=?', [newUser.firstName, newUser.name, newUser.email.toLowerCase(), newUser.password, newUser.image, userId]);
 	},
 
+	async updateUserImage(userId, userImage) {
+		return databaseConnection.queryp('UPDATE User SET Image=? where User_Id=?', [userImage, userId]);
+	},
+
 	/**
 	 * Returns the organization the user is currently in.
 	 * @param {number} userId The id of the user to get the organization of.

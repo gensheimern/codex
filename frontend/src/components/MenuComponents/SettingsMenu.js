@@ -16,6 +16,8 @@ class SettingsMenu extends React.Component {
 		super(props);
 
 		this.state = {
+			show:false,
+			previousIndex: "",
 			loaded: false,
 			organizations: [],
 			changed: false,
@@ -30,6 +32,9 @@ class SettingsMenu extends React.Component {
 	}
 
 	componentDidMount() {
+		if(this.props.activeIndex === "profile"){
+		this.props.changeTeamIndex("profile")
+		this.setState({show:true});}
 		this.loadOrganizations();
 	}
 
@@ -119,6 +124,11 @@ class SettingsMenu extends React.Component {
 		const allSelected = this.state.organizations.reduce(
 			(total, organization) => total && !organization.active, true);
 
+				if(this.state.previousIndex !== this.props.activeIndex && this.props.activeIndex !== "profile"){
+					this.setState({previousIndex:this.props.activeIndex})
+				}
+				let changeInd = this.state.previousIndex;
+
 		const listOfOrganizations = [
 			<Divider key="divider1" />,
 			<MenuItem
@@ -176,11 +186,19 @@ class SettingsMenu extends React.Component {
 				<Menu>
 					<MenuItem
 						primaryText="Profile Settings"
-						onClick={() => {
-							this.props.history.push('/profile');
-							this.props.hideSettings();
-						}}
-					/>
+						onClick={() => {if(this.state.show === false){
+												this.setState({show:true})
+												this.props.changeTeamIndex("profile")
+												this.props.history.push('/profile');
+												this.props.hideSettings();
+
+											} else if(this.state.show === true){
+												this.setState({show:false})
+												this.props.changeTeamIndex(changeInd);
+												this.props.history.goBack();
+												this.props.hideSettings();
+											}
+						}} />
 					<MenuItem
 						primaryText="Change organization"
 						rightIcon={this.state.showOrganizations ? <ArrowDropUp /> : <ArrowDropDown />}

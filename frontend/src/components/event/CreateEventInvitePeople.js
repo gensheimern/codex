@@ -117,14 +117,17 @@ export default class CreateEventInvitePeople extends React.Component {
 				],
 				value: '',
 			}
-		});
+		}
+	);
 
-		this.props.people(this.state.inviteImageList);
+		this.props.people(this.state.inviteImageList)
 	}
 
 	render(){
 		return(
 			<AutoComplete
+				targetOrigin={{ vertical: 'top', horizontal: 'left'}}
+				animated={true}
 				id="CreateEventInvitePeopleAutocomplete"
 				fullWidth={true}
 				value={this.state.value}

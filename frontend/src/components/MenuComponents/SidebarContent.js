@@ -53,14 +53,14 @@ class SidebarContent extends React.Component {
 		getSocket().unsubscribe('teamsChanged');
 	}
 
-	clickGroupName(groupId){
+	clickGroupName(groupId) {
 		this.props.closeDrawer();
 		this.props.searchFilterFeed(groupId,"FilterFeed");
-				this.props.history.push('/feed');
-
+		this.props.history.push('/feed');
 	}
 
 	clickGroupButton(activeIndex){
+		this.props.changeTeamIndex(activeIndex);
 		this.setState({ activeIndex });
 		if (activeIndex === 'PUBLIC') {
 			this.props.searchFilterFeed('PUBLIC', 'FilterFeed');
@@ -107,7 +107,7 @@ class SidebarContent extends React.Component {
 							marginLeft: '10%',
 							marginRight: '2%',
 							marginTop: '3%',
-						}}>GROUPS</p>
+						}}>TEAMS</p>
 						<CreateTeamButton
 							style={{
 								float: 'none',

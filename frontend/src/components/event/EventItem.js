@@ -28,22 +28,21 @@ export default class EventItem extends React.Component {
 		this.loadParticipants();
 		this.loadMessages();
 
-		// Load messages
-		getSocket().subscribe(`messagesChanged-${this.props.event.id}`, this.loadMessages);
-
 		if (this.props.webFeed) {
+			getSocket().subscribe(`messagesChanged-${this.props.event.id}`, this.loadMessages);
 			getSocket().subscribe(`participantsChanged-${this.props.event.id}`, this.loadParticipants);
 		}
 	}
 
 	componentWillUnmount() {
-		getSocket().unsubscribe(`messagesChanged-${this.props.event.id}`);
 		if (this.props.webFeed) {
+			getSocket().unsubscribe(`messagesChanged-${this.props.event.id}`);
 			getSocket().unsubscribe(`participantsChanged-${this.props.event.id}`);
 		}
 	}
 
 	loadMessages() {
+
 		this.setState({
 			error: null,
 		});
@@ -171,7 +170,6 @@ export default class EventItem extends React.Component {
 		if (!this.state.loaded) {
 			return (<p>Loading...</p>);
 		}
-		
 		return (
 			<EventCard
 				loaded = {this.state.loaded}
