@@ -6,6 +6,7 @@ import config from '../../config';
 import LoadingAnimation from '../tools/LoadingAnimation';
 import RetryPrompt from '../tools/RetryPrompt';
 import { withRouter } from 'react-router-dom';
+import getSocket from '../../Socket';
 
 import '../MenuComponents/sidebars.css';
 
@@ -71,6 +72,15 @@ class SidebarContent extends React.Component {
 	componentDidMount() {
 		this.loadEvents();
 		this.loadAllEvents();
+
+		getSocket().subscribe('personalEventsChanged', () => {
+			this.loadEvents();
+			this.loadAllEvents();
+		});
+	}
+
+	comsonentWillUnmount() {
+		getSocket().unsubscribe('personalEventsChanged');
 	}
 
 	loadAllEvents() {

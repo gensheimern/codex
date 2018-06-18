@@ -44,7 +44,7 @@ const Team = {
 	 * @returns {Promise<DBResult>} The result fetched from the database.
 	 */
 	async addTeam(teamName, description, teamIcon, userId) {
-		return databaseConnection.queryp('INSERT INTO Team (Teamname, Description, Group_icon, Teammanager) VALUES (?, ?, ?, ?);', [teamName, description, teamIcon, userId]);
+		return databaseConnection.queryp('INSERT INTO Team (Teamname, Description, Group_Icon, Teammanager) VALUES (?, ?, ?, ?);', [teamName, description, teamIcon, userId]);
 	},
 
 	/**

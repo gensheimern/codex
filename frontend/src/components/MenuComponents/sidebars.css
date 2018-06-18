@@ -107,7 +107,7 @@
 	color: white;
 }
 
-@media only screen and (min-width: 769px) {
+@media only screen and (min-width: 771px) {
 	.CalendarWrapper {
 		font-size: 11px;
 		margin: 3%;

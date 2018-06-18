@@ -3,6 +3,7 @@ const ActivityModel = require('../../models/ActivityModel');
 const NotificationModel = require('../../models/NotificationModel');
 const UserModel = require('../../models/UserModel');
 const transforms = require('../transforms');
+const LiveSync = require('../LiveSync');
 
 const ParticipatesController = {
 
@@ -78,6 +79,9 @@ const ParticipatesController = {
 			Number(userId) === Number(participantId),
 		);
 
+		LiveSync.personalChanged(userId);
+		LiveSync.participantsChanged(activityId);
+
 		if (userId !== participantId) {
 			await NotificationModel.addNotification(participantId, 'joinEvent', 'Event invitation', `You are invited to join the event '${activity.Activityname}'.`, activityId);
 		}
@@ -112,6 +116,9 @@ const ParticipatesController = {
 		}
 
 		const result = await ParticipatesModel.deleteParticipant(activityId, participantId);
+
+		LiveSync.personalChanged(userId);
+		LiveSync.participantsChanged(activityId);
 
 		if (result.affectedRows !== 1) {
 			res.status(404).json({

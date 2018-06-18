@@ -132,9 +132,14 @@ class AppNavBottom extends Component {
 			minWidth: '56px',
 		};
 
+		let index = this.props.index;
+		if (index === 7) {
+			index = 4;
+		}
+
 		return (
 			<Paper className="navbarbottom" zDepth={1}>
-				<BottomNavigation selectedIndex={this.props.index}>
+				<BottomNavigation selectedIndex={index}>
 					<BottomNavigationItem
 						icon={FeedIcon}
 						onClick={() => this.props.history.push('/feed')}

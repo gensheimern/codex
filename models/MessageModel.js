@@ -11,6 +11,10 @@ const Message = {
 		return databaseConnection.queryp('SELECT Message.*, User.* FROM Message INNER JOIN User ON Message.User_Id = User.User_Id WHERE Message.Activity_Id = ?', [activityId]);
 	},
 
+	async getMessageById(messageId) {
+		return databaseConnection.querypFirst('SELECT * FROM Message WHERE Message_ID = ?', [messageId]);
+	},
+
 	/**
 	 * Creates a new message.
 	 * @param {object} content The information of the new message.

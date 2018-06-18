@@ -131,10 +131,14 @@ class ProfileToolbar extends React.Component {
 		});
 	}
 
-	render(){
+	componentDidUpdate(prevProps) {
 		if(this.state.previousIndex !== this.props.activeIndex && this.props.activeIndex !== "notification"){
-			this.setState({previousIndex:this.props.activeIndex})
+			this.setState({previousIndex: this.props.activeIndex})
 		}
+	}
+
+	render(){
+		
 		let changeInd = this.state.previousIndex;
 
 		const IconNotStyle = {
