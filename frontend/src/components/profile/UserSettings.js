@@ -13,6 +13,7 @@ import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import axios from 'axios';
 
+
 import './profile.css';
 
 export default class UserSettings extends React.Component {
@@ -158,7 +159,7 @@ handleDialogYes = () => {
 				 }
 
 	fd.append('image',this.state.uploadFile[0],"user_" + this.state.uploadFile[0].name);
-	axios.post('http://localhost:5000/api/upload/profile',fd, configAxios)
+	axios.post(config.apiPath +'/upload/profile',fd, configAxios)
 		.then(res => {
 				console.log(res);
 		});
