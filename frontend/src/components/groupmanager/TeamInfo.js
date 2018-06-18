@@ -97,7 +97,13 @@ export default class GroupInfo extends React.Component {
 			.then(organizations => {
 				this.loadOrganizationMembers(organizations[0]);
 			}).catch((err) => {
-				console.log('Request failed.');
+				this.setState({
+					isAdmin: false,
+					team: {
+						name: 'No organization',
+						description: 'Here are all Events that are posted in no organization.',
+					},
+				});
 			});
 		} else {
 			this.setState({
