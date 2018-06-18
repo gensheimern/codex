@@ -141,11 +141,11 @@ class RestaurantLogin extends Component {
                     <Paper style={styles.paperStyle} zDepth= {1}/>
                 </div>
                 <center>
-                    <h3 className = "h3header">Lunchplannner</h3>
+                    <h3 className = "h3headerR">Lunchplannner</h3>
                 </center>
-                <Card className = "loginCard">
+                <Card className = "loginCardR">
                 <CardText>
-                <h2 className = "h2header">Restaurant Login</h2>
+                <h2 className = "h2headerR">Restaurant Login</h2>
                 <TextField
                     id="email"
 					label="E-Mail"

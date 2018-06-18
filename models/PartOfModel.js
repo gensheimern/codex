@@ -3,7 +3,7 @@ const databaseConnection = require('./DatabaseConnection');
 const PartOfModel = {
 
 	async getAllMembers() {
-		return databaseConnection.queryp('SELECT User.* FROM part_of INNER JOIN User on part_of.userId = User.User_Id WHERE part_of.Active = 1');
+		return databaseConnection.queryp('SELECT User.* FROM part_of INNER JOIN User on part_of.User_Id = User.User_Id WHERE part_of.Active = 1');
 	},
 
 	async getOrganizationsOfUser(userId) {
@@ -11,7 +11,7 @@ const PartOfModel = {
 			SELECT Organization.*, User.*
 			FROM Organization
 			INNER JOIN User
-				ON User.User_Id = Organization.Admin
+				ON User.User_Id = Organization.Administrator
 			INNER JOIN part_of
 				ON part_of.Organization_Id = Organization.Organization_Id
 			WHERE part_of.User_Id = ?
@@ -23,7 +23,7 @@ const PartOfModel = {
 			SELECT Organization.*, User.*
 			FROM Organization
 			INNER JOIN User
-				ON User.User_Id = Organization.Admin
+				ON User.User_Id = Organization.Administrator
 			INNER JOIN part_of
 				ON part_of.Organization_Id = Organization.Organization_Id
 			WHERE part_of.User_Id = ?

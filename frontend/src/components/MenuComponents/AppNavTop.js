@@ -95,6 +95,8 @@ class AppNavTop extends Component {
 		return (
 			<div className="navbartop">
 				<GroupsDrawer
+					activeIndex={this.props.activeIndex}
+					changeTeamIndex={this.props.changeTeamIndex}
 					searchFilterFeed={this.props.searchFilterFeed}
 					changeContent={this.props.changeContent}
 				/>
@@ -102,6 +104,8 @@ class AppNavTop extends Component {
 
 				<AppMore onClick={this.showSettings} />
 				<SettingsMenu
+					activeIndex={this.props.activeIndex}
+					changeTeamIndex={this.props.changeTeamIndex}
 					menuOpen={this.state.showSettingsMenu}
 					anchor={this.state.anchor}
 					hideSettings={this.hideSettings}

@@ -1,11 +1,6 @@
 body {
 	background-color: #F1F1F1;
-}
-
-@media only screen and (min-width: 2000px) {
-	body {
-		margin: 0 10%;
-	}
+	font-family: 'Trebuchet MS', 'Verdana', 'lucida sans', 'sans-serif';
 }
 
 label {
@@ -18,7 +13,7 @@ label {
 	margin-top: 0;
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 770px) {
 	#contentarea {
 		height: auto;
 		width: 100%;
@@ -41,15 +36,15 @@ label {
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-	background: #888; 
+	background: #888;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-	background: #555; 
+	background: #555;
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 770px) {
     /* Custom scrollbars*/
 	/* width */
 	::-webkit-scrollbar {
@@ -57,7 +52,7 @@ label {
 	}
 }
 
-@media only screen and (min-width: 769px) {
+@media only screen and (min-width: 771px) {
 	body {
 		overflow: hidden;
 	}

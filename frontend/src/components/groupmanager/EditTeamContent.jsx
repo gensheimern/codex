@@ -134,7 +134,6 @@ export default class EditTeamContent extends React.Component {
         }
         componentDidUpdate(prevProps, prevState) {
             // only update chart if the data has changed
-            //console.log('didpdate called');
             if(prevProps.data !== this.props.data) {
                 this.chart = this.listTeams.load({
                     data: this.props.data
@@ -190,11 +189,9 @@ export default class EditTeamContent extends React.Component {
                             </div>
                         </div>
                 					<TextField
-                						floatingLabelFixed={true}
                 						floatingLabelFocusStyle={{ color: 'rgb(30 161 133)' }}
                 						underlineFocusStyle={{ borderColor: 'rgb(30 161 133)' }}
                 						floatingLabelText="Name"
-                						hintText="Nice Group Of PPL"
                             value={this.props.name}
                 						onChange={this.props.handleChangeN}
                             style={{marginTop :"5%",
@@ -203,11 +200,9 @@ export default class EditTeamContent extends React.Component {
                 					<br/>
 
                 					<TextField
-                            floatingLabelFixed={true}
                             floatingLabelFocusStyle={{ color: 'rgb(30 161 133)' }}
                             underlineFocusStyle={{ borderColor: 'rgb(30 161 133)' }}
                             floatingLabelText="Description"
-                            hintText="a bunch of ppl that doesnt suck."
                             value={this.props.description}
                             onChange={this.props.handleChangeD}
                             style={{marginBottom :"3%",

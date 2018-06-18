@@ -1,4 +1,4 @@
-.signup {
+.signupR {
 	padding: 2%;
 	/*height: 1065px;*/
 	height: 100vh;
@@ -8,7 +8,7 @@
 	overflow-y: scroll;
 }
 
-.signupBg {
+.signupBgR {
 	background-image: url("Hintergrundbild.png");
 	background-size: cover;
 	background-repeat: no-repeat;
@@ -16,7 +16,7 @@
 	background-position: center top;
 }
 
-.h3header {
+.h3headerR {
 	font-family: 'Trebuchet MS';
 	font-size: 30px;
 	font-weight: 'bold';
@@ -25,7 +25,7 @@
 	padding-bottom: 30px;
 }
 
-.h2header {
+.h2headerR {
 	margin: 10% 10% 0 10%;
 	color: #1EA185;
 	font-family: 'Trebuchet MS';
@@ -35,13 +35,7 @@
 	text-align: left;
 }
 
-a {
-	text-decoration: underline;
-	color: #1EA185;
-
-}
-
-.signupCard {
+.signupCardR {
 	width: 440px;
 	border-radius: 5px;
 	background-color: #FFFFFF;
@@ -51,7 +45,7 @@ a {
 	text-align: center;
 }
 
-.toggleWrapper {
+.toggleWrapperR {
 	float:left;
 	width:80%;
 	padding-top:20px;
@@ -61,7 +55,7 @@ a {
 
 
 @media only screen and (max-width: 500px) {
-    .signupCard {
+    .signupCardR {
 		width: 100%;
     }
 }

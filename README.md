@@ -98,18 +98,18 @@ To deploy and run the software you need hardware matching at least the following
 
 To deploy the code to the test / live system you can follow these steps:
 
-First install only the production dependencies.
+First customize your environment by setting the environment variables specified in the .env file according to your setup.
+
+Then install only the production dependencies.
 ```
 npm install --production
 npm run installclient
 ```
 
-Then build the frontend application using:
+Next build the frontend application using:
 ```
 npm run build
 ```
-
-Next customize your environment by setting the environment variables specified in the .env file according to your setup.
 
 To start the server run:
 ```

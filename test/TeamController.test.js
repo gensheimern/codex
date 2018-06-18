@@ -38,6 +38,8 @@ describe('Team controller', () => {
 				{
 					Team_Id: 1,
 					Teamname: 'Test1',
+					Description: 'Test description 1',
+					Group_Icon: 'Icon1.jpg',
 					Firstname: 'Max',
 					Name: 'Mustermann',
 					Email: 'valid@email.com',
@@ -47,6 +49,8 @@ describe('Team controller', () => {
 				{
 					Team_Id: 2,
 					Teamname: 'Test2',
+					Description: 'Test description 2',
+					Group_Icon: 'Icon2.jpg',
 					Firstname: 'Nico',
 					Name: 'Mustermann',
 					Email: 'valid2@email.com',
@@ -67,6 +71,8 @@ describe('Team controller', () => {
 				{
 					id: 1,
 					name: 'Test1',
+					description: 'Test description 1',
+					icon: 'Icon1.jpg',
 					manager: {
 						firstName: 'Max',
 						name: 'Mustermann',
@@ -78,6 +84,8 @@ describe('Team controller', () => {
 				{
 					id: 2,
 					name: 'Test2',
+					description: 'Test description 2',
+					icon: 'Icon2.jpg',
 					manager: {
 						firstName: 'Nico',
 						name: 'Mustermann',
@@ -110,6 +118,8 @@ describe('Team controller', () => {
 			mockModels.push(TestTools.mockModel(teamModel, 'getTeamById', null, {
 				Team_Id: 5,
 				Teamname: 'Test1',
+				Description: 'Test description 1',
+				Group_Icon: 'Icon1.jpg',
 				Firstname: 'Max',
 				Name: 'Mustermann',
 				Email: 'valid@email.com',
@@ -133,6 +143,8 @@ describe('Team controller', () => {
 			expect(res.body(), 'Correct response body').to.deep.equal({
 				id: 5,
 				name: 'Test1',
+				description: 'Test description 1',
+				icon: 'Icon1.jpg',
 				manager: {
 					firstName: 'Max',
 					name: 'Mustermann',
@@ -188,16 +200,21 @@ describe('Team controller', () => {
 			// Mock user model
 			mockModels.push(TestTools.mockModel(teamModel, 'addTeam', null, TestTools.dbInsertSuccess));
 			mockModels.push(TestTools.mockModel(memberModel, 'addMember', null, TestTools.dbInsertSuccess));
+			const liveSync = TestTools.mockLiveSync('teamAllChanged');
 
 			// Mock http request and response
 			const { req, res } = TestTools.mockRequest({
 				body: {
 					name: 'Test Team',
+					description: 'Test description 1',
+					icon: 'Icon1.jpg',
 				},
 			});
 
 			// Call test method
 			await teamController.addTeam(req, res);
+
+			liveSync.restore();
 
 			// Validate result
 			correctResponseType(res, 201);
@@ -208,12 +225,15 @@ describe('Team controller', () => {
 			// Mock user model
 			mockModels.push(TestTools.mockNotCalled(teamModel, 'addTeam'));
 			mockModels.push(TestTools.mockNotCalled(memberModel, 'addMember'));
+			const liveSync = TestTools.mockLiveSync('teamAllChanged');
 
 			// Mock http request and response
 			const { req, res } = TestTools.mockRequest();
 
 			// Call test method
 			await teamController.addTeam(req, res);
+
+			liveSync.restore();
 
 			// Validate result
 			correctResponseType(res, 400);
@@ -229,6 +249,8 @@ describe('Team controller', () => {
 			const { req, res } = TestTools.mockRequest({
 				body: {
 					name: 'Test Team',
+					description: 'Test description 1',
+					icon: 'Icon1.jpg',
 				},
 			});
 
@@ -245,6 +267,7 @@ describe('Team controller', () => {
 			// Mock user model
 			mockModels.push(TestTools.mockModel(teamModel, 'updateTeam', null, TestTools.dbUpdateSuccess));
 			mockModels.push(TestTools.mockModel(NotificationModel, 'notifyTeam', null, null));
+			const liveSync = TestTools.mockLiveSync('teamAllChanged');
 
 			// Mock http request and response
 			const { req, res } = TestTools.mockRequest({
@@ -253,11 +276,15 @@ describe('Team controller', () => {
 				},
 				body: {
 					name: 'Test Team',
+					description: 'Test description 1',
+					icon: 'Icon1.jpg',
 				},
 			});
 
 			// Call test method
 			await teamController.updateTeam(req, res);
+
+			liveSync.restore();
 
 			// Validate result
 			correctResponseType(res, 200);
@@ -269,16 +296,21 @@ describe('Team controller', () => {
 			// Mock user model
 			mockModels.push(TestTools.mockModel(teamModel, 'updateTeam', null, TestTools.dbUpdateFailed));
 			mockModels.push(TestTools.mockModel(NotificationModel, 'notifyTeam', null, null));
+			const liveSync = TestTools.mockLiveSync('teamAllChanged');
 
 			// Mock http request and response
 			const { req, res } = TestTools.mockRequest({
 				body: {
 					name: 'Test Team',
+					description: 'Test description 1',
+					icon: 'Icon1.jpg',
 				},
 			});
 
 			// Call test method
 			await teamController.updateTeam(req, res);
+
+			liveSync.restore();
 
 			// Validate result
 			correctResponseType(res, 404);
@@ -290,6 +322,7 @@ describe('Team controller', () => {
 			// Mock user model
 			mockModels.push(TestTools.mockNotCalled(teamModel, 'updateTeam'));
 			mockModels.push(TestTools.mockModel(NotificationModel, 'notifyTeam', null, null));
+			const liveSync = TestTools.mockLiveSync('teamAllChanged');
 
 			// Mock http request and response
 			const { req, res } = TestTools.mockRequest({
@@ -300,6 +333,8 @@ describe('Team controller', () => {
 
 			// Call test method
 			await teamController.updateTeam(req, res);
+
+			liveSync.restore();
 
 			// Validate result
 			correctResponseType(res, 400);
@@ -318,6 +353,8 @@ describe('Team controller', () => {
 				},
 				body: {
 					name: 'Test Team',
+					description: 'Test description 1',
+					icon: 'Icon1.jpg',
 				},
 			});
 
@@ -333,6 +370,7 @@ describe('Team controller', () => {
 		it('should delete a team if the user is the admin of the team.', async () => {
 			// Mock user model
 			mockModels.push(TestTools.mockModel(teamModel, 'deleteTeam', null, TestTools.dbDeleteSuccess));
+			const liveSync = TestTools.mockLiveSync('teamAllChanged');
 
 			// Mock http request and response
 			const { req, res } = TestTools.mockRequest({
@@ -343,6 +381,8 @@ describe('Team controller', () => {
 
 			// Call test method
 			await teamController.deleteTeam(req, res);
+
+			liveSync.restore();
 
 			// Validate result
 			correctResponseType(res, 200);
@@ -353,6 +393,7 @@ describe('Team controller', () => {
 		it('should not delete a team if the user is not the admin of the team.', async () => {
 			// Mock user model
 			mockModels.push(TestTools.mockModel(teamModel, 'deleteTeam', null, TestTools.dbDeleteFailed));
+			const liveSync = TestTools.mockLiveSync('teamAllChanged');
 
 			// Mock http request and response
 			const { req, res } = TestTools.mockRequest({
@@ -363,6 +404,8 @@ describe('Team controller', () => {
 
 			// Call test method
 			await teamController.deleteTeam(req, res);
+
+			liveSync.restore();
 
 			// Validate result
 			correctResponseType(res, 404);
@@ -378,6 +421,8 @@ describe('Team controller', () => {
 			const { req, res } = TestTools.mockRequest({
 				params: {
 					teamId: '8',
+					description: 'Test description 1',
+					icon: 'Icon1.jpg',
 				},
 			});
 

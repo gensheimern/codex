@@ -23,6 +23,7 @@ export default class ImageUpload extends React.Component {
    }
 
    onImageDrop(files) {
+     console.log(files);
      this.props.handleFile(files);
      this.setState({style: {
        border:"2px solid green",

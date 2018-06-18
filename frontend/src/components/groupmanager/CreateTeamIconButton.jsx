@@ -24,7 +24,6 @@ handleClick = () => {
     return (
       <div className={classNameDiv}>
         <FlatButton
-          key={this.props.key}
           style={{
             height:"32px",
             width:"32px",

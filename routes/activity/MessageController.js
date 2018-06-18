@@ -3,6 +3,7 @@ const ParticipatesModel = require('../../models/participatesModel');
 const ActivityModel = require('../../models/ActivityModel');
 const transforms = require('../transforms');
 const { validMessage } = require('./messageValidation');
+const LiveSync = require('../LiveSync');
 
 const MessageController = {
 
@@ -50,6 +51,8 @@ const MessageController = {
 
 		const result = await Message.createMessage(content, activityId, userId);
 
+		LiveSync.messageChanged(activityId);
+
 		res.status(201).json({
 			messageId: result.insertId,
 		});
@@ -59,8 +62,20 @@ const MessageController = {
 		const { userId } = req.token;
 		const { messageId } = req.params;
 
+		const message = await Message.getMessageById(messageId);
+
+		if (userId !== message.User_Id) {
+			res.status(403).json({
+				success: false,
+				message: 'You can only delete your own messages.',
+			});
+			return;
+		}
+
 		// TODO check for admin
 		const result = await Message.deleteMessage(messageId, userId);
+
+		LiveSync.messageChanged(message.Activity_Id);
 
 		if (result.affectedRows === 1) {
 			res.json({
@@ -87,8 +102,19 @@ const MessageController = {
 			return;
 		}
 
-		// TODO: check for admin
+		const message = await Message.getMessageById(messageId);
+
+		if (userId !== message.User_Id) {
+			res.status(403).json({
+				success: false,
+				message: 'You can only delete your own messages.',
+			});
+			return;
+		}
+
 		const result = await Message.updateMessage(messageId, content, userId);
+
+		LiveSync.messageChanged(message.Activity_Id);
 
 		if (result.affectedRows === 1) {
 			res.json({

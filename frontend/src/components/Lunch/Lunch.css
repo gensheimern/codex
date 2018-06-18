@@ -1,4 +1,4 @@
-.background {
+.backgroundR {
   background-image: url("Hintergrundbild.png");
   height:100%;
   background-size: cover;
@@ -7,11 +7,11 @@
 	background-position: center top;
 }
 
-.loginBg {
+.loginBgR {
   height:100vh;
 }
 
-.h2header {
+.h2headerR {
   margin-bottom: 20px !important;
 }
 
