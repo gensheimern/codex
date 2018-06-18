@@ -76,7 +76,7 @@ export default class Login extends Component {
 
             this.props.history.push("/feed");
         }).catch((err) => {
-            
+
         });
     }
 
@@ -167,6 +167,10 @@ export default class Login extends Component {
                     Don't have an account yet?&nbsp;
 					<Link to = "/signup">Create an account</Link>
 				</p>
+        <p>
+            Promote your restaurant.&nbsp;
+  <Link to = "/restaurantlogin">Login restaurant</Link>
+</p>
                 </CardText>
                 </Card>
             </form>

@@ -12,13 +12,14 @@ import config from '../../config';
 import Snackbar from 'material-ui/Snackbar';
 import FlatButton from 'material-ui/FlatButton';
 import Paper from 'material-ui/Paper';
+
 // import jwt_decode from 'jwt-decode';
 import { withRouter } from 'react-router-dom';
 
 const eventImages = [
 	{
 		img: "weblogin",
-		title: "NO MATCHES"
+		title: "Edit event picture"
 	},
 	{
 		img: "asianfood",

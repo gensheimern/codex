@@ -161,7 +161,7 @@ export default class CollapsedContent extends React.Component {
 			return (
 				<div className="collapse-activity">
 					<div className="event-extend-info">
-						<hr/>
+						<hr className="activity-hr"/>
 						<h4>  <IconDesc style={{width:"1em", height:"1em"}}/> {'"'}{this.props.event.description}{'"'} </h4>
 						<h4> <PlaceMUI />  {this.props.event.place} </h4>
 					</div>
@@ -180,14 +180,14 @@ export default class CollapsedContent extends React.Component {
 							<div  className="myTextfield">
 							<TextField
 								value={this.state.value}
-								hintText= "Add a new comment"
+								hintText= "Comment.."
 								fullWidth={true}
 								className="addComment"
 								onKeyPress={this._onKeyPress}
 								onChange={this.handleChange}
 								style={{
 									float: 'left',
-									width: 'auto',
+									width: '70%',
 								}}
 							/>
 							<IconButton
