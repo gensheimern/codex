@@ -52,6 +52,8 @@ export default class GroupsDrawer extends React.Component {
 					}}
 				>
 					<SidebarContent
+						activeIndex={this.props.activeIndex}
+						changeTeamIndex={this.props.changeTeamIndex}
 						changeContent={this.props.changeContent}
 						searchFilterFeed={this.props.searchFilterFeed}
 						closeDrawer={this.handleClose}

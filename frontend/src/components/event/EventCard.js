@@ -67,9 +67,6 @@ export default class EventCard extends React.Component {
 	}
 
 	render() {
-		const avatarStyle = {
-			marginLeft: '-15px',
-		};
 
 		this.checkDate();
 		let participantsImages;
@@ -78,32 +75,39 @@ export default class EventCard extends React.Component {
 				if (index > 3) return true;
 
 				return (
+					<div className="participatesImagePreview">
 					<UserAvatar
-						key={user.id}
+						id={user.id + "id"}
+						key={user.id + "key"}
 						user={user}
 						style={{
-							...avatarStyle,
 							cursor: 'pointer',
+							height:"100%",
+							width:"100%",
 						}}
 						onClick={this.showParticipantsList}
 					/>
+					</div>
 				);
 			});
 
 			if (participantsImages.length > 4) {
 				participantsImages.push(
+					<div className="participatesImagePreview">
 					<Avatar
 						key="moreParticipants"
 						color="#000000"
 						backgroundColor="#f8c947"
 						style={{
-							...avatarStyle,
+							height:"100%",
+							width:"100%",
 							cursor: 'pointer',
 						}}
 						onClick={this.showParticipantsList}
 					>
 						+{participantsImages.length - 4}
 					</Avatar>
+					</div>
 				);
 			}
 		}
@@ -156,14 +160,17 @@ export default class EventCard extends React.Component {
 				</Popover>
 			);
 		}
-
+		let eventInfoStyle = (this.props.webFeed === true) ? "eventInfo" : "smallEventInfo";
+		let eventGroupStyle = (this.props.webFeed === true) ? "eventGroup" : "smallEventGroup";
+		let eventCardHeaderStyle = (this.props.webFeed === true) ? "eventCardHeader" : "smallEventCardHeader";
+		let eventCardTitleStyle = (this.props.webFeed === true) ? "eventCardTitle" : "smallEventCardTitle";
 		return (
 			<div className ="card-wrapper">
 				<div className = "eventCard" style={isJoinedBorder}>
-					<div className = "eventCardHeader" >
+					<div className = {eventCardHeaderStyle} >
 						<img src = {this.props.event.banner} alt = "Event banner" />
 							<div className = "after">
-								<div className="eventCardTitle">
+								<div className={eventCardTitleStyle}>
 									<span className = "eventName"> {this.props.event.name} </span>
 									{/*this.getJoinLeaveButton()*/}
 									<div style={buttonColor} className="joinBtnWrapper" onClick={this.props.toggleJoin}>
@@ -172,8 +179,8 @@ export default class EventCard extends React.Component {
 								</div>
 							</div>
 					</div>
-						<div className = "eventGroup">
-							<div className="eventInfo">
+						<div className = {eventGroupStyle}>
+							<div className={eventInfoStyle}>
 								<div className="dateInfo">
 								 {this.checkDate()}
 								</div>
@@ -183,9 +190,9 @@ export default class EventCard extends React.Component {
 								{this.props.webFeed &&
 								<div className="participates-image">
 									{ participantsImages }
-									  <span id="participant-counter"> <h6><GroupFA />{" "} {this.props.participants.length}/{
+									  <span id="participant-counter" style={{marginRight:"6.3%"}}> <h4><GroupFA />{" "} {this.props.participants.length}/{
 												(this.props.event.maxParticipants === "0") ?
-												this.props.event.maxParticipants : "∞" } </h6></span>
+												this.props.event.maxParticipants : "∞" } </h4></span>
 								</div>
 							}
 							</div>

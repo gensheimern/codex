@@ -56,7 +56,6 @@ handleOpenCreate = () => {
 };
 
 checkForImage = () => {
-  console.log(this.props.image);
   if(this.props.image === null){
     return ("weblogin.jpg")
   }else {
@@ -133,7 +132,6 @@ render() {
   <TimePicker
       ref={ref => this.timePickerRef = ref}
       hintText="Custom Labels"
-      minDate={new Date()}
       onShow={this.onShow}
       onChange={this.handleCreateEvent}
       okLabel="OK"

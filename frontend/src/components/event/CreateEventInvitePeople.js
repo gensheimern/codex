@@ -68,35 +68,34 @@ export default class CreateEventInvitePeople extends React.Component {
 	}
 
 	loadGroups(){
-	    fetch(config.apiPath + "/team/", {
-	      method: 'GET',
-	      headers: {
-	        'Content-Type': 'application/json',
-	        'X-Access-Token': localStorage.getItem('apiToken')
-	      }
-	    })
-	    .then((res) => {
-	      if (!res.ok) {
-	        throw new Error("Request failed.");
-	        } else if (res.status !== 200) {
-	        throw new Error("Forbidden");
-	      }
-	      return res;
-	    })
-	    .then(res => res.json())
-	    .then(res => {
-	        res.forEach(userid => {
-	          console.log(userid);
-	          this.setState({groups:[...this.state.groups, {textKey: userid.name, ValueEmail: userid.id, ValueKey:"Group"}]})
-	        })
-	        this.setState({groups: this.state.groups.concat(this.state.usersList)})
-	    })
-	    .catch((err) => {
-	      this.setState({
-	        error: 'An Error occured.',
-	      });
-	    });
-	  }
+			fetch(config.apiPath + "/team/", {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json',
+					'X-Access-Token': localStorage.getItem('apiToken')
+				}
+			})
+			.then((res) => {
+				if (!res.ok) {
+					throw new Error("Request failed.");
+					} else if (res.status !== 200) {
+					throw new Error("Forbidden");
+				}
+				return res;
+			})
+			.then(res => res.json())
+			.then(res => {
+					res.forEach(userid => {
+						this.setState({groups:[...this.state.groups, {textKey: userid.name, ValueEmail: userid.id, ValueKey:"Group"}]})
+					})
+					this.setState({groups: this.state.groups.concat(this.state.usersList)})
+			})
+			.catch((err) => {
+				this.setState({
+					error: 'An Error occured.',
+				});
+			});
+		}
 
 
 	onChange = (event) => {
@@ -118,14 +117,17 @@ export default class CreateEventInvitePeople extends React.Component {
 				],
 				value: '',
 			}
-		});
+		}
+	);
 
-		this.props.people(this.state.inviteImageList);
+		this.props.people(this.state.inviteImageList)
 	}
 
 	render(){
 		return(
 			<AutoComplete
+				targetOrigin={{ vertical: 'top', horizontal: 'left'}}
+				animated={true}
 				id="CreateEventInvitePeopleAutocomplete"
 				fullWidth={true}
 				value={this.state.value}

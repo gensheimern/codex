@@ -17,6 +17,10 @@ import { withRouter } from 'react-router-dom';
 
 const eventImages = [
 	{
+		img: "weblogin",
+		title: "NO MATCHES"
+	},
+	{
 		img: "asianfood",
 		title:"ASIAN FODD",
 	}, {
@@ -28,14 +32,19 @@ const eventImages = [
 	}, {
 		img: "coffee",
 		title:"COFFEE",
-	}, {
-		img: "fisch",
+	},
+	{
+		img:"tacco",
+		title:"TACCO",
+	},
+	 {
+		img: "fish",
 		title:"FISH",
 	}, {
 		img: "grillen",
 		title:"GRILL",
 	}, {
-		img: "kebab_card",
+		img: "kebab",
 		title:"KEBAB",
 	}, {
 		img: "fastfood",
@@ -261,8 +270,6 @@ class CreateEventCard extends React.Component {
 		} else {
 			if(parseInt(this.getMaxPeopleValue(), 10) >= userArray.length +1 ||
 			 parseInt(this.getMaxPeopleValue(), 10) === 0 ) {
-				 console.log(userArray);
-				 console.log(groupArray);
 				fetch(config.apiPath + "/activity", {
 					method: 'POST',
 					body: JSON.stringify({
@@ -359,10 +366,8 @@ class CreateEventCard extends React.Component {
 						key={"profilePicture" + index}
 						src={data.img + ".jpg"}
 						onClick={() => this.cardImage(data.title,data.img)}
-						width="100px"
-						height="100px"
 						alt=""
-						id="pickimage"
+						className="pickimage"
 					/>
 				))
 			)
@@ -415,6 +420,8 @@ class CreateEventCard extends React.Component {
 								toggle={this.callbackTogglePrivate}
 							/>
 						</div>
+						<InvitePeople people={this.callBackInvitePeople}/>
+
 						<TextField
 							fullWidth={true}
 							floatingLabelFixed={true}
@@ -432,7 +439,6 @@ class CreateEventCard extends React.Component {
 							onChange={this.handleChangeDescription}
 						/>
 
-						<InvitePeople people={this.callBackInvitePeople}/>
 
 						<div style={{color:"red"}}>
 							{this.state.errorInvite}
@@ -464,11 +470,11 @@ class CreateEventCard extends React.Component {
 						/>
 					}
 				>
-					<img className='eventCardImg' src={`${this.state.cardImage}.jpg`} alt="" />
+					<img className='eventCardImg' src={`${this.state.cardImage}_card.jpg`} alt="" />
 				</CardMedia>
 
 				<CardText>
-					<div> {this.collapseImagePicker()} </div>
+					<div className="EventImagePickerWrapper"> {this.collapseImagePicker()} </div>
 					<Maps
 						callbackAdress={this.handleChangeAddressValue}
 						myAddress={this.callbackAddress}

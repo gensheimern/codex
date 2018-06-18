@@ -2,7 +2,7 @@ const fetch = require('node-fetch');
 const UserModel = require('../../models/UserModel');
 const transforms = require('../transforms');
 const { validUser } = require('./userValidation');
-const { hashPassword, validateHash } = require('../auth/Auth');
+const { hashPassword, validateHash, createJWT } = require('../auth/Auth');
 const config = require('../../config');
 
 const UserController = {
@@ -61,7 +61,17 @@ const UserController = {
 
 		const result = await UserModel.addUser(userData);
 
+		// Create token and login user
+		const payload = {
+			userId: result.insertId,
+			firstName: userData.firstName,
+			name: userData.name,
+			email: userData.email,
+		};
+		const token = await createJWT(payload);
+
 		res.status(201).json({
+			token,
 			userId: result.insertId,
 		});
 	},

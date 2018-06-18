@@ -13,6 +13,8 @@ class ProfileToolbar extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			show:false,
+			previousIndex: "",
 			newNotifications: 0,
 			unseenNotifications: 0,
 			unsubscribed: false,
@@ -40,6 +42,10 @@ class ProfileToolbar extends React.Component {
 	}
 
 	componentDidMount() {
+
+		if(this.props.activeIndex === "notification"){
+		this.props.changeTeamIndex("notification")
+		this.setState({show:true});}
 		notificationChecker.enable('notification', () => {
 			if (!this.state.unsubscribed) {
 				this.setState((prevState, props) => ({
@@ -126,6 +132,29 @@ class ProfileToolbar extends React.Component {
 	}
 
 	render(){
+		if(this.state.previousIndex !== this.props.activeIndex && this.props.activeIndex !== "notification"){
+			this.setState({previousIndex:this.props.activeIndex})
+		}
+		let changeInd = this.state.previousIndex;
+
+		const IconNotStyle = {
+			marginLeft: 0,
+		}
+		const UsedIconNotStyle = {
+			marginLeft: 0,
+			borderBottom : "5px solid #1ea185"
+		}
+		const IconProStyle = {
+			cursor: 'pointer',
+
+		}
+		const UsedIconProStyle = {
+			cursor: 'pointer',
+			border : "3px solid #1ea185",
+			borderRadius:"49%"
+		}
+
+
 		const notificationIcon = this.state.newNotifications + this.state.unseenNotifications > 0
 			? 	(<Badge
 					badgeContent={this.state.newNotifications + this.state.unseenNotifications}
@@ -146,23 +175,32 @@ class ProfileToolbar extends React.Component {
 				</Badge>)
 			:	(<Notification
 					onClick={() => {
+						if(this.state.show === false){
+						this.setState({show:true})
 						this.readNotifications();
+						this.props.changeTeamIndex("notification")
 						this.props.history.push('/notifications');
+					} else if(this.state.show === true){
+						this.props.changeTeamIndex(changeInd);
+						this.setState({show:false})
+						this.readNotifications();
+						this.props.history.goBack();
+						}
 					}}
 					style={{
 						cursor: 'pointer',
 					}}
 				/>);
 
+				let iconNotifStyle = (this.props.activeIndex === "notification") ? UsedIconNotStyle : IconNotStyle;
+				let iconProfileStyle = (this.props.activeIndex === "profile") ? UsedIconProStyle : IconProStyle;
 
 		return (
 			<React.Fragment>
 				<Toolbar style={{
 					backgroundColor: 'white',
 				}}>
-					<ToolbarGroup firstChild={true} style={{
-						marginLeft: 0,
-					}}>
+					<ToolbarGroup firstChild={true} style={iconNotifStyle}>
 					{notificationIcon}
 					</ToolbarGroup>
 
@@ -179,9 +217,7 @@ class ProfileToolbar extends React.Component {
 							: (<Avatar
 								src={this.state.userImg}
 								onClick={this.showSettings}
-								style={{
-									cursor: 'pointer',
-								}}
+								style={iconProfileStyle}
 							/>)
 						}
 
@@ -190,8 +226,10 @@ class ProfileToolbar extends React.Component {
 							anchor={this.state.anchor}
 							hideSettings={this.hideSettings}
 							history={this.props.history}
-						/>
-					</ToolbarGroup>
+							activeIndex={this.props.activeIndex}
+							changeTeamIndex={this.props.changeTeamIndex}
+							/>
+						</ToolbarGroup>
 				</Toolbar>
 			</React.Fragment>
 		);

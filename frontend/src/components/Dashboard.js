@@ -30,8 +30,10 @@ export default class Dashboard extends React.Component {
 
 		return (
 			<React.Fragment>
-				<FeedToolbar searchFilterFeed={this.props.searchFilterFeed} />
-
+				<FeedToolbar
+				searchFilterFeed={this.props.searchFilterFeed}
+				activeIndex={this.props.activeIndex}
+				changeTeamIndex={this.props.changeTeamIndex} />
 				<div style={{
 					...defaultStyle,
 					width: '20%',
@@ -39,6 +41,8 @@ export default class Dashboard extends React.Component {
 					boxShadow: '5px 5px 5px lightgrey',
 				}}>
 					<SidebarContent
+						activeIndex={this.props.activeIndex}
+						changeTeamIndex={this.props.changeTeamIndex}
 						changeContent={this.props.changeContent}
 						searchFilterFeed={this.props.searchFilterFeed}
 						closeDrawer={() => {}}

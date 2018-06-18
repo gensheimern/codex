@@ -55,7 +55,6 @@ render(){
   let lunches;
   if(this.state.lunchList !== null){
   lunches = this.state.lunchList.map((lunchItem) =>  {
-    console.log(lunchItem.LunchImage);
     return(
       /*
       <Card
@@ -72,6 +71,7 @@ render(){
         */
 
             <LunchPaper
+            key={lunchItem.LunchRestaurant_Id}
             image={lunchItem.LunchImage}
             name={lunchItem.Name}
             place={lunchItem.Place}
@@ -88,7 +88,6 @@ render(){
       )
   })
 }
-  console.log(this.state.lunchList);
   return(
       <div>
 

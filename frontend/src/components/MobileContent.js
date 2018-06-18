@@ -41,6 +41,8 @@ export default class MobileContent extends React.Component {
 						searchFilterFeed={this.props.searchFilterFeed}
 						name={displayName}
 						showSearch={content === 0}
+						activeIndex={this.props.activeIndex}
+						changeTeamIndex={this.props.changeTeamIndex}
 					/>
 				</div>
 		);

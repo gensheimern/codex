@@ -17,7 +17,6 @@ export default class FilterDropDown extends React.Component {
 
   handleFilterChange = (event, index, value) =>{
     this.setState({value:value});
-    console.log(value);
 
     switch(value.toString()) {
             case "1":

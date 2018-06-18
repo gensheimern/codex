@@ -154,7 +154,6 @@ export default class EventItem extends React.Component {
 		if (!this.state.loaded) {
 			return (<p>Loading...</p>);
 		}
-		console.log(this.props.event);
 		return (
 			<EventCard
 				loaded = {this.state.loaded}
