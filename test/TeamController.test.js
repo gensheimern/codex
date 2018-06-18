@@ -200,6 +200,7 @@ describe('Team controller', () => {
 			// Mock user model
 			mockModels.push(TestTools.mockModel(teamModel, 'addTeam', null, TestTools.dbInsertSuccess));
 			mockModels.push(TestTools.mockModel(memberModel, 'addMember', null, TestTools.dbInsertSuccess));
+			const liveSync = TestTools.mockLiveSync('teamAllChanged');
 
 			// Mock http request and response
 			const { req, res } = TestTools.mockRequest({
@@ -213,6 +214,8 @@ describe('Team controller', () => {
 			// Call test method
 			await teamController.addTeam(req, res);
 
+			liveSync.restore();
+
 			// Validate result
 			correctResponseType(res, 201);
 			expect(res.body().teamId).to.equal(10);
@@ -222,12 +225,15 @@ describe('Team controller', () => {
 			// Mock user model
 			mockModels.push(TestTools.mockNotCalled(teamModel, 'addTeam'));
 			mockModels.push(TestTools.mockNotCalled(memberModel, 'addMember'));
+			const liveSync = TestTools.mockLiveSync('teamAllChanged');
 
 			// Mock http request and response
 			const { req, res } = TestTools.mockRequest();
 
 			// Call test method
 			await teamController.addTeam(req, res);
+
+			liveSync.restore();
 
 			// Validate result
 			correctResponseType(res, 400);
@@ -261,6 +267,7 @@ describe('Team controller', () => {
 			// Mock user model
 			mockModels.push(TestTools.mockModel(teamModel, 'updateTeam', null, TestTools.dbUpdateSuccess));
 			mockModels.push(TestTools.mockModel(NotificationModel, 'notifyTeam', null, null));
+			const liveSync = TestTools.mockLiveSync('teamAllChanged');
 
 			// Mock http request and response
 			const { req, res } = TestTools.mockRequest({
@@ -276,6 +283,8 @@ describe('Team controller', () => {
 
 			// Call test method
 			await teamController.updateTeam(req, res);
+
+			liveSync.restore();
 
 			// Validate result
 			correctResponseType(res, 200);
@@ -287,6 +296,7 @@ describe('Team controller', () => {
 			// Mock user model
 			mockModels.push(TestTools.mockModel(teamModel, 'updateTeam', null, TestTools.dbUpdateFailed));
 			mockModels.push(TestTools.mockModel(NotificationModel, 'notifyTeam', null, null));
+			const liveSync = TestTools.mockLiveSync('teamAllChanged');
 
 			// Mock http request and response
 			const { req, res } = TestTools.mockRequest({
@@ -300,6 +310,8 @@ describe('Team controller', () => {
 			// Call test method
 			await teamController.updateTeam(req, res);
 
+			liveSync.restore();
+
 			// Validate result
 			correctResponseType(res, 404);
 			expect(res.body().success).to.be.false;
@@ -310,6 +322,7 @@ describe('Team controller', () => {
 			// Mock user model
 			mockModels.push(TestTools.mockNotCalled(teamModel, 'updateTeam'));
 			mockModels.push(TestTools.mockModel(NotificationModel, 'notifyTeam', null, null));
+			const liveSync = TestTools.mockLiveSync('teamAllChanged');
 
 			// Mock http request and response
 			const { req, res } = TestTools.mockRequest({
@@ -320,6 +333,8 @@ describe('Team controller', () => {
 
 			// Call test method
 			await teamController.updateTeam(req, res);
+
+			liveSync.restore();
 
 			// Validate result
 			correctResponseType(res, 400);
@@ -355,6 +370,7 @@ describe('Team controller', () => {
 		it('should delete a team if the user is the admin of the team.', async () => {
 			// Mock user model
 			mockModels.push(TestTools.mockModel(teamModel, 'deleteTeam', null, TestTools.dbDeleteSuccess));
+			const liveSync = TestTools.mockLiveSync('teamAllChanged');
 
 			// Mock http request and response
 			const { req, res } = TestTools.mockRequest({
@@ -365,6 +381,8 @@ describe('Team controller', () => {
 
 			// Call test method
 			await teamController.deleteTeam(req, res);
+
+			liveSync.restore();
 
 			// Validate result
 			correctResponseType(res, 200);
@@ -375,6 +393,7 @@ describe('Team controller', () => {
 		it('should not delete a team if the user is not the admin of the team.', async () => {
 			// Mock user model
 			mockModels.push(TestTools.mockModel(teamModel, 'deleteTeam', null, TestTools.dbDeleteFailed));
+			const liveSync = TestTools.mockLiveSync('teamAllChanged');
 
 			// Mock http request and response
 			const { req, res } = TestTools.mockRequest({
@@ -385,6 +404,8 @@ describe('Team controller', () => {
 
 			// Call test method
 			await teamController.deleteTeam(req, res);
+
+			liveSync.restore();
 
 			// Validate result
 			correctResponseType(res, 404);
