@@ -137,7 +137,15 @@ class ProfileToolbar extends React.Component {
 			marginLeft: 0,
 			borderBottom : "5px solid #1ea185"
 		}
+		const IconProStyle = {
+			cursor: 'pointer',
 
+		}
+		const UsedIconProStyle = {
+			cursor: 'pointer',
+			border : "3px solid #1ea185",
+			borderRadius:"49%"
+		}
 
 
 		const notificationIcon = this.state.newNotifications + this.state.unseenNotifications > 0
@@ -177,7 +185,8 @@ class ProfileToolbar extends React.Component {
 					}}
 				/>);
 
-				let iconNotifStyle = (this.state.show === true) ? UsedIconNotStyle : IconNotStyle;
+				let iconNotifStyle = (this.props.activeIndex === "notification") ? UsedIconNotStyle : IconNotStyle;
+				let iconProfileStyle = (this.props.activeIndex === "profile") ? UsedIconProStyle : IconProStyle;
 
 		return (
 			<React.Fragment>
@@ -201,9 +210,7 @@ class ProfileToolbar extends React.Component {
 							: (<Avatar
 								src={this.state.userImg}
 								onClick={this.showSettings}
-								style={{
-									cursor: 'pointer',
-								}}
+								style={iconProfileStyle}
 							/>)
 						}
 
@@ -212,7 +219,8 @@ class ProfileToolbar extends React.Component {
 							anchor={this.state.anchor}
 							hideSettings={this.hideSettings}
 							history={this.props.history}
-						/>
+							activeIndex={this.props.activeIndex}
+							changeTeamIndex={this.props.changeTeamIndex}/>
 					</ToolbarGroup>
 				</Toolbar>
 			</React.Fragment>

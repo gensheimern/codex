@@ -16,6 +16,7 @@ class SettingsMenu extends React.Component {
 		super(props);
 
 		this.state = {
+			show:false,
 			loaded: false,
 			organizations: [],
 			changed: false,
@@ -30,6 +31,9 @@ class SettingsMenu extends React.Component {
 	}
 
 	componentDidMount() {
+		if(this.props.activeIndex === "profile"){
+		this.props.changeTeamIndex("profile")
+		this.setState({show:true});}
 		this.loadOrganizations();
 	}
 
@@ -176,11 +180,19 @@ class SettingsMenu extends React.Component {
 				<Menu>
 					<MenuItem
 						primaryText="Profile Settings"
-						onClick={() => {
-							this.props.history.push('/profile');
-							this.props.hideSettings();
-						}}
-					/>
+						onClick={() => {if(this.state.show === false){
+												this.setState({show:true})
+												this.props.changeTeamIndex("profile")
+												this.props.history.push('/profile');
+												this.props.hideSettings();
+
+											} else if(this.state.show === true){
+												this.setState({show:false})
+												this.props.changeTeamIndex("PUBLIC")
+												this.props.history.goBack();
+												this.props.hideSettings();
+											}
+						}} />
 					<MenuItem
 						primaryText="Change organization"
 						rightIcon={this.state.showOrganizations ? <ArrowDropUp /> : <ArrowDropDown />}
