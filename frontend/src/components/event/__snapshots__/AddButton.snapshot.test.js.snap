@@ -20,14 +20,5 @@ exports[`AddButton Snapshot renders 1`] = `
   >
       +
   </div>
-  <h2
-    style={
-      Object {
-        "color": "white",
-      }
-    }
-  >
-     ADD EVENT
-  </h2>
 </a>
 `;
