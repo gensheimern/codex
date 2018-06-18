@@ -15,7 +15,8 @@
 		"lint:fix": "eslint . --fix",
 		"test": "mocha test --recursive",
 		"test:coverage": "nyc --reporter=text --reporter=html npm test",
-		"deploy": "npm install&&npm run installclient&&npm run build"
+		"predeploy": "npm i --only=production&&cd frontend&&npm i --only=production",
+		"deploy": "npm run build"
 	},
 	"engines": {
 		"node": ">=6.9.1"

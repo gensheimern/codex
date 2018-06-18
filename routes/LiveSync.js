@@ -52,10 +52,6 @@ const LiveSync = {
 		}
 	},
 
-	async newEvent() {
-		//
-	},
-
 	async teamChanged(userId) {
 		try {
 			send('teamsChanged', null, userId);
@@ -87,22 +83,6 @@ const LiveSync = {
 
 	async personalChanged(userId) {
 		send('personalEventsChanged', null, userId);
-	},
-
-	async changedSettings() {
-		//
-	},
-
-	async newNotification() {
-		//
-	},
-
-	async organizationChanged() {
-		//
-	},
-
-	async newOrganization() {
-		//
 	},
 
 	async messageChanged(eventId) {
