@@ -94,6 +94,7 @@ const LiveSync = {
 			const messages = dbMessages.map(transforms(null).transformMessage);
 
 			send(`messagesChanged-${eventId}`, messages, isPrivate ? participants.map(user => user.User_Id) : 'all');
+			send(`messagesChangedApp-${eventId}`, messages, isPrivate ? participants.map(user => user.User_Id) : 'all');
 		} catch (error) {
 			logError(error);
 		}
