@@ -29,7 +29,6 @@ describe('Message controller', () => {
 
 
 	describe('GET all messages of activity', () => {
-		// FIXME: Test does not end
 		/* it('should send the data of all messages', async () => {
 			// Mock user model
 			mockModels.push(TestTools.mockModel(

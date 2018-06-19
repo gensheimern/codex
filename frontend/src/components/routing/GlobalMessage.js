@@ -2,6 +2,9 @@ import React from 'react';
 import getSocket from '../../Socket'
 import Snackbar from 'material-ui/Snackbar';
 
+/**
+ * Show a message sent by the backend.
+ */
 export default class GlobalMessage extends React.Component {
 	constructor(props) {
 		super(props);

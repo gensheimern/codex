@@ -1,4 +1,4 @@
-const mysql = require('mysql');
+const mysql = require('mysql2');
 const config = require('../config');
 
 const pool = mysql.createPool({
@@ -10,15 +10,20 @@ const pool = mysql.createPool({
 });
 
 
+/**
+ * Provides a promise wrapper for the mysql driver.
+ * The querys are executed as prepared statements,
+ * which prevents sql injections.
+ */
 const databaseConnection = {
 
 	query(...args) {
-		return pool.query(...args);
+		return pool.execute(...args);
 	},
 
 	queryp(...args) {
 		return new Promise((resolve, reject) => {
-			pool.query(...args, (err, res) => {
+			pool.execute(...args, (err, res) => {
 				if (err) reject(err);
 				else resolve(res);
 			});
@@ -27,7 +32,7 @@ const databaseConnection = {
 
 	querypFirst(...args) {
 		return new Promise((resolve, reject) => {
-			pool.query(...args, (err, res) => {
+			pool.execute(...args, (err, res) => {
 				if (err) reject(err);
 				else if (res.length === 0) resolve(null);
 				else resolve(res[0]);
@@ -37,7 +42,7 @@ const databaseConnection = {
 
 	querypBool(...args) {
 		return new Promise((resolve, reject) => {
-			pool.query(...args, (err, res) => {
+			pool.execute(...args, (err, res) => {
 				if (err) reject(err);
 				else resolve(res.length >= 1);
 			});

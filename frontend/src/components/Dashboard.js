@@ -5,6 +5,9 @@ import MainContent from './MainContent';
 import SidebarContentCalendar from './personal/SidebarContentCalendar';
 import PropTypes from 'prop-types';
 
+/**
+ * Render the web version of the app.
+ */
 export default class Dashboard extends React.Component {
 	render() {
 		const defaultStyle = {

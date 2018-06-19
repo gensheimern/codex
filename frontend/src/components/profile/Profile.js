@@ -6,6 +6,9 @@ import NotificationSettings from './NotificationSettings';
 import LanguageSettings from './LanguageSettings';
 import RetryPrompt from '../tools/RetryPrompt';
 
+/**
+ * Shows the personal profile information and settings per user.
+ */
 export default class ProfileContent extends React.Component {
 	constructor(props) {
 		super(props);

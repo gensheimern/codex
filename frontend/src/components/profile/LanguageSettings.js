@@ -6,6 +6,9 @@ import SelectField from 'material-ui/SelectField';
 
 import './profile.css';
 
+/**
+ * Show the profile settings to change the language and date format.
+ */
 export default class LanguageSettings extends React.Component {
 	constructor(props) {
 		super(props);

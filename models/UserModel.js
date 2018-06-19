@@ -68,9 +68,9 @@ const User = {
 	 */
 	async getOrganization(userId) {
 		return new Promise((resolve, reject) => {
-			databaseConnection.querypFirst('SELECT Organization_Id FROM part_of WHERE User_Id = 1 AND Active = 1', [userId])
+			databaseConnection.querypFirst('SELECT Organization_Id FROM part_of WHERE User_Id = ? AND Active = 1', [userId])
 				.then((res) => {
-					resolve(res ? res.Organization_Id : null);
+					resolve(res !== null ? res.Organization_Id : null);
 				})
 				.catch(reject);
 		});

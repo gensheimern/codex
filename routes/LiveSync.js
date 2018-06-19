@@ -32,8 +32,24 @@ const LiveSync = {
 		send('globalMessage', title, 'all');
 	},
 
-	async newEvent() {
-		//
+	async upcomingEvent(activityId) {
+		try {
+			const activity = await ActivityModel.getActivityById(activityId);
+			const member = await ParticipatesModel.getMemberOfActivity(activityId);
+
+			const hours = activity.Time.getHours();
+			let minutes = activity.Time.getMinutes();
+			if (minutes <= 9) {
+				minutes = `0${minutes}`;
+			}
+
+			send('reminder', {
+				event: activityId,
+				message: `Event '${activity.Name}' is due in 30 minutes (${hours}:${minutes}).`,
+			}, member.map(user => user.User_Id));
+		} catch (error) {
+			logError(error);
+		}
 	},
 
 	async teamChanged(userId) {
@@ -45,9 +61,8 @@ const LiveSync = {
 	},
 
 	async teamAllChanged(teamId) {
-		const member = await memberModel.getMemberOfTeam(teamId);
-
 		try {
+			const member = await memberModel.getMemberOfTeam(teamId);
 			send('teamsChanged', null, member.map(user => user.User_Id));
 		} catch (error) {
 			logError(error);
@@ -70,22 +85,6 @@ const LiveSync = {
 		send('personalEventsChanged', null, userId);
 	},
 
-	async changedSettings() {
-		//
-	},
-
-	async newNotification() {
-		//
-	},
-
-	async organizationChanged() {
-		//
-	},
-
-	async newOrganization() {
-		//
-	},
-
 	async messageChanged(eventId) {
 		try {
 			const isPrivate = await ActivityModel.isPrivate(eventId);
@@ -94,6 +93,7 @@ const LiveSync = {
 			const messages = dbMessages.map(transforms(null).transformMessage);
 
 			send(`messagesChanged-${eventId}`, messages, isPrivate ? participants.map(user => user.User_Id) : 'all');
+			send(`messagesChangedApp-${eventId}`, messages, isPrivate ? participants.map(user => user.User_Id) : 'all');
 		} catch (error) {
 			logError(error);
 		}

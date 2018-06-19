@@ -16,7 +16,7 @@ const onStart = () => {
 	}
 };
 
-if (process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === 'production' && config.HTTPS) {
 	// Start HTTPS Server for production
 	const credentials = {
 		key: fs.readFileSync(config.PRIVKEY_PATH, 'utf8'),
@@ -38,7 +38,7 @@ if (process.env.NODE_ENV === 'production') {
 	const liveMessages = createLiveMessage(httpsServer);
 	liveMessages.initialize();
 } else {
-	// Start HTTP Server for development
+	// Start HTTP Server
 	const httpServer = http.createServer(app);
 	httpServer.listen(config.PORT, onStart);
 

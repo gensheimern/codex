@@ -2,7 +2,8 @@ import React, {Component} from 'react';
 import {BottomNavigation, BottomNavigationItem} from 'material-ui/BottomNavigation';
 import Paper from 'material-ui/Paper';
 import IconAdd from 'material-ui/svg-icons/content/add-circle';
-import IconProfile from 'material-ui/svg-icons/social/person';
+//import IconProfile from 'material-ui/svg-icons/social/person';
+import IconLunch from 'material-ui/svg-icons/maps/restaurant-menu'
 import IconCalendar from 'material-ui/svg-icons/action/event';
 import IconFeed from 'material-ui/svg-icons/action/assignment';
 import Notification from 'material-ui/svg-icons/social/notifications';
@@ -15,7 +16,7 @@ import './navbar.css';
 const FeedIcon = <IconFeed/>;
 const CalendarIcon = <IconCalendar/>;
 const AddIcon = <IconAdd/>;
-const ProfileIcon = <IconProfile />;
+const LunchIcon = <IconLunch />;
 
 /**
  * A simple example of `BottomNavigation`, with three labels and icons
@@ -164,7 +165,7 @@ class AppNavBottom extends Component {
 						style={itemStyle}
 					/>
 					<BottomNavigationItem
-						icon={ProfileIcon}
+						icon={LunchIcon}
 						onClick={() => this.props.history.push('/lunchfeed')}
 						style={itemStyle}
 					/>

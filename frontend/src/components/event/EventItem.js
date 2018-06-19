@@ -31,6 +31,8 @@ export default class EventItem extends React.Component {
 		if (this.props.webFeed) {
 			getSocket().subscribe(`messagesChanged-${this.props.event.id}`, this.loadMessages);
 			getSocket().subscribe(`participantsChanged-${this.props.event.id}`, this.loadParticipants);
+		} else {
+			getSocket().subscribe(`messagesChangedApp-${this.props.event.id}`, this.loadMessages);
 		}
 	}
 
@@ -38,6 +40,8 @@ export default class EventItem extends React.Component {
 		if (this.props.webFeed) {
 			getSocket().unsubscribe(`messagesChanged-${this.props.event.id}`);
 			getSocket().unsubscribe(`participantsChanged-${this.props.event.id}`);
+		} else {
+			getSocket().unsubscribe(`messagesChangedApp-${this.props.event.id}`);
 		}
 	}
 
