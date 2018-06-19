@@ -213,7 +213,7 @@ console.log(email)
 					open={this.state.open}
 					onRequestClose={this.handleClose}
 					autoScrollBodyContent={true}
-				>
+					>
 					<div>
 						<CreateGroupContent
 							name={this.state.name}
