@@ -1,7 +1,7 @@
 import React from 'react';
 import FlatButton from 'material-ui/FlatButton';
 import "./sidebars.css"
-import IconGroup from '../../../../image/icons/round-card_membership-24px.svg';
+import IconGroup from 'material-ui/svg-icons/social/group';
 
 export default class CreateTeamButton extends React.Component {
 

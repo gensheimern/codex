@@ -112,6 +112,7 @@ class SidebarContent extends React.Component {
               }}
               changeContent={this.props.changeContent}
               closeDrawer={this.props.closeDrawer}
+							reload={() => {}}
             />
           <div className="groups">
                 {myGroups}
