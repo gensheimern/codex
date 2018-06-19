@@ -45,7 +45,7 @@ const LiveSync = {
 
 			send('reminder', {
 				event: activityId,
-				message: `Event '${activity.Name}' is due in 30 minutes (${hours}:${minutes}).`,
+				message: `Event '${activity.Activityname}' is due in 30 minutes (${hours}:${minutes}).`,
 			}, member.map(user => user.User_Id));
 		} catch (error) {
 			logError(error);
