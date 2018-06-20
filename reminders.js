@@ -17,13 +17,13 @@ async function remind(eventId) {
 	if (minutes <= 9) {
 		minutes = `0${minutes}`;
 	}
-	NotificationModel.notifyEvent(eventId, 'reminder', 'Reminder', `Event '${event.Name}' is due in 30 minutes (${hours}:${minutes}).`, eventId, null);
+	NotificationModel.notifyEvent(eventId, 'reminder', 'Reminder', `Event '${event.Activityname}' is due in 30 minutes (${hours}:${minutes}).`, eventId, null);
 
 	// Send reminder mail
 	const participants = await ParticipatesModel.getMemberOfActivity(eventId);
 	const eventUrl = `${config.HOST}/notifications`;
 	participants.forEach((user) => {
-		mail.sendReminderMail(user.Email, 'Meet\'n\'Eat Reminder', event.Name, `${hours}:${minutes}`, eventUrl)
+		mail.sendReminderMail(user.Email, 'Meet\'n\'Eat Reminder', event.Activityname, `${hours}:${minutes}`, eventUrl)
 			.catch(() => {});
 	});
 }
