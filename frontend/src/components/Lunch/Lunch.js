@@ -75,7 +75,7 @@ class Lunch extends React.Component {
            }
 
     fd.append('image',this.state.uploadFile[0],"lunch_" + this.state.uploadFile[0].name);
-    axios.post('http://localhost:5000/api/upload/lunch',fd, configAxios)
+    axios.post(config.apiPath + "/upload/lunch",fd, configAxios)
       .then(res => {
           // console.log(res);
       });

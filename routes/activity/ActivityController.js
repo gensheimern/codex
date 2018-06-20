@@ -2,6 +2,7 @@ const ActivityModel = require('../../models/ActivityModel');
 const ParticipatesModel = require('../../models/participatesModel');
 const NotificationModel = require('../../models/NotificationModel');
 const UserModel = require('../../models/UserModel');
+const MemberModel = require('../../models/MemberModel');
 const transforms = require('../transforms');
 const { validActivity } = require('./activityValidation');
 const reminder = require('../../reminders');
@@ -71,58 +72,89 @@ const ActivityController = {
 	},
 
 	async createActivity(req, res) {
+		let participantsAdded = 0;
+		const { participants } = req.body;
 		const { userId } = req.token;
 		const activity = req.body;
-
 		if (!validActivity(activity)) {
 			res.status(400).json({
 				message: 'Invalid event information.',
 			});
 			return;
 		}
-
 		const organizationId = await UserModel.getOrganization(userId);
 
 		const result = await ActivityModel.createActivity(activity, userId, organizationId);
 
-		// Add invited participants
-		let participantsAdded = 0;
-		const { participants } = req.body;
-
-		if (participants instanceof Array) {
+		// Add invited teams
+		let teamsAdded = 0;
+		let invitePeople = [];
+		const { teams } = req.body;
+		console.log(teams);
+		if (teams instanceof Array) {
 			const { maxParticipants } = activity;
 
-			if (participants.length >= maxParticipants && maxParticipants !== 0) {
-				res.status(400).json({
-					message: 'Too many participants.',
-				});
-			}
-
-			participants.forEach(async (participantId) => {
-				participantsAdded += 1;
+			teams.forEach(async (teamId) => {
+				teamsAdded += 1;
 				try {
-					await ParticipatesModel.addParticipant(result.insertId, participantId, false);
+					await ParticipatesModel.addTeamToEvent(teamId, result.insertId);
+					const member = await MemberModel.getMemberOfTeam(teamId);
+					console.log(teamId +  "teamid");
+					console.log(member);
 
-					const user = await UserModel.getUserById(userId);
-
-					await NotificationModel.addNotification(participantId, 'joinEvent', 'Event invitation', `${user.Firstname} ${user.Name} invited you to join the event '${activity.name}'.`, result.insertId);
+					member.forEach((userid) => {
+						if (userid.User_Id !== userId) {
+							invitePeople.push(userid.User_Id);
+						}
+					});
 				} catch (err) {
+					console.log(err);
 					participantsAdded -= 1;
 				}
 			});
+
+				const actualCountParticipants = invitePeople.length + participants.length;
+				if (actualCountParticipants >= maxParticipants && maxParticipants !== 0) {
+					res.status(400).json({
+						message: 'Too many participants.',
+					});
+				}
+				console.log(participants + "participants");
+
+				// Add invited participants
+				if (participants instanceof Array) {
+					participants.forEach((e) => {
+						invitePeople.push(e);
+					});
+					invitePeople = invitePeople.reduce(
+						(x, y) => (x.findIndex(e => e === y) < 0 ? [...x, y] : x),
+						[],
+					);
+					invitePeople.forEach(async (participantId) => {
+						participantsAdded += 1;
+						try {
+							await ParticipatesModel.addParticipant(result.insertId, participantId, false);
+
+							const user = await UserModel.getUserById(userId);
+
+							await NotificationModel.addNotification(participantId, 'joinEvent', 'Event invitation', `${user.Firstname} ${user.Name} invited you to join the event '${activity.name}'.`, result.insertId);
+						} catch (err) {
+							participantsAdded -= 1;
+						}
+					});
+				}
 		}
+
 
 		// Add host
 		await ParticipatesModel.addParticipant(result.insertId, userId, true);
 
-		reminder.scheduleReminder(result.insertId);
-
 		res.status(201).json({
 			activityId: result.insertId,
 			addedParticipants: participantsAdded,
+			addedTeams: teamsAdded,
 		});
 	},
-
 	async deleteActivity(req, res) {
 		const { userId } = req.token;
 		const { activityId } = req.params;
