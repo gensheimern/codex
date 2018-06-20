@@ -24,6 +24,7 @@ export default class CreateTeamButton extends React.Component {
 		return (
 			<div className="GroupSidebarButton">
 				<FlatButton
+					//TODO icons: icons durch übergabe verwerten
 					icon={
 						<IconGroup style={{
 							float: 'left',
