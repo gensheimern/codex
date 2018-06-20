@@ -101,7 +101,6 @@ const Activity = {
 	async createActivity(activity, userId, organizationId) {
 		const eventTag = activity.event ? 1 : 0;
 		const privateTag = activity.private ? 1 : 0;
-
 		if (organizationId === null) {
 			return databaseConnection.queryp('INSERT INTO Activity (Description, Activityname, Place, Time, Eventtag, Private, Host, Banner, MaxParticipants, Organization) VALUES (?,?,?,?,?,?,?,?, ?, NULL)', [activity.description, activity.name, activity.place, activity.time, eventTag, privateTag, userId, activity.banner, activity.maxParticipants]);
 		}
