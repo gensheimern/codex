@@ -100,7 +100,8 @@ class SettingsMenu extends React.Component {
 				changedError: false,
 			});
 
-			this.loadOrganizations();
+			this.loadOrganizations()
+				.then(window.location.reload());
         }).catch((error) => {
 			this.setState({
 				changedError: true,

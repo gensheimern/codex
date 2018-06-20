@@ -35,6 +35,7 @@ export default class CreateTeamButton extends React.Component {
 		};
 
 		this.validateInput = this.validateInput.bind(this);
+		this.handleClose = this.handleClose.bind(this);
 		this.handleChangeN = this.handleChangeN.bind(this);
 		this.handleChangeD = this.handleChangeD.bind(this);
 		this.handleChangeI = this.handleChangeI.bind(this);
@@ -73,7 +74,7 @@ export default class CreateTeamButton extends React.Component {
 			sending: false,
 		});
 	};
-	
+
 	handleSubmit = (e) => {
 		e.preventDefault();
 
@@ -141,10 +142,10 @@ console.log(email)
 				errTextName: '',
 			});
 		}
-		
+
 		this.validateInput();
 	}
-	
+
 	handleChangeD = event => {
 		this.setState({
 			description: event.target.value
@@ -162,17 +163,17 @@ console.log(email)
 
 		this.validateInput();
 	}
-	
+
 	handleChangeI(x){
 		this.setState({
 			selectedIcon : x
 		});
 	}
-	
+
 	callBackInvitePeople(invitePeople){
 		this.setState({ invitePeople })
 	}
-	
+
 	render() {
 		const actions = [
 			<FlatButton
@@ -212,7 +213,7 @@ console.log(email)
 					open={this.state.open}
 					onRequestClose={this.handleClose}
 					autoScrollBodyContent={true}
-				>
+					>
 					<div>
 						<CreateGroupContent
 							name={this.state.name}

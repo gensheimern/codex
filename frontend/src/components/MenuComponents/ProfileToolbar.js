@@ -138,9 +138,10 @@ class ProfileToolbar extends React.Component {
 	}
 
 	render(){
-		
-		let changeInd = this.state.previousIndex;
 
+		let changeInd = this.state.previousIndex;
+		console.log(changeInd);
+		console.log(this.props.activeIndex);
 		const IconNotStyle = {
 			marginLeft: 0,
 		}
