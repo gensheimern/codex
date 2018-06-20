@@ -436,6 +436,15 @@ exports[`Login Snapshot renders 1`] = `
               Create an account
             </a>
           </p>
+          <p>
+            Promote your restaurant. 
+            <a
+              href="/restaurantlogin"
+              onClick={[Function]}
+            >
+              Login restaurant
+            </a>
+          </p>
         </div>
       </div>
     </div>

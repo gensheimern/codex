@@ -6,13 +6,10 @@ exports[`SidebarContent Snapshot renders 1`] = `
 >
   <div>
     <div
-      className="divider"
-    />
-    <div
       className="GroupSidebarButton"
     >
       <button
-        className="highlightSidebarContent"
+        className="nonHighlightSidebarContent"
         disabled={false}
         onBlur={[Function]}
         onClick={[Function]}
