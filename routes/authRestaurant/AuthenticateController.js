@@ -16,11 +16,7 @@ const AuthenticateController = {
 
 		const validPassord = await Auth.validateHash(password, restaurant.Password);
 
-
-		// If the restaurant doesnt exits, it will send status code 403 and the
-		// json to the client
-		if (!validPassord && !(password === restaurant.Password)) {
-			// FIXME: Use only hashed password authentification!
+		if (!validPassord) {
 			res.status(403).json({
 				success: false,
 				message: 'Invalid restaurant credentials.',

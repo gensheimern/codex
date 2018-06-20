@@ -6,6 +6,9 @@ import SelectField from 'material-ui/SelectField';
 
 import './profile.css';
 
+/**
+ * Shows the user settings about the reminder and notifications.
+ */
 export default class NotificationSettings extends React.Component {
 	constructor(props) {
 		super(props);

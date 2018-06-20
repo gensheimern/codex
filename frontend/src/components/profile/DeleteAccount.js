@@ -4,6 +4,9 @@ import Dialog from 'material-ui/Dialog';
 import AlertError from 'material-ui/svg-icons/alert/error';
 import config from '../../config';
 
+/**
+ * Shows a button to delete the account.
+ */
 export default class DeleteAccount extends React.Component {
 	constructor(props) {
 		super(props);

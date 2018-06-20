@@ -11,6 +11,9 @@ import DeleteAccount from './DeleteAccount';
 import './profile.css';
 import CircularProgress from 'material-ui/CircularProgress/CircularProgress';
 
+/**
+ * Give the user the possibility to change the password or delete the account.
+ */
 class AccountSettings extends React.Component {
 	constructor(props) {
 		super(props);

@@ -10,7 +10,7 @@ import FlatButton from 'material-ui/FlatButton';
 import CreateDsgvoText from '../signup/DsgvoText';
 
 /**
- * Dialog content can be scrollable.
+ * Dialog showing the data protection guildelines.
  */
 export default class Dsgvo extends React.Component{
     constructor(props) {

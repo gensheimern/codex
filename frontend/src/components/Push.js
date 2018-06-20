@@ -1,5 +1,8 @@
 import config from '../config';
 
+/**
+ * Handling the push messages sent over the browser api to notify the user.
+ */
 class Push {
 	static sendPush(title, body) {
 		// Check browser support for notifications

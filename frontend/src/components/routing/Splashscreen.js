@@ -6,6 +6,9 @@ import LinearProgress from 'material-ui/LinearProgress';
 
 import './splashscreen.css';
 
+/**
+ * This component renders a splashscreen, showing the logo, covering the loading time.
+ */
 export default class Splashscreen extends React.Component {
 	constructor(props) {
 		super(props);

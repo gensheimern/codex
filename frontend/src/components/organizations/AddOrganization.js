@@ -3,6 +3,9 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import config from '../../config';
 
+/**
+ * This component show a dialog to add an organization.
+ */
 export default class AddOrganization extends React.Component {
 	constructor(props) {
 		super(props);

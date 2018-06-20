@@ -12,6 +12,9 @@ import Dsgvo from './Dsgvo'; // In english General Data Protection (GDPR)
 import logo from '../../IMG/logo/Logo_3.png';
 import SelectOrganization from '../organizations/SelectOrganization';
 
+/**
+ * Shows a signup form to create a new user.
+ */
 class Signup extends React.Component {
 	emailRegExp = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 

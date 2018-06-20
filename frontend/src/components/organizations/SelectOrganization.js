@@ -13,6 +13,9 @@ import Autocomplete from 'material-ui/AutoComplete';
 const NOT_SELECTED = -1;
 const CREATE_NEW = 0;
 
+/**
+ * Show all available organizations to join.
+ */
 export default class SelectOrganization extends React.Component {
 	constructor(props) {
 		super(props);

@@ -64,7 +64,6 @@ checkForImage = () => {
 }
 
 checkForDialogImage = () => {
-  console.log(this.props.image);
   if(this.props.image === null){
     return null
   }else {
@@ -74,7 +73,6 @@ checkForDialogImage = () => {
 }
 
 checkForText = () => {
-  console.log(this.props.text);
   if(this.props.text === ""){
     return (
       <div>

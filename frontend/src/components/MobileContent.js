@@ -4,6 +4,9 @@ import PropTypes from 'prop-types';
 import AppNavBottom from './MenuComponents/AppNavBottom';
 import AppNavTop from './MenuComponents/AppNavTop';
 
+/**
+ * This component renders the app version of the application designed for small formfactor devices.
+ */
 export default class MobileContent extends React.Component {
 	render() {
 		let content = 0;
@@ -24,27 +27,26 @@ export default class MobileContent extends React.Component {
 
 		return (
 			<div className="mobileContent-wrapper">
-
-					<div style={{width: '100%'}}>
-						<MainContent
-							filterPersonalFeed = {this.props.filterPersonalFeed}
-							searchFilterFeed={this.props.searchFilterFeed}
-							mainContentNumber={content}
-							filter={this.props.filter}
-						/>
-					</div>
-					{/* This is the inteded order of components, because it stacks them in the right order. */}
-					<AppNavBottom
-						index={content}
-					/>
-					<AppNavTop
+				<div style={{width: '100%'}}>
+					<MainContent
+						filterPersonalFeed = {this.props.filterPersonalFeed}
 						searchFilterFeed={this.props.searchFilterFeed}
-						name={displayName}
-						showSearch={content === 0}
-						activeIndex={this.props.activeIndex}
-						changeTeamIndex={this.props.changeTeamIndex}
+						mainContentNumber={content}
+						filter={this.props.filter}
 					/>
 				</div>
+				{/* This is the inteded order of components, because it stacks them in the right order. */}
+				<AppNavBottom
+					index={content}
+				/>
+				<AppNavTop
+					searchFilterFeed={this.props.searchFilterFeed}
+					name={displayName}
+					showSearch={content === 0}
+					activeIndex={this.props.activeIndex}
+					changeTeamIndex={this.props.changeTeamIndex}
+				/>
+			</div>
 		);
 	}
 }

@@ -4,6 +4,7 @@ const NotificationModel = require('../../models/NotificationModel');
 const UserModel = require('../../models/UserModel');
 const transforms = require('../transforms');
 const { validActivity } = require('./activityValidation');
+const reminder = require('../../reminders');
 
 const ActivityController = {
 
@@ -113,6 +114,8 @@ const ActivityController = {
 
 		// Add host
 		await ParticipatesModel.addParticipant(result.insertId, userId, true);
+
+		reminder.scheduleReminder(result.insertId);
 
 		res.status(201).json({
 			activityId: result.insertId,

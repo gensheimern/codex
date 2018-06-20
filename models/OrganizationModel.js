@@ -7,7 +7,7 @@ const OrganizationModel = {
 		return databaseConnection.queryp(`
 			SELECT Organization.*, User.* 
 			FROM Organization 
-			INNER JOIN User 
+			INNER JOIN User
 				ON User.User_Id = Organization.Administrator`);
 	},
 
