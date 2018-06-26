@@ -4,6 +4,9 @@ import Dialog from 'material-ui/Dialog';
 import AlertError from 'material-ui/svg-icons/alert/error';
 import config from '../../config';
 
+/**
+ * Shows a button to delete the account.
+ */
 export default class DeleteAccount extends React.Component {
 	constructor(props) {
 		super(props);
@@ -67,7 +70,7 @@ export default class DeleteAccount extends React.Component {
     			label="Delete"
 				onClick={this.deleteAccount}
 				backgroundColor="#ED6559"
-				labelColor="white"
+				labelColor="#ffffff"
     		/>
 		];
 
@@ -87,9 +90,9 @@ export default class DeleteAccount extends React.Component {
 				<RaisedButton
 					label="Delete Account"
 					backgroundColor="#ED6559"
-					color="white"
+					color="#ffffff"
 					onClick={this.handleDeleteAccount}
-					labelColor="white"
+					labelColor="#ffffff"
 				/>
 
 				{this.state.showDeleteAccountError ? deleteAccountError : null}

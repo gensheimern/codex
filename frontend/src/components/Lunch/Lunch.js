@@ -5,23 +5,53 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import {Card,CardText} from 'material-ui/Card';
 import Paper from 'material-ui/Paper';
-import { Link } from 'react-router-dom';
 import ImageUpload from './ImageUpload';
-
+import {Tabs, Tab} from 'material-ui/Tabs';
+import DatePicker from './CreateEventDatePicker';
+import axios from 'axios';
+import config from '../../config';
 
 
 class Lunch extends React.Component {
   constructor(props) {
       super(props);
-
       this.state = {
           email: "",
           password: "",
           errorPrompt: "",
+          uploadFile: null,
           open: false,
           errorText: "",
           value:1,
+          yearFrom:'',
+          monthFrom:'',
+          dayFrom:'',
+          yearTo: '',
+          monthTo: '',
+          dayTo: '',
+          textValue:'',
+          priceValue:'',
       };
+      this.callbackDateTo = this.callbackDateTo.bind(this);
+      this.callbackDateFrom = this.callbackDateFrom.bind(this);
+      this.handleFile = this.handleFile.bind(this);
+      this.handleTextChange = this.handleTextChange.bind(this);
+      this.handlePriceChange = this.handlePriceChange.bind(this);
+
+  }
+
+  resetState = () => {
+    this.setState({
+      email: "",
+      password: "",
+      errorPrompt: "",
+      uploadFile: null,
+      open: false,
+      errorText: "",
+      value:1,
+      textValue:'',
+      priceValue:'',
+    })
   }
 
   handleOpen = () => {
@@ -32,50 +62,130 @@ class Lunch extends React.Component {
       this.setState({open: false});
   };
 
-  handleChange = name => e => {
-  this.setState({
-    [name]: e.target.value
+  handleFile(file) {
+      this.setState({uploadFile: file});
+  }
+
+  handleSubmit = () => {
+
+    if(this.state.uploadFile !== null){
+    const fd = new FormData();
+    const configAxios = {
+               headers: { 'content-type': 'multipart/form-data' }
+           }
+
+    fd.append('image',this.state.uploadFile[0],"lunch_" + this.state.uploadFile[0].name);
+    axios.post(config.apiPath + "/upload/lunch",fd, configAxios)
+      .then(res => {
+          // console.log(res);
+      });
+    }
+      fetch(config.apiPath + "/restaurant/lunch", {
+  			method: 'POST',
+  			body: JSON.stringify({
+          TimeFrom: this.state.yearFrom + "-" + this.state.monthFrom + "-" + this.state.dayFrom,
+          TimeTo: this.state.yearTo + "-" + this.state.monthTo + "-" + this.state.dayTo,
+          LunchImage: this.state.uploadFile ? this.state.uploadFile[0].name : null ,
+          LunchText: this.state.textValue,
+          Price: this.state.priceValue,
+
+  			}),
+  			headers: {
+  				'Content-Type': 'application/json',
+  				'X-Access-Token': localStorage.getItem('apiToken'),
+  			}
+  		})
+  		.then((res) => {
+  			if (!res.ok || res.status !== 201) {
+  				// handle error
+          throw new Error("invalid iwas");
+  			}
+        this.resetState();
   });
 }
 
-  validateForm() {
-      return this.state.email.length > 0 && this.state.password.length > 0;
+  handleTextChange(e){
+    this.setState({ textValue: e.target.value });
   }
 
+  handlePriceChange(e){
+    this.setState({ priceValue: e.target.value });
+  }
+
+callbackDateFrom(event, mydate){
+  this.setState({
+    yearFrom:mydate.getUTCFullYear(),
+    dayFrom:mydate.getUTCDate()+1,
+    monthFrom:mydate.getUTCMonth()+1,
+  });
+}
+
+callbackDateTo(event, mydate){
+  this.setState({
+    yearTo:mydate.getUTCFullYear(),
+    dayTo:mydate.getUTCDate()+1,
+    monthTo:mydate.getUTCMonth()+1,
+  });
+}
+
+showPreview(){
+  if(this.state.uploadFile !== null){
+    return <img alt="uploadedImage" style={{width:"100%", height:"auto"}} src={this.state.uploadFile[0].preview} />
+  } else {
+    return <ImageUpload handleFile={this.handleFile} />
+  }
+}
+
+
+
+
+  handleActive(tab) {
+  alert(`A tab with this route property ${tab.props['data-route']} was activated.`);
+}
+
+Tab () {
+  return(
+  <Tabs>
+    <Tab label="Upload" >
+      <div>
+        <div className="DateWrapper">
+          <div className="singleDateWrapper">
+            <DatePicker date={this.callbackDateFrom} hintText={"From"} />
+            <DatePicker date={this.callbackDateTo} hintText={"To"} />
+          </div>
+        </div>
+        <div style={{clear:"both"}}></div>
+      </div>
+      {this.showPreview()}
+    </Tab>
+    <Tab label="By Hand" >
+      <div>
+        <div className="DateWrapper">
+            <DatePicker date={this.callbackDateFrom} hintText={"From"} />
+            <DatePicker date={this.callbackDateTo} hintText={"To"} />
+
+          </div>
+        <TextField
+                style={styles.textField}
+                hintText="Type your lunch"
+                multiLine={true}
+                onChange={this.handleTextChange}
+        />
+        <TextField
+                style={styles.textField}
+                hintText="Price"
+                onChange={this.handlePriceChange}
+        />
+      </div>
+    </Tab>
+  </Tabs>
+)
+};
 
 
   render() {
-        const styles ={
-
-            paperStyle:{
-				height: 62,
-				width: 62,
-				borderRadius: 7,
-				display: 'block',
-				marginLeft: 'auto',
-				marginRight: 'auto',
-            },
-
-            textField:{
-				width: '80%',
-				marginLeft: '10%',
-				marginRight: '10%',
-            },
-
-            loginButton:{
-				heigt: 40.57,
-				width: '30%',
-				borderRadius: 3,
-				boxShadow: "inset 0 1 3 0 rgba(0,0,0,0.5),0 1 2 0 rgba(0,0,0,0.5)",
-				display: 'block',
-				marginLeft: 'auto',
-				marginRight: 'auto',
-			},
-        }
-
         return(
             <div className = "loginBg">
-            <form className ="login" >
                 <div>
                     <Paper style={styles.paperStyle} zDepth= {1}/>
                 </div>
@@ -86,55 +196,56 @@ class Lunch extends React.Component {
                 <CardText>
                 <h2 className = "h2header">Insert your Lunch for today</h2>
 
-                <TextField
-                        style={styles.textField}
-                        hintText="Type your text"
-                        multiLine={true}
-                        rows={2}
-                />
-                <TextField
-                        style={styles.textField}
-                        hintText="Price"
-                />
+                {this.Tab()}
 
           <div className="errorText"> {this.state.errorText} </div>
-
-          <ImageUpload />
-
-
-    <form ref='uploadForm'
-      id='uploadForm'
-      action={ 'http://localhost:5000/api/upload'}
-      method='post'
-      encType="multipart/form-data">
-        <input type="file" name="sampleFile" />
-        <input type='submit' value='Upload!' />
-    </form>
-
-
 
                 <br/>
                 <br/>
                 <RaisedButton
 					backgroundColor="#b9b9b9"
 					type="submit"
-					label="Login"
+					label="Send"
 					primary={true}
-					disabled={!this.validateForm()}
 					style = {styles.loginButton}
+          onClick = {this.handleSubmit}
 				/>
-                <br/>
-                <p>Dot have an account yet?&nbsp;
-						<Link to = "/signup">Create an account</Link>
-				</p>
                 </CardText>
                 </Card>
-            </form>
             </div>
             );
 
 	}
 
 }
+
+const styles ={
+
+    paperStyle:{
+height: 62,
+width: 62,
+borderRadius: 7,
+display: 'block',
+marginLeft: 'auto',
+marginRight: 'auto',
+    },
+
+    textField:{
+width: '90%',
+marginLeft: '5%',
+marginRight: '5%',
+    },
+
+    loginButton:{
+heigt: 40.57,
+width: '30%',
+borderRadius: 3,
+boxShadow: "inset 0 1 3 0 rgba(0,0,0,0.5),0 1 2 0 rgba(0,0,0,0.5)",
+display: 'block',
+marginLeft: 'auto',
+marginRight: 'auto',
+},
+}
+
 
 export default withRouter(Lunch);

@@ -8,13 +8,22 @@ const Team = {
 	 * @returns {Promise<Array<User>>} The result fetched from the database.
 	 */
 	async getAllTeams(userID) {
-		return databaseConnection.queryp(`SELECT Manager.*, Team.*
-			FROM Team, User AS Manager, User AS Member, member_of
-			WHERE Manager.User_Id = Team.Teammanager
-			  AND Member.User_Id = member_of.User_Id
-			  AND Team.Team_Id = member_of.Team_Id
-			  AND Member.User_Id = ?`, [userID]);
+		return databaseConnection.queryp(`
+			SELECT Manager.*, Team.*
+			FROM Team
+			INNER JOIN User AS Manager
+				ON Manager.User_Id = Team.Teammanager
+			INNER JOIN member_of
+				ON member_of.Team_Id = Team.Team_Id
+			WHERE member_of.User_Id = ?
+				AND member_of.Accepted = 1`, [userID]);
 	},
+	// SELECT Manager.*, Team.*
+	// 		FROM Team, User AS Manager, User AS Member, member_of
+	// 		WHERE Manager.User_Id = Team.Teammanager
+	// 		  AND Member.User_Id = member_of.User_Id
+	// 		  AND Team.Team_Id = member_of.Team_Id
+	// 		  AND Member.User_Id = ?
 
 	/**
 	 * Returns information about a team specified by an id.
@@ -34,8 +43,8 @@ const Team = {
 	 * @param {number} userId ID of the user creating a team.
 	 * @returns {Promise<DBResult>} The result fetched from the database.
 	 */
-	async addTeam(teamName, userId) {
-		return databaseConnection.queryp('INSERT INTO Team (Teamname, Teammanager) VALUES (?, ?);', [teamName, userId]);
+	async addTeam(teamName, description, teamIcon, userId) {
+		return databaseConnection.queryp('INSERT INTO Team (Teamname, Description, Group_Icon, Teammanager) VALUES (?, ?, ?, ?);', [teamName, description, teamIcon, userId]);
 	},
 
 	/**

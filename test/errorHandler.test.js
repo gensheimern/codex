@@ -9,7 +9,7 @@ const errorHandler = require('../middleware/errorHandler');
 describe('route error handler', () => {
 	it('should handle errors by sending status 500', () => {
 		const { req, res } = TestTools.mockRequest();
-		const error = new TestError('Test error.');
+		const error = new TestError('This error should be shown when the tests are run.');
 		const next = sinon.spy();
 
 		errorHandler(error, req, res, next);

@@ -6,10 +6,16 @@ import AddOrganization from './AddOrganization';
 import ListOrganizations from './ListOrganizations';
 import Divider from 'material-ui/Divider';
 import SelectOrganizationDialog from './SelectOrganizationDialog';
+import { List } from 'material-ui/List';
+import Subheader from 'material-ui/Subheader';
+import Autocomplete from 'material-ui/AutoComplete';
 
 const NOT_SELECTED = -1;
 const CREATE_NEW = 0;
 
+/**
+ * Show all available organizations to join.
+ */
 export default class SelectOrganization extends React.Component {
 	constructor(props) {
 		super(props);
@@ -20,6 +26,8 @@ export default class SelectOrganization extends React.Component {
 			error: null,
 			password: '',
 			selected: NOT_SELECTED,
+
+			searchText: '',
 		};
 
 		this.back = this.back.bind(this);
@@ -109,6 +117,28 @@ export default class SelectOrganization extends React.Component {
 		});
 	}
 
+	handleUpdateInput = (searchText) => {
+		this.setState({
+			searchText,
+		});
+	}
+
+	handleNewRequest = (chosenRequest, index) => {
+		this.setState({
+			searchText: '',
+		});
+
+		if (index === -1) return;
+
+		const organizations = this.state.organizations.filter((organization) => {
+			return !this.props.myOrganizations.map(o => o.id).includes(organization.id);
+		});
+
+		this.setState({
+			selected: organizations[index].id,
+		});
+	}
+
 	render() {
 		const organizations = this.state.organizations.filter((organization) => {
 			return !this.props.myOrganizations.map(o => o.id).includes(organization.id);
@@ -119,23 +149,6 @@ export default class SelectOrganization extends React.Component {
 		if (this.state.selected === NOT_SELECTED) {
 			action = (
 				<React.Fragment>
-					<p style={{ fontWeight: 600 }}>My Organizations:</p>
-					<ListOrganizations
-						organizations={this.props.myOrganizations}
-						joined={true}
-						onLeave={this.leaveOrganization}
-						onDelete={this.deleteOrganization}
-					/>
-					<Divider />
-					<p style={{ fontWeight: 600 }}>Other Organizations:</p>
-					<ListOrganizations
-						organizations={organizations}
-						onJoin={(selected) => {
-							this.setState({
-								selected,
-							});
-						}}
-					/>
 					<RaisedButton
 						label="Create new"
 						primary={true}
@@ -146,8 +159,58 @@ export default class SelectOrganization extends React.Component {
 						}}
 						style={{
 							margin: '2%',
+							float: 'right',
 						}}
 					/>
+
+					<br style={{
+						clear: 'both',
+					}} />
+
+					<List>
+						<Subheader>My Organizations:</Subheader>
+						<ListOrganizations
+							organizations={this.props.myOrganizations}
+							joined={true}
+							onLeave={this.leaveOrganization}
+							onDelete={this.deleteOrganization}
+						/>
+					</List>
+
+					<Divider style={{
+						backgroundColor: '#1EA185',
+						height: '2px',
+					}} />	
+
+					<Autocomplete
+						hintText="Type here"
+						searchText={this.state.searchText}
+						onUpdateInput={this.handleUpdateInput}
+						onNewRequest={this.handleNewRequest}
+						floatingLabelText="Search Organization"
+						dataSource={organizations.map(organization => organization.name)}
+						filter={(searchText, key) => (key.toLowerCase().indexOf(searchText.toLowerCase()) !== -1)}
+						style={{
+							maxWidth: '100%',
+							minWidth: '50%',
+						}}
+						textFieldStyle={{
+							width: '100%',
+						}}
+					/>
+
+					<br />
+
+					<List>
+						<ListOrganizations
+							organizations={organizations}
+							onJoin={(selected) => {
+								this.setState({
+									selected,
+								});
+							}}
+						/>
+					</List>
 				</React.Fragment>
 			);
 		}
@@ -204,6 +267,7 @@ export default class SelectOrganization extends React.Component {
 				close={this.props.close}
 				back={this.back}
 				backBtn={this.state.selected !== NOT_SELECTED}
+				modal={this.props.modal}
 			>
 				{action}
 			</SelectOrganizationDialog>

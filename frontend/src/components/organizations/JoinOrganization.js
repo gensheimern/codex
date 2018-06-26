@@ -3,6 +3,9 @@ import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField'
 import config from '../../config';
 
+/**
+ * Shows a list of available organizations and offers an opportunity to join them.
+ */
 export default class JoinOrganization extends React.Component {
 	constructor(props) {
 		super(props);
@@ -81,6 +84,9 @@ export default class JoinOrganization extends React.Component {
 					floatingLabelText="Organization password"
 					value={this.state.password}
 					onChange={this.handleChange('password')}
+					style={{
+						width: '100%',
+					}}
 				/>
 				<RaisedButton
 					label="Join"

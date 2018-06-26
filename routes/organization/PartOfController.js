@@ -30,7 +30,7 @@ const PartOfController = {
 		const dbOrganizations = await PartOfModel.getOrganizationsOfUser(userId);
 		const organizations = dbOrganizations.map(transforms(userId).transformOrganization);
 
-		const organizationOfUser = await UserModel.getOrganization();
+		const organizationOfUser = await UserModel.getOrganization(userId);
 		res.json(organizations.map(organization => ({
 			...organization,
 			active: organization.id === organizationOfUser,

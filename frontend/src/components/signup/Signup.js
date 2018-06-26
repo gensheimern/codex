@@ -10,15 +10,19 @@ import Checkbox from 'material-ui/Checkbox';
 import { Link, withRouter } from 'react-router-dom';
 import Dsgvo from './Dsgvo'; // In english General Data Protection (GDPR)
 import logo from '../../IMG/logo/Logo_3.png';
+import SelectOrganization from '../organizations/SelectOrganization';
 
+/**
+ * Shows a signup form to create a new user.
+ */
 class Signup extends React.Component {
 	emailRegExp = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 	constructor(props) {
 		super(props);
 
-		this.handleChange.bind(this);
-		this.signupUser.bind(this);
+		this.handleChange = this.handleChange.bind(this);
+		this.loadOrganizations = this.loadOrganizations.bind(this);
 
 		this.state = {
 			email: "",
@@ -30,6 +34,8 @@ class Signup extends React.Component {
 			checked: false,
 			captcha: '',
 			errorMessage: '',
+			showSelectOrganization: false,
+			organizations: [],
 		}
 	}
 
@@ -91,12 +97,48 @@ class Signup extends React.Component {
             return res.json();
 		})
 		.then((res) => {
-            this.props.history.push('/organization');
+			localStorage.setItem('apiToken', res.token);
+			this.loadOrganizations();
+			this.setState({
+				showSelectOrganization: true,
+			});
+            //this.props.history.push('/organization');
         }).catch((error) => {
 			this.setState({
 				errorMessage: error.message,
 			});
         });
+	}
+
+	loadOrganizations() {
+		return fetch(config.apiPath + "/user/me/organizations", {
+            method: 'GET',
+            headers: {
+				'Content-Type': 'application/json',
+				'X-Access-Token': localStorage.getItem('apiToken'),
+            }
+		})
+		.then((res) => {
+            if(!res.ok) {
+                throw new Error("Response not ok.");
+            } else if(res.status !== 200) {
+                throw new Error("An error occured.");
+            }
+            return res.json();
+		})
+		.then((res) => {
+            this.setState({
+				organizations: res,
+			});
+        }).catch((error) => {
+			this.setState({
+				organizations: [],
+			});
+        });
+	}
+
+	hideSelectDialog = () => {
+		this.props.history.push('/feed');
 	}
 
 	render() {
@@ -128,12 +170,11 @@ class Signup extends React.Component {
 				marginRight: '10%',
 			},
 			reCAPTCHA:{
-				heigth: 76,
-				width: 305,
+				heigth: 78,
+				width: 304,
 				boarder:"1 solid #D6D6D6",
 				borderRadius: 2.43,
 				backgroundColor: "#FAFAFA",
-				boxShadow: "0 1 2 0 rgba(0,0,0,0.1)",
 				display: 'block',
 				marginLeft: 'auto',
 				marginRight: 'auto',
@@ -235,7 +276,6 @@ class Signup extends React.Component {
 					style = {styles.reCAPTCHA}
 					onChange={(captcha) => {
 						this.setState({captcha});
-						console.log("Captcha: " + captcha);
 					}}
 				/>
 				<br/>
@@ -272,6 +312,14 @@ class Signup extends React.Component {
 				
 				</CardText>
 				</Card>
+
+				<SelectOrganization
+					show={this.state.showSelectOrganization}
+					close={this.hideSelectDialog}
+					reload={this.loadOrganizations}
+					myOrganizations={this.state.organizations}
+					modal={true}
+				/>
 				
 			</form>
 			</div>

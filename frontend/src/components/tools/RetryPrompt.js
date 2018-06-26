@@ -2,6 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import RaisedButton from 'material-ui/RaisedButton';
 
+/**
+ * Shows a prompt with a retry option.
+ */
 export default class RetryPrompt extends React.Component {
 	render() {
 		return (

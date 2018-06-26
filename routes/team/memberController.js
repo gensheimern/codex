@@ -2,6 +2,7 @@ const Member = require('../../models/MemberModel');
 const TeamModel = require('../../models/TeamModel');
 const NotificationModel = require('../../models/NotificationModel');
 const transforms = require('../transforms');
+const LiveSync = require('../LiveSync');
 
 const MemberController = {
 
@@ -53,6 +54,8 @@ const MemberController = {
 		} else {
 			await Member.addMember(memberId, teamId, userId === memberId);
 
+			LiveSync.teamChanged(userId);
+
 			// Send invitation to user
 			const team = await TeamModel.getTeamById(teamId);
 			if (userId !== memberId) {
@@ -97,6 +100,8 @@ const MemberController = {
 
 		if ((isTeamManager) || (Number(userId) === Number(memberId) && isMember)) {
 			const response = await Member.deleteMember(teamId, memberId);
+
+			LiveSync.teamChanged(userId);
 
 			// Send notification to other team members
 			const team = await TeamModel.getTeamById(teamId);

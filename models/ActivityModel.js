@@ -52,6 +52,10 @@ const Activity = {
 		);
 	},
 
+	async getAllActivitiesWithoutChecks() {
+		return databaseConnection.queryp('SELECT Activity.*, User.* FROM Activity INNER JOIN User ON Activity.Host = User.User_Id');
+	},
+
 	async getJoinedActivities(userId) {
 		return databaseConnection.queryp(
 			`SELECT Activity.*, User.*
@@ -64,6 +68,19 @@ const Activity = {
 				AND Activity.Time > CURRENT_TIMESTAMP()
 			ORDER BY Activity.Time`,
 			[userId],
+		);
+	},
+
+	async getActivityOfTeam(teamId) {
+		return databaseConnection.queryp(
+			`SELECT Activity.*, teamParticipates.*
+			FROM Activity
+				INNER JOIN teamParticipates
+				ON Activity.Activity_Id = teamParticipates.Activity_Id
+				WHERE teamParticipates.Team_Id = ?
+				AND Activity.Time > CURRENT_TIMESTAMP()
+			ORDER BY Activity.Time`,
+			[teamId],
 		);
 	},
 
@@ -84,7 +101,6 @@ const Activity = {
 	async createActivity(activity, userId, organizationId) {
 		const eventTag = activity.event ? 1 : 0;
 		const privateTag = activity.private ? 1 : 0;
-
 		if (organizationId === null) {
 			return databaseConnection.queryp('INSERT INTO Activity (Description, Activityname, Place, Time, Eventtag, Private, Host, Banner, MaxParticipants, Organization) VALUES (?,?,?,?,?,?,?,?, ?, NULL)', [activity.description, activity.name, activity.place, activity.time, eventTag, privateTag, userId, activity.banner, activity.maxParticipants]);
 		}

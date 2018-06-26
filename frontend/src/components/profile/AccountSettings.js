@@ -11,6 +11,9 @@ import DeleteAccount from './DeleteAccount';
 import './profile.css';
 import CircularProgress from 'material-ui/CircularProgress/CircularProgress';
 
+/**
+ * Give the user the possibility to change the password or delete the account.
+ */
 class AccountSettings extends React.Component {
 	constructor(props) {
 		super(props);
@@ -35,7 +38,6 @@ class AccountSettings extends React.Component {
 			});
 		}
 	}
-
 	
 	changePassword = () => {
 		if (!this.validPasswords()) {
@@ -170,17 +172,17 @@ class AccountSettings extends React.Component {
 				<RaisedButton
 					label="Cancel"
 					backgroundColor="#ED6559"
-					labelColor="white"
+					labelColor="#ffffff"
 					onClick={this.resetInputs}
-					style={{color: 'white'}}
+					style={{color: '#ffffff'}}
 				/>
 				<RaisedButton
 					label="Save"
 					backgroundColor="#32AA90"
-					color="white"
+					color="#ffffff"
 					onClick={this.changePassword}
 					style={{
-						color: 'white',
+						color: '#ffffff',
 						marginBottom: '10px',
 						marginLeft: '10px',
 					}}

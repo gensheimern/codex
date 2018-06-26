@@ -1,8 +1,37 @@
-.background {
+.backgroundR {
   background-image: url("Hintergrundbild.png");
   height:100%;
   background-size: cover;
 	background-repeat: no-repeat;
 	background-color: #1EA185;
 	background-position: center top;
+}
+
+.loginBgR {
+  height:100vh;
+}
+
+.loginCardR {
+  width: 440px;
+  background-color: rgb(255, 255, 255);
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;}
+
+.h2headerR {
+  margin-bottom: 20px !important;
+}
+
+.DateWrapper {
+  float:left;
+  width:90%;
+  margin-left:5%;
+  margin-right:5%;
+  margin-top:40px;
+}
+
+.dropZoneText {
+  margin-left:50px;
+  margin-right:50px;
 }

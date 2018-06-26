@@ -4,6 +4,11 @@ import { Redirect } from 'react-router-dom';
 import logo from '../../IMG/logo/Logo_1.png';
 import LinearProgress from 'material-ui/LinearProgress';
 
+import './splashscreen.css';
+
+/**
+ * This component renders a splashscreen, showing the logo, covering the loading time.
+ */
 export default class Splashscreen extends React.Component {
 	constructor(props) {
 		super(props);
@@ -47,25 +52,23 @@ export default class Splashscreen extends React.Component {
 		});
 	}
 
+	isStandalone() {
+		const navigatorSO = window.navigator.standalone;
+		const restSO = window.matchMedia('(display-mode: standalone)').matches;
+
+		return navigatorSO || restSO;
+	}
+
 	render() {
-		if (!this.state.loaded || !this.state.timeout) {
+		if (!this.state.loaded || (!this.state.timeout && !this.isStandalone())) {
 			return (
-				<div style={{
-					position: 'fixed',
-					top: 'calc(50% - 35vw)',
-					left: 'calc(50% - 40vw)',
-					width: '80vw',
-					height: '80vw',
-				}}>
+				<div className="splashscreenWrapper">
 					<img
-						style={{
-							marginBottom: '5%',
-							width: '100%',
-						}}
+						className="splashscreenImage"
 						src={logo}
 						alt="Logo"
 					/>
-					 <LinearProgress mode="indeterminate" />
+					<LinearProgress mode="indeterminate" />
 				</div>
 			);
 		}

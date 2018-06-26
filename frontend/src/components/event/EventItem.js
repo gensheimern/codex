@@ -1,6 +1,7 @@
 import React from 'react';
 import config from '../../config';
 import EventCard from './EventCard';
+import getSocket from '../../Socket';
 
 export default class EventItem extends React.Component {
 
@@ -19,16 +20,33 @@ export default class EventItem extends React.Component {
 		this.toggleJoin = this.toggleJoin.bind(this);
 		this.toggleColapse = this.toggleColapse.bind(this);
 		this.loadMessages = this.loadMessages.bind(this);
+		this.loadParticipants = this.loadParticipants.bind(this);
 
 	}
 
 	componentDidMount() {
 		this.loadParticipants();
 		this.loadMessages();
+
+		if (this.props.webFeed) {
+			getSocket().subscribe(`messagesChanged-${this.props.event.id}`, this.loadMessages);
+			getSocket().subscribe(`participantsChanged-${this.props.event.id}`, this.loadParticipants);
+		} else {
+			getSocket().subscribe(`messagesChangedApp-${this.props.event.id}`, this.loadMessages);
+		}
+	}
+
+	componentWillUnmount() {
+		if (this.props.webFeed) {
+			getSocket().unsubscribe(`messagesChanged-${this.props.event.id}`);
+			getSocket().unsubscribe(`participantsChanged-${this.props.event.id}`);
+		} else {
+			getSocket().unsubscribe(`messagesChangedApp-${this.props.event.id}`);
+		}
 	}
 
 	loadMessages() {
-		console.log("drin")
+
 		this.setState({
 			error: null,
 		});
@@ -148,7 +166,8 @@ export default class EventItem extends React.Component {
             this.setState({
                 isJoined: join,
 			});
-        });
+		})
+		.catch(() => {});
 	}
 
 	render() {
@@ -168,6 +187,7 @@ export default class EventItem extends React.Component {
 				postComment={this.postComment}
 				messages={this.state.messages}
 				loadMessages={this.loadMessages}
+				webFeed={this.props.webFeed}
 			/>
 		);
 	}

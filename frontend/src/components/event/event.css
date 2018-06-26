@@ -8,7 +8,33 @@
 	box-shadow: 0px 81px 40px -76px #00000091 !important;
 }
 
+.eventCard, h4 {
+	font-size: 16px;
+}
+
+.participatesImagePreview {
+	height:40px;
+	width:40px;
+	float:left;
+	margin-left:-10px;
+}
+
 @media only screen and (max-width: 768px) {
+
+	.eventCardHeader, .eventCardHeader img {
+
+			height: 100% !important;
+			object-fit: contain !important;
+	}
+
+	.eventInfo {
+		height:40px !important;
+	}
+
+	.participates-image {
+		display:none;
+}
+
 	.eventCardHeader, .eventCardHeader img {
 		position: relative;
 		padding-right:0px;
@@ -17,6 +43,104 @@
 		height: 70pt;
 		box-shadow: 0px 81px 40px -76px #00000091;
 	}
+
+	.createEventPickImageWrapper {
+		padding: 0px !important;
+	}
+
+	.createEventPickImageWrapper img {
+		width: 100%;
+	}
+
+	.createEventCardWrapper {
+		/*height: 900px;*/
+		padding-bottom: 200px;
+	}
+
+	.createEventButton {
+		background-color: #F8C947 !important;
+		position: fixed !important;
+		height: 50px !important;
+		bottom: 53px;
+	}
+
+	.pickimage {
+		height:75px;
+		width:75px;
+		margin-left:2px;
+		margin-right:2px;
+		margin-bottom:2px;
+	}
+	.EventImagePickerWrapper {
+		margin-left:auto;
+		margin-right:auto;
+		margin-bottom: 20px;
+		width:100%;
+	}
+
+	.eventGroup {
+		padding-left: 12px;
+		padding-right: 12px;
+	}
+
+}
+
+	.eventInfo {
+		height:100px;
+	}
+
+	.smallEventInfo {
+		height: 40px !important;
+	}
+	.event-extend-info {
+		margin-bottom: 10px;
+	}
+
+
+	.extendedInfo {
+		display: none;
+	}
+
+	.createEventWeb {
+		margin: 2%;
+	}
+
+	.participates-image {
+		width:100%
+}
+
+	.participatesImagePreview {
+		height:40px;
+		width:40px;
+	}
+
+	.createEventButton {
+		background-color: #F8C947 !important;
+		height: 50px !important;
+	}
+
+.pickimage {
+	height:100px;
+	width:100px;
+	margin-left:3px;
+	margin-right:3px;
+	margin-bottom:3px;
+}
+
+.EventImagePickerWrapper {
+	margin-left:auto;
+	margin-right:auto;
+	margin-bottom: 20px;
+	cursor:pointer;
+	width:100%;
+}
+.eventGroup {
+	padding-left: 42px;
+	padding-right: 42px;
+}
+.smallEventGroup{
+	padding-left: 22px;
+	padding-right: 22px;
 }
 
 .eventCardHeader, .eventCardHeader img {
@@ -24,8 +148,18 @@
 	padding-right:0px;
 	padding-left:0px;
 	width: 100%;
-	height: 100%;
+	height: 130px;
 	box-shadow: 0px 81px 40px -76px #00000091;
+	object-fit: cover;
+}
+.smallEventCardHeader, .smallEventCardHeader img {
+	position: relative;
+	padding-right:0px;
+	padding-left:0px;
+	width: 100%;
+	height: 90px;
+	box-shadow: 0px 81px 40px -76px #00000091;
+	object-fit: cover;
 }
 
 .eventCardHeader .after {
@@ -39,12 +173,40 @@
 	display: block;
 	background: #0000004d;
 }
+.smallEventCardHeader .after {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 100%;
+	height: 100%;
+	color: white;
+	text-align: center;
+	display: block;
+	background: #0000004d;
+}
 
 .eventCardTitle {
 	color: white;
-	margin-top: 13%;
+	margin-top: 11%;
 	z-index: 2;
 }
+
+@media only screen and (max-width: 768px) {
+
+.smallEventCardTitle {
+	color: white;
+	margin-top: 11%;
+	z-index: 2;
+}
+}
+
+@media only screen and (min-width: 768px) {
+	.smallEventCardTitle {
+		color: white;
+		margin-top: 18%;
+		z-index: 2;
+	}
+	}
 
 .eventName {
 	float:left;
@@ -65,7 +227,7 @@
 	border-radius: 4px;
 	background: #f8c947;
 	color: white;
-	margin-right: 20px;
+	margin-right: 10px;
 	float: right;
 	top: -20pt;
 	font-size: 10pt;
@@ -84,34 +246,31 @@
 
 .eventGroup {
 	width: 100%;
-	height: 70pt;
+	height: 100px;
 	background-color: white;
 	padding-top: 5pt;
 	padding-bottom: 5pt;
-	padding-left: 20px;
-	padding-right: 20px;
+
 }
 
-.eventGroup h4 {
-	font-size: 13px;
-}
 
 .myimage {
-	height: 6vh;
-	width: 6vh;
+	height: 5vh;
+	width: 5vh;
 	border-radius: 50%;
 	margin-left: -15px;
 }
 
 .participates-image {
 	margin-left: 15px;
+	margin-top:10px
 }
 
 .alreadyJoningText {
 	margin-left: -15px;
 }
 
-@media only screen and (min-width: 769px) {
+@media only screen and (min-width: 771px) {
 	.event-extend-info {
 		margin-top: 25px;
 		margin-bottom: 10px;
@@ -120,13 +279,13 @@
 	.extendedInfo {
 		display: none;
 	}
-}
 
-@media only screen and (max-width: 768px) {
-	.participates-image {
-		display: none;
+	.createEventWeb {
+		margin: 2%;
 	}
 }
+
+
 
 .dateInfo {
 	display: inline-block;
@@ -139,7 +298,7 @@
 
 .activity-hr {
 	margin-top: 5px;
-	margin-bottom: 10px;
+	margin-bottom: 5px;
 	border: 0;
 	border-top: 1px solid #eee;
 }
@@ -154,6 +313,7 @@
 
 #participant-counter {
 	float: right;
+	margin-right:16px !important;
 }
 
 .participants-row {
@@ -162,8 +322,8 @@
 
 .participants-counter-icon {
 	float: left;
-	height: 6vh;
-	width: 6vh;
+	height: 4vh;
+	width: 4vh;
 	background-color: #f8c947;
 	text-align: center;
 	border-radius: 50%;
@@ -195,6 +355,7 @@
 .myTextfield {
 	float: left;
 	padding-left: 10px;
+	width:70%
 }
 
 .texfield-profile-picture img, .commentUserImage img {
@@ -208,6 +369,7 @@
 }
 
 .commentWrapper {
+	margin-top:20px;
 	display: flex;
 	padding-bottom: 20px;
 }
@@ -236,10 +398,14 @@
 
 .collapseOnClick {
 	clear: both;
+	cursor: pointer;
+
 }
 
 .createEventEditPicture {
-	padding-top: 20px !important;
+	padding-top: 5px !important;
+	padding-bottom: 5px !important;
+	cursor: pointer;
 }
 
 .meetingPoint {
@@ -271,6 +437,7 @@
 	float: right;
 	padding-right: 20px;
 	padding-top: 20px;
+	cursor: pointer;
 }
 
 .maxPeopleWrapper {
@@ -283,7 +450,7 @@
 	padding-top: 3%;
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 770px) {
 	.createEventPickImageWrapper {
 		padding: 0px !important;
 	}

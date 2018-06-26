@@ -2,6 +2,9 @@ import React from 'react';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 
+/**
+ * Show a dialog to manage the users organizations.
+ */
 export default class SelectOrganizationDialog extends React.Component {
 	render() {
 		const back = this.props.backBtn
@@ -24,7 +27,7 @@ export default class SelectOrganizationDialog extends React.Component {
 		return (
 			<Dialog
 				title="Select Organizations"
-				modal={false}
+				modal={this.props.modal}
 				autoScrollBodyContent={true}
 				actions={actions}
 				open={this.props.open}

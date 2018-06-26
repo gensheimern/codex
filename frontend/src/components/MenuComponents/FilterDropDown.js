@@ -17,31 +17,43 @@ export default class FilterDropDown extends React.Component {
 
   handleFilterChange = (event, index, value) =>{
     this.setState({value:value});
-    console.log(value);
 
     switch(value.toString()) {
             case "1":
-         this.props.searchFilterFeed("TimeDown","Sort");
+            this.props.searchFilterFeed("TimeDown","Sort");
+            this.props.searchFilterFeed("TimeDown","Sort");
+            this.props.searchFilterFeed("TimeDown","Sort");
          this.setState({value:value});
       ;break
             case "2":
-         this.props.searchFilterFeed("TimeUp","Sort");
+            this.props.searchFilterFeed("TimeUp","Sort");
+            this.props.searchFilterFeed("TimeUp","Sort");
+            this.props.searchFilterFeed("TimeUp","Sort");
          this.setState({value:value});
       ;break
             case '3':
-         this.props.searchFilterFeed("NameDown","Sort");
+            this.props.searchFilterFeed("NameDown","Sort");
+            this.props.searchFilterFeed("NameDown","Sort");
+            this.props.searchFilterFeed("NameDown","Sort");
          this.setState({value:value});
       ;break
             case '4':
-         this.props.searchFilterFeed("NameUp","Sort");
+            this.props.searchFilterFeed("NameUp","Sort");
+            this.props.searchFilterFeed("NameUp","Sort");
+            this.props.searchFilterFeed("NameUp","Sort");
          this.setState({value:value});
       ;break
             case '5':
          this.props.searchFilterFeed("Oldest","Sort");
+         this.props.searchFilterFeed("Oldest","Sort");
+         this.props.searchFilterFeed("Oldest","Sort");
+
          this.setState({value:value});
       ;break
             case '6':
-         this.props.searchFilterFeed("Newest","Sort");
+            this.props.searchFilterFeed("Newest","Sort");
+            this.props.searchFilterFeed("Newest","Sort");
+            this.props.searchFilterFeed("Newest","Sort");
          this.setState({value:value});
       ;break
         default:

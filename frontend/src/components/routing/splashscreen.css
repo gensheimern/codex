@@ -1,0 +1,23 @@
+/* This styles describe the splashscreen. */
+
+.splashscreenImage {
+	width: 100%;
+}
+
+.splashscreenWrapper {
+	position: fixed;
+	top: calc(50% - 24vw);
+	left: calc(50% - 40vw);
+	width: 80vw;
+	height: 47vw;
+}
+
+@media only screen and (min-width: 1000px) {
+	.splashscreenWrapper {
+		position: fixed;
+		top: calc(50% - 235px);
+		left: calc(50% - 400px);
+		width: 800px;
+		height: 471px;
+	}
+}

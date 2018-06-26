@@ -3,27 +3,53 @@ import IconButton from 'material-ui/IconButton';
 import AddList from 'material-ui/svg-icons/av/playlist-add';
 import ClosedIcon from 'material-ui/svg-icons/navigation/close';
 import DeleteIcon from 'material-ui/svg-icons/action/delete'
+import { ListItem } from 'material-ui/List';
 
+/**
+ * Shows a list of organizations and offers a specified quick action.
+ */
 export default class ListOrganizations extends React.Component {
 	render() {
 		return this.props.organizations.map(organization => {
-				let actionIcon;
-				let action;
+			let actionIcon;
+			let action;
 
-				if (!this.props.joined) {
-					actionIcon = <AddList />;
-					action = this.props.onJoin;
+			if (!this.props.joined) {
+				actionIcon = <AddList />;
+				action = this.props.onJoin;
+			} else {
+				if (organization.admin.me) {
+					actionIcon = <DeleteIcon />;
+					action = this.props.onDelete;
 				} else {
-					if (organization.admin.me) {
-						actionIcon = <DeleteIcon />;
-						action = this.props.onDelete;
-					} else {
-						actionIcon = <ClosedIcon />;
-						action = this.props.onLeave;
-					}
+					actionIcon = <ClosedIcon />;
+					action = this.props.onLeave;
 				}
+			}
+
+			const iconButton = (
+				<IconButton
+					onClick={() => { action(organization.id) }}
+					style={{
+						float: 'right',
+					}}
+				>
+					{actionIcon}
+				</IconButton>
+			);
 
 			return (
+				<ListItem
+					key={organization.id}
+					onClick={() => { action(organization.id) }}
+					rightIconButton={iconButton}
+					primaryText={organization.name}
+					secondaryText={organization.description}
+					secondaryTextLines={2}
+				/>
+			);
+
+			/* return (
 				<div
 					key={organization.id}
 					style={{
@@ -49,7 +75,7 @@ export default class ListOrganizations extends React.Component {
 						{actionIcon}
 					</IconButton>
 				</div>
-			)
+			); */
 		});
 	}
 }

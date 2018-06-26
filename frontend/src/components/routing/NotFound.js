@@ -1,5 +1,8 @@
 import React from 'react';
 
+/**
+ * This is the page rendered, if the content was not found.
+ */
 export default class NotFound extends React.Component {
 	render() {
 		return (

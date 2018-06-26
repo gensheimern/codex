@@ -2,6 +2,9 @@ import React from 'react';
 import CircularProgress from 'material-ui/CircularProgress';
 import PropTypes from 'prop-types';
 
+/**
+ * Shows a loading circle.
+ */
 export default class LoadingAnimation extends React.Component {
 	render() {
 		return (
